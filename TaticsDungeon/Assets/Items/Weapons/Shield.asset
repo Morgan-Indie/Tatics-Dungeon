@@ -18,11 +18,12 @@ MonoBehaviour:
   type: 0
   description: Simple Shield
   pickedUp: 1
-  modelPrefab: {fileID: 171988, guid: 77bf3af1241620541be3e49f8dda490d, type: 3}
+  modelPrefab: {fileID: 171988, guid: 1e5c446e51bd3634b8c4a218007bbcca, type: 3}
   isUnarmed: 0
   equipped: 1
   slotType: 5
   equipmentType: 6
+  range: 1
   _scaleValueStrength: 0
   _scaleValueVitality: 0
   _scaleValueDexterity: 0

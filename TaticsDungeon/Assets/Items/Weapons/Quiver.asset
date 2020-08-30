@@ -18,7 +18,7 @@ MonoBehaviour:
   type: 0
   description: Normal Arrows
   pickedUp: 1
-  modelPrefab: {fileID: 3605415491353605043, guid: 424dd457665e04c4b87af2d09bd29020,
+  modelPrefab: {fileID: 1341705565345784535, guid: c0226555557fedc4d801ab19aea39325,
     type: 3}
   isUnarmed: 0
   equipped: 1

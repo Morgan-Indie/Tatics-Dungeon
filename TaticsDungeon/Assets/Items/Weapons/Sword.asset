@@ -18,11 +18,12 @@ MonoBehaviour:
   type: 0
   description: A simple melee weapon for close combat.
   pickedUp: 1
-  modelPrefab: {fileID: 181534, guid: 13af847dfa6dbe844ba4b7c902f98f67, type: 3}
+  modelPrefab: {fileID: 181534, guid: 4e7633ea7071dcb4abd0915b79c7ba36, type: 3}
   isUnarmed: 0
   equipped: 1
   slotType: 0
   equipmentType: 0
+  range: 1
   _scaleValueStrength: 1.5
   _scaleValueVitality: 0
   _scaleValueDexterity: 0

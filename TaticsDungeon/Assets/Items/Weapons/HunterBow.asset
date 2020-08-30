@@ -18,7 +18,7 @@ MonoBehaviour:
   type: 0
   description: An effective ranged weapon
   pickedUp: 1
-  modelPrefab: {fileID: 8489945934326369467, guid: 2d032c98e665ab94bae2eefb3470b331,
+  modelPrefab: {fileID: 8489945934326369467, guid: 7211e864e1ec25048b9c087985800f50,
     type: 3}
   isUnarmed: 0
   equipped: 1
