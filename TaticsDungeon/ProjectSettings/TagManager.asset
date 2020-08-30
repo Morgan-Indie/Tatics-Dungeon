@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - InventorySlotHolder
+  - UIButton
+  - InventorySlot
+  - EquipmentSlot
+  - StatPreviewText
+  - Enemy
+  - APSlot
+  - GridMesh
   layers:
   - Default
   - TransparentFX
@@ -13,13 +21,13 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Player1
+  - Player2
+  - Player3
+  - Player4
+  - Enemy
+  - Mesh
   - 
   - 
   - 
