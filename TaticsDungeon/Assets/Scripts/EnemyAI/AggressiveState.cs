@@ -90,14 +90,11 @@ namespace PrototypeGame
             {
                 if (taticalMovement.transform.position == taticalMovement.moveLocation)
                 {
-                    if (characterStats.currentAP > 0 && stateManager.characterState=="ready")
+                    if (characterStats.currentAP > 0 && stateManager.characterState==CharacterState.Ready)
                     {                                     
                         MeleeAttack.Activate(characterStats, animationHandler,
                             taticalMovement, skillDict[SkillType.MeleeAttack], target, delta);
                     }
-                            
-                    else
-                        stateManager.characterState = "exhausted";
                 }
                 else
                 {

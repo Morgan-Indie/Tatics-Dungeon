@@ -42,7 +42,7 @@ namespace PrototypeGame
             combatUtils = GetComponent<CombatUtils>();            
             stateManager = GetComponent<CharacterStateManager>();
             characterTransform = transform;
-            isometricCamera = GameManager.instance.cameraModeSwitch.isometricCamera.GetComponent<Camera>();
+            isometricCamera = Camera.main;
             animationHandler = GetComponent<AnimationHandler>();
             characterRigidBody = GetComponent<Rigidbody>();
             characterStats = GetComponent<CharacterStats>();
@@ -156,7 +156,7 @@ namespace PrototypeGame
             moveLocation = cell.transform.position;
             
             characterStats.UseAP(distance);
-            stateManager.characterAction = "Moving";
+            stateManager.characterAction = CharacterAction.Moving;
             currentPathIndex = 0;
             
             nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
@@ -169,7 +169,7 @@ namespace PrototypeGame
             {
                 if ((transform.position - moveLocation).magnitude <= .1)
                 {
-                    stateManager.characterAction = "None";
+                    stateManager.characterAction = CharacterAction.None;
                                        
                     UpdateGridState();
                     characterRigidBody.velocity = Vector3.zero;
@@ -204,7 +204,7 @@ namespace PrototypeGame
 
         public void ExcuteMovement(float delta)
         {            
-            if (stateManager.characterAction == "Moving")
+            if (stateManager.characterAction == CharacterAction.Moving)
                 TraverseToDestination(delta);
             else
             {
@@ -219,7 +219,7 @@ namespace PrototypeGame
                     {
                         GridManager.Instance.HighlightPathWithList(path);
                         if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput) 
-                            && stateManager.characterAction == "None")
+                            && stateManager.characterAction == CharacterAction.None)
                         {                           
                             SetTargetDestination(index, distance);                            
                         }

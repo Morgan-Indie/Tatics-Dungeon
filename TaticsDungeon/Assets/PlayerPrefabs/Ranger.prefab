@@ -391,7 +391,6 @@ GameObject:
   - component: {fileID: 8679879993389321282}
   - component: {fileID: 8322370813774397498}
   - component: {fileID: 8062651049303537688}
-  - component: {fileID: 1495003379608370422}
   - component: {fileID: 2441008602256201525}
   - component: {fileID: 3294088175789465063}
   - component: {fileID: 5619464829182783018}
@@ -592,27 +591,6 @@ MonoBehaviour:
   meshMask:
     serializedVersion: 2
     m_Bits: 16384
---- !u!114 &1495003379608370422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1303343850594452088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ec604510bd5f6d49945eaa14e154dc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 5
-  rotationSpeed: 10
-  characterRigidbody: {fileID: 0}
-  characterTransform: {fileID: 0}
-  stateManager: {fileID: 0}
-  cameraTransfrom: {fileID: 0}
-  animationHandler: {fileID: 0}
-  fallSpeed: 250
-  grounded: 0
 --- !u!114 &2441008602256201525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,7 +713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 0}
   animator: {fileID: 3879287183939454435}
-  playerMovement: {fileID: 1495003379608370422}
+  playerMovement: {fileID: 0}
   stateManager: {fileID: 3294088175789465063}
 --- !u!114 &2295491863913346781
 MonoBehaviour:

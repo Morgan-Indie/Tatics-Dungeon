@@ -10,8 +10,8 @@ namespace PrototypeGame
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             CharacterStateManager stateManager = animator.GetComponent<CharacterStateManager>();
-            stateManager.characterAction = "ShieldCharge";
-            stateManager.characterState = "isInteracting";
+            stateManager.characterAction = CharacterAction.ShieldCharge;
+            stateManager.characterState = CharacterState.IsInteracting;
             animator.GetComponent<TaticalMovement>().triggerCollider.enabled = true;
         }
 
@@ -24,8 +24,8 @@ namespace PrototypeGame
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             CharacterStateManager stateManager = animator.GetComponent<CharacterStateManager>();
-            stateManager.characterAction = "None";
-            stateManager.characterState = "ready";
+            stateManager.characterAction = CharacterAction.None;
+            stateManager.characterState = CharacterState.Ready;
             animator.GetComponent<TaticalMovement>().triggerCollider.enabled = false;
         }
 

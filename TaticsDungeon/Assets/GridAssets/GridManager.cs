@@ -109,7 +109,9 @@ namespace PrototypeGame
             RemoveAllHighlights();
             foreach (KeyValuePair<IntVector2, IntVector2> n in dict)
             {
-                HighlightTileByIndex(n.Key);
+                if (n.Key.GetDistance(GameManager.instance.currentCharacter.taticalMovement.currentIndex)
+                    <= GameManager.instance.currentCharacter.characterStats.currentAP)
+                    HighlightTileByIndex(n.Key);
             }
         }
 

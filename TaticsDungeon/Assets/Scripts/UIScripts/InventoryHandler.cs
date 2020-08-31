@@ -51,7 +51,7 @@ namespace PrototypeGame
 
         public void ActivateInventoryUI()
         {
-            if (stateManager.characterState!="isInteracting")
+            if (stateManager.characterState!= CharacterState.IsInteracting)
             {
                 if (InputHandler.instance.gamepadNorthInput && !inventoryUIEnabled)
                 {
@@ -63,8 +63,8 @@ namespace PrototypeGame
                     UIcamLight.enabled = true;
 
                     EventSystem.current.SetSelectedGameObject(first_slot.gameObject);
-                    GameManager.instance.playerState = "inMenu";
-                    stateManager.characterState = "inMenu";
+                    GameManager.instance.playerState = CharacterState.InMenu;
+                    stateManager.characterState = CharacterState.InMenu;
                     Cursor.lockState = CursorLockMode.Confined;
                     //Time.timeScale = 0f;
                 }
@@ -79,11 +79,8 @@ namespace PrototypeGame
                     UIcam.enabled = false;
                     UIcamLight.enabled = false;
 
-                    stateManager.characterState = "ready";
-                    GameManager.instance.playerState = "ready";
-                    if (!GameManager.instance.CombatMode)
-                        Cursor.lockState = CursorLockMode.Locked;
-                    //Time.timeScale = 1f;
+                    stateManager.characterState = CharacterState.Ready;
+                    GameManager.instance.playerState = CharacterState.Ready;
                 }
             }
         }

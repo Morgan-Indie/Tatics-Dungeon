@@ -10,7 +10,6 @@ namespace PrototypeGame
         [HideInInspector]
         public InputHandler inputHandler;
         public Animator animator;
-        public PlayerMovement playerMovement;
         string currentAnimationState;
         public CharacterStateManager stateManager;
 
@@ -19,7 +18,6 @@ namespace PrototypeGame
             stateManager = GetComponent<CharacterStateManager>();
             animator = GetComponent<Animator>();
             inputHandler = InputHandler.instance;
-            playerMovement = GetComponent<PlayerMovement>();
         }
 
         public void UpdateAnimatorValues(float delta)
@@ -61,20 +59,6 @@ namespace PrototypeGame
         {
             animator.applyRootMotion = isRoot;
             animator.CrossFade(targetAnimation, .1f);
-        }
-
-        private void OnAnimatorMove()
-        {
-            float delta = Time.deltaTime;
-
-            if (stateManager.characterState!="inMenu" && !GameManager.instance.CombatMode)
-            {
-                playerMovement.characterRigidbody.drag = 0;
-                Vector3 deltaPosition = animator.deltaPosition;
-                deltaPosition.y = 0;
-                Vector3 velocity = deltaPosition / delta;
-                playerMovement.characterRigidbody.velocity = velocity * 1.5f;
-            }
         }
     }
 }

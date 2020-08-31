@@ -20,7 +20,7 @@ namespace PrototypeGame
 
         public void FixedUpdate()
         {
-            if (GameManager.instance.playerState == "inMenu")
+            if (GameManager.instance.playerState == CharacterState.InMenu)
                 GamepadClick(EventSystem.current.currentSelectedGameObject);
         }
     }
