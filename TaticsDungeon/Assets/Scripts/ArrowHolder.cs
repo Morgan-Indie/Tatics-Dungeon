@@ -29,7 +29,6 @@ namespace PrototypeGame
             if (arrow != null)
             {
                 arrow.transform.SetParent(null);
-                //arrow.transform.position = parentOverride.position;
                 arrow.transform.LookAt(target.transform);
                 arrow.transform.Rotate(Vector3.up*45f+ Vector3.right * 15f);
 
