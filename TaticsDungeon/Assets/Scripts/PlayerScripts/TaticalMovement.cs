@@ -10,7 +10,6 @@ namespace PrototypeGame
         public GridMapAdapter mapAdapter;
         public Collider triggerCollider;
 
-        PlayerMovement playerMovement;
         InputHandler inputHandler;
         Transform characterTransform;
         Camera isometricCamera;
@@ -42,7 +41,6 @@ namespace PrototypeGame
         {
             combatUtils = GetComponent<CombatUtils>();            
             stateManager = GetComponent<CharacterStateManager>();
-            playerMovement = GetComponent<PlayerMovement>();
             characterTransform = transform;
             isometricCamera = GameManager.instance.cameraModeSwitch.isometricCamera.GetComponent<Camera>();
             animationHandler = GetComponent<AnimationHandler>();
@@ -76,9 +74,11 @@ namespace PrototypeGame
         public void UpdateGridState()
         {            
             currentCell.SetCharacter(null);
+            
             currentCell.state=CellState.open;
             GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
             SetCurrentCell();
+            Debug.Log(characterStats.characterName+" Grid State Updated");
         }
 
         public void HandleRotation(float delta, Vector3 moveDirection)
@@ -146,6 +146,7 @@ namespace PrototypeGame
             currentNavDict = NavigationHandler.instance.Navigate(currentIndex, characterStats.currentAP);
             if (gameObject.tag == "Player")
                 GridManager.Instance.HighlightNavDict(currentNavDict);
+            Debug.Log(characterStats.characterName +" NavDict Updated");
         }
 
         public void SetTargetDestination(IntVector2 targetIndex, int distance)
@@ -159,6 +160,7 @@ namespace PrototypeGame
             currentPathIndex = 0;
             
             nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
+            Debug.Log(characterStats.characterName + " Setting Destination");    
         }
 
         public void TraverseToDestination(float delta)
@@ -168,15 +170,21 @@ namespace PrototypeGame
                 if ((transform.position - moveLocation).magnitude <= .1)
                 {
                     stateManager.characterAction = "None";
+                                       
                     UpdateGridState();
                     characterRigidBody.velocity = Vector3.zero;
-                    animationHandler.UpdateAnimatorValues(delta, 0f);
+                                        
+                    animationHandler.UpdateAnimatorValues(delta, 0f);   
                     transform.position = moveLocation;
                     currentPathIndex = 0;
-                    if (characterStats.currentAP != 0)
+                    
+                    if (characterStats.currentAP > 0)
                         SetCurrentNavDict();
                     else
+                    {
                         GridManager.Instance.RemoveAllHighlights();
+                    }
+                    Debug.Log(characterStats.characterName + " Reached Destination"); 
                 }
                 else
                 {

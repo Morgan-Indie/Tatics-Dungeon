@@ -124,6 +124,8 @@ namespace PrototypeGame
             currentCharacter.taticalMovement.SetCurrentNavDict();
             currentCharacter.playerMovement.characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             isPlayerTurn = true;
+
+            Debug.Log("Player Turn Intialized");
         }
 
         public void InitalizeEnemyTurn()
@@ -136,10 +138,11 @@ namespace PrototypeGame
             }
 
             currentEnemy = enemiesList[0];
-            Debug.Log(currentEnemy.characterStats.currentAP);
             currentEnemy.isCurrentEnemy = true;
             currentEnemy.taticalMovement.SetCurrentNavDict();
             isPlayerTurn = false;
+
+            Debug.Log("Enemy Turn Intialized");
         }
 
         #region Player Selecting
@@ -216,6 +219,7 @@ namespace PrototypeGame
 
         public void EnterCombatMode()
         {
+            cameraModeSwitch.isometricCamera.GetComponent<Camera>().enabled = true;
             CombatMode = true;
             popUpUI.Activate();
 
@@ -223,11 +227,14 @@ namespace PrototypeGame
                 characterStatusLayout.AddPlayerStatusPanel(player.Value);
             foreach (var enemy in enemiesDict)
                 characterStatusLayout.AddEnemyStatusPanel(enemy.Value);
+            Debug.Log("Entered Tactics Mode");
           }
 
         public void ExitCombatMode()
         {
             CombatMode = false;
+            cameraModeSwitch.isometricCamera.GetComponent<Camera>().enabled = false;
+            Debug.Log("Exited Tactics Mode");
         }
 
         public void CheckEnemyEndTurn()
@@ -241,7 +248,6 @@ namespace PrototypeGame
 
         public void CharacterSwitch()
         {
-            PlayerEndTurnCheck();
             if (InputHandler.instance.characterSelectInputNext)
             {
                 SetNextPlayer();
@@ -254,15 +260,6 @@ namespace PrototypeGame
                 InputHandler.instance.characterSelectInputPrevious = false;
                 IsometricCamera.instance.FocusOnCurrentPlayer();
             }
-        }
-
-        public void PlayerEndTurnCheck()
-        {
-            int totalAp = 0;
-            foreach (PlayerManager player in playersList)
-                totalAp += player.characterStats.currentAP;
-            if (totalAp == 0)
-                EventSystem.current.SetSelectedGameObject(endTurn.gameObject);
         }
 
         public void SwitchTurns()

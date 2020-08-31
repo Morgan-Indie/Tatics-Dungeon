@@ -48,8 +48,7 @@ namespace PrototypeGame
         {
             if (isCurrentPlayer)
             {                
-                float delta = Time.deltaTime;
-                
+                float delta = Time.deltaTime;                
                 GameManager.instance.cameraModeSwitch.CheckMode();
 
                 inventoryHandler.ActivateInventoryUI();
@@ -72,9 +71,7 @@ namespace PrototypeGame
 
                 else
                 {
-                    GameManager.instance.cameraModeSwitch.isometricCamera.GetComponent<Camera>().enabled = true;
                     GameManager.instance.cameraModeSwitch.isometricCamera.HandleCamera(delta);
-
                     if (GameManager.instance.playerState != "inMenu")
                     {
                         if (selectedSkill == null)
@@ -83,6 +80,7 @@ namespace PrototypeGame
                     }
                 }
             }
+            Debug.Log(characterStats.characterName+" Player Updated Completed");
         }
     }
 }
