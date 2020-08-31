@@ -85,21 +85,28 @@ namespace PrototypeGame
                 characterStatusLayout.AddEnemyStatusPanel(enemy.Value);
         }
 
-        public void LateUpdate()
+        public void Update()
         {
+            float delta = Time.deltaTime;
+
             if (isPlayerTurn)
             {
-                CharacterSwitch();
+                currentCharacter.PlayerUpdate(delta);
+                if (currentCharacter.stateManager.characterState!=CharacterState.IsInteracting)
+                    CharacterSwitch();
                 if (playerState == CharacterState.InMenu)
                 {
                     UIcam.enabled = true;
                     UIcamLight.enabled = true;
                     UIcam.GetComponent<UICam>().HandleUICam();
                 }
+                
             }
+                
             else
             {
                 CheckEnemyEndTurn();
+                currentEnemy.EnemyUpdate(delta);                
             }
         }
 
@@ -234,13 +241,11 @@ namespace PrototypeGame
             {
                 SetNextPlayer();
                 InputHandler.instance.characterSelectInputNext = false;
-                CameraHandler.instance.FocusOnCurrentPlayer();
             }
             else if (InputHandler.instance.characterSelectInputPrevious)
             {
                 SetPreviousPlayer();
                 InputHandler.instance.characterSelectInputPrevious = false;
-                CameraHandler.instance.FocusOnCurrentPlayer();
             }
         }
 
@@ -256,13 +261,11 @@ namespace PrototypeGame
                 currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
                 GridManager.Instance.RemoveAllHighlights();
                 InitalizeEnemyTurn();
-                //IsometricCamera.instance.FocusOnCurrentEnemy();                
             }
             else
             {
                 foreach (EnemyManager enemy in enemiesList)
                     enemy.isCurrentEnemy = false;
-                CameraHandler.instance.FocusOnCurrentPlayer();                
                 InitalizePlayerTurn();
             }
         }

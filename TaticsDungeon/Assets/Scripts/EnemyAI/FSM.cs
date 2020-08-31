@@ -92,8 +92,7 @@ namespace PrototypeGame
         }
 
         public virtual void Initialize() { }
-        public virtual void FSMUpdate() { }
-        public virtual void FSMFixedUpdate(float delta) { }
+        public virtual void FSMUpdate(float delta) { }
     }
 }
 

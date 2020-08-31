@@ -25,12 +25,11 @@ namespace PrototypeGame
         }
 
         // Update is called once per frame
-        void Update()
+        public void EnemyUpdate(float delta)
         {
             if (isCurrentEnemy)
             {
-                float delta = Time.deltaTime;
-                enemyController.FSMFixedUpdate(delta);
+                enemyController.FSMUpdate(delta);
                 if (characterStats.currentAP == 0)
                     GameManager.instance.SetNextEnemy();
             }

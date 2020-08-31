@@ -24,7 +24,7 @@ namespace PrototypeGame
             ConstructFSM();
         }
 
-        public override void FSMFixedUpdate(float delta)
+        public override void FSMUpdate(float delta)
         {
             CurrentState.HandleTransitions();
             CurrentState.Act(delta);

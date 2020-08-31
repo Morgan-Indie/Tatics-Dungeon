@@ -36,7 +36,6 @@ namespace PrototypeGame
 
         public override void Act(float delta)
         {
-
             if (target == null)
             {
                 List<(PlayerManager, int)> playersHealthList = new List<(PlayerManager, int)>();
@@ -71,11 +70,6 @@ namespace PrototypeGame
                             targetIndicies.Add(i);                                
                     }
                 }
-
-                //foreach(var item in taticalMovement.currentNavDict)
-                //{
-                //    Debug.Log(item.Key.x + "," + item.Key.y + ":" + item.Value.x + "," + item.Value.y);
-                //}
 
                 IntVector2 targetIndex = targetIndicies[0];
 

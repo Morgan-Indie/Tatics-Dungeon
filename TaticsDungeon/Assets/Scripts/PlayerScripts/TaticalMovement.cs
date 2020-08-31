@@ -33,8 +33,8 @@ namespace PrototypeGame
         public List<IntVector2> path;
         public LayerMask meshMask;
 
-        float movementSpeed = 3.5f;
-        float rotationSpeed = 5f;
+        float movementSpeed = 4f;
+        float rotationSpeed = 10f;
 
         // Start is called before the first frame update
         void Start()
@@ -165,9 +165,9 @@ namespace PrototypeGame
 
         public void TraverseToDestination(float delta)
         {
-            if ((nextPos - transform.position).magnitude < .1)
+            if ((nextPos - transform.position).magnitude < .15)
             {
-                if ((transform.position - moveLocation).magnitude <= .1)
+                if ((transform.position - moveLocation).magnitude <= .15)
                 {
                     stateManager.characterAction = CharacterAction.None;
                                        
@@ -176,14 +176,9 @@ namespace PrototypeGame
                                         
                     animationHandler.UpdateAnimatorValues(delta, 0f);   
                     transform.position = moveLocation;
-                    currentPathIndex = 0;
-                    
-                    if (characterStats.currentAP > 0)
-                        SetCurrentNavDict();
-                    else
-                    {
-                        GridManager.Instance.RemoveAllHighlights();
-                    }
+                    currentPathIndex = 0;                    
+                    SetCurrentNavDict();
+
                     Debug.Log(characterStats.characterName + " Reached Destination"); 
                 }
                 else

@@ -37,11 +37,10 @@ namespace PrototypeGame
         }
 
         // Update is called once per frame
-        void Update()
+        public void PlayerUpdate(float delta)
         {
             if (isCurrentPlayer)
             {                
-                float delta = Time.deltaTime;                
                 inventoryHandler.ActivateInventoryUI();
                 InputHandler.instance.TickInput(delta);
 
@@ -53,7 +52,6 @@ namespace PrototypeGame
                     taticalMovement.UseSkill(selectedSkill, delta);
                 }                
             }
-            Debug.Log(characterStats.characterName+" Player Updated Completed");
         }
     }
 }
