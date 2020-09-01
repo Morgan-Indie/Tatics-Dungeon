@@ -26,6 +26,7 @@ namespace PrototypeGame
         public EnemyManager currentEnemy;
         public int playerIndex=0;
         public int enemyIndex=0;
+        protected int Turn = 1;
 
         [Header("Required")]
         public TurnPopUpFade popUpUI;
@@ -61,7 +62,8 @@ namespace PrototypeGame
             currentCharacter = playersList[0];
             currentCharacter.isCurrentPlayer = true;
             isPlayerTurn = true;
-            
+
+            currentEnemy = enemiesList[0];            
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
             SetUICam();            
         }
@@ -99,8 +101,7 @@ namespace PrototypeGame
                     UIcam.enabled = true;
                     UIcamLight.enabled = true;
                     UIcam.GetComponent<UICam>().HandleUICam();
-                }
-                
+                }                
             }
                 
             else
@@ -126,7 +127,7 @@ namespace PrototypeGame
                 player.characterStats.currentAP= player.characterStats.maxAP;
                 player.characterStats.apBar.RecoverAP();
             }
-
+            currentEnemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             currentCharacter = playersList[0];
             currentCharacter.isCurrentPlayer = true;
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(true);
@@ -145,12 +146,12 @@ namespace PrototypeGame
                 enemy.characterStats.currentAP= enemy.characterStats.maxAP;
                 enemy.characterStats.apBar.RecoverAP();
             }
-
+            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             currentEnemy = enemiesList[0];
             currentEnemy.isCurrentEnemy = true;
             currentEnemy.taticalMovement.SetCurrentNavDict();
             isPlayerTurn = false;
-
+            currentEnemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             Debug.Log("Enemy Turn Intialized");
         }
 
@@ -260,12 +261,13 @@ namespace PrototypeGame
                 }
                 currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
                 GridManager.Instance.RemoveAllHighlights();
-                InitalizeEnemyTurn();
+                InitalizeEnemyTurn();                
             }
             else
             {
                 foreach (EnemyManager enemy in enemiesList)
                     enemy.isCurrentEnemy = false;
+                Turn++;
                 InitalizePlayerTurn();
             }
         }

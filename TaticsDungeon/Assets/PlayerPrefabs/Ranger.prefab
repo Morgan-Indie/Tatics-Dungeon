@@ -502,7 +502,6 @@ MonoBehaviour:
   playerModel: {fileID: 4531517342975124752}
   playerNumber: 0
   characterClass: 4
-  playerMovement: {fileID: 0}
   playerTransform: {fileID: 0}
   taticalMovement: {fileID: 0}
   characterStats: {fileID: 0}
@@ -615,8 +614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20965c3bd47710d4bb457ed7c2b54abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterState: ready
-  characterAction: None
+  characterState: 0
+  characterAction: 0
   skillColliderTiggered: 0
 --- !u!114 &5619464829182783018
 MonoBehaviour:
@@ -650,7 +649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterStats: {fileID: 0}
-  arrowPrefab: {fileID: 1341705565345784535, guid: 7faf1df211a88de4fab137089b2fde33,
+  arrowPrefab: {fileID: 1341705565345784535, guid: 6d6316389554eaf4ebb7bf1adcf869e3,
     type: 3}
   arrow: {fileID: 0}
   target: {fileID: 0}
@@ -682,7 +681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills:
-  - {fileID: 11400000, guid: 00173bb1331113f45a6ae9d35de00f32, type: 2}
+  - {fileID: 11400000, guid: cf28006038f359c4682d536ff1515349, type: 2}
   - {fileID: 11400000, guid: a45948b4d204b1f49854ada283144da6, type: 2}
 --- !u!114 &4410433602637472155
 MonoBehaviour:
@@ -713,7 +712,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 0}
   animator: {fileID: 3879287183939454435}
-  playerMovement: {fileID: 0}
   stateManager: {fileID: 3294088175789465063}
 --- !u!114 &2295491863913346781
 MonoBehaviour:
@@ -2493,6 +2491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentOverride: {fileID: 4531517342974761382}
   currentModel: {fileID: 0}
+  animationHandler: {fileID: 0}
   slotType: 0
 --- !u!1 &4531517342975102336
 GameObject:
@@ -2667,6 +2666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentOverride: {fileID: 4671050295100125345}
   currentModel: {fileID: 0}
+  animationHandler: {fileID: 0}
   slotType: 5
 --- !u!1 &4531517342975116468
 GameObject:
@@ -3948,6 +3948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentOverride: {fileID: 4531517342974846008}
   currentModel: {fileID: 0}
+  animationHandler: {fileID: 0}
   slotType: 9
 --- !u!1 &4531517342975196352
 GameObject:

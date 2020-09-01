@@ -100,7 +100,6 @@ namespace PrototypeGame
 
                 if (Physics.Raycast(ray, out meshHit,meshMask))
                 {
-                    //IntVector2 index = mapAdapter.GetIndexByPos(mapAdapter.transform.InverseTransformPoint(ray.GetPoint(rayDistance)));
                     IntVector2 index = mapAdapter.GetIndexByPos(meshHit.point);
                     return index;
                 }

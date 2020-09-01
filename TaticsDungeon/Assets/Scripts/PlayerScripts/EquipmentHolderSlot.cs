@@ -10,19 +10,27 @@ namespace PrototypeGame
         public Transform parentOverride;
         [Header("Not Required")]
         public GameObject currentModel;
+        public AnimationHandler animationHandler;
 
         public SlotType slotType;
+
+        public void Start()
+        {
+            animationHandler = GetComponentInParent<AnimationHandler>();
+        }
 
         public void UnloadEquipment()
         {
             if (currentModel != null)
                 currentModel.SetActive(false);
+            animationHandler.animator.SetBool("Equiped", false);
         }
 
         public void UnloadEquipmentAndDestroy()
         {
             if (currentModel != null)
                 Destroy(currentModel);
+            animationHandler.animator.SetBool("Equiped", false);
         }
         
         public void LoadEquipmentModel(dynamic item)
@@ -46,6 +54,7 @@ namespace PrototypeGame
                 equipmentModel.transform.localScale = Vector3.one;
             }
             currentModel = equipmentModel;
+            animationHandler.animator.SetBool("Equiped", true);
         }
     }
 }
