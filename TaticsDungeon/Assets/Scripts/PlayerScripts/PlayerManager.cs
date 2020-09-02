@@ -38,9 +38,6 @@ namespace PrototypeGame
 
         public void DisableCharacter()
         {
-            stateManager.characterState = CharacterState.Dead;
-            taticalMovement.currentCell.character = null;
-            taticalMovement.currentCell.state = CellState.open;
             GameManager.instance.playersDict.Remove(characterStats.characterName);
             gameObject.transform.parent.gameObject.SetActive(false);
         }

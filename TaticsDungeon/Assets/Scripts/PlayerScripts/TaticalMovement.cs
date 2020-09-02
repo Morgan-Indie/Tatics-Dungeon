@@ -34,6 +34,7 @@ namespace PrototypeGame
         public Vector3 nextPos;
         public List<IntVector2> path;
         public LayerMask meshMask;
+        public bool isDirty;
 
         float movementSpeed = 4f;
         float rotationSpeed = 15f;

@@ -46,8 +46,9 @@ namespace PrototypeGame
 
                     int distance = taticalMovement.GetRequiredMoves(player.taticalMovement.currentIndex, targetsPath);
                     
-                    if (distance <= characterStats.currentAP && distance!=-1)
-                    {                        
+                    if (distance!=-1 && player.characterStats.currentHealth>0)
+                    {
+                        Debug.Log("Checking Player" + player.characterStats.characterName);
                         playersHealthList.Add((player, player.characterStats.currentHealth));
                     }
                 }
@@ -55,14 +56,26 @@ namespace PrototypeGame
                 playersHealthList.Sort((c1, c2) => c1.Item2.CompareTo(c2.Item2));
 
                 //set the target destination
+                for (int i =0; i< playersHealthList.Count; i++)
+                {
+                    target = playersHealthList[i].Item1;
+                    IntVector2 targetIndex = target.taticalMovement.currentIndex;
+                    List<IntVector2> targetPath = NavigationHandler.instance.GetPath(taticalMovement.currentTargetsNavDict,
+                            targetIndex, taticalMovement.currentIndex);
+                    if (taticalMovement.GetRequiredMoves(targetIndex, targetPath)<=characterStats.currentAP)
+                    {
+                        targetPath.RemoveAt(targetPath.Count - 1);
+                        taticalMovement.path = targetPath;
+                        int targetDistance = taticalMovement.GetRequiredMoves(targetIndex, taticalMovement.path);
+                        taticalMovement.SetTargetDestination(targetPath[targetPath.Count - 1], targetDistance);
+                        return;
+                    }
+                }
+
                 target = playersHealthList[0].Item1;
-                IntVector2 targetIndex = target.taticalMovement.currentIndex;
-                List<IntVector2> targetPath = NavigationHandler.instance.GetPath(taticalMovement.currentTargetsNavDict,
-                        targetIndex, taticalMovement.currentIndex);
-                targetPath.RemoveAt(targetPath.Count - 1);
-                taticalMovement.path = targetPath;
-                int targetDistance = taticalMovement.GetRequiredMoves(targetIndex, taticalMovement.path);
-                taticalMovement.SetTargetDestination(targetPath[targetPath.Count - 1], targetDistance);
+                List<IntVector2> secondaryPath = NavigationHandler.instance.GetPath(taticalMovement.currentTargetsNavDict,
+                        target.taticalMovement.currentIndex, taticalMovement.currentIndex);
+                taticalMovement.SetTargetDestination(secondaryPath[characterStats.currentAP-1], characterStats.currentAP);
             }
 
             else
@@ -76,6 +89,11 @@ namespace PrototypeGame
                     {
                         MeleeAttack.Activate(characterStats, animationHandler,
                             taticalMovement, skillDict[SkillType.MeleeAttack], target, 20, delta);
+                        if (target.characterStats.currentHealth <= 0)
+                        {
+                            target = null;
+                            taticalMovement.SetCurrentNavDict();
+                        }
                     }
                 }
 

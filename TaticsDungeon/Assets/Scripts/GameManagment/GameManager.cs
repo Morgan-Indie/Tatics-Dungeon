@@ -300,7 +300,6 @@ namespace PrototypeGame
                 if (player.stateManager.characterState!=CharacterState.Ready)
                 {
                     gameState = GameState.ResolvingInteraction;
-                    Debug.Log(player.characterStats.characterName);
                     if (!log)
                     {
                         Debug.Log(player.characterStats.characterName+" Game State Set To ResolvingInteraction");
@@ -314,7 +313,6 @@ namespace PrototypeGame
                 if (enemy.stateManager.characterState != CharacterState.Ready)
                 {
                     gameState = GameState.ResolvingInteraction;
-                    Debug.Log(enemy.characterStats.characterName);
                     if (!log)
                        Debug.Log(" Game State Set To ResolvingInteraction");
                     return;

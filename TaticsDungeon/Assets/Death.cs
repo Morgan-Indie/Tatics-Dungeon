@@ -9,7 +9,6 @@ namespace PrototypeGame
         //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            animator.GetComponent<CharacterStateManager>().characterState = CharacterState.IsInteracting;
             if (animator.gameObject.tag == "Player")
                 LeanTween.alpha(animator.GetComponent<PlayerManager>().playerModel, 0, 3.5f).setOnComplete(animator.gameObject.GetComponent<PlayerManager>().DisableCharacter);
             else

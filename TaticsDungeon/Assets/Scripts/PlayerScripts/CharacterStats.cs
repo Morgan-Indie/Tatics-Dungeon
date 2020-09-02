@@ -54,6 +54,7 @@ namespace PrototypeGame
         [HideInInspector]
         public CharacterStateManager stateManager;
         public AnimationHandler animationHandler;
+        public TaticalMovement taticalMovement;
 
         private void Awake()
         {
@@ -80,6 +81,7 @@ namespace PrototypeGame
 
             stateManager = GetComponent<CharacterStateManager>();
             animationHandler = GetComponent<AnimationHandler>();
+            taticalMovement = GetComponent<TaticalMovement>();
         }
 
         public void CollectPlayerAttributes()
@@ -143,6 +145,8 @@ namespace PrototypeGame
             if (currentHealth <= 0)
             {
                 stateManager.characterState = CharacterState.Dead;
+                taticalMovement.currentCell.character = null;
+                taticalMovement.currentCell.state = CellState.open;
                 animationHandler.PlayTargetAnimation("Death");
             }
 

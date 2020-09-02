@@ -26,8 +26,7 @@ namespace PrototypeGame
 
         public void DisableCharacter()
         {
-            taticalMovement.currentCell.character = null;
-            taticalMovement.currentCell.state = CellState.open;
+            GameManager.instance.enemiesDict.Remove(characterStats.characterName);
             gameObject.SetActive(false);
         }
 
