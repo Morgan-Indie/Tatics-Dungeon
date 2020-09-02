@@ -10,19 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9a768a03a2a7a7428852746dd7f6490, type: 3}
-  m_Name: Tree
+  m_Name: Throwable
   m_EditorClassIdentifier: 
-  cellName: Tree
-  tint: {r: 0.12001601, g: 0.8207547, b: 0.385343, a: 1}
+  cellName: Throwable
+  tint: {r: 0.110137075, g: 0.5188679, b: 0.16255158, a: 1}
   cellMode: 0
   singlePrefab:
-    prefab: {fileID: 186228, guid: 67591d5c46592134abc0500512ba9123, type: 3}
+    prefab: {fileID: 185158, guid: 067161ae46386c14c842800eb27cf27b, type: 3}
     offset: {x: 0, y: 0, z: 0}
-    scale: {x: 0.2, y: 0.2, z: 0.2}
+    scale: {x: 0.32, y: 0.3, z: 0.32}
   prefabList:
     prefabs: []
     offsets: []
     scales: []
+  wallMode: 0
+  wallSinglePrefab:
+    prefab: {fileID: 0}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotationOffset: 0
+  wallPrefabList:
+    prefabs: []
+    offsets: []
+    scales: []
+    rotationOffsets: []
   railingMode: 0
   railingSinglePrefab:
     prefab: {fileID: 0}
@@ -45,25 +56,19 @@ MonoBehaviour:
     placeRandomly: 0
     randomLimit: {x: 0, y: 0, z: 0}
     prefabs:
-    - {fileID: 113998, guid: 1fedb5571d445274782330b0eea48e80, type: 3}
-    - {fileID: 102970, guid: f88e0c5504d699d4ebb950b8944bffcb, type: 3}
-    - {fileID: 190414, guid: 653c97bd88b4b084d87714542c43ee5a, type: 3}
-    - {fileID: 177546, guid: 247e09e89c199dd46b07af0a0a46b8ac, type: 3}
-    - {fileID: 108714, guid: 00ed5f0c12fd8d5499f54fb0096adab9, type: 3}
-    - {fileID: 143756, guid: 6b1e970065443dd46b6854a0caf642c9, type: 3}
+    - {fileID: 139386, guid: c2849fd453abd0445a702a035f04ac60, type: 3}
+    - {fileID: 143208, guid: b02bc145bce4ede4da8151c54b21e0e0, type: 3}
+    - {fileID: 124282, guid: 4a0161dd17a0d6b42b4f8046836bcb22, type: 3}
+    - {fileID: 176366, guid: febd7f03c03be1e468a98ba8024a2b8c, type: 3}
     offsets:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0.01, z: 0}
+    - {x: 0, y: 0.01, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     scales:
-    - {x: 0.7, y: 0.7, z: 0.7}
-    - {x: 0.7, y: 0.7, z: 0.7}
-    - {x: 0.7, y: 0.7, z: 0.7}
-    - {x: 0.7, y: 0.7, z: 0.7}
-    - {x: 0.7, y: 0.7, z: 0.7}
+    - {x: 1, y: 1, z: 1}
+    - {x: 1, y: 1, z: 1}
+    - {x: 1.5, y: 1.5, z: 1.5}
     - {x: 0.7, y: 0.7, z: 0.7}
   decorationMode: 0
   decorationSinglePrefab:
@@ -86,11 +91,37 @@ MonoBehaviour:
     offset: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}
     rotationOffset: 0
+    stairDecorationMode: 0
+    stairDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+    stairConditionalDecoration: 0
+    stairConditionData:
+      conditionType: 0
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
   stairPrefabList:
     prefabs: []
     offsets: []
     scales: []
     rotationOffset: 0
+    stairDecorationMode: 0
+    stairDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+    stairConditionalDecoration: 0
+    stairConditionData:
+      conditionType: 0
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
   isAPath: 0
   pathData:
     straightPath: {fileID: 0}
@@ -98,10 +129,15 @@ MonoBehaviour:
     tPath: {fileID: 0}
     crossPath: {fileID: 0}
     bridge: {fileID: 0}
-    riverUnderBridge: {fileID: 0}
     offsets: []
     scales: []
     rotationOffsets: []
+    bridgeDecorationMode: 0
+    bridgeDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
   isARiver: 0
   riverData:
     straightPrefab: {fileID: 0}

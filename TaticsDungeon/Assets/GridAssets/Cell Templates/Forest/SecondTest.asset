@@ -10,19 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9a768a03a2a7a7428852746dd7f6490, type: 3}
-  m_Name: Path
+  m_Name: SecondTest
   m_EditorClassIdentifier: 
-  cellName: Path
-  tint: {r: 0.6698113, g: 0.57642114, b: 0.31910822, a: 1}
+  cellName: Second
+  tint: {r: 0.754717, g: 0.23139909, b: 0.23139909, a: 1}
   cellMode: 0
   singlePrefab:
-    prefab: {fileID: 132560, guid: 322f1c098632dc7488899237a7c30940, type: 3}
+    prefab: {fileID: 124282, guid: 4a0161dd17a0d6b42b4f8046836bcb22, type: 3}
     offset: {x: 0, y: 0, z: 0}
-    scale: {x: 0.2, y: 0.2, z: 0.2}
+    scale: {x: 2, y: 1, z: 2}
   prefabList:
     prefabs: []
     offsets: []
     scales: []
+  wallMode: 0
+  wallSinglePrefab:
+    prefab: {fileID: 0}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotationOffset: 0
+  wallPrefabList:
+    prefabs: []
+    offsets: []
+    scales: []
+    rotationOffsets: []
   railingMode: 0
   railingSinglePrefab:
     prefab: {fileID: 0}
@@ -39,7 +50,7 @@ MonoBehaviour:
     randomLimit: {x: 0, y: 0, z: 0}
     prefab: {fileID: 0}
     offset: {x: 0, y: 0, z: 0}
-    scale: {x: 1, y: 1, z: 1}
+    scale: {x: 0, y: 0, z: 0}
   obstaclePrefabList:
     percentToSpawn: 100
     placeRandomly: 0
@@ -68,40 +79,53 @@ MonoBehaviour:
     offset: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}
     rotationOffset: 0
+    stairDecorationMode: 0
+    stairDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+    stairConditionalDecoration: 0
+    stairConditionData:
+      conditionType: 0
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
   stairPrefabList:
     prefabs: []
     offsets: []
     scales: []
     rotationOffset: 0
-  isAPath: 1
+    stairDecorationMode: 0
+    stairDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+    stairConditionalDecoration: 0
+    stairConditionData:
+      conditionType: 0
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+  isAPath: 0
   pathData:
-    straightPath: {fileID: 123434, guid: c87a99b4c24b9ce48bac40727eb1ecb6, type: 3}
-    cornerPath: {fileID: 155188, guid: 277c7d167d4d0af4aac55cdde94e2ff6, type: 3}
-    tPath: {fileID: 136306, guid: 6071db37dae58dc418710a47e22faca7, type: 3}
-    crossPath: {fileID: 104856, guid: 659ffda2fd4a2ee4cb3bc9ccc0f4c4af, type: 3}
-    bridge: {fileID: 183838, guid: 53df91a386bb7b541a0c24d10af51a54, type: 3}
-    riverUnderBridge: {fileID: 195706, guid: d4c2ef2dffff62449a99c54093ccde9c, type: 3}
-    offsets:
-    - {x: -0.81, y: 0.05, z: -0.66}
-    - {x: 0.617, y: 0.018, z: 1.6}
-    - {x: 0.66, y: 0.015, z: 1.88}
-    - {x: -0.758, y: 0.067, z: -1.213}
-    - {x: 0, y: 0, z: 0}
-    - {x: -0.75, y: 0.05, z: 0.75}
-    scales:
-    - {x: 0.48, y: 0.35, z: 0.27}
-    - {x: 0.3265225, y: 0.1, z: 0.387132}
-    - {x: 0.412, y: 0.3, z: 0.427}
-    - {x: 0.5, y: 0.3, z: 0.5}
-    - {x: 0.35, y: 0.35, z: 0.35}
-    - {x: 0.3, y: 0.3, z: 0.3}
-    rotationOffsets:
-    - 0
-    - 180
-    - 180
-    - 0
-    - 90
-    - 90
+    straightPath: {fileID: 0}
+    cornerPath: {fileID: 0}
+    tPath: {fileID: 0}
+    crossPath: {fileID: 0}
+    bridge: {fileID: 0}
+    offsets: []
+    scales: []
+    rotationOffsets: []
+    bridgeDecorationMode: 0
+    bridgeDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
   isARiver: 0
   riverData:
     straightPrefab: {fileID: 0}

@@ -974,7 +974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b61f40c8fc722448a60ea91c3d10a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridMap: {fileID: 11400000, guid: 1222b8c8ded2fd14fac89ced659805ec, type: 2}
+  gridMap: {fileID: 11400000, guid: 2dbb9ceb423a0704f8239e32dadf9abc, type: 2}
   cellPrefab: {fileID: 8007888483546437700, guid: 0d7df3e40093d2e49b9ed1b8697db0ec,
     type: 3}
   meshPrefab: {fileID: 768154570}

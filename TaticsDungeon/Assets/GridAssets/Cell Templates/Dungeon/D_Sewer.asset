@@ -10,19 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9a768a03a2a7a7428852746dd7f6490, type: 3}
-  m_Name: Throwable
+  m_Name: D_Sewer
   m_EditorClassIdentifier: 
-  cellName: Throwable
-  tint: {r: 0.110137075, g: 0.5188679, b: 0.16255158, a: 1}
+  cellName: Sewer
+  tint: {r: 0.39288896, g: 0.48459315, b: 0.764151, a: 1}
   cellMode: 0
   singlePrefab:
-    prefab: {fileID: 185158, guid: 067161ae46386c14c842800eb27cf27b, type: 3}
+    prefab: {fileID: 0}
     offset: {x: 0, y: 0, z: 0}
-    scale: {x: 0.32, y: 0.3, z: 0.32}
+    scale: {x: 1, y: 1, z: 1}
   prefabList:
     prefabs: []
     offsets: []
     scales: []
+  wallMode: 0
+  wallSinglePrefab:
+    prefab: {fileID: 0}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotationOffset: 0
+  wallPrefabList:
+    prefabs: []
+    offsets: []
+    scales: []
+    rotationOffsets: []
   railingMode: 0
   railingSinglePrefab:
     prefab: {fileID: 0}
@@ -32,7 +43,7 @@ MonoBehaviour:
     prefabs: []
     positiveOffsets: []
     scales: []
-  obstacleMode: 2
+  obstacleMode: 0
   obstacleSinglePrefab:
     percentToSpawn: 100
     placeRandomly: 0
@@ -44,21 +55,9 @@ MonoBehaviour:
     percentToSpawn: 100
     placeRandomly: 0
     randomLimit: {x: 0, y: 0, z: 0}
-    prefabs:
-    - {fileID: 139386, guid: c2849fd453abd0445a702a035f04ac60, type: 3}
-    - {fileID: 143208, guid: b02bc145bce4ede4da8151c54b21e0e0, type: 3}
-    - {fileID: 124282, guid: 4a0161dd17a0d6b42b4f8046836bcb22, type: 3}
-    - {fileID: 176366, guid: febd7f03c03be1e468a98ba8024a2b8c, type: 3}
-    offsets:
-    - {x: 0, y: 0.01, z: 0}
-    - {x: 0, y: 0.01, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    scales:
-    - {x: 1, y: 1, z: 1}
-    - {x: 1, y: 1, z: 1}
-    - {x: 1.5, y: 1.5, z: 1.5}
-    - {x: 0.7, y: 0.7, z: 0.7}
+    prefabs: []
+    offsets: []
+    scales: []
   decorationMode: 0
   decorationSinglePrefab:
     percentToSpawn: 100
@@ -80,11 +79,37 @@ MonoBehaviour:
     offset: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}
     rotationOffset: 0
+    stairDecorationMode: 0
+    stairDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+    stairConditionalDecoration: 0
+    stairConditionData:
+      conditionType: 0
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
   stairPrefabList:
     prefabs: []
     offsets: []
     scales: []
     rotationOffset: 0
+    stairDecorationMode: 0
+    stairDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+    stairConditionalDecoration: 0
+    stairConditionData:
+      conditionType: 0
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
   isAPath: 0
   pathData:
     straightPath: {fileID: 0}
@@ -96,10 +121,14 @@ MonoBehaviour:
     offsets: []
     scales: []
     rotationOffsets: []
-  isARiver: 0
+  isARiver: 1
   riverData:
-    straightPrefab: {fileID: 0}
-    cornerPrefab: {fileID: 0}
-    offsets: []
-    scales: []
+    straightPrefab: {fileID: 155712, guid: 494ea68912b382044bbcc86230c7fbad, type: 3}
+    cornerPrefab: {fileID: 188134, guid: d64dfded9f1d52c44a52ed92602dcb67, type: 3}
+    offsets:
+    - {x: -0.72, y: 0.105, z: -0.753}
+    - {x: -0.789, y: 0.109, z: -0.766}
+    scales:
+    - {x: 0.3, y: 0.3, z: 0.3}
+    - {x: 0.3146288, y: 0.3, z: 0.30783}
     rotationOffset: 0

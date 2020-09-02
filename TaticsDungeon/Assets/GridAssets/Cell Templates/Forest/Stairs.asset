@@ -23,6 +23,17 @@ MonoBehaviour:
     prefabs: []
     offsets: []
     scales: []
+  wallMode: 0
+  wallSinglePrefab:
+    prefab: {fileID: 0}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotationOffset: 0
+  wallPrefabList:
+    prefabs: []
+    offsets: []
+    scales: []
+    rotationOffsets: []
   railingMode: 0
   railingSinglePrefab:
     prefab: {fileID: 0}
@@ -68,11 +79,37 @@ MonoBehaviour:
     offset: {x: 0, y: 0.8, z: 0}
     scale: {x: 0.7, y: 1.2, z: 0.625}
     rotationOffset: 180
+    stairDecorationMode: 0
+    stairDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+    stairConditionalDecoration: 0
+    stairConditionData:
+      conditionType: 0
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
   stairPrefabList:
     prefabs: []
     offsets: []
     scales: []
     rotationOffset: 0
+    stairDecorationMode: 0
+    stairDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+    stairConditionalDecoration: 0
+    stairConditionData:
+      conditionType: 0
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
   isAPath: 0
   pathData:
     straightPath: {fileID: 0}
@@ -80,10 +117,15 @@ MonoBehaviour:
     tPath: {fileID: 0}
     crossPath: {fileID: 0}
     bridge: {fileID: 0}
-    riverUnderBridge: {fileID: 0}
     offsets: []
     scales: []
     rotationOffsets: []
+    bridgeDecorationMode: 0
+    bridgeDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
   isARiver: 0
   riverData:
     straightPrefab: {fileID: 0}

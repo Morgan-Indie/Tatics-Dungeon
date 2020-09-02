@@ -18,6 +18,10 @@ namespace PrototypeGame
         GameObject highlightEffect;
         public CellAlchemyState alchemyState;
 
+        public bool HasAdjacentStair = false;
+        //If cell is a stair cell, sets this tuple to its Entrance and Exit respectively 
+        public (IntVector2, IntVector2) stairExits;
+
         //index within its parent mesh
         public IntVector2 index;
         //index inside of the entire grid
