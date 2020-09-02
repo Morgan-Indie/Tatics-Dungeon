@@ -22,9 +22,9 @@ MonoBehaviour:
   castableSettings:
     castableSpell: 0
     range: 4
-    shape: 1
+    shape: 5
     inclusive: 0
-    radius: 1
+    radius: 3
     lineOrientation: 0
     crossOrientation: 0
   strScaleType: 0

@@ -178,7 +178,7 @@ namespace PrototypeGame
             List<GridCell> outerRange = CastableShapes.CircularCells(playerOrigin, skill.castableSettings.radius + skill.castableSettings.range, skill.castableSettings.range + 1);
             foreach (GridCell cell in rangeCells)
             {
-                cell.ApplyHighlight(GridManager.Instance.castableValidPrefab, CellHighlightType.InRange);
+                cell.ApplyHighlight(castableValidPrefab, CellHighlightType.InRange);
             }
             if (castOrigin.Distance(playerOrigin) <= skill.castableSettings.range)
             {
