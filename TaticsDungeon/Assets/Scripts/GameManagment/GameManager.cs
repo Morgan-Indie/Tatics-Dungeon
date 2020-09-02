@@ -6,17 +6,19 @@ using UnityEngine.EventSystems;
 
 namespace PrototypeGame
 {
+    public enum GameState
+    {
+        Ready,InMenu,ResolvingInteraction
+    }
     public class GameManager : MonoBehaviour
     {
-        public CharacterState playerState = CharacterState.Ready;
+        public GameState gameState;
         public bool isPlayerTurn;
 
         [HideInInspector]
         public static GameManager instance = null;
         public Dictionary<string, PlayerManager> playersDict = new Dictionary<string, PlayerManager>();
         public Dictionary<string, EnemyManager> enemiesDict = new Dictionary<string, EnemyManager>();
-        public PlayerManager[] playersList;
-        public EnemyManager[] enemiesList;
         public CharacterStatusLayout characterStatusLayout;
         public Camera UIcam;
         public Light UIcamLight;
@@ -56,26 +58,23 @@ namespace PrototypeGame
                 enemy.GetComponent<CharacterStats>().statusPanel = Instantiate(enemyStatusPrefab);
             }
 
-            enemiesList = enemiesDict.Values.ToArray();
-            playersList = playersDict.Values.ToArray();
-
-            currentCharacter = playersList[0];
+            currentCharacter = playersDict.Values.ToArray()[0];
             currentCharacter.isCurrentPlayer = true;
             isPlayerTurn = true;
 
-            currentEnemy = enemiesList[0];            
+            currentEnemy = enemiesDict.Values.ToArray()[0];            
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
             SetUICam();            
         }
 
         public void Start()
         {            
-            foreach (PlayerManager player in playersList)
+            foreach (PlayerManager player in playersDict.Values.ToArray())
             {
                 player.skillSlotsHandler.skillPanel.SetActive(false);
                 player.taticalMovement.SetCurrentCell();
             }
-            foreach (EnemyManager enemy in enemiesList)
+            foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
                 enemy.taticalMovement.SetCurrentCell();
 
             InitalizePlayerTurn();
@@ -85,29 +84,34 @@ namespace PrototypeGame
                 characterStatusLayout.AddPlayerStatusPanel(player.Value);
             foreach (var enemy in enemiesDict)
                 characterStatusLayout.AddEnemyStatusPanel(enemy.Value);
+            gameState = GameState.Ready;
         }
 
         public void Update()
         {
             float delta = Time.deltaTime;
+            CheckGameState();
 
             if (isPlayerTurn)
             {
-                currentCharacter.PlayerUpdate(delta);
-                if (currentCharacter.stateManager.characterState!=CharacterState.IsInteracting)
-                    CharacterSwitch();
-                if (playerState == CharacterState.InMenu)
+                if (gameState == GameState.InMenu)
                 {
                     UIcam.enabled = true;
                     UIcamLight.enabled = true;
                     UIcam.GetComponent<UICam>().HandleUICam();
-                }                
+                }
+
+                currentCharacter.PlayerUpdate(delta);
+                if (gameState != GameState.ResolvingInteraction)
+                    CharacterSwitch();
             }
                 
             else
             {
-                CheckEnemyEndTurn();
-                currentEnemy.EnemyUpdate(delta);                
+                if (CheckEnemyEndTurn())
+                    SwitchTurns();
+                else
+                    currentEnemy.EnemyUpdate(delta);
             }
         }
 
@@ -121,18 +125,16 @@ namespace PrototypeGame
 
         public void InitalizePlayerTurn()
         {
-            foreach (PlayerManager player in playersList)
+            foreach (PlayerManager player in playersDict.Values.ToArray())
             {
                 // must recover AP first before setting navDict
                 player.characterStats.currentAP= player.characterStats.maxAP;
                 player.characterStats.apBar.RecoverAP();
             }
-            currentEnemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            currentCharacter = playersList[0];
+            currentCharacter = playersDict.Values.ToArray()[0];
             currentCharacter.isCurrentPlayer = true;
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(true);
             currentCharacter.taticalMovement.SetCurrentNavDict();
-            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             isPlayerTurn = true;
 
             Debug.Log("Player Turn Intialized");
@@ -140,18 +142,16 @@ namespace PrototypeGame
 
         public void InitalizeEnemyTurn()
         {
-            foreach (EnemyManager enemy in enemiesList)
+            foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
             {
                 // must recover AP first before setting navDict
                 enemy.characterStats.currentAP= enemy.characterStats.maxAP;
                 enemy.characterStats.apBar.RecoverAP();
             }
-            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            currentEnemy = enemiesList[0];
+            currentEnemy = enemiesDict.Values.ToArray()[0];
             currentEnemy.isCurrentEnemy = true;
             currentEnemy.taticalMovement.SetCurrentNavDict();
             isPlayerTurn = false;
-            currentEnemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             Debug.Log("Enemy Turn Intialized");
         }
 
@@ -159,26 +159,24 @@ namespace PrototypeGame
         public void SetNextPlayer()
         {            
             currentCharacter.isCurrentPlayer = false;
-            if (playerState == CharacterState.InMenu)
+            if (gameState == GameState.InMenu)
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(false);
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
-            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             playerIndex++;
 
             if (playerIndex < 0)
-                playerIndex = playersList.Length-1;
-            else if (playerIndex >= playersList.Length)
+                playerIndex = playersDict.Values.ToArray().Length-1;
+            else if (playerIndex >= playersDict.Values.ToArray().Length)
                 playerIndex = 0;
 
-            currentCharacter = playersList[playerIndex];
+            currentCharacter = playersDict.Values.ToArray()[playerIndex];
             currentCharacter.isCurrentPlayer = true;
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(true);
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
             currentCharacter.taticalMovement.SetCurrentNavDict();
 
-            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-            if (playerState == CharacterState.InMenu)
+            if (gameState == GameState.InMenu)
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(true);
         }
 
@@ -187,22 +185,20 @@ namespace PrototypeGame
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
             currentCharacter.isCurrentPlayer = false;
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
-            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
             playerIndex--;
 
             if (playerIndex < 0)
-                playerIndex = playersList.Length-1;
-            else if (playerIndex >= playersList.Length)
+                playerIndex = playersDict.Values.ToArray().Length-1;
+            else if (playerIndex >= playersDict.Values.ToArray().Length)
                 playerIndex = 0;
 
-            currentCharacter = playersList[playerIndex];
+            currentCharacter = playersDict.Values.ToArray()[playerIndex];
             currentCharacter.isCurrentPlayer = true;
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
             currentCharacter.taticalMovement.SetCurrentNavDict();
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(true);
-            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-            if (playerState == CharacterState.InMenu)
+            if (gameState == GameState.InMenu)
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(true);
         }
 
@@ -211,29 +207,29 @@ namespace PrototypeGame
         #region Enemy Selection
 
         public void SetNextEnemy()
-        {
+        {            
             if (enemyIndex < 0)
-                enemyIndex = enemiesList.Length - 1;
-            else if (enemyIndex >= enemiesList.Length)
+                enemyIndex = enemiesDict.Values.ToArray().Length - 1;
+            else if (enemyIndex >= enemiesDict.Values.ToArray().Length)
                 enemyIndex = 0;
-            currentEnemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             currentEnemy.isCurrentEnemy = false;
-            currentEnemy = enemiesList[enemyIndex];
+            currentEnemy = enemiesDict.Values.ToArray()[enemyIndex];
             currentEnemy.isCurrentEnemy = true;
-            currentEnemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            currentEnemy.taticalMovement.SetCurrentNavDict();
             enemyIndex++;
         }
 
         #endregion
 
 
-        public void CheckEnemyEndTurn()
+        public bool CheckEnemyEndTurn()
         {
             int totalAp = 0;
-            foreach (EnemyManager enemy in enemiesList)
+            foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
                 totalAp += enemy.characterStats.currentAP;
-            if (totalAp == 0 && currentEnemy.stateManager.characterState!=CharacterState.IsInteracting)
-                SwitchTurns();
+            if (totalAp == 0 && gameState == GameState.Ready)
+                return true;
+            return false;
         }
 
         public void CharacterSwitch()
@@ -255,7 +251,7 @@ namespace PrototypeGame
             popUpUI.Activate();
             if (isPlayerTurn)
             {
-                foreach (PlayerManager player in playersList)
+                foreach (PlayerManager player in playersDict.Values.ToArray())
                 {
                     player.isCurrentPlayer = false;
                 }
@@ -265,8 +261,11 @@ namespace PrototypeGame
             }
             else
             {
-                foreach (EnemyManager enemy in enemiesList)
+                foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
+                {
                     enemy.isCurrentEnemy = false;
+                }
+                    
                 Turn++;
                 InitalizePlayerTurn();
             }
@@ -282,6 +281,49 @@ namespace PrototypeGame
                 else
                     GridManager.Instance.RemoveAllHighlights();
             }
+        }
+
+        public void CheckGameState()
+        {
+            bool log = (gameState == GameState.ResolvingInteraction);
+
+            foreach (PlayerManager player in playersDict.Values.ToArray())
+            {
+                if (player.stateManager.characterState == CharacterState.InMenu)
+                {
+                    gameState = GameState.InMenu;
+                    if (log)
+                        Debug.Log("Game State Set To InMenu");
+                    return;
+                }
+
+                if (player.stateManager.characterState!=CharacterState.Ready)
+                {
+                    gameState = GameState.ResolvingInteraction;
+                    Debug.Log(player.characterStats.characterName);
+                    if (!log)
+                    {
+                        Debug.Log(player.characterStats.characterName+" Game State Set To ResolvingInteraction");
+                    }
+                    return;
+                }
+            }
+
+            foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
+            {
+                if (enemy.stateManager.characterState != CharacterState.Ready)
+                {
+                    gameState = GameState.ResolvingInteraction;
+                    Debug.Log(enemy.characterStats.characterName);
+                    if (!log)
+                       Debug.Log(" Game State Set To ResolvingInteraction");
+                    return;
+                }
+            }
+            
+            gameState = GameState.Ready;
+            if (log)
+                Debug.Log("Game State Set To Ready");
         }
     }
 }

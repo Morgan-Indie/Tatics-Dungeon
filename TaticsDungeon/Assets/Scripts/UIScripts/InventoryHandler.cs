@@ -63,9 +63,7 @@ namespace PrototypeGame
                     UIcamLight.enabled = true;
 
                     EventSystem.current.SetSelectedGameObject(first_slot.gameObject);
-                    GameManager.instance.playerState = CharacterState.InMenu;
                     stateManager.characterState = CharacterState.InMenu;
-                    Cursor.lockState = CursorLockMode.Confined;
                     //Time.timeScale = 0f;
                 }
 
@@ -80,7 +78,6 @@ namespace PrototypeGame
                     UIcamLight.enabled = false;
 
                     stateManager.characterState = CharacterState.Ready;
-                    GameManager.instance.playerState = CharacterState.Ready;
                 }
             }
         }

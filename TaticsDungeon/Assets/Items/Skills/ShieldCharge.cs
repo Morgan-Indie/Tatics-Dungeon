@@ -51,7 +51,7 @@ namespace PrototypeGame
 
                 else
                 {
-                    characterRigidbody.velocity = 5f * characterRigidbody.transform.forward;
+                    characterRigidbody.velocity = 5f * targetDirection;
                 }
 
                 if ((targetPos - characterRigidbody.transform.position).magnitude < .2)
@@ -72,7 +72,7 @@ namespace PrototypeGame
             TaticalMovement taticalMovement, Skill skill, PlayerManager target, float delta)
         {
             IntVector2 index = target.taticalMovement.currentIndex;
-            int distance = taticalMovement.GetMouseDistance(index);
+            int distance = taticalMovement.GetRequiredMoves(index,taticalMovement.path);
             CharacterStateManager stateManager = characterStats.GetComponent<CharacterStateManager>();
             float percentNormalDamage = skill.combatStatScaleDict[CombatStatType.normalDamage].Value;
             int damage = (int)(percentNormalDamage * characterStats.normalDamage.Value);

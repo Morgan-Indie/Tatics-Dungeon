@@ -6,6 +6,8 @@ namespace PrototypeGame
 {
     public static class MeleeAttack
     {
+        public static bool animationCompleted;
+
         public static void Activate(CharacterStats characterStats, AnimationHandler animationHandler,
             TaticalMovement taticalMovement, Skill skill, float delta)
         {
@@ -28,21 +30,20 @@ namespace PrototypeGame
                         characterStats.UseAP(skill.APcost);
                     }
                     else
-                    {
                         Debug.LogError("No TargetDetected");
-                    }
                 }
             }
         }
 
         public static void Activate(CharacterStats characterStats, AnimationHandler animationHandler,
-            TaticalMovement taticalMovement, Skill skill,PlayerManager target, float delta)
+            TaticalMovement taticalMovement, Skill skill,PlayerManager target, int damage, float delta)
         {
-            if (target != null && characterStats.stateManager.characterState != CharacterState.IsInteracting)
+            if (target != null)
             {
                 characterStats.transform.LookAt(target.transform);
                 animationHandler.PlayTargetAnimation("Attack");
-                characterStats.GetComponent<CombatUtils>().Attack(target.gameObject);
+
+                target.characterStats.TakeDamage(damage);
                 characterStats.UseAP(skill.APcost);
             }
         }

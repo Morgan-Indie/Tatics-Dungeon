@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
+    public enum CellState { open, obstacle, occupiedParty, occupiedEnemy };
+
     public class GridCell : MonoBehaviour
     {
         public Color color;

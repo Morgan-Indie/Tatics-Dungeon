@@ -18,6 +18,7 @@ namespace PrototypeGame
         CharacterStateManager stateManager;
         CombatUtils combatUtils;
         CharacterStats characterStats;
+        Rigidbody characterRigidbody;
 
         public Vector3 moveLocation=Vector3.up;
 
@@ -29,12 +30,13 @@ namespace PrototypeGame
         public IntVector2 targetIndex;
         public int currentPathIndex=0;
         public Dictionary<IntVector2, IntVector2> currentNavDict;
+        public Dictionary<IntVector2, IntVector2> currentTargetsNavDict;
         public Vector3 nextPos;
         public List<IntVector2> path;
         public LayerMask meshMask;
 
         float movementSpeed = 4f;
-        float rotationSpeed = 10f;
+        float rotationSpeed = 15f;
 
         // Start is called before the first frame update
         void Start()
@@ -46,7 +48,8 @@ namespace PrototypeGame
             animationHandler = GetComponent<AnimationHandler>();
             characterRigidBody = GetComponent<Rigidbody>();
             characterStats = GetComponent<CharacterStats>();
-            
+            characterRigidbody = GetComponent<Rigidbody>();
+
             SetCurrentCell();
             triggerCollider.enabled = false;
         }
@@ -121,7 +124,7 @@ namespace PrototypeGame
             return null;
         }
 
-        public int GetMouseDistance(IntVector2 index)
+        public int GetRequiredMoves(IntVector2 index, List<IntVector2> path)
         {
             if(path!=null)
             {
@@ -142,7 +145,7 @@ namespace PrototypeGame
 
         public void SetCurrentNavDict()
         {
-            currentNavDict = NavigationHandler.instance.Navigate(currentIndex, characterStats.currentAP);
+            (currentNavDict,currentTargetsNavDict) = NavigationHandler.instance.Navigate(currentIndex, characterStats.currentAP);
             if (gameObject.tag == "Player")
                 GridManager.Instance.HighlightNavDict(currentNavDict);
             Debug.Log(characterStats.characterName +" NavDict Updated");
@@ -156,7 +159,9 @@ namespace PrototypeGame
             
             characterStats.UseAP(distance);
             stateManager.characterAction = CharacterAction.Moving;
-            currentPathIndex = 0;
+            stateManager.characterState = CharacterState.IsInteracting;
+            characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+            currentPathIndex = 0;            
             
             nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
             Debug.Log(characterStats.characterName + " Setting Destination");    
@@ -164,12 +169,10 @@ namespace PrototypeGame
 
         public void TraverseToDestination(float delta)
         {
-            if ((nextPos - transform.position).magnitude < .15)
+            if ((nextPos - transform.position).magnitude < .2)
             {
-                if ((transform.position - moveLocation).magnitude <= .15)
+                if ((transform.position - moveLocation).magnitude <= .2)
                 {
-                    stateManager.characterAction = CharacterAction.None;
-                                       
                     UpdateGridState();
                     characterRigidBody.velocity = Vector3.zero;
                                         
@@ -178,8 +181,12 @@ namespace PrototypeGame
                     currentPathIndex = 0;                    
                     SetCurrentNavDict();
 
+                    stateManager.characterAction = CharacterAction.None;
+                    stateManager.characterState = CharacterState.Ready;
+                    characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
                     Debug.Log(characterStats.characterName + " Reached Destination"); 
                 }
+
                 else
                 {
                     currentPathIndex++;
@@ -207,7 +214,7 @@ namespace PrototypeGame
                 if (currentNavDict.ContainsKey(index))
                 {
                     path = NavigationHandler.instance.GetPath(currentNavDict, index, currentIndex);
-                    int distance = GetMouseDistance(index);
+                    int distance = GetRequiredMoves(index,path);
                     
                     if (characterStats.currentAP >= distance && EnemyCheck(index) == null)
                     {
