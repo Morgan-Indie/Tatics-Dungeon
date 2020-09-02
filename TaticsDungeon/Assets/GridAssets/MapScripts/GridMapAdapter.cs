@@ -118,13 +118,11 @@ namespace PrototypeGame
                 IntVector2 orientation = dir % 2 == 0 ? new IntVector2(0, dir - 1) : new IntVector2((dir - 2), 0);
                 if (orientation.Add(cell.gridIndex).IsValid(this)) {
                     cell.stairExits.Item1 = new IntVector2(orientation.x + cell.gridIndex.x, orientation.y + cell.gridIndex.y);
-                    cell.exit1 = new IntVector2(orientation.x + cell.gridIndex.x, orientation.y + cell.gridIndex.y); 
                     GetCellByIndex(orientation.Add(cell.gridIndex)).HasAdjacentStair = true;
                 }
                 orientation = new IntVector2(orientation.x * -1, orientation.y * -1);
                 if (orientation.Add(cell.gridIndex).IsValid(this)) { 
                     cell.stairExits.Item2 = new IntVector2(orientation.x + cell.gridIndex.x, orientation.y + cell.gridIndex.y);
-                    cell.exit2 = new IntVector2(orientation.x + cell.gridIndex.x, orientation.y + cell.gridIndex.y);
                     GetCellByIndex(orientation.Add(cell.gridIndex)).HasAdjacentStair = true;
                 }
             }
