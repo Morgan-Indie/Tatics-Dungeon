@@ -12,9 +12,11 @@ namespace PrototypeGame
 
     public enum FireState { Dry, Burning, Inferno};
 
+    public enum ShockState { Dry, Shocked};
+
     public class AlchemyManager : MonoBehaviour
     {
-        enum ChangeValues { Gas, Liquid, Solid, Blessed, Fire};
+        enum ChangeValues { Gas, Liquid, Solid, Blessed, Fire, Shock};
         List<ChangeValues> changeValues;
 
         public static AlchemyManager Instance { get; private set; }
@@ -36,6 +38,11 @@ namespace PrototypeGame
         public GameObject BurningEffectPrefab;
         public GameObject InfernoEffectPrefab;
 
+        [Header("Shock")]
+        public GameObject ShockSolidEffectPrefab;
+        public GameObject ShockLiquidEffectPrefab;
+        public GameObject ShockGasEffectPrefab;
+
         private void Awake()
         {
             if (Instance == null)
@@ -47,6 +54,7 @@ namespace PrototypeGame
         {
             cellState.gasState = gas;
             changeValues.Add(ChangeValues.Gas);
+            ShockCheck(cellState);
             ApplyVFX(cellState);
         }
 
@@ -60,6 +68,7 @@ namespace PrototypeGame
                 if (liquid != LiquidPhaseState.Oil)
                     ReduceFireState(cellState);
             }
+            ShockCheck(cellState);
             ApplyVFX(cellState);
         }
 
@@ -71,6 +80,7 @@ namespace PrototypeGame
             {
                 ApplyHeatInternal(cellState, 2);
             }
+            ShockCheck(cellState);
             ApplyVFX(cellState);
         }
 
@@ -102,6 +112,13 @@ namespace PrototypeGame
                 ApplyChillInternal(cellState, itters - 1);
         }
 
+        public void ApplyShock(CellAlchemyState cellState)
+        {
+            cellState.shockState = ShockState.Shocked;
+            changeValues.Add(ChangeValues.Shock);
+            ApplyVFX(cellState);
+        }
+
         void SolidToLiquid(CellAlchemyState cellState)
         {
             if (cellState.solidState == SolidPhaseState.Dry)
@@ -111,8 +128,8 @@ namespace PrototypeGame
             ReduceFireState(cellState);
             cellState.solidState = SolidPhaseState.Dry;
             changeValues.Add(ChangeValues.Solid);
+            ShockCheck(cellState);
         }
-
         void LiquidToGas(CellAlchemyState cellState)
         {
             switch (cellState.liquidState)
@@ -135,6 +152,7 @@ namespace PrototypeGame
                     break;
             }
             InfernoCheck(cellState);
+            ShockCheck(cellState);
         }
 
         void LiquidToSolid(CellAlchemyState cellState)
@@ -152,8 +170,8 @@ namespace PrototypeGame
                     break;
 
             }
+            ShockCheck(cellState);
         }
-
         void GasToLiquid(CellAlchemyState cellState)
         {
             if (cellState.gasState == GasPhaseState.Dry)
@@ -161,6 +179,7 @@ namespace PrototypeGame
             cellState.liquidState = (LiquidPhaseState)cellState.gasState;
             changeValues.Add(ChangeValues.Liquid);
             cellState.gasState = GasPhaseState.Dry;
+            ShockCheck(cellState);
         }
         
         void ReduceFireState(CellAlchemyState cellState, int levels = 1)
@@ -174,7 +193,6 @@ namespace PrototypeGame
                 }
             }
         }
-
         void IncreaseFire(CellAlchemyState cellState, int levels = 1)
         {
             for (int i = 0; i < levels; i++)
@@ -197,6 +215,16 @@ namespace PrototypeGame
                 if (cellState.liquidState != LiquidPhaseState.Dry) { cellState.liquidState = LiquidPhaseState.Dry; changeValues.Add(ChangeValues.Liquid); }
                 if (cellState.solidState != SolidPhaseState.Dry) { cellState.solidState = SolidPhaseState.Dry; changeValues.Add(ChangeValues.Solid); }
             }
+        }
+
+        void ShockCheck(CellAlchemyState cellState)
+        {
+            if (cellState.shockState == ShockState.Dry)
+                return;
+            if (cellState.gasState != GasPhaseState.Dry || cellState.liquidState != LiquidPhaseState.Dry || cellState.solidState != SolidPhaseState.Dry)
+                changeValues.Add(ChangeValues.Shock);
+            else
+                cellState.shockState = ShockState.Dry;
         }
 
         public void ApplyVFX(CellAlchemyState cellState)
@@ -228,6 +256,10 @@ namespace PrototypeGame
                     case (ChangeValues.Fire):
                         if (cellState.fireEffect != null)
                             Destroy(cellState.fireEffect);
+                        break;
+                    case (ChangeValues.Shock):
+                        if (cellState.shockEffect != null)
+                            Destroy(cellState.shockEffect);
                         break;
                 }
             }
@@ -292,6 +324,23 @@ namespace PrototypeGame
                             case (FireState.Inferno):
                                 cellState.fireEffect = Instantiate(InfernoEffectPrefab, cellState.transform.position, cellState.transform.rotation);
                                 break;
+                        }
+                        break;
+                    case (ChangeValues.Shock):
+                        if (cellState.shockState == ShockState.Dry) { 
+
+                        } else if (cellState.solidState != SolidPhaseState.Dry)
+                        {
+                            cellState.shockEffect = Instantiate(ShockSolidEffectPrefab, cellState.transform.position, cellState.transform.rotation);
+                        } else if (cellState.gasState != GasPhaseState.Dry)
+                        {
+                            cellState.shockEffect = Instantiate(ShockGasEffectPrefab, cellState.transform.position, cellState.transform.rotation);
+                        } else if (cellState.liquidState != LiquidPhaseState.Dry)
+                        {
+                            cellState.shockEffect = Instantiate(ShockLiquidEffectPrefab, cellState.transform.position, cellState.transform.rotation);
+                        } else
+                        {
+                            cellState.shockState = ShockState.Dry;
                         }
                         break;
                 }

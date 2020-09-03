@@ -176,7 +176,10 @@ namespace PrototypeGame
                     if (characterStats.currentAP != 0)
                         SetCurrentNavDict();
                     else
+                    {
+                        SetCurrentNavDict();
                         GridManager.Instance.RemoveAllHighlights();
+                    }
                 }
                 else
                 {

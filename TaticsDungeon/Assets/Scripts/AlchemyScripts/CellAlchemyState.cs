@@ -11,11 +11,13 @@ namespace PrototypeGame
         public SolidPhaseState solidState = SolidPhaseState.Dry;
         public BlessingState blessingState = BlessingState.Neutral;
         public FireState fireState = FireState.Dry;
+        public ShockState shockState = ShockState.Dry;
 
         public GameObject gasEffect;
         public GameObject liquidEffect;
         public GameObject solidEffect;
         public GameObject blessedEffect;
         public GameObject fireEffect;
+        public GameObject shockEffect;
     }
 }

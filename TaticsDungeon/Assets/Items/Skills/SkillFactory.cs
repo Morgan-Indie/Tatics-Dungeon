@@ -59,6 +59,9 @@ namespace PrototypeGame
                         case (CastableSpell.CastPoison):
                             CastPoison.Activate(characterStats, animationHandler, taticalMovement, skill, delta);
                             break;
+                        case (CastableSpell.CastShock):
+                            CastShock.Activate(characterStats, animationHandler, taticalMovement, skill, delta);
+                            break;
                     }
                     break;
             }

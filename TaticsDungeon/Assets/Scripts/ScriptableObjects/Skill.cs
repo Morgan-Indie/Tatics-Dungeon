@@ -22,6 +22,7 @@ namespace PrototypeGame
         CastWater,
         CastOil,
         CastPoison,
+        CastShock,
     };
 
     [System.Serializable]
