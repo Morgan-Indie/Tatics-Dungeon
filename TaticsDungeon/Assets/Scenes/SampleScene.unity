@@ -1416,7 +1416,7 @@ MonoBehaviour:
   allHighlightedTiles: []
   castableHighlightPrefab: {fileID: 2015886591300925424, guid: 45f81241aff918c459795841e047692e,
     type: 3}
-  castableValidPrefab: {fileID: 2015886591300925424, guid: 6f85b2ebea62ed542a8f3de985e97733,
+  castableValidPrefab: {fileID: 2015886591300925424, guid: 6169b74d920cde54c8577893e0bda67d,
     type: 3}
 --- !u!4 &1157780373
 Transform:
@@ -1823,6 +1823,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 306594214909376139, guid: dbef1ad53e25e9e41a81c041caa74373,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 306594214909376139, guid: dbef1ad53e25e9e41a81c041caa74373,
+        type: 3}
+      propertyPath: skills.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: faa23ca282a6e7e4086ae2c0dcce9a70,
+        type: 2}
     - target: {fileID: 831799078184822845, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -3024,6 +3035,12 @@ MonoBehaviour:
   BurningEffectPrefab: {fileID: 6375987105220089366, guid: 77ceab1076bfe054f8e8c611a10f3c83,
     type: 3}
   InfernoEffectPrefab: {fileID: 4029089394443433646, guid: dca4d7a29be926241a5800769bfa064b,
+    type: 3}
+  ShockSolidEffectPrefab: {fileID: 1740139871691603000, guid: 96ce0b7f879da024da2a47ad8f1ba447,
+    type: 3}
+  ShockLiquidEffectPrefab: {fileID: 2764418381461071984, guid: 20be469f2f569404baeeb8d713f4cca7,
+    type: 3}
+  ShockGasEffectPrefab: {fileID: 4274387872410849155, guid: 94a03351ac6bf4d47adb85bff15271b1,
     type: 3}
 --- !u!1001 &7659661411929149706
 PrefabInstance:
