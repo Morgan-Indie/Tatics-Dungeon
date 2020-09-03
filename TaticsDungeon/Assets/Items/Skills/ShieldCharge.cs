@@ -34,7 +34,7 @@ namespace PrototypeGame
                 }
             }
 
-            if (stateManager.characterAction== "ShieldCharge")
+            if (stateManager.characterAction== CharacterAction.ShieldCharge)
             {
                 
                 characterStats.transform.LookAt(target.transform);                
@@ -77,7 +77,7 @@ namespace PrototypeGame
             float percentNormalDamage = skill.combatStatScaleDict[CombatStatType.normalDamage].Value;
             int damage = (int)(percentNormalDamage * characterStats.normalDamage.Value);
 
-            if (stateManager.characterAction != "ShieldCharge")
+            if (stateManager.characterAction != CharacterAction.ShieldCharge)
             {
                 taticalMovement.targetIndex = index;
                 characterStats.UseAP(skill.APcost);

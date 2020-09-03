@@ -10,7 +10,6 @@ namespace PrototypeGame
         public GridMapAdapter mapAdapter;
         public Collider triggerCollider;
 
-        PlayerMovement playerMovement;
         InputHandler inputHandler;
         Transform characterTransform;
         Camera isometricCamera;
@@ -34,21 +33,20 @@ namespace PrototypeGame
         public List<IntVector2> path;
         public LayerMask meshMask;
 
-        float movementSpeed = 3.5f;
-        float rotationSpeed = 5f;
+        float movementSpeed = 4f;
+        float rotationSpeed = 10f;
 
         // Start is called before the first frame update
         void Start()
         {
-            combatUtils = GetComponent<CombatUtils>();            
+            combatUtils = GetComponent<CombatUtils>();
             stateManager = GetComponent<CharacterStateManager>();
-            playerMovement = GetComponent<PlayerMovement>();
             characterTransform = transform;
-            isometricCamera = GameManager.instance.cameraModeSwitch.isometricCamera.GetComponent<Camera>();
+            isometricCamera = Camera.main;
             animationHandler = GetComponent<AnimationHandler>();
             characterRigidBody = GetComponent<Rigidbody>();
             characterStats = GetComponent<CharacterStats>();
-            
+
             SetCurrentCell();
             triggerCollider.enabled = false;
         }
@@ -58,7 +56,7 @@ namespace PrototypeGame
             currentIndex = mapAdapter.GetIndexByPos(transform.position);
         }
         public void SetCurrentCell()
-        {                           
+        {
             SetCurrentIndex();
             currentCell = mapAdapter.GetCellByIndex(currentIndex);
             currentCell.SetCharacter(this.gameObject);
@@ -74,11 +72,13 @@ namespace PrototypeGame
         }
 
         public void UpdateGridState()
-        {            
+        {
             currentCell.SetCharacter(null);
+
             currentCell.state=CellState.open;
             GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
             SetCurrentCell();
+            Debug.Log(characterStats.characterName+" Grid State Updated");
         }
 
         public void HandleRotation(float delta, Vector3 moveDirection)
@@ -131,7 +131,7 @@ namespace PrototypeGame
             }
             else
                 return -1;
-        }        
+        }
 
         public void PrintPath(List<IntVector2> path)
         {
@@ -146,6 +146,7 @@ namespace PrototypeGame
             currentNavDict = NavigationHandler.instance.Navigate(currentIndex, characterStats.currentAP);
             if (gameObject.tag == "Player")
                 GridManager.Instance.HighlightNavDict(currentNavDict);
+            Debug.Log(characterStats.characterName +" NavDict Updated");
         }
 
         public void SetTargetDestination(IntVector2 targetIndex, int distance)
@@ -153,33 +154,32 @@ namespace PrototypeGame
             InputHandler.instance.tacticsXInput = false;
             GridCell cell = mapAdapter.GetCellByIndex(targetIndex);
             moveLocation = cell.transform.position;
-            
+
             characterStats.UseAP(distance);
-            stateManager.characterAction = "Moving";
+            stateManager.characterAction = CharacterAction.Moving;
             currentPathIndex = 0;
-            
+
             nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
+            Debug.Log(characterStats.characterName + " Setting Destination");
         }
 
         public void TraverseToDestination(float delta)
         {
-            if ((nextPos - transform.position).magnitude < .1)
+            if ((nextPos - transform.position).magnitude < .15)
             {
-                if ((transform.position - moveLocation).magnitude <= .1)
+                if ((transform.position - moveLocation).magnitude <= .15)
                 {
-                    stateManager.characterAction = "None";
+                    stateManager.characterAction = CharacterAction.None;
+
                     UpdateGridState();
                     characterRigidBody.velocity = Vector3.zero;
+
                     animationHandler.UpdateAnimatorValues(delta, 0f);
                     transform.position = moveLocation;
                     currentPathIndex = 0;
-                    if (characterStats.currentAP != 0)
-                        SetCurrentNavDict();
-                    else
-                    {
-                        SetCurrentNavDict();
-                        GridManager.Instance.RemoveAllHighlights();
-                    }
+                    SetCurrentNavDict();
+
+                    Debug.Log(characterStats.characterName + " Reached Destination");
                 }
                 else
                 {
@@ -198,25 +198,25 @@ namespace PrototypeGame
         }
 
         public void ExcuteMovement(float delta)
-        {            
-            if (stateManager.characterAction == "Moving")
+        {
+            if (stateManager.characterAction == CharacterAction.Moving)
                 TraverseToDestination(delta);
             else
             {
                 IntVector2 index = GetMouseIndex();
-                
+
                 if (currentNavDict.ContainsKey(index))
                 {
                     path = NavigationHandler.instance.GetPath(currentNavDict, index, currentIndex);
                     int distance = GetMouseDistance(index);
-                    
+
                     if (characterStats.currentAP >= distance && EnemyCheck(index) == null)
                     {
                         GridManager.Instance.HighlightPathWithList(path);
-                        if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput) 
-                            && stateManager.characterAction == "None")
-                        {                           
-                            SetTargetDestination(index, distance);                            
+                        if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput)
+                            && stateManager.characterAction == CharacterAction.None)
+                        {
+                            SetTargetDestination(index, distance);
                         }
                     }
                 }
@@ -235,4 +235,3 @@ namespace PrototypeGame
         }
     }
 }
-

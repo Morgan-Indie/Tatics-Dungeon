@@ -653,7 +653,6 @@ GameObject:
   - component: {fileID: 4346658694915827375}
   - component: {fileID: 4346658694915827362}
   - component: {fileID: 4346658694915827385}
-  - component: {fileID: 4346658694915827384}
   - component: {fileID: 4346658694915827367}
   - component: {fileID: 4346658694915827366}
   - component: {fileID: 4346658694915827365}
@@ -663,7 +662,7 @@ GameObject:
   - component: {fileID: 1810680449}
   - component: {fileID: 1810680461}
   m_Layer: 13
-  m_Name: Enemy 1
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -704,7 +703,7 @@ Animator:
   m_GameObject: {fileID: 4347284167483555766}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: be73df03abf02284486d1afabcf5d4fe, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7a71eb740526a2a47b6699f56c153aef, type: 2}
+  m_Controller: {fileID: 9100000, guid: 847ef0b6e1c11404a912defa502c355f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -757,27 +756,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterStats: {fileID: 0}
   equipmentSlotManager: {fileID: 0}
---- !u!114 &4346658694915827384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4347284167483555766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ec604510bd5f6d49945eaa14e154dc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 5
-  rotationSpeed: 10
-  characterRigidbody: {fileID: 0}
-  characterTransform: {fileID: 0}
-  stateManager: {fileID: 0}
-  cameraTransfrom: {fileID: 0}
-  animationHandler: {fileID: 0}
-  fallSpeed: 250
-  grounded: 0
 --- !u!114 &4346658694915827367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -868,8 +846,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20965c3bd47710d4bb457ed7c2b54abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterState: ready
-  characterAction: None
+  characterState: 0
+  characterAction: 0
   skillColliderTiggered: 0
 --- !u!114 &4346658694915827363
 MonoBehaviour:
@@ -885,7 +863,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 0}
   animator: {fileID: 0}
-  playerMovement: {fileID: 0}
   stateManager: {fileID: 0}
 --- !u!114 &1810680448
 MonoBehaviour:
@@ -930,7 +907,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c54105204a52a6459d51be862688acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement: {fileID: 0}
   characterTransform: {fileID: 0}
   taticalMovement: {fileID: 0}
   characterStats: {fileID: 0}

@@ -25,11 +25,28 @@ namespace PrototypeGame
         CastShock,
     };
 
+    public enum CastableShape
+    {
+        Single,
+        Circular,
+        Area,
+        Line, 
+        Cross,
+        Checker,
+    }
+
     [System.Serializable]
     public class CastableSettings
     {
         public CastableSpell castableSpell;
-        public int range = 1;
+        public int range = 3;
+        public CastableShape shape = CastableShape.Single;
+        public bool inclusive = true;
+        public int radius = 1;
+        [ConditionalHide("shape", (int)CastableShape.Line)]
+        public int lineOrientation = 0;
+        [ConditionalHide("shape", (int)CastableShape.Cross)]
+        public int crossOrientation = 0;
     }
 
     [CreateAssetMenu(fileName ="Skill")]

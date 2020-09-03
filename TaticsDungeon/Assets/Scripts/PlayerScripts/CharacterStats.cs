@@ -141,11 +141,11 @@ namespace PrototypeGame
 
             if (currentHealth <= 0)
             {
-                stateManager.characterState = "dead";
+                stateManager.characterState = CharacterState.Dead;
                 animationHandler.PlayTargetAnimation("Death");
             }
 
-            else if (stateManager.characterAction == "LyingDown")
+            else if (stateManager.characterAction == CharacterAction.LyingDown)
                 animationHandler.PlayTargetAnimation("LyingHitReaction");
             else
                 animationHandler.PlayTargetAnimation("MinorHitReaction");
@@ -155,11 +155,6 @@ namespace PrototypeGame
         {
             currentAP -= AP;
             apBar.SetCurrentAP(currentAP);
-
-            if (currentAP <= 0)
-            {
-                stateManager.characterState = "Exhausted";
-            }
         }
     }
 }

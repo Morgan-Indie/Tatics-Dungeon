@@ -36,7 +36,6 @@ namespace PrototypeGame
 
         public override void Act(float delta)
         {
-
             if (target == null)
             {
                 List<(PlayerManager, int)> playersHealthList = new List<(PlayerManager, int)>();
@@ -72,11 +71,6 @@ namespace PrototypeGame
                     }
                 }
 
-                //foreach(var item in taticalMovement.currentNavDict)
-                //{
-                //    Debug.Log(item.Key.x + "," + item.Key.y + ":" + item.Value.x + "," + item.Value.y);
-                //}
-
                 IntVector2 targetIndex = targetIndicies[0];
 
                 taticalMovement.path = NavigationHandler.instance.GetPath(taticalMovement.currentNavDict,
@@ -90,14 +84,11 @@ namespace PrototypeGame
             {
                 if (taticalMovement.transform.position == taticalMovement.moveLocation)
                 {
-                    if (characterStats.currentAP > 0 && stateManager.characterState=="ready")
+                    if (characterStats.currentAP > 0 && stateManager.characterState==CharacterState.Ready)
                     {                                     
                         MeleeAttack.Activate(characterStats, animationHandler,
                             taticalMovement, skillDict[SkillType.MeleeAttack], target, delta);
                     }
-                            
-                    else
-                        stateManager.characterState = "exhausted";
                 }
                 else
                 {

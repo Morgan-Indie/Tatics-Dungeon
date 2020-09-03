@@ -15,7 +15,7 @@ namespace PrototypeGame
             if (index.x >= 0 && characterStats.currentAP >= skill.APcost && distance == 1)
             {
                 if (Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput && 
-                    characterStats.stateManager.characterState!="isInteracting")
+                    characterStats.stateManager.characterState!= CharacterState.IsInteracting)
                 {
                     InputHandler.instance.tacticsXInput = false;
                     GameObject target = taticalMovement.EnemyCheck(index);
@@ -38,7 +38,7 @@ namespace PrototypeGame
         public static void Activate(CharacterStats characterStats, AnimationHandler animationHandler,
             TaticalMovement taticalMovement, Skill skill,PlayerManager target, float delta)
         {
-            if (target != null && characterStats.stateManager.characterState != "isInteracting")
+            if (target != null && characterStats.stateManager.characterState != CharacterState.IsInteracting)
             {
                 characterStats.transform.LookAt(target.transform);
                 animationHandler.PlayTargetAnimation("Attack");

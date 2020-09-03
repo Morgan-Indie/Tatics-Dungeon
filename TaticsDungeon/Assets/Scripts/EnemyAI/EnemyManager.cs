@@ -7,7 +7,6 @@ namespace PrototypeGame
     public class EnemyManager : MonoBehaviour
     {
         [Header("Auto Filled GameObjects")]
-        public PlayerMovement playerMovement;
         public Transform characterTransform;
         public TaticalMovement taticalMovement;
         public CharacterStats characterStats;
@@ -20,24 +19,17 @@ namespace PrototypeGame
         {
             characterTransform = GetComponent<Transform>();
             taticalMovement = GetComponent<TaticalMovement>();
-            playerMovement = GetComponent<PlayerMovement>();
             characterStats = GetComponent<CharacterStats>();
             stateManager = GetComponent<CharacterStateManager>();
             enemyController = GetComponent<EnemyController>();
         }
 
-        private void FixedUpdate()
-        {
-            playerMovement.HandleFalling();
-        }
-
         // Update is called once per frame
-        void Update()
+        public void EnemyUpdate(float delta)
         {
             if (isCurrentEnemy)
             {
-                float delta = Time.deltaTime;
-                enemyController.FSMFixedUpdate(delta);
+                enemyController.FSMUpdate(delta);
                 if (characterStats.currentAP == 0)
                     GameManager.instance.SetNextEnemy();
             }

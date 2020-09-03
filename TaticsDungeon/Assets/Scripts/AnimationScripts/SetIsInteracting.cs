@@ -10,7 +10,7 @@ namespace PrototypeGame
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             CharacterStateManager stateManager = animator.GetComponent<CharacterStateManager>();
-            stateManager.characterState = "isInteracting";
+            stateManager.characterState = CharacterState.IsInteracting;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -23,7 +23,7 @@ namespace PrototypeGame
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             CharacterStateManager stateManager = animator.GetComponent<CharacterStateManager>();
-            stateManager.characterState = "ready";
+            stateManager.characterState = CharacterState.Ready;
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()

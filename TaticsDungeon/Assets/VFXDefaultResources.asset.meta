@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 298e312cf31928044bc721c048aa8755
+=======
+guid: 9592f060f182ccc4eafb4291b2b94df5
+>>>>>>> CastableEditing
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0

@@ -8,8 +8,7 @@ namespace PrototypeGame
 {
     public class GameManager : MonoBehaviour
     {
-        public string playerState = "ready";
-        public bool CombatMode = false;
+        public CharacterState playerState = CharacterState.Ready;
         public bool isPlayerTurn;
 
         [HideInInspector]
@@ -19,7 +18,6 @@ namespace PrototypeGame
         public PlayerManager[] playersList;
         public EnemyManager[] enemiesList;
         public CharacterStatusLayout characterStatusLayout;
-        public CameraModeSwitch cameraModeSwitch;
         public Camera UIcam;
         public Light UIcamLight;
         public AlchemyManager alchemyManager;
@@ -43,7 +41,6 @@ namespace PrototypeGame
                 instance = this;
 
             characterStatusLayout = GetComponent<CharacterStatusLayout>();
-            cameraModeSwitch = GetComponent<CameraModeSwitch>();
             alchemyManager = GetComponent<AlchemyManager>();
 
             foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
@@ -66,7 +63,6 @@ namespace PrototypeGame
             isPlayerTurn = true;
             
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
-            CameraHandler.instance.playerTransform = currentCharacter.transform;
             SetUICam();            
         }
 
@@ -81,23 +77,36 @@ namespace PrototypeGame
                 enemy.taticalMovement.SetCurrentCell();
 
             InitalizePlayerTurn();
+            popUpUI.Activate();
+
+            foreach (var player in playersDict)
+                characterStatusLayout.AddPlayerStatusPanel(player.Value);
+            foreach (var enemy in enemiesDict)
+                characterStatusLayout.AddEnemyStatusPanel(enemy.Value);
         }
 
-        public void LateUpdate()
+        public void Update()
         {
+            float delta = Time.deltaTime;
+
             if (isPlayerTurn)
             {
-                CharacterSwitch();
-                if (playerState == "inMenu")
+                currentCharacter.PlayerUpdate(delta);
+                if (currentCharacter.stateManager.characterState!=CharacterState.IsInteracting)
+                    CharacterSwitch();
+                if (playerState == CharacterState.InMenu)
                 {
                     UIcam.enabled = true;
                     UIcamLight.enabled = true;
                     UIcam.GetComponent<UICam>().HandleUICam();
                 }
+                
             }
+                
             else
             {
                 CheckEnemyEndTurn();
+                currentEnemy.EnemyUpdate(delta);                
             }
         }
 
@@ -122,8 +131,10 @@ namespace PrototypeGame
             currentCharacter.isCurrentPlayer = true;
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(true);
             currentCharacter.taticalMovement.SetCurrentNavDict();
-            currentCharacter.playerMovement.characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             isPlayerTurn = true;
+
+            Debug.Log("Player Turn Intialized");
         }
 
         public void InitalizeEnemyTurn()
@@ -136,21 +147,22 @@ namespace PrototypeGame
             }
 
             currentEnemy = enemiesList[0];
-            Debug.Log(currentEnemy.characterStats.currentAP);
             currentEnemy.isCurrentEnemy = true;
             currentEnemy.taticalMovement.SetCurrentNavDict();
             isPlayerTurn = false;
+
+            Debug.Log("Enemy Turn Intialized");
         }
 
         #region Player Selecting
         public void SetNextPlayer()
         {            
             currentCharacter.isCurrentPlayer = false;
-            if (playerState == "inMenu")
+            if (playerState == CharacterState.InMenu)
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(false);
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
-            currentCharacter.playerMovement.characterRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             playerIndex++;
 
             if (playerIndex < 0)
@@ -164,8 +176,8 @@ namespace PrototypeGame
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
             currentCharacter.taticalMovement.SetCurrentNavDict();
 
-            currentCharacter.playerMovement.characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-            if (playerState == "inMenu")
+            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            if (playerState == CharacterState.InMenu)
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(true);
         }
 
@@ -174,7 +186,7 @@ namespace PrototypeGame
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
             currentCharacter.isCurrentPlayer = false;
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
-            currentCharacter.playerMovement.characterRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
             playerIndex--;
 
@@ -188,8 +200,8 @@ namespace PrototypeGame
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
             currentCharacter.taticalMovement.SetCurrentNavDict();
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(true);
-            currentCharacter.playerMovement.characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-            if (playerState == "inMenu")
+            currentCharacter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            if (playerState == CharacterState.InMenu)
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(true);
         }
 
@@ -203,66 +215,38 @@ namespace PrototypeGame
                 enemyIndex = enemiesList.Length - 1;
             else if (enemyIndex >= enemiesList.Length)
                 enemyIndex = 0;
-            currentEnemy.playerMovement.characterRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            currentEnemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             currentEnemy.isCurrentEnemy = false;
             currentEnemy = enemiesList[enemyIndex];
             currentEnemy.isCurrentEnemy = true;
-            currentEnemy.playerMovement.characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            currentEnemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             enemyIndex++;
         }
 
         #endregion
 
 
-        public void EnterCombatMode()
-        {
-            CombatMode = true;
-            popUpUI.Activate();
-
-            foreach (var player in playersDict)
-                characterStatusLayout.AddPlayerStatusPanel(player.Value);
-            foreach (var enemy in enemiesDict)
-                characterStatusLayout.AddEnemyStatusPanel(enemy.Value);
-          }
-
-        public void ExitCombatMode()
-        {
-            CombatMode = false;
-        }
-
         public void CheckEnemyEndTurn()
         {
             int totalAp = 0;
             foreach (EnemyManager enemy in enemiesList)
                 totalAp += enemy.characterStats.currentAP;
-            if (totalAp == 0 && currentEnemy.stateManager.characterState!="isInteracting")
+            if (totalAp == 0 && currentEnemy.stateManager.characterState!=CharacterState.IsInteracting)
                 SwitchTurns();
         }
 
         public void CharacterSwitch()
         {
-            PlayerEndTurnCheck();
             if (InputHandler.instance.characterSelectInputNext)
             {
                 SetNextPlayer();
                 InputHandler.instance.characterSelectInputNext = false;
-                IsometricCamera.instance.FocusOnCurrentPlayer();
             }
             else if (InputHandler.instance.characterSelectInputPrevious)
             {
                 SetPreviousPlayer();
                 InputHandler.instance.characterSelectInputPrevious = false;
-                IsometricCamera.instance.FocusOnCurrentPlayer();
             }
-        }
-
-        public void PlayerEndTurnCheck()
-        {
-            int totalAp = 0;
-            foreach (PlayerManager player in playersList)
-                totalAp += player.characterStats.currentAP;
-            if (totalAp == 0)
-                EventSystem.current.SetSelectedGameObject(endTurn.gameObject);
         }
 
         public void SwitchTurns()
@@ -277,20 +261,18 @@ namespace PrototypeGame
                 currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
                 GridManager.Instance.RemoveAllHighlights();
                 InitalizeEnemyTurn();
-                //IsometricCamera.instance.FocusOnCurrentEnemy();                
             }
             else
             {
                 foreach (EnemyManager enemy in enemiesList)
                     enemy.isCurrentEnemy = false;
-                IsometricCamera.instance.FocusOnCurrentPlayer();                
                 InitalizePlayerTurn();
             }
         }
 
         public void SwitchSkill(Skill s)
         {
-            if (currentCharacter.stateManager.characterState!="isInteracting")
+            if (currentCharacter.stateManager.characterState!= CharacterState.IsInteracting)
             {
                 currentCharacter.selectedSkill = s;
                 if (s == null || s.type == SkillType.Move)

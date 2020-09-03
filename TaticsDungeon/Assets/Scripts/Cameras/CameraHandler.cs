@@ -6,58 +6,96 @@ namespace PrototypeGame
 {
     public class CameraHandler : MonoBehaviour
     {
-        public Transform playerTransform;
-        public Transform cameraTransform;
-        public Transform pivotTransform;
-        public Transform frameTransform;
-        InputHandler inputHandler;
-        private Vector3 pivotOffset;
-        public float followSpeed = .1f;
-        public float lookSpeed = 360f;
-        public float pivotSpeed = 60f;
+        public float cameraSensitivity = 10f;
+        public float cameraSpeed = 10f;
+        public float rotateSpeed = 100f;
 
-        public float maximumPivot = 60f;
-        public static CameraHandler instance=null;
+        public float zoomSpeed = 10f;
+        public float maxZoom = 3f, minZoom = 12f;
+        public static CameraHandler instance = null;
         public Quaternion pivotRotation;
         public Quaternion lookRotation;
-        Vector3 pivotDirection;
-        public Camera UIcam;
-        public Light UIcamLight;
-        // Start is called before the first frame update
+        public Camera isometricCamera;
 
         private void Awake()
         {
             if (instance == null)
                 instance = this;
+
+            isometricCamera = Camera.main;
+            Cursor.lockState = CursorLockMode.Confined;            
         }
 
-        void Start()
+        private void Start()
         {
-            frameTransform = transform;
-            UIcam = GetComponentsInChildren<Camera>()[1];
-            UIcamLight = UIcam.GetComponentInChildren<Light>();
-            UIcam.enabled = false;
-            UIcamLight.enabled = false;
+            FocusOnCurrentPlayer();
         }
 
-        public void FollowPlayer(float delta)
+        public void FocusOnCurrentPlayer()
         {
             Vector3 currentVelocity = Vector3.zero;
-            frameTransform.position = Vector3.SmoothDamp(frameTransform.position, playerTransform.position, 
-                ref currentVelocity,delta/followSpeed);
+            Transform playerTransform = GameManager.instance.currentCharacter.transform;
+            Vector3 targetPoistion = playerTransform.position + Vector3.up * 10f - playerTransform.forward * 2f;
+            targetPoistion.y = transform.position.y;
+            transform.position = Vector3.SmoothDamp(transform.position, targetPoistion, ref currentVelocity, Time.deltaTime / cameraSpeed);
+            transform.LookAt(playerTransform.position);
+        }
+
+        public void FocusOnCurrentEnemy()
+        {
+            Vector3 currentVelocity = Vector3.zero;
+            Transform enemyTransform = GameManager.instance.currentEnemy.transform;
+            Vector3 targetPoistion = enemyTransform.position + Vector3.up * 10f - enemyTransform.forward * 2f;
+            targetPoistion.y = transform.position.y;
+            transform.position = Vector3.SmoothDamp(transform.position, targetPoistion, ref currentVelocity, Time.deltaTime / cameraSpeed);
+            transform.LookAt(enemyTransform.position);
+        }
+
+        public void HandleCameraMove(float delta)
+        {
+            Vector3 currentVelocity = Vector3.zero;
+            Vector3 camUp = transform.up;
+            camUp.y = 0;
+            camUp.Normalize();
+            Vector3 moveDirection = (camUp * InputHandler.instance.MoveY + transform.right * InputHandler.instance.MoveX).normalized;
+            transform.position = Vector3.SmoothDamp(transform.position,
+                transform.position + moveDirection * cameraSensitivity * delta,
+                ref currentVelocity, delta / cameraSpeed);
+        }
+
+        public void HandleZoom(float delta)
+        {
+            Vector3 refVelocity = Vector3.zero;
+            if (InputHandler.instance.rightTriggerInput)
+            {
+                Vector3 zoomPos = Vector3.down * zoomSpeed * delta + transform.position;
+                zoomPos.y = Mathf.Clamp(zoomPos.y, maxZoom, minZoom);
+                transform.position = Vector3.SmoothDamp(transform.position,
+                                        zoomPos, ref refVelocity, delta / cameraSpeed);
+            }
+
+
+            else if (InputHandler.instance.leftTriggerInput)
+            {
+                Vector3 zoomPos = Vector3.up * zoomSpeed * delta + transform.position;
+                zoomPos.y = Mathf.Clamp(zoomPos.y, maxZoom, minZoom);
+                transform.position = Vector3.SmoothDamp(transform.position,
+                                        zoomPos, ref refVelocity, delta / cameraSpeed);
+            }
         }
 
         public void HandleRotation(float delta)
         {
-            frameTransform.RotateAround(frameTransform.position, Vector3.up, InputHandler.instance.MouseX* lookSpeed*delta);
-
-            float pivotAngle = -Mathf.Clamp(InputHandler.instance.MouseY * pivotSpeed, -maximumPivot, maximumPivot);
-            pivotTransform.Rotate(pivotAngle*delta,0f,0f,Space.Self);
+            if (InputHandler.instance.rightShoulderInput)
+                transform.Rotate(0f, rotateSpeed * delta, 0f, Space.World);
+            else if (InputHandler.instance.leftShoulderInput)
+                transform.Rotate(0f, -rotateSpeed * delta, 0f, Space.World);
         }
 
         public void HandleCamera(float delta)
         {
-            FollowPlayer(delta);
+            HandleCameraMove(delta);
+            HandleZoom(delta);
             HandleRotation(delta);
         }
     }

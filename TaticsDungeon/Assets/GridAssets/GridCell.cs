@@ -15,6 +15,7 @@ namespace PrototypeGame
         public CellState state;
         GameObject highlightEffect;
         public CellAlchemyState alchemyState;
+        public CellHighlightType highlightType = CellHighlightType.None;
 
         //index within its parent mesh
         public IntVector2 index;
@@ -39,9 +40,22 @@ namespace PrototypeGame
             highlighted = true;
         }
 
+        public void ApplyHighlight(GameObject effect, CellHighlightType type)
+        {
+            if (type == highlightType)
+                return;
+            highlightType = type;
+            highlighted = true;
+            if (highlightEffect != null)
+                Destroy(highlightEffect);
+            highlightEffect = Instantiate(effect, transform.position, transform.rotation);
+            highlightEffect.transform.SetParent(transform);
+        }
+
         public void RemoveHighlight()
         {
             highlighted = false;
+            highlightType = CellHighlightType.None;
             if (highlightEffect != null)
                 Destroy(highlightEffect);
         }
@@ -68,15 +82,6 @@ namespace PrototypeGame
         }
 
         public CellState GetCellState() { return state; }
-
-        public void ApplyHighlight(GameObject effect)
-        {
-            highlighted = true;
-            if (highlightEffect != null)
-                Destroy(highlightEffect);
-            highlightEffect = Instantiate(effect, transform.position, transform.rotation);
-            highlightEffect.transform.SetParent(transform);
-        }
     }
 
     [System.Serializable]
@@ -144,6 +149,11 @@ namespace PrototypeGame
         public IntVector2 Subtract(IntVector2 index)
         {
             return new IntVector2(this.x - index.x, this.y - index.y);
+        }
+
+        public int Distance(IntVector2 a)
+        {
+            return (int)Mathf.Abs(x - a.x) + (int)Mathf.Abs(y - a.y);
         }
     }
 }

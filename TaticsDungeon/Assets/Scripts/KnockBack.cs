@@ -13,7 +13,7 @@ namespace PrototypeGame
         {
             TaticalMovement taticalMovement = animator.GetComponent<TaticalMovement>();
             targetPosition = taticalMovement.moveLocation;
-            animator.GetComponent<CharacterStateManager>().characterAction = "LyingDown";
+            animator.GetComponent<CharacterStateManager>().characterAction = CharacterAction.LyingDown;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
