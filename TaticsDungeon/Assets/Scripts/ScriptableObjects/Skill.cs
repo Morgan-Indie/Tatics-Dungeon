@@ -23,6 +23,7 @@ namespace PrototypeGame
         CastOil,
         CastPoison,
         CastShock,
+        FireStorm,
     };
 
     public enum CastableShape
@@ -60,6 +61,7 @@ namespace PrototypeGame
         public int APcost;
         public SkillType type;
         public int coolDown;
+        public GameObject effectPrefab;
 
         [ConditionalHide("type", (int)SkillType.Castable)]
         public CastableSettings castableSettings;

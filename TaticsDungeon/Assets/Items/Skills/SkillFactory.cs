@@ -11,7 +11,7 @@ namespace PrototypeGame
         Move,
         ShieldCharge,
         RangeAttack,
-        Castable
+        Castable,
     }
 
     [System.Serializable]
@@ -61,6 +61,9 @@ namespace PrototypeGame
                             break;
                         case (CastableSpell.CastShock):
                             CastShock.Activate(characterStats, animationHandler, taticalMovement, skill, delta);
+                            break;
+                        case (CastableSpell.FireStorm):
+                            FireStorm.Activate(characterStats, animationHandler, taticalMovement, skill, delta);
                             break;
                     }
                     break;

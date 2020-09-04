@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HealField
+  m_Shader: {fileID: -6465566751694194690, guid: 3fdbe778a03b1204f8df12fddd45bd61,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_920CB3D5:
+        m_Texture: {fileID: 2800000, guid: 37b6249cda7b80043a6c4ef81fe5291f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_1F383FBA: 0.59
+    - Vector1_96CC58C0: 0.2
+    - Vector1_BFB2FBC8: 7.5
+    m_Colors:
+    - Color_44DA1BFB: {r: 0.4117974, g: 4.594794, b: 4.217504, a: 0}

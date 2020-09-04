@@ -764,7 +764,7 @@ RectTransform:
   - {fileID: 1103952856}
   - {fileID: 1268537437}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1834,6 +1834,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: faa23ca282a6e7e4086ae2c0dcce9a70,
         type: 2}
+    - target: {fileID: 306594214909376139, guid: dbef1ad53e25e9e41a81c041caa74373,
+        type: 3}
+      propertyPath: skills.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 784cc7f428848cc40bd4b6feeefc2834,
+        type: 2}
     - target: {fileID: 831799078184822845, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -2871,6 +2877,7 @@ GameObject:
   - component: {fileID: 2143576070}
   - component: {fileID: 2143576074}
   - component: {fileID: 2143576075}
+  - component: {fileID: 2143576072}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2981,6 +2988,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2143576072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143576066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 219864e35c3d4974f8dc55f65764af56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2143576073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3035,6 +3054,8 @@ MonoBehaviour:
   BurningEffectPrefab: {fileID: 6375987105220089366, guid: 77ceab1076bfe054f8e8c611a10f3c83,
     type: 3}
   InfernoEffectPrefab: {fileID: 4029089394443433646, guid: dca4d7a29be926241a5800769bfa064b,
+    type: 3}
+  ChillEffectPrefab: {fileID: 4332221713764172744, guid: 6ecbfd6cef8f3414bb27f9933e7e1628,
     type: 3}
   ShockSolidEffectPrefab: {fileID: 1740139871691603000, guid: 96ce0b7f879da024da2a47ad8f1ba447,
     type: 3}
@@ -3894,7 +3915,7 @@ PrefabInstance:
     - target: {fileID: 7848430310830141171, guid: e2018849fe655fa419a569b7ea3d7d5d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7848430310830141171, guid: e2018849fe655fa419a569b7ea3d7d5d,
         type: 3}

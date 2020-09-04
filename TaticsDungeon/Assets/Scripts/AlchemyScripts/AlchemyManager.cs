@@ -10,7 +10,7 @@ namespace PrototypeGame
 
     public enum BlessingState { Neutral, Blessed, Cursed};
 
-    public enum FireState { Dry, Burning, Inferno};
+    public enum FireState { Chill, Dry, Burning, Inferno};
 
     public enum ShockState { Dry, Shocked};
 
@@ -37,6 +37,9 @@ namespace PrototypeGame
         [Header("Fire")]
         public GameObject BurningEffectPrefab;
         public GameObject InfernoEffectPrefab;
+
+        [Header("Chill")]
+        public GameObject ChillEffectPrefab;
 
         [Header("Shock")]
         public GameObject ShockSolidEffectPrefab;
@@ -67,6 +70,9 @@ namespace PrototypeGame
                 ApplyHeatInternal(cellState);
                 if (liquid != LiquidPhaseState.Oil)
                     ReduceFireState(cellState);
+            } else if ((int)cellState.fireState < (int)FireState.Dry)
+            {
+                ApplyChillInternal(cellState);
             }
             ShockCheck(cellState);
             ApplyVFX(cellState);
@@ -101,6 +107,8 @@ namespace PrototypeGame
         public void ApplyChill(CellAlchemyState cellState)
         {
             ApplyChillInternal(cellState);
+            if (changeValues.Contains(ChangeValues.Solid) || changeValues.Contains(ChangeValues.Liquid) && cellState.fireState == FireState.Chill)
+                cellState.fireState = FireState.Dry;
             ApplyVFX(cellState);
         }
 
@@ -108,6 +116,7 @@ namespace PrototypeGame
         {
             LiquidToSolid(cellState);
             GasToLiquid(cellState);
+            ReduceFireWithChill(cellState);
             if (itters - 1 > 0)
                 ApplyChillInternal(cellState, itters - 1);
         }
@@ -187,6 +196,17 @@ namespace PrototypeGame
             for (int i = 0; i < levels; i++)
             {
                 if ((int)cellState.fireState > (int)FireState.Dry)
+                {
+                    cellState.fireState -= 1;
+                    changeValues.Add(ChangeValues.Fire);
+                }
+            }
+        }
+        void ReduceFireWithChill(CellAlchemyState cellState, int levels = 1)
+        {
+            for (int i = 0; i < levels; i++)
+            {
+                if ((int)cellState.fireState > (int)FireState.Chill)
                 {
                     cellState.fireState -= 1;
                     changeValues.Add(ChangeValues.Fire);
@@ -318,6 +338,9 @@ namespace PrototypeGame
                     case (ChangeValues.Fire):
                         switch (cellState.fireState)
                         {
+                            case (FireState.Chill):
+                                cellState.fireEffect = Instantiate(ChillEffectPrefab, cellState.transform.position, cellState.transform.rotation);
+                                break;
                             case (FireState.Burning):
                                 cellState.fireEffect = Instantiate(BurningEffectPrefab, cellState.transform.position, cellState.transform.rotation);
                                 break;

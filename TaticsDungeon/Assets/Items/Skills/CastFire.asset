@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: CastFire
   skillClass: 0
-  icon: {fileID: 21300000, guid: a59c751c587cf3a41857354161b41609, type: 3}
+  icon: {fileID: 21300000, guid: d4b2cd9adb4374545a4cedd6969d029d, type: 3}
   LevelRequired: 0
   APcost: 0
   type: 4
   coolDown: 0
+  effectPrefab: {fileID: 0}
   castableSettings:
     castableSpell: 0
     range: 4
