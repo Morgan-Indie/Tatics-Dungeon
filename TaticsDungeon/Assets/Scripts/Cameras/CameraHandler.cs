@@ -11,7 +11,7 @@ namespace PrototypeGame
         public float rotateSpeed = 100f;
 
         public float zoomSpeed = 10f;
-        public float maxZoom = 3f, minZoom = 12f;
+        public float maxZoom = 3f, minZoom = 8f;
         public static CameraHandler instance = null;
         public Quaternion pivotRotation;
         public Quaternion lookRotation;

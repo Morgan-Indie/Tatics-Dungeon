@@ -83,6 +83,11 @@ namespace PrototypeGame
                 characterStatusLayout.AddPlayerStatusPanel(player.Value);
             foreach (var enemy in enemiesDict)
                 characterStatusLayout.AddEnemyStatusPanel(enemy.Value);
+<<<<<<< Updated upstream
+=======
+            gameState = GameState.Ready;
+            Debug.Log("GameManager Start Method Completed");
+>>>>>>> Stashed changes
         }
 
         public void Update()

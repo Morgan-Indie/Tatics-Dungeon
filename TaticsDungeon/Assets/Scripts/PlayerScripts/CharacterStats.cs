@@ -142,6 +142,11 @@ namespace PrototypeGame
             if (currentHealth <= 0)
             {
                 stateManager.characterState = CharacterState.Dead;
+<<<<<<< Updated upstream
+=======
+                taticalMovement.currentCell.occupyingObject = null;
+                taticalMovement.currentCell.state = CellState.open;
+>>>>>>> Stashed changes
                 animationHandler.PlayTargetAnimation("Death");
             }
 

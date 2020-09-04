@@ -7,10 +7,11 @@ namespace PrototypeGame
     public class TaticalMovement : MonoBehaviour
     {
         [Header("Required")]
-        public GridMapAdapter mapAdapter;
         public Collider triggerCollider;
+        public GridMapAdapter mapAdapter;
 
         InputHandler inputHandler;
+        
         Transform characterTransform;
         Camera isometricCamera;
         AnimationHandler animationHandler;
@@ -23,7 +24,6 @@ namespace PrototypeGame
 
         public LayerMask characterCheckLayerMask;
         public LayerMask attackCheckLayerMask;
-        public GameObject navDummy;
         public IntVector2 currentIndex;
         public GridCell currentCell;
         public IntVector2 targetIndex;
@@ -59,7 +59,7 @@ namespace PrototypeGame
         {                           
             SetCurrentIndex();
             currentCell = mapAdapter.GetCellByIndex(currentIndex);
-            currentCell.SetCharacter(this.gameObject);
+            currentCell.SetOccupiedObject(this.gameObject);
 
             CellState cellstate;
             if (gameObject.tag=="Player")
@@ -73,7 +73,7 @@ namespace PrototypeGame
 
         public void UpdateGridState()
         {            
-            currentCell.SetCharacter(null);
+            currentCell.SetOccupiedObject(null);
             
             currentCell.state=CellState.open;
             GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
@@ -154,6 +154,8 @@ namespace PrototypeGame
             InputHandler.instance.tacticsXInput = false;
             GridCell cell = mapAdapter.GetCellByIndex(targetIndex);
             moveLocation = cell.transform.position;
+            if (cell.isStairs)
+                moveLocation += Vector3.up*.75f;
             
             characterStats.UseAP(distance);
             stateManager.characterAction = CharacterAction.Moving;
@@ -165,6 +167,7 @@ namespace PrototypeGame
 
         public void TraverseToDestination(float delta)
         {
+<<<<<<< Updated upstream
             if ((nextPos - transform.position).magnitude < .15)
             {
                 if ((transform.position - moveLocation).magnitude <= .15)
@@ -186,11 +189,34 @@ namespace PrototypeGame
                     currentPathIndex++;
                     nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
                 }
+=======
+            if ((transform.position - moveLocation).magnitude <= .2)
+            {
+                UpdateGridState();
+                characterRigidBody.velocity = Vector3.zero;
+
+                animationHandler.UpdateAnimatorValues(delta, 0f);
+                transform.position = moveLocation;
+                currentPathIndex = 0;
+                SetCurrentNavDict();
+
+                stateManager.characterAction = CharacterAction.None;
+                stateManager.characterState = CharacterState.Ready;
+                characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
+                Debug.Log(characterStats.characterName + " Reached Destination");
+            }
+            else if ((nextPos - transform.position).magnitude < .2)
+            {
+                currentPathIndex++;
+                nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
+>>>>>>> Stashed changes
             }
 
             else
             {
-                Vector3 currentDirection = (nextPos - transform.position).normalized;
+                Vector3 currentDirection = (nextPos - transform.position);
+                currentDirection.y = 0;
+                currentDirection.Normalize();
                 HandleRotation(delta, currentDirection);
                 characterRigidBody.velocity = currentDirection * movementSpeed;
                 animationHandler.UpdateAnimatorValues(delta, 1f);
