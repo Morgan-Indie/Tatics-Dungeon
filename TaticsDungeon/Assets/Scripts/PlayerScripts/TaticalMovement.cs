@@ -177,7 +177,6 @@ namespace PrototypeGame
             InputHandler.instance.tacticsXInput = false;
             GridCell cell = mapAdapter.GetCellByIndex(targetIndex);
             moveLocation = cell.transform.position;
-            moveLocation += cell.height * GridMetrics.squareSize*Vector3.up;
 
             if (cell.isStairs)
                 moveLocation += Vector3.up * .75f;

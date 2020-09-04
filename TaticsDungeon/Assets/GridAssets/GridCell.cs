@@ -31,6 +31,7 @@ namespace PrototypeGame
         public void Start()
         {
             alchemyState = GetComponent<CellAlchemyState>();
+            transform.position = new Vector3(transform.position.x, transform.position.y + height * GridMetrics.heightIncrement, transform.position.z);
         }
 
         public Color GetColor()
@@ -99,7 +100,7 @@ namespace PrototypeGame
             highlighted = true;
             if (highlightEffect != null)
                 Destroy(highlightEffect);
-            highlightEffect = Instantiate(effect, new Vector3(transform.position.x, transform.position.y + height * GridMetrics.heightIncrement, transform.position.z), transform.rotation);
+            highlightEffect = Instantiate(effect, transform.position, transform.rotation);
             highlightEffect.transform.SetParent(transform);
         }
     }

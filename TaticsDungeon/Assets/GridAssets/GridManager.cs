@@ -99,7 +99,7 @@ namespace PrototypeGame
             GridCell[,] cells = mapAdapter.GetCellMatrix();
             foreach (GridCell cell in cells)
             {
-                GameObject ob = Instantiate(tileHighlightPrefab, cell.transform.position + new Vector3(0, 0.3f + GridMetrics.squareSize * cell.height, 0), Quaternion.identity);
+                GameObject ob = Instantiate(tileHighlightPrefab, cell.transform.position + new Vector3(0, 0.3f, 0), Quaternion.identity);
                 ob.transform.SetParent(gridHolder.transform);
             }
         }

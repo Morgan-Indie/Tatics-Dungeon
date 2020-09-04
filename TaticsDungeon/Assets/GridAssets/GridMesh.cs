@@ -75,7 +75,6 @@ namespace PrototypeGame
             if (grid == null) { grid = GetComponentInParent<Grid>(); }
 
             Vector3 center = cell.transform.position;
-            center.y += cell.height * GridMetrics.heightIncrement;
             float sectionSize = GridMetrics.squareSize / GridMetrics.sectionsPerSquare;
             Vector3 topLeft = center + GridMetrics.corners[2];
             Vector3[] t1 = {
@@ -119,7 +118,6 @@ namespace PrototypeGame
             foreach (GridCell cell in cells)
             {
                 Vector3 center = cell.transform.position;
-                center.y += cell.height * GridMetrics.heightIncrement;
                 Vector3 lineOrigin = center - new Vector3(GridMetrics.squareSize / 2, -0.2f, GridMetrics.squareSize / 2) + transform.position;
                 GameObject newLine = Instantiate(LinePrefab, lineOrigin, Quaternion.identity);
                 lines.Add(newLine);

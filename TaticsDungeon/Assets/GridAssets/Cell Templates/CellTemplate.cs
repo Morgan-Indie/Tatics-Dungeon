@@ -205,7 +205,7 @@ namespace PrototypeGame
             public override void BuildPrefab(GridCell cell)
             {
                 float mult = GridMetrics.squareSize / 1.5f;
-                Vector3 obPos = cell.transform.position + offset * mult + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + offset * mult;
                 GameObject ob = Instantiate(prefab, obPos, cell.transform.rotation);
                 ob.transform.localScale = scale * mult;
                 ob.transform.SetParent(cell.transform);
@@ -223,7 +223,7 @@ namespace PrototypeGame
             {
                 float mult = GridMetrics.squareSize / 1.5f;
                 int rand = Random.Range(0, prefabs.Length);
-                Vector3 obPos = cell.transform.position + offsets[rand] * mult + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + offsets[rand] * mult;
                 GameObject ob = Instantiate(prefabs[rand], obPos, cell.transform.rotation);
                 ob.transform.localScale = scales[rand] * mult;
                 ob.transform.SetParent(cell.transform);
@@ -248,7 +248,7 @@ namespace PrototypeGame
                 Vector3 adjustedOffset = dir % 2 == 0 ? offset : new Vector3(offset.z, offset.y, offset.x);
                 adjustedOffset *= mult;
                 Vector3[] wallDirections = { new Vector3(1, 1, -1), new Vector3(-1, 1, -1), new Vector3(-1, 1, 1), new Vector3(1, 1, 1) };
-                Vector3 obPos = cell.transform.position + Vector3.Scale(offset, wallDirections[dir]) + new Vector3(0, (cell.height + height) * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + Vector3.Scale(offset, wallDirections[dir]) + new Vector3(0, (height) * GridMetrics.heightIncrement, 0);
                 GameObject ob = Instantiate(prefab, obPos, cell.transform.rotation);
                 ob.transform.localScale = scale * mult;
                 ob.transform.Rotate(new Vector3(0, 90 * rot, 0));
@@ -273,7 +273,7 @@ namespace PrototypeGame
                 Vector3 adjustedOffset = dir % 2 == 0 ? offsets[rand] : new Vector3(offsets[rand].z, offsets[rand].y, offsets[rand].x);
                 adjustedOffset *= mult;
                 Vector3[] wallDirections = { new Vector3(1, 1, -1), new Vector3(-1, 1, -1), new Vector3(-1, 1, 1), new Vector3(1, 1, 1) };
-                Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, wallDirections[dir]) + new Vector3(0, (cell.height + height) * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, wallDirections[dir]) + new Vector3(0, (height) * GridMetrics.heightIncrement, 0);
                 GameObject ob = Instantiate(prefabs[rand], obPos, cell.transform.rotation);
                 ob.transform.localScale = scales[rand] * mult;
                 ob.transform.Rotate(new Vector3(0, 90 * rot, 0));
@@ -296,7 +296,7 @@ namespace PrototypeGame
                 Vector3 adjustedOffset = dir % 2 == 0 ? positiveOffset : new Vector3(positiveOffset.z, positiveOffset.y, positiveOffset.x);
                 adjustedOffset *= mult;
                 Vector3[] railingDirections = { new Vector3(-1, 1, 1), new Vector3(-1, 1, -1), new Vector3(1, 1, -1), new Vector3(1, 1, 1) };
-                Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, railingDirections[dir]) + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, railingDirections[dir]);
                 GameObject ob = Instantiate(prefab, obPos, cell.transform.rotation);
                 ob.transform.localScale = scale * mult;
                 ob.transform.Rotate(new Vector3(0, 90 * dir, 0));
@@ -318,7 +318,7 @@ namespace PrototypeGame
                 Vector3 adjustedOffset = dir % 2 == 0 ? positiveOffsets[rand] : new Vector3(positiveOffsets[rand].z, positiveOffsets[rand].y, positiveOffsets[rand].x);
                 adjustedOffset *= mult;
                 Vector3[] railingDirections = { new Vector3(-1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, -1), new Vector3(-1, 1, -1) };
-                Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, railingDirections[dir]) + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, railingDirections[dir]);
                 GameObject ob = Instantiate(prefabs[rand], obPos, cell.transform.rotation);
                 ob.transform.localScale = scales[rand] * mult;
                 ob.transform.Rotate(new Vector3(0, 90 * dir, 0));
@@ -342,7 +342,7 @@ namespace PrototypeGame
             {
                 float mult = GridMetrics.squareSize / 1.5f;
                 if (Random.Range(0f, 100f) > percentToSpawn) { return; }
-                Vector3 obPos = cell.transform.position + offset * mult + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + offset * mult;
                 GameObject ob = Instantiate(prefab, obPos, cell.transform.rotation);
                 ob.transform.localScale = scale * mult;
                 ob.transform.SetParent(cell.transform);
@@ -364,7 +364,7 @@ namespace PrototypeGame
                 float mult = GridMetrics.squareSize / 1.5f;
                 if (Random.Range(0f, 100f) > percentToSpawn) { return; }
                 int rand = Random.Range(0, prefabs.Length);
-                Vector3 obPos = cell.transform.position + offsets[rand] * mult + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + offsets[rand] * mult;
                 GameObject ob = Instantiate(prefabs[rand], obPos, cell.transform.rotation);
                 ob.transform.localScale = scales[rand] * mult;
                 ob.transform.SetParent(cell.transform);
@@ -388,7 +388,7 @@ namespace PrototypeGame
                 float mult = GridMetrics.squareSize / 1.5f;
                 if (Random.Range(0f, 100f) > percentToSpawn) { return; }
                 Vector3 randOffset = new Vector3(Random.Range(0f, randomLimit.x * 2) - randomLimit.x, Random.Range(0f, randomLimit.y * 2) - randomLimit.y, Random.Range(0f, randomLimit.z * 2) - randomLimit.z);
-                Vector3 obPos = cell.transform.position + offset * mult + randOffset + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + offset * mult + randOffset;
                 GameObject ob = Instantiate(prefab, obPos, cell.transform.rotation);
                 ob.transform.localScale = scale * mult;
                 ob.transform.SetParent(cell.transform);
@@ -411,7 +411,7 @@ namespace PrototypeGame
                 if (Random.Range(0f, 100f) > percentToSpawn) { return; }
                 int rand = Random.Range(0, prefabs.Length);
                 Vector3 randOffset = new Vector3(Random.Range(0f, randomLimit.x * 2) - randomLimit.x, Random.Range(0f, randomLimit.y * 2) - randomLimit.y, Random.Range(0f, randomLimit.z * 2) - randomLimit.z);
-                Vector3 obPos = cell.transform.position + offsets[rand] * mult + randOffset + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + offsets[rand] * mult + randOffset;
                 GameObject ob = Instantiate(prefabs[rand], obPos, cell.transform.rotation);
                 ob.transform.localScale = scales[rand] * mult;
                 ob.transform.SetParent(cell.transform);
@@ -442,7 +442,7 @@ namespace PrototypeGame
                 Vector3 adjustedOffset = dir % 2 == 0 ? offset : new Vector3(offset.z, offset.y, offset.x);
                 adjustedOffset *= mult;
                 Vector3[] stairDirections = { new Vector3(-1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, -1), new Vector3(-1, 1, -1) };
-                Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, stairDirections[dir]) + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, stairDirections[dir]);
                 GameObject ob = Instantiate(prefab, obPos, cell.transform.rotation);
                 ob.transform.localScale = scale * mult;
                 ob.transform.Rotate(new Vector3(0, 90 * dir + rotationOffset, 0));
@@ -517,7 +517,7 @@ namespace PrototypeGame
                 Vector3 adjustedOffset = dir % 2 == 0 ? offsets[rand] : new Vector3(offsets[rand].z, offsets[rand].y, offsets[rand].x);
                 adjustedOffset *= mult;
                 Vector3[] stairDirections = { new Vector3(-1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, -1), new Vector3(-1, 1, -1) };
-                Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, stairDirections[dir]) + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, stairDirections[dir]);
                 GameObject ob = Instantiate(prefabs[rand], obPos, cell.transform.rotation);
                 ob.transform.localScale = scales[rand] * mult;
                 ob.transform.Rotate(new Vector3(0, 90 * dir + rotationOffset, 0));
@@ -585,7 +585,7 @@ namespace PrototypeGame
                     Vector3 adjustedOffset = dir % 2 == 0 ? offsets[i] : new Vector3(offsets[i].z, offsets[i].y, offsets[i].x);
                     adjustedOffset *= mult;
                     Vector3[] stairDirections = { new Vector3(-1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, -1), new Vector3(-1, 1, -1) };
-                    Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, stairDirections[dir]) + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                    Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, stairDirections[dir]);
                     GameObject ob = Instantiate(prefabs[i], obPos, cell.transform.rotation);
                     ob.transform.localScale = scales[i] * mult;
                     ob.transform.Rotate(new Vector3(0, 90 * dir + rotationOffsets[i], 0));
@@ -614,7 +614,7 @@ namespace PrototypeGame
                     Vector3 adjustedOffset = dir % 2 == 0 ? offsets[i] : new Vector3(offsets[i].z, offsets[i].y, offsets[i].x);
                     adjustedOffset *= mult;
                     Vector3[] stairDirections = { new Vector3(-1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, -1), new Vector3(-1, 1, -1) };
-                    Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, stairDirections[dir]) + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                    Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, stairDirections[dir]);
                     GameObject ob = Instantiate(prefabs[i], obPos, cell.transform.rotation);
                     ob.transform.localScale = scales[i] * mult;
                     ob.transform.Rotate(new Vector3(0, 90 * dir + rotationOffsets[i], 0));
@@ -695,7 +695,7 @@ namespace PrototypeGame
                 Vector3[] pathDir = { new Vector3(-1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, -1), new Vector3(-1, 1, -1) };
                 //swap the x and z of the offset for ever second 90 degree rotation
                 Vector3 processedOffset = dir % 2 == 0 ? offsets[mode] : new Vector3(offsets[mode].z, offsets[mode].y, offsets[mode].x);
-                Vector3 obPos = cell.transform.position + Vector3.Scale(pathDir[dir], processedOffset) * mult + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + Vector3.Scale(pathDir[dir], processedOffset) * mult;
                 GameObject ob = Instantiate(prefab, obPos, cell.transform.rotation);
                 ob.transform.localScale = scales[mode] * mult;
                 ob.transform.Rotate(new Vector3(0, 90 * dir + rotationOffsets[mode], 0));
@@ -724,7 +724,7 @@ namespace PrototypeGame
                     Vector3 adjustedOffset = dir % 2 == 0 ? offsets[i] : new Vector3(offsets[i].z, offsets[i].y, offsets[i].x);
                     adjustedOffset *= mult;
                     Vector3[] stairDirections = { new Vector3(-1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, -1), new Vector3(-1, 1, -1) };
-                    Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, stairDirections[dir]) + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                    Vector3 obPos = cell.transform.position + Vector3.Scale(adjustedOffset, stairDirections[dir]);
                     GameObject ob = Instantiate(prefabs[i], obPos, cell.transform.rotation);
                     ob.transform.localScale = scales[i] * mult;
                     ob.transform.Rotate(new Vector3(0, 90 * dir + rotationOffsets[i], 0));
@@ -830,7 +830,7 @@ namespace PrototypeGame
                 Vector3[] riverDir = { new Vector3(-1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, -1), new Vector3(-1, 1, -1) };
                 GameObject prefab = isCorner ? cornerPrefab : straightPrefab;
                 int index = isCorner ? 1 : 0;
-                Vector3 obPos = cell.transform.position + Vector3.Scale(riverDir[dir], offsets[index]) * mult + new Vector3(0, cell.height * GridMetrics.heightIncrement, 0);
+                Vector3 obPos = cell.transform.position + Vector3.Scale(riverDir[dir], offsets[index]) * mult;
                 GameObject ob = Instantiate(prefab, obPos, cell.transform.rotation);
                 ob.transform.localScale = scales[index] * mult;
                 ob.transform.Rotate(new Vector3(0, 90 * dir + rotationOffset, 0));
