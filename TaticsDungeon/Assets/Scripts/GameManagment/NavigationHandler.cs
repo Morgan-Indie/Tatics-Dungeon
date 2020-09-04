@@ -26,49 +26,83 @@ namespace PrototypeGame
 
             List<(IntVector2, int)> que = new List<(IntVector2, int)>() { (currentIndex, 0) };
 
+            void UpdateNavDicts(IntVector2 currentCellIndex, IntVector2 nextCellIndex, bool targetDictOnly = false)
+            {
+                int altDistance = cellDistances[currentCellIndex] + 1;
+                if (!cellDistances.ContainsKey(nextCellIndex) || altDistance < cellDistances[nextCellIndex])
+                {
+                    cellDistances[nextCellIndex] = altDistance;
+                    prevCellTargets[nextCellIndex] = currentCellIndex;
+                    if (!targetDictOnly)
+                        prevCellNav[nextCellIndex] = currentCellIndex;
+
+                }
+                if (!targetDictOnly)
+                {
+                    if (!que.Contains((nextCellIndex, cellDistances[nextCellIndex])))
+                        que.Add((nextCellIndex, cellDistances[nextCellIndex]));
+                }
+            }
+
             while (que.Count != 0)
             {
                 que.Sort((c1, c2) => c1.Item2.CompareTo(c2.Item2));
-                IntVector2 currentCell = que[0].Item1;
+                IntVector2 currentCellIndex = que[0].Item1;
                 que.RemoveAt(0);
 
-                visited.Add(currentCell);
+                visited.Add(currentCellIndex);
 
                 List<IntVector2> validMoves = new List<IntVector2>()
                 {
-                    new IntVector2(currentCell.x+1,currentCell.y),
-                    new IntVector2(currentCell.x-1,currentCell.y),
-                    new IntVector2(currentCell.x,currentCell.y+1),
-                    new IntVector2(currentCell.x,currentCell.y-1)
+                    new IntVector2(currentCellIndex.x+1,currentCellIndex.y),
+                    new IntVector2(currentCellIndex.x-1,currentCellIndex.y),
+                    new IntVector2(currentCellIndex.x,currentCellIndex.y+1),
+                    new IntVector2(currentCellIndex.x,currentCellIndex.y-1)
                 };
 
-                foreach (IntVector2 move in validMoves)
+                foreach (IntVector2 nextCellIndex in validMoves)
                 {
-                    //if (move.Equals(new IntVector2()));
-
-                    if (move.IsValid(gridMapAdapter) && move.GetDistance(currentIndex) <= AP &&
-                          GridManager.Instance.gridState[move.x, move.y] != CellState.obstacle && !visited.Contains(move))
+                    if (nextCellIndex.IsValid(gridMapAdapter) && nextCellIndex.GetDistance(currentIndex) <= AP &&
+                          gridMapAdapter.GetCellByIndex(nextCellIndex).state != CellState.obstacle && !visited.Contains(nextCellIndex))
                     {
-                        if (GridManager.Instance.gridState[move.x, move.y] == CellState.open)
+                        GridCell currentCell = gridMapAdapter.GetCellByIndex(currentCellIndex);
+                        GridCell nextCell = gridMapAdapter.GetCellByIndex(nextCellIndex);
+
+                        if (nextCell.state == CellState.open)
                         {
-                            int altDistance = cellDistances[currentCell] + 1;
-                            if (!cellDistances.ContainsKey(move) || altDistance < cellDistances[move])
+                            Debug.Log(nextCellIndex);
+                            if (nextCell.isStairs)
                             {
-                                cellDistances[move] = altDistance;
-                                prevCellNav[move] = currentCell;
-                                prevCellTargets[move] = currentCell;
+                                if (currentCellIndex.Equals(nextCell.stairExits.Item1) || currentCellIndex.Equals(nextCell.stairExits.Item2))
+                                    UpdateNavDicts(currentCellIndex, nextCellIndex);
                             }
-                            if (!que.Contains((move, cellDistances[move])))
-                                que.Add((move, cellDistances[move]));
+
+                            else if (currentCell.isStairs)
+                            {
+                                if (currentCell.stairExits.Item1.Equals(nextCellIndex) || currentCell.stairExits.Item2.Equals(nextCellIndex))
+                                    UpdateNavDicts(currentCellIndex, nextCellIndex);
+                            }
+
+                            else if (currentCell.height == nextCell.height)
+                                UpdateNavDicts(currentCellIndex, nextCellIndex);
+                            
                         }
                         else
                         {
-                            int altDistance = cellDistances[currentCell] + 1;
-                            if (!cellDistances.ContainsKey(move) || altDistance < cellDistances[move])
+                            if (nextCell.isStairs)
                             {
-                                cellDistances[move] = altDistance;
-                                prevCellTargets[move] = currentCell;
+                                if (currentCellIndex.Equals(nextCell.stairExits.Item1) || currentCellIndex.Equals(nextCell.stairExits.Item2))
+                                    UpdateNavDicts(currentCellIndex, nextCellIndex,true);
                             }
+
+                            else if (currentCell.isStairs)
+                            {
+                                if (currentCell.stairExits.Item1.Equals(nextCellIndex) || currentCell.stairExits.Item2.Equals(nextCellIndex))
+                                    UpdateNavDicts(currentCellIndex, nextCellIndex,true);
+                            }
+
+                            else if (currentCell.height == nextCell.height)
+                                UpdateNavDicts(currentCellIndex, nextCellIndex,true);
                         }
                     }
                 }

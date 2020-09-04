@@ -152,11 +152,33 @@ namespace PrototypeGame
             Debug.Log(characterStats.characterName +" NavDict Updated");
         }
 
+        public void SetNextPos(IntVector2 nextIndex)
+        {
+            GridCell nextCell = mapAdapter.GetCellByIndex(nextIndex);
+            nextPos = nextCell.transform.position + nextCell.height * GridMetrics.squareSize * Vector3.up;
+            if (nextCell.isStairs)
+            {
+                nextPos += Vector3.up * .75f;
+            }
+        }
+
+        private bool ReachedPosition(Vector3 CP, Vector3 NP)
+        {
+            float dist = Mathf.Sqrt(Mathf.Pow(CP.x - NP.x, 2) + Mathf.Pow(CP.z - NP.z, 2));
+            if (dist <= .2)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void SetTargetDestination(IntVector2 targetIndex, int distance)
         {
             InputHandler.instance.tacticsXInput = false;
             GridCell cell = mapAdapter.GetCellByIndex(targetIndex);
             moveLocation = cell.transform.position;
+            moveLocation += cell.height * GridMetrics.squareSize*Vector3.up;
+
             if (cell.isStairs)
                 moveLocation += Vector3.up * .75f;
             
@@ -164,15 +186,15 @@ namespace PrototypeGame
             stateManager.characterAction = CharacterAction.Moving;
             stateManager.characterState = CharacterState.IsInteracting;
             characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-            currentPathIndex = 0;            
-            
-            nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
+            currentPathIndex = 1;
+
+            SetNextPos(path[currentPathIndex]);
             Debug.Log(characterStats.characterName + " Setting Destination");    
         }
 
         public void TraverseToDestination(float delta)
         {
-            if ((transform.position - moveLocation).magnitude <= .2)
+            if (ReachedPosition(transform.position,moveLocation))
             {
                 UpdateGridState();
                 characterRigidBody.velocity = Vector3.zero;
@@ -188,10 +210,10 @@ namespace PrototypeGame
                 Debug.Log(characterStats.characterName + " Reached Destination");
             }
 
-            else if ((transform.position - nextPos).magnitude <= .2)
+            else if ((ReachedPosition(transform.position, nextPos)))
             {
                 currentPathIndex++;
-                nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
+                SetNextPos(path[currentPathIndex]);
             }
 
             else
@@ -201,6 +223,13 @@ namespace PrototypeGame
                 currentDirection.Normalize();
                 HandleRotation(delta, currentDirection);
                 characterRigidBody.velocity = currentDirection * movementSpeed;
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position,Vector3.down,out hit))
+                {
+                    if (hit.distance >.35 && (transform.position.y-nextPos.y)>.2)
+                        characterRigidBody.velocity += (Vector3.down * 500f * delta);
+                }
+                    
                 animationHandler.UpdateAnimatorValues(delta, 1f);
             }
         }

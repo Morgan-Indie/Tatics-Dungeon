@@ -39,7 +39,7 @@ namespace PrototypeGame
         public void DisableCharacter()
         {
             GameManager.instance.playersDict.Remove(characterStats.characterName);
-            gameObject.transform.parent.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         // Update is called once per frame
