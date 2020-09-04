@@ -157,6 +157,8 @@ namespace PrototypeGame
             InputHandler.instance.tacticsXInput = false;
             GridCell cell = mapAdapter.GetCellByIndex(targetIndex);
             moveLocation = cell.transform.position;
+            if (cell.isStairs)
+                moveLocation += Vector3.up * .75f;
             
             characterStats.UseAP(distance);
             stateManager.characterAction = CharacterAction.Moving;
@@ -170,34 +172,33 @@ namespace PrototypeGame
 
         public void TraverseToDestination(float delta)
         {
-            if ((nextPos - transform.position).magnitude < .2)
+            if ((transform.position - moveLocation).magnitude <= .2)
             {
-                if ((transform.position - moveLocation).magnitude <= .2)
-                {
-                    UpdateGridState();
-                    characterRigidBody.velocity = Vector3.zero;
-                                        
-                    animationHandler.UpdateAnimatorValues(delta, 0f);   
-                    transform.position = moveLocation;
-                    currentPathIndex = 0;                    
-                    SetCurrentNavDict();
+                UpdateGridState();
+                characterRigidBody.velocity = Vector3.zero;
 
-                    stateManager.characterAction = CharacterAction.None;
-                    stateManager.characterState = CharacterState.Ready;
-                    characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
-                    Debug.Log(characterStats.characterName + " Reached Destination"); 
-                }
+                animationHandler.UpdateAnimatorValues(delta, 0f);
+                transform.position = moveLocation;
+                currentPathIndex = 0;
+                SetCurrentNavDict();
 
-                else
-                {
-                    currentPathIndex++;
-                    nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
-                }
+                stateManager.characterAction = CharacterAction.None;
+                stateManager.characterState = CharacterState.Ready;
+                characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
+                Debug.Log(characterStats.characterName + " Reached Destination");
+            }
+
+            else if ((transform.position - nextPos).magnitude <= .2)
+            {
+                currentPathIndex++;
+                nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
             }
 
             else
             {
-                Vector3 currentDirection = (nextPos - transform.position).normalized;
+                Vector3 currentDirection = (nextPos - transform.position);
+                currentDirection.y = 0f;
+                currentDirection.Normalize();
                 HandleRotation(delta, currentDirection);
                 characterRigidBody.velocity = currentDirection * movementSpeed;
                 animationHandler.UpdateAnimatorValues(delta, 1f);

@@ -145,7 +145,7 @@ namespace PrototypeGame
             if (currentHealth <= 0)
             {
                 stateManager.characterState = CharacterState.Dead;
-                taticalMovement.currentCell.character = null;
+                taticalMovement.currentCell.occupyingObject = null;
                 taticalMovement.currentCell.state = CellState.open;
                 animationHandler.PlayTargetAnimation("Death");
             }

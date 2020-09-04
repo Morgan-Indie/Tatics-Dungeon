@@ -87,8 +87,7 @@ namespace PrototypeGame
                 while (!index.Equals(currentIndex))
                 {
                     path.Add(index);
-                    if (currentNavDict.ContainsKey(index))
-                        index = currentNavDict[index];
+                    index = currentNavDict[index];
                 }
                 path.Add(currentIndex);
                 path.Reverse();

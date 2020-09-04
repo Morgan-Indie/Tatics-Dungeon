@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public enum CellState { open, obstacle, occupiedParty, occupiedEnemy };
+    public enum CellState { open, obstacle, occupiedParty, occupiedEnemy , interactable};
 
     public class GridCell : MonoBehaviour
     {
@@ -13,10 +13,11 @@ namespace PrototypeGame
         public CellTemplate cellTemplate;
         bool highlighted = false;
         Color highlightColor = Color.magenta;
-        public GameObject character;
+        public GameObject occupyingObject;
         public CellState state;
         GameObject highlightEffect;
         public CellAlchemyState alchemyState;
+        public bool isStairs=false;
 
         public bool HasAdjacentStair = false;
         //If cell is a stair cell, sets this tuple to its Entrance and Exit respectively 
@@ -60,15 +61,33 @@ namespace PrototypeGame
             gridIndex = new IntVector2(x + mx * maxMeshSize, y + my * maxMeshSize);
         }
 
-        public void SetCharacter(GameObject c) { character = c;}
-        public GameObject GetCharacter() { return character; }
+        public void SetCharacter(GameObject o) { occupyingObject = o;}
+        public GameObject GetCharacter() { return occupyingObject; }
 
         public void SetCellState()
         {
             if (cellTemplate.isARiver || cellTemplate.obstacleMode != 0)
                 state = CellState.obstacle;
-            else if (character != null)
-                state = CellState.occupiedParty;
+
+            else if (cellTemplate.stairMode != CellTemplate.StairMode.None)
+                isStairs = true;
+
+            else if (occupyingObject != null)
+            {
+                switch(occupyingObject.tag)
+                {
+                    case "Player":
+                        state = CellState.occupiedParty;
+                        break;
+                    case "Enemy":
+                        state = CellState.occupiedEnemy;
+                        break;
+                    case "Interactable":
+                        state = CellState.interactable;
+                        break;
+                }
+            }
+
             else
                 state = CellState.open;
         }
