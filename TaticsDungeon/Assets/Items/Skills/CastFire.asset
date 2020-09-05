@@ -21,7 +21,12 @@ MonoBehaviour:
   coolDown: 0
   castableSettings:
     castableSpell: 0
-    range: 1
+    range: 3
+    shape: 2
+    inclusive: 1
+    radius: 2
+    lineOrientation: 0
+    crossOrientation: 0
   strScaleType: 0
   _scaleValueStrength: 0
   vitScaleType: 0

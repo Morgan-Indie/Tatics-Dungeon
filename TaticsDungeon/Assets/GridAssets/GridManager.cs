@@ -4,6 +4,16 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
+    public enum CellHighlightType
+    {
+        None,
+        Walkable,
+        Invalid,
+        Path,
+        InRange,
+        Castable,
+    }
+
     public class GridManager : MonoBehaviour
     {
         public static GridManager Instance { get; private set; }
@@ -35,6 +45,8 @@ namespace PrototypeGame
         public List<GameObject> castableRangeHighlights;
         IntVector2 castableHighlightOrigin = new IntVector2(-1, -1);
         public GameObject castableHighlightPrefab;
+        public GameObject castableValidPrefab;
+        public GameObject testHighlightPrefab;
 
         public CellState[,] gridState;
 
@@ -88,6 +100,7 @@ namespace PrototypeGame
         public void SetMapAdapter(GridMapAdapter m) { mapAdapter = m; }
         public GridCell[,] GetCellNeighbors(GridCell cell) { return mapAdapter.GetNeighbors(cell); }
         public GridCell[] GetCellOrthogonalNeighbors(GridCell cell) { return mapAdapter.GetOrthogonalNeighbors(cell); }
+        public GridCell GetCellByIndex(IntVector2 index) { return mapAdapter.GetCellByIndex(index); }
 
 
         void UpdateGridLineHighlights()
@@ -170,60 +183,33 @@ namespace PrototypeGame
             highlightedPath.Clear();
         }
 
-        public void RemoveCastableHighlight()
+        public void HighlightCastableRange(IntVector2 playerOrigin, IntVector2 castOrigin, Skill skill)
         {
-            foreach (GameObject i in castableRangeHighlights)
+            List<GridCell> rangeCells = CastableShapes.GetRangeCells(skill, playerOrigin);
+            List<GridCell> castRange = CastableShapes.GetCastableCells(skill, castOrigin);
+            List<GridCell> outerRange = CastableShapes.CircularCells(playerOrigin, skill.castableSettings.radius + skill.castableSettings.range, skill.castableSettings.range + 1);
+            foreach (GridCell cell in outerRange)
             {
-                Destroy(i);
+                //  if (!castRange.Contains(cell))
+                //     cell.RemoveHighlight();
+                cell.ApplyHighlight(testHighlightPrefab, CellHighlightType.Invalid);
             }
-            castableRangeHighlights.Clear();
-            castableHighlightOrigin.SetValues(-1, -1);
-        }
 
-        void AddCastableRangeHighlight(IntVector2 index)
-        {
-            castableRangeHighlights.Add(Instantiate(castableHighlightPrefab, mapAdapter.GetPosByIndex(index), Quaternion.identity));
-        }
-
-        public void HighlightCastableRange(IntVector2 index, int range)
-        {
-            if (!index.Equals(castableHighlightOrigin))
+            foreach (GridCell cell in rangeCells)
             {
-                RemoveCastableHighlight();
-                castableHighlightOrigin = index;
-                
-                IntVector2 checkIndex = new IntVector2(index.x, index.y);
-                for (int x = 0; x <= range; x++)
+                cell.ApplyHighlight(castableValidPrefab, CellHighlightType.InRange);
+            }
+            if (castOrigin.GetDistance(playerOrigin) <= skill.castableSettings.range)
+            {
+                foreach (GridCell cell in castRange)
                 {
-                    checkIndex.SetValues(index.x - x, index.y);
-                    if (IndexIsOnGrid(checkIndex))
-                    {
-                        AddCastableRangeHighlight(checkIndex);
-                        for (int y = 1; y <= range - x; y++)
-                        {
-                            checkIndex.SetValues(index.x - x, index.y - y);
-                            if (IndexIsOnGrid(checkIndex)) { AddCastableRangeHighlight(checkIndex); }
-                            checkIndex.SetValues(index.x - x, index.y + y);
-                            if (IndexIsOnGrid(checkIndex)) { AddCastableRangeHighlight(checkIndex); }
-                        }
-                    }
-                    checkIndex.SetValues(index.x + x, index.y);
-                    if (IndexIsOnGrid(checkIndex) && x > 0)
-                    {
-                        AddCastableRangeHighlight(checkIndex);
-                        for (int y = 1; y <= range - x; y++)
-                        {
-                            checkIndex.SetValues(index.x + x, index.y - y);
-                            if (IndexIsOnGrid(checkIndex)) { AddCastableRangeHighlight(checkIndex); }
-                            checkIndex.SetValues(index.x + x, index.y + y);
-                            if (IndexIsOnGrid(checkIndex)) { AddCastableRangeHighlight(checkIndex); }
-                        }
-                    }
+                    cell.ApplyHighlight(castableHighlightPrefab, CellHighlightType.Castable);
                 }
             }
+            
         }
 
-        bool IndexIsOnGrid(IntVector2 index)
+        public bool IndexIsOnGrid(IntVector2 index)
         {
             if (index.x >= 0 &&
                 index.y >= 0 &&

@@ -16,6 +16,7 @@ namespace PrototypeGame
         public GameObject occupyingObject;
         public CellState state;
         GameObject highlightEffect;
+        public CellHighlightType highlightType = CellHighlightType.None;
         public CellAlchemyState alchemyState;
         public bool isStairs=false;
 
@@ -45,6 +46,18 @@ namespace PrototypeGame
         public void Highlight()
         {
             highlighted = true;
+        }
+
+        public void ApplyHighlight(GameObject effect, CellHighlightType type)
+        {
+            if (type == highlightType)
+                return;
+            highlightType = type;
+            highlighted = true;
+            if (highlightEffect != null)
+                Destroy(highlightEffect);
+            highlightEffect = Instantiate(effect, transform.position, transform.rotation);
+            highlightEffect.transform.SetParent(transform);
         }
 
         public void RemoveHighlight()
