@@ -11,7 +11,7 @@ namespace PrototypeGame
         public bool empty;
         public Skill skill;
         public Transform slotIconPanel;
-        public SkillAbstract skillScript;
+        public SkillAbstract skillScript;        
 
         [Header("Required")]
         public Sprite defaultSprite;
@@ -21,7 +21,8 @@ namespace PrototypeGame
             slotIconPanel = transform.GetChild(0);            
         }
 
-        public void UpdateSlot()
+        public void UpdateSlot(CharacterStats characterStats, AnimationHandler animationHandler,
+            TaticalMovement taticalMovement)
         {
             if (skill == null)
                 slotIconPanel.GetComponent<Image>().sprite = defaultSprite;
@@ -29,6 +30,7 @@ namespace PrototypeGame
             {
                 slotIconPanel.GetComponent<Image>().sprite = skill.icon;
                 skillScript = skill.skillScriptObject.GetComponent<SkillObjectInterface>().skillScript;
+                skillScript.AttachToCharacter(characterStats, animationHandler, taticalMovement);
             }
         }
 

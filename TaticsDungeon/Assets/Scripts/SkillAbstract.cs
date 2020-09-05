@@ -17,13 +17,12 @@ namespace PrototypeGame
     {
         public Skill skill;
 
-        public abstract void Activate(CharacterStats characterStats, 
-            AnimationHandler animationHandler, TaticalMovement taticalMovement, 
-            float delta);
+        public abstract void AttachToCharacter(CharacterStats characterStats,
+            AnimationHandler animationHandler, TaticalMovement taticalMovement);
 
-        public abstract void Excute(CharacterStats characterStats,
-            AnimationHandler animationHandler, TaticalMovement taticalMovement,
-            float delta, GridCell targetCell);
+        public abstract void Activate(float delta);
+
+        public abstract void Excute(float delta, GridCell targetCell);
     }
 }
 

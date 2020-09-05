@@ -260,7 +260,7 @@ namespace PrototypeGame
 
         public void UseSkill(SkillAbstract skillScript, float delta)
         {
-            skillScript.Activate(characterStats, animationHandler, this, delta);
+            skillScript.Activate(delta);
         }
 
         public void OnTriggerEnter(Collider other)

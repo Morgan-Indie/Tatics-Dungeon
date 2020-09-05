@@ -7,10 +7,19 @@ namespace PrototypeGame
     public class MeleeAttack : SkillAbstract
     {
         public bool animationCompleted;
+        public CharacterStats characterStats;
+        public AnimationHandler animationHandler;
+        public TaticalMovement taticalMovement;
 
-        public override void Activate(CharacterStats characterStats,
-            AnimationHandler animationHandler, TaticalMovement taticalMovement,
-            float delta)
+        public override void AttachToCharacter(CharacterStats _characterStats, AnimationHandler _animationHandler,
+            TaticalMovement _taticalMovement)
+        {
+            characterStats = _characterStats;
+            animationHandler = _animationHandler;
+            taticalMovement = _taticalMovement;
+        }
+
+        public override void Activate(float delta)
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
             int distance = Mathf.Abs(index.x - taticalMovement.currentIndex.x) + Mathf.Abs(index.y - taticalMovement.currentIndex.y);
@@ -23,14 +32,12 @@ namespace PrototypeGame
                     InputHandler.instance.tacticsXInput = false;
                     GridCell targetCell = taticalMovement.mapAdapter.GetCellByIndex(index);
 
-                    Excute(characterStats,animationHandler, taticalMovement, delta, targetCell);
+                    Excute(delta, targetCell);
                 }
             }
         }
 
-        public override void Excute(CharacterStats characterStats,
-            AnimationHandler animationHandler, TaticalMovement taticalMovement,
-            float delta, GridCell targetCell)
+        public override void Excute(float delta, GridCell targetCell)
         {
             GameObject target = targetCell.GetOccupyingObject();
             if (target != null)

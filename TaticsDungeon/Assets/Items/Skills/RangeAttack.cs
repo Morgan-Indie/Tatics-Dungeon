@@ -6,9 +6,20 @@ namespace PrototypeGame
 {
     public class RangeAttack : SkillAbstract
     {
-        public override void Activate(CharacterStats characterStats,
-                    AnimationHandler animationHandler, TaticalMovement taticalMovement,
-                    float delta)
+        public bool animationCompleted;
+        public CharacterStats characterStats;
+        public AnimationHandler animationHandler;
+        public TaticalMovement taticalMovement;
+
+        public override void AttachToCharacter(CharacterStats _characterStats, AnimationHandler _animationHandler,
+            TaticalMovement _taticalMovement)
+        {
+            characterStats = _characterStats;
+            animationHandler = _animationHandler;
+            taticalMovement = _taticalMovement;
+        }
+
+        public override void Activate(float delta)
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
             int distance = index.GetDistance(taticalMovement.currentIndex);
@@ -20,14 +31,12 @@ namespace PrototypeGame
                     InputHandler.instance.tacticsXInput = false;
                     GridCell targetCell = taticalMovement.mapAdapter.GetCellByIndex(index);
 
-                    Excute(characterStats,animationHandler,taticalMovement,delta, targetCell);
+                    Excute(delta, targetCell);
                 }
             }
         }
 
-        public override void Excute(CharacterStats characterStats,
-            AnimationHandler animationHandler, TaticalMovement taticalMovement,
-            float delta, GridCell targetCell)
+        public override void Excute(float delta, GridCell targetCell)
         {
             GameObject target = targetCell.GetOccupyingObject();
             if (target != null)

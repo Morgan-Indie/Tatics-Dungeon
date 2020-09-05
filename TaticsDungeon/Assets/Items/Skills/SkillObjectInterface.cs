@@ -11,13 +11,13 @@ namespace PrototypeGame
         public void Activate(CharacterStats characterStats,AnimationHandler animationHandler, 
             TaticalMovement taticalMovement,float delta)
         {
-            skillScript.Activate( characterStats,animationHandler,  taticalMovement,  delta);
+            skillScript.Activate(delta);
         }
 
         public void Excute(CharacterStats characterStats,AnimationHandler animationHandler,
             TaticalMovement taticalMovement,float delta, GridCell targetCell)
         {
-            skillScript.Excute(characterStats,animationHandler, taticalMovement, delta, targetCell);
+            skillScript.Excute(delta, targetCell);
         }
     }
 }

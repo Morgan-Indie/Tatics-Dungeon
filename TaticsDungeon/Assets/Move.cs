@@ -6,16 +6,20 @@ namespace PrototypeGame
 {
     public class Move : SkillAbstract
     {
-        public override void Activate(CharacterStats characterStats,
-                    AnimationHandler animationHandler, TaticalMovement taticalMovement,
-                    float delta)
+        public TaticalMovement taticalMovement;
+
+        public override void AttachToCharacter(CharacterStats _characterStats, AnimationHandler _animationHandler,
+            TaticalMovement _taticalMovement)
+        {
+            taticalMovement = _taticalMovement;
+        }
+
+        public override void Activate(float delta)
         {
             taticalMovement.ExcuteMovement(delta);
         }
 
-        public override void Excute(CharacterStats characterStats,
-            AnimationHandler animationHandler, TaticalMovement taticalMovement,
-            float delta, GridCell targetCell)
+        public override void Excute(float delta, GridCell targetCell)
         {
         }
     }

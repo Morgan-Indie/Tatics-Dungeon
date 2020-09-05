@@ -53,7 +53,7 @@ namespace PrototypeGame
                 CameraHandler.instance.HandleCamera(delta);
                 if (GameManager.instance.gameState != GameState.InMenu)
                 {
-                    if (selectedSkill == null)
+                    if (selectedSkill == null || selectedSkill.skill.type == SkillType.Move)
                         taticalMovement.ExcuteMovement(delta);
                     else
                         taticalMovement.UseSkill(selectedSkill, delta);
