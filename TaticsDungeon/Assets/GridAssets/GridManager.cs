@@ -46,7 +46,6 @@ namespace PrototypeGame
         IntVector2 castableHighlightOrigin = new IntVector2(-1, -1);
         public GameObject castableHighlightPrefab;
         public GameObject castableValidPrefab;
-        public GameObject testHighlightPrefab;
 
         public CellState[,] gridState;
 
@@ -168,6 +167,7 @@ namespace PrototypeGame
 
         public void RemoveAllHighlights()
         {
+            /*
             foreach (IntVector2 index in allHighlightedTiles)
             {
                 mapAdapter.GetCellByIndex(index).RemoveHighlight();
@@ -179,8 +179,17 @@ namespace PrototypeGame
                     mapAdapter.GetCellByIndex(index).RemoveHighlight();
                 }
             }
+            */
             allHighlightedTiles.Clear();
             highlightedPath.Clear();
+            
+            for (int y=0; y<mapAdapter.gridMap.height; y++)
+            {
+                for (int x=0; x<mapAdapter.gridMap.width; x++)
+                {
+                    mapAdapter.GetCellByIndex(new IntVector2(x, y)).RemoveHighlight();
+                }
+            }
         }
 
         public void HighlightCastableRange(IntVector2 playerOrigin, IntVector2 castOrigin, Skill skill)
@@ -190,9 +199,8 @@ namespace PrototypeGame
             List<GridCell> outerRange = CastableShapes.CircularCells(playerOrigin, skill.castableSettings.radius + skill.castableSettings.range, skill.castableSettings.range + 1);
             foreach (GridCell cell in outerRange)
             {
-                //  if (!castRange.Contains(cell))
-                //     cell.RemoveHighlight();
-                cell.ApplyHighlight(testHighlightPrefab, CellHighlightType.Invalid);
+                  if (!castRange.Contains(cell))
+                     cell.RemoveHighlight();
             }
 
             foreach (GridCell cell in rangeCells)

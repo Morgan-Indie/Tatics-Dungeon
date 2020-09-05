@@ -65,6 +65,7 @@ namespace PrototypeGame
             highlighted = false;
             if (highlightEffect != null)
                 Destroy(highlightEffect);
+            highlightType = CellHighlightType.None;
         }
 
         public bool IsHighlighted() { return highlighted; }
