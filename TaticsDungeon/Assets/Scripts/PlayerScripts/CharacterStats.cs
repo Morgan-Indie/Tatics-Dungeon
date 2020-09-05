@@ -94,11 +94,11 @@ namespace PrototypeGame
             Dexterity = new Stat(_dexterity);
 
             playerAttributeDict.Add(AttributeType.strength, Strength);
-            playerAttributeDict.Add(AttributeType.dexterity, Vitality);
-            playerAttributeDict.Add(AttributeType.luck, Stamina);
-            playerAttributeDict.Add(AttributeType.vitality, Luck);
-            playerAttributeDict.Add(AttributeType.stamina, Intelligence);
-            playerAttributeDict.Add(AttributeType.intelligence, Dexterity);
+            playerAttributeDict.Add(AttributeType.dexterity, Dexterity);
+            playerAttributeDict.Add(AttributeType.luck, Luck);
+            playerAttributeDict.Add(AttributeType.vitality, Vitality);
+            playerAttributeDict.Add(AttributeType.stamina, Stamina);
+            playerAttributeDict.Add(AttributeType.intelligence, Intelligence);
         }
 
         public void CollectPlayerCombatStats()
