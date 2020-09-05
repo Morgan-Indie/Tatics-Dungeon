@@ -271,12 +271,12 @@ namespace PrototypeGame
             }
         }
 
-        public void SwitchSkill(Skill s)
+        public void SwitchSkill(SkillAbstract skillScript)
         {
             if (currentCharacter.stateManager.characterState!= CharacterState.IsInteracting)
             {
-                currentCharacter.selectedSkill = s;
-                if (s == null || s.type == SkillType.Move)
+                currentCharacter.selectedSkill = skillScript;
+                if (skillScript == null||skillScript.skill.type == SkillType.Move)
                     GridManager.Instance.HighlightNavDict(currentCharacter.taticalMovement.currentNavDict);
                 else
                     GridManager.Instance.RemoveAllHighlights();

@@ -2167,7 +2167,6 @@ GameObject:
   - component: {fileID: 2143576067}
   - component: {fileID: 2143576069}
   - component: {fileID: 2143576073}
-  - component: {fileID: 2143576070}
   - component: {fileID: 2143576075}
   - component: {fileID: 2143576072}
   m_Layer: 0
@@ -2247,18 +2246,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLayout: {fileID: 734044337}
   enemyLayout: {fileID: 1090512653}
---- !u!114 &2143576070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2143576066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcda2de3e592cd648a7f1df92930ae47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &2143576071
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3234,6 +3221,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015926559626107006, guid: e2018849fe655fa419a569b7ea3d7d5d,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015926559626107006, guid: e2018849fe655fa419a569b7ea3d7d5d,
+        type: 3}
+      propertyPath: skills.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015926559626107006, guid: e2018849fe655fa419a569b7ea3d7d5d,
+        type: 3}
+      propertyPath: skills.Array.data[1]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2018849fe655fa419a569b7ea3d7d5d, type: 3}

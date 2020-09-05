@@ -70,7 +70,6 @@ namespace PrototypeGame
 
                         if (nextCell.state == CellState.open)
                         {
-                            Debug.Log(nextCellIndex);
                             if (nextCell.isStairs)
                             {
                                 if (currentCellIndex.Equals(nextCell.stairExits.Item1) || currentCellIndex.Equals(nextCell.stairExits.Item2))

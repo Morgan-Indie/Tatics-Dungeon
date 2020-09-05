@@ -33,7 +33,7 @@ namespace PrototypeGame
             animationHandler.animator.SetBool("Equiped", false);
         }
         
-        public void LoadEquipmentModel(dynamic item)
+        public void LoadEquipmentModel(EquipableItem item)
         {
             if (item == null)
                 return;

@@ -4,83 +4,48 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public static class ShieldCharge
+    public class ShieldCharge : SkillAbstract
     {
-        public static GameObject target=null;
-        static Vector3 targetDirection;
-        static Vector3 targetPos;
+        public GameObject target=null;
+        public Vector3 targetDirection;
+        public Vector3 targetPos;
 
-        public static void Activate(CharacterStats characterStats, AnimationHandler animationHandler,
-            TaticalMovement taticalMovement, Skill skill, float delta)
+        public override void Activate(CharacterStats characterStats,AnimationHandler animationHandler, 
+            TaticalMovement taticalMovement, float delta)
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
             int distance = index.GetDistance(taticalMovement.currentIndex);
             CharacterStateManager stateManager = characterStats.GetComponent<CharacterStateManager>();
-            float percentNormalDamage = skill.combatStatScaleDict[CombatStatType.normalDamage].Value;
-            int damage = (int)(percentNormalDamage * characterStats.normalDamage.Value);
 
             if (index.x >= 0 && characterStats.currentAP >= skill.APcost && 
                 taticalMovement.currentIndex.IsOrtho(index)&& distance <=3)
             {
-                if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput) && taticalMovement.EnemyCheck(index) != null)
+                if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput))
                 {
                     InputHandler.instance.tacticsXInput = false;
-                    target = taticalMovement.EnemyCheck(index);
-                    taticalMovement.targetIndex = index;
-                    characterStats.UseAP(skill.APcost);
-                    targetPos = target.transform.position;
-                    targetDirection = (target.transform.position - characterStats.transform.position).normalized;                    
-                    animationHandler.PlayTargetAnimation("ShieldCharge");
+                    GridCell targetCell = taticalMovement.mapAdapter.GetCellByIndex(index);
+                    Excute(characterStats, animationHandler, taticalMovement, delta, targetCell);
                 }
-            }
-
-            if (stateManager.characterAction== CharacterAction.ShieldCharge)
-            {
-                
-                characterStats.transform.LookAt(target.transform);                
-                Rigidbody characterRigidbody = characterStats.GetComponent<Rigidbody>();
-                               
-                if (stateManager.skillColliderTiggered)
-                {
-                    target.transform.LookAt(characterRigidbody.transform);
-                    target.GetComponent<CharacterStats>().TakeDamage(damage);
-                    target.GetComponent<TaticalMovement>().moveLocation = target.transform.position + 1.5f * targetDirection;
-                    target.GetComponent<AnimationHandler>().PlayTargetAnimation("StumbleAndFall");
-                    stateManager.skillColliderTiggered = false;                   
-                }
-
-                else
-                {
-                    characterRigidbody.velocity = 5f * targetDirection;
-                }
-
-                if ((targetPos - characterRigidbody.transform.position).magnitude < .2)
-                {
-                    characterRigidbody.velocity = Vector3.zero;
-                    characterRigidbody.position = targetPos;
-                    animationHandler.PlayTargetAnimation("CombatIdle");
-                    taticalMovement.UpdateGridState();
-                    taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
-
-                    if (characterStats.currentAP != 0)
-                        taticalMovement.SetCurrentNavDict();
-                }
-            }                            
+            }            
         }
 
-        public static void Activate(CharacterStats characterStats, AnimationHandler animationHandler,
-            TaticalMovement taticalMovement, Skill skill, PlayerManager target, float delta)
+        public override void Excute(CharacterStats characterStats,
+            AnimationHandler animationHandler, TaticalMovement taticalMovement,
+            float delta, GridCell targetCell)
         {
-            IntVector2 index = target.taticalMovement.currentIndex;
-            int distance = taticalMovement.GetRequiredMoves(index,taticalMovement.path);
             CharacterStateManager stateManager = characterStats.GetComponent<CharacterStateManager>();
-            float percentNormalDamage = skill.combatStatScaleDict[CombatStatType.normalDamage].Value;
-            int damage = (int)(percentNormalDamage * characterStats.normalDamage.Value);
 
             if (stateManager.characterAction != CharacterAction.ShieldCharge)
             {
-                taticalMovement.targetIndex = index;
+
+                GameObject target = targetCell.GetOccupyingObject();
                 characterStats.UseAP(skill.APcost);
+
+                if (target != null)
+                    targetPos = target.transform.position;
+                else
+                    targetPos = targetCell.transform.position;
+
                 targetDirection = (target.transform.position - characterStats.transform.position).normalized;
                 animationHandler.PlayTargetAnimation("ShieldCharge");
             }
@@ -88,29 +53,38 @@ namespace PrototypeGame
             else
             {
                 characterStats.transform.LookAt(target.transform);
-                Vector3 targetPos = taticalMovement.mapAdapter.GetCellByIndex(taticalMovement.targetIndex).transform.position;
                 Rigidbody characterRigidbody = characterStats.GetComponent<Rigidbody>();
 
                 if (stateManager.skillColliderTiggered)
                 {
-                    target.transform.LookAt(characterRigidbody.transform);
-                    target.GetComponent<CharacterStats>().TakeDamage(damage);
-                    target.GetComponent<TaticalMovement>().moveLocation = targetPos + 1.5f * targetDirection;
-                    target.GetComponent<AnimationHandler>().PlayTargetAnimation("StumbleAndFall");
-                    stateManager.skillColliderTiggered = false;
+                    if (target.tag == "Enemy" || target.tag == "Player")
+                    {
+                        target.transform.LookAt(characterRigidbody.transform);
+                        float percentNormalDamage = skill.combatStatScaleDict[CombatStatType.normalDamage].Value;
+                        int damage = (int)(percentNormalDamage * characterStats.normalDamage.Value);
+                        target.GetComponent<CharacterStats>().TakeDamage(damage);
+                        target.GetComponent<TaticalMovement>().moveLocation = target.transform.position + 1.5f * targetDirection;
+                        target.GetComponent<AnimationHandler>().PlayTargetAnimation("StumbleAndFall");
+                        stateManager.skillColliderTiggered = false;
+                    }
                 }
 
                 else
                 {
-                    characterRigidbody.velocity = 5f * characterRigidbody.transform.forward;
+                    characterRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+                    characterRigidbody.velocity = 5f * targetDirection;
                 }
 
-                if ((targetPos - characterRigidbody.transform.position).magnitude < .1)
+                if (taticalMovement.ReachedPosition(taticalMovement.transform.position, targetPos))
                 {
                     characterRigidbody.velocity = Vector3.zero;
                     characterRigidbody.position = targetPos;
+                    characterRigidbody.constraints = RigidbodyConstraints.FreezeAll;
                     animationHandler.PlayTargetAnimation("CombatIdle");
                     taticalMovement.UpdateGridState();
+                    taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
+
+                    taticalMovement.SetCurrentNavDict();
                 }
             }
         }

@@ -37,8 +37,7 @@ namespace PrototypeGame
         {
             if (target == null)
             {                
-                List<(PlayerManager, int)> playersHealthList = new List<(PlayerManager, int)>();
-                    
+                List<(PlayerManager, int)> playersHealthList = new List<(PlayerManager, int)>();                   
                 foreach (PlayerManager player in GameManager.instance.playersDict.Values.ToArray())
                 {                    
                     List<IntVector2> targetsPath = NavigationHandler.instance.GetPath(taticalMovement.currentTargetsNavDict,
@@ -87,8 +86,7 @@ namespace PrototypeGame
                 {
                     if (characterStats.currentAP > 0 && GameManager.instance.gameState == GameState.Ready)
                     {
-                        MeleeAttack.Activate(characterStats, animationHandler,
-                            taticalMovement, skillDict[SkillType.MeleeAttack], target, 20, delta);
+                        
                         if (target.characterStats.currentHealth <= 0)
                         {
                             target = null;

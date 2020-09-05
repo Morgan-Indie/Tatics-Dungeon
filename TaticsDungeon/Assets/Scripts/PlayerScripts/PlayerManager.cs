@@ -24,7 +24,7 @@ namespace PrototypeGame
         public InventoryHandler inventoryHandler;
         public SkillSlotsHandler skillSlotsHandler;
         public bool isCurrentPlayer;
-        public Skill selectedSkill;
+        public SkillAbstract selectedSkill;
 
         private void Start()
         {
@@ -54,8 +54,9 @@ namespace PrototypeGame
                 if (GameManager.instance.gameState != GameState.InMenu)
                 {
                     if (selectedSkill == null)
-                        selectedSkill = skillSlotsHandler.Move;
-                    taticalMovement.UseSkill(selectedSkill, delta);
+                        taticalMovement.ExcuteMovement(delta);
+                    else
+                        taticalMovement.UseSkill(selectedSkill, delta);
                 }                
             }
         }
