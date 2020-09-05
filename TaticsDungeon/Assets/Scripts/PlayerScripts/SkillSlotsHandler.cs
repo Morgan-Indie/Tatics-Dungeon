@@ -61,7 +61,6 @@ namespace PrototypeGame
 
                     slots[i].UpdateSlot(playerManager.characterStats,animationHandler,playerManager.taticalMovement);
                     slots[i].empty = false;
-                    //item.SetActive(false);
                     return;
                 }
             }

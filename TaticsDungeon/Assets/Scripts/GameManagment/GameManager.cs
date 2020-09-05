@@ -276,6 +276,7 @@ namespace PrototypeGame
             if (currentCharacter.stateManager.characterState!= CharacterState.IsInteracting)
             {
                 currentCharacter.selectedSkill = skillScript;
+                Debug.Log(currentCharacter.selectedSkill.taticalMovement);
                 if (skillScript == null||skillScript.skill.type == SkillType.Move)
                     GridManager.Instance.HighlightNavDict(currentCharacter.taticalMovement.currentNavDict);
                 else

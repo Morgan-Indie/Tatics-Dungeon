@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2938501836201146644}
-  - component: {fileID: 705673143048539361}
+  - component: {fileID: 386175631873019667}
   m_Layer: 0
   m_Name: MeleeAttack
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &705673143048539361
+--- !u!114 &386175631873019667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill: {fileID: 11400000, guid: 507bc4d2d25c2204aa96977aae6584fb, type: 2}
-  animationCompleted: 0
   characterStats: {fileID: 0}
   animationHandler: {fileID: 0}
   taticalMovement: {fileID: 0}
+  animationCompleted: 0
+  target: {fileID: 0}

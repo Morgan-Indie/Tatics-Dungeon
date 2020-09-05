@@ -10,23 +10,23 @@ namespace PrototypeGame
         public Vector3 targetDirection;
         public Vector3 targetPos;
         public bool animationCompleted;
-        public CharacterStats characterStats;
-        public AnimationHandler animationHandler;
-        public TaticalMovement taticalMovement;
+
         public Rigidbody characterRigidBody;
         public CharacterStateManager stateManager;
         GridCell targetCell;
         bool isExcuting = false;
 
-        public override void AttachToCharacter(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement)
+        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
+            TaticalMovement _taticalMovement, Skill _skill)
         {
-            characterStats = _characterStats;
-            animationHandler = _animationHandler;
-            taticalMovement = _taticalMovement;
-
-            characterRigidBody = taticalMovement.GetComponent<Rigidbody>();
-            stateManager = animationHandler.stateManager;
+            ShieldCharge shieldCharge = _characterStats.gameObject.AddComponent<ShieldCharge>();
+            shieldCharge.characterStats = _characterStats;
+            shieldCharge.animationHandler = _animationHandler;
+            shieldCharge.taticalMovement = _taticalMovement;
+            shieldCharge.characterRigidBody = _taticalMovement.GetComponent<Rigidbody>();
+            shieldCharge. stateManager = _animationHandler.stateManager;
+            shieldCharge.skill= _skill;
+            return shieldCharge;
         }
 
         public override void Activate(float delta)
@@ -35,7 +35,6 @@ namespace PrototypeGame
             {
                 IntVector2 index = taticalMovement.GetMouseIndex();
                 int distance = index.GetDistance(taticalMovement.currentIndex);
-
                 if (index.x >= 0 && characterStats.currentAP >= skill.APcost &&
                     taticalMovement.currentIndex.IsOrtho(index) && distance <= 3)
                 {
@@ -52,24 +51,21 @@ namespace PrototypeGame
         }
 
         public override void Excute(float delta, GridCell targetCell)
-        {
-            if (stateManager.characterAction != CharacterAction.ShieldCharge)
+        {            
+            if (stateManager.characterAction!=CharacterAction.ShieldCharge)
             {
-
-                GameObject target = targetCell.GetOccupyingObject();
-                characterStats.UseAP(skill.APcost);
-
+                target = targetCell.GetOccupyingObject();
+                characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
                 if (target != null)
                     targetPos = target.transform.position;
                 else
                     targetPos = targetCell.transform.position;
 
+                characterStats.UseAP(skill.APcost);
                 targetDirection = (targetPos - characterStats.transform.position).normalized;
                 animationHandler.PlayTargetAnimation("ShieldCharge");
-                characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
                 isExcuting = true;
             }
-
             else
             {
                 characterStats.transform.LookAt(target.transform);
@@ -87,11 +83,6 @@ namespace PrototypeGame
                     }
                 }
 
-                else
-                {
-                    characterRigidBody.velocity = 5f * targetDirection;
-                }
-
                 if (taticalMovement.ReachedPosition(taticalMovement.transform.position, targetPos))
                 {
                     characterRigidBody.velocity = Vector3.zero;
@@ -103,6 +94,11 @@ namespace PrototypeGame
                     isExcuting = false;
 
                     taticalMovement.SetCurrentNavDict();
+                }
+
+                else
+                {
+                    characterRigidBody.velocity = 5f * targetDirection;
                 }
             }
         }

@@ -24,7 +24,7 @@ namespace PrototypeGame
         public InventoryHandler inventoryHandler;
         public SkillSlotsHandler skillSlotsHandler;
         public bool isCurrentPlayer;
-        public SkillAbstract selectedSkill;
+        public SkillAbstract selectedSkill=null;
 
         private void Start()
         {

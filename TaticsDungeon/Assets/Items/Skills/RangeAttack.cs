@@ -7,16 +7,16 @@ namespace PrototypeGame
     public class RangeAttack : SkillAbstract
     {
         public bool animationCompleted;
-        public CharacterStats characterStats;
-        public AnimationHandler animationHandler;
-        public TaticalMovement taticalMovement;
 
-        public override void AttachToCharacter(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement)
+        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
+            TaticalMovement _taticalMovement, Skill _skill)
         {
-            characterStats = _characterStats;
-            animationHandler = _animationHandler;
-            taticalMovement = _taticalMovement;
+            RangeAttack rangeAttack = _characterStats.gameObject.AddComponent<RangeAttack>();
+            rangeAttack.characterStats = _characterStats;
+            rangeAttack.animationHandler = _animationHandler;
+            rangeAttack.taticalMovement = _taticalMovement;
+            rangeAttack.skill = _skill;
+            return rangeAttack;
         }
 
         public override void Activate(float delta)

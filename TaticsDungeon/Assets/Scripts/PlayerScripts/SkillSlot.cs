@@ -29,8 +29,8 @@ namespace PrototypeGame
             else
             {
                 slotIconPanel.GetComponent<Image>().sprite = skill.icon;
-                skillScript = skill.skillScriptObject.GetComponent<SkillObjectInterface>().skillScript;
-                skillScript.AttachToCharacter(characterStats, animationHandler, taticalMovement);
+                skillScript = skill.skillScriptObject.GetComponent<SkillAbstract>();
+                skillScript = skillScript.AttachSkill(characterStats, animationHandler, taticalMovement,skill);
             }
         }
 

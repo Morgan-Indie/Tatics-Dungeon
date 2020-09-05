@@ -7,22 +7,23 @@ namespace PrototypeGame
     public class MeleeAttack : SkillAbstract
     {
         public bool animationCompleted;
-        public CharacterStats characterStats;
-        public AnimationHandler animationHandler;
-        public TaticalMovement taticalMovement;
+        public GameObject target;
 
-        public override void AttachToCharacter(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement)
+        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
+            TaticalMovement _taticalMovement, Skill _skill)
         {
-            characterStats = _characterStats;
-            animationHandler = _animationHandler;
-            taticalMovement = _taticalMovement;
+            MeleeAttack meleeAttack = _characterStats.gameObject.AddComponent<MeleeAttack>();
+            meleeAttack.characterStats = _characterStats;
+            meleeAttack.animationHandler = _animationHandler;
+            meleeAttack.taticalMovement = _taticalMovement;
+            meleeAttack.skill = _skill;
+            return meleeAttack;
         }
 
         public override void Activate(float delta)
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
-            int distance = Mathf.Abs(index.x - taticalMovement.currentIndex.x) + Mathf.Abs(index.y - taticalMovement.currentIndex.y);
+            int distance = taticalMovement.currentIndex.GetDistance(index);
 
             if (index.x >= 0 && characterStats.currentAP >= skill.APcost && distance == 1)
             {
@@ -39,7 +40,7 @@ namespace PrototypeGame
 
         public override void Excute(float delta, GridCell targetCell)
         {
-            GameObject target = targetCell.GetOccupyingObject();
+            target = targetCell.GetOccupyingObject();
             if (target != null)
                 characterStats.transform.LookAt(target.transform);
                 animationHandler.PlayTargetAnimation("Attack");

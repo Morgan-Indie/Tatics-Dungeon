@@ -6,12 +6,15 @@ namespace PrototypeGame
 {
     public class Move : SkillAbstract
     {
-        public TaticalMovement taticalMovement;
-
-        public override void AttachToCharacter(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement)
+        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
+            TaticalMovement _taticalMovement,Skill _skill)
         {
-            taticalMovement = _taticalMovement;
+            Move move = _characterStats.gameObject.AddComponent<Move> ();
+            move.characterStats = _characterStats;
+            move.animationHandler = _animationHandler;
+            move.taticalMovement = _taticalMovement;
+            move.skill = _skill;
+            return move;
         }
 
         public override void Activate(float delta)

@@ -1623,8 +1623,6 @@ MonoBehaviour:
     type: 3}
   castableValidPrefab: {fileID: 2015886591300925424, guid: 0ff89592af23cff41b812d291e9142b0,
     type: 3}
-  testHighlightPrefab: {fileID: 2015886591300925424, guid: bd61d4a113f008c448bdf5c6e756e659,
-    type: 3}
 --- !u!4 &1157780373
 Transform:
   m_ObjectHideFlags: 0
@@ -3640,10 +3638,20 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2866332890248882710, guid: 6dcc2918de3992b41b9a3b9c2cf24d1f,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3511859065010113456, guid: 6dcc2918de3992b41b9a3b9c2cf24d1f,
         type: 3}
       propertyPath: m_Name
       value: Barbarian
+      objectReference: {fileID: 0}
+    - target: {fileID: 3511859065010113456, guid: 6dcc2918de3992b41b9a3b9c2cf24d1f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3964222241787266081, guid: 6dcc2918de3992b41b9a3b9c2cf24d1f,
         type: 3}
@@ -4088,7 +4096,7 @@ PrefabInstance:
     - target: {fileID: 7848430310830141171, guid: 6dcc2918de3992b41b9a3b9c2cf24d1f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7848430310830141171, guid: 6dcc2918de3992b41b9a3b9c2cf24d1f,
         type: 3}
@@ -4569,6 +4577,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Paladin
       objectReference: {fileID: 0}
+    - target: {fileID: 5012251641638902140, guid: dbef1ad53e25e9e41a81c041caa74373,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5885915574917985009, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -4667,7 +4680,7 @@ PrefabInstance:
     - target: {fileID: 7071877413999080333, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7071877413999080333, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
