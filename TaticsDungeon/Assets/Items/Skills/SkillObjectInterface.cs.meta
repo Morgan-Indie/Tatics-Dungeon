@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: fcda2de3e592cd648a7f1df92930ae47
+guid: cc2094edb828b094ea775d94324a1d02
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - attack: {fileID: 816733371694430083, guid: bc31c47ffecfb184d891cade2f5c590a, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

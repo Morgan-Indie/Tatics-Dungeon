@@ -24,7 +24,6 @@ namespace PrototypeGame
 
         public LayerMask characterCheckLayerMask;
         public LayerMask attackCheckLayerMask;
-        public GameObject navDummy;
         public IntVector2 currentIndex;
         public GridCell currentCell;
         public IntVector2 targetIndex;
@@ -63,7 +62,7 @@ namespace PrototypeGame
         {                           
             SetCurrentIndex();
             currentCell = mapAdapter.GetCellByIndex(currentIndex);
-            currentCell.SetCharacter(this.gameObject);
+            currentCell.SetOccupyingObject(this.gameObject);
 
             CellState cellstate;
             if (gameObject.tag=="Player")
@@ -77,7 +76,7 @@ namespace PrototypeGame
 
         public void UpdateGridState()
         {            
-            currentCell.SetCharacter(null);
+            currentCell.SetOccupyingObject(null);
             
             currentCell.state=CellState.open;
             GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
@@ -162,7 +161,7 @@ namespace PrototypeGame
             }
         }
 
-        private bool ReachedPosition(Vector3 CP, Vector3 NP)
+        public bool ReachedPosition(Vector3 CP, Vector3 NP)
         {
             float dist = Mathf.Sqrt(Mathf.Pow(CP.x - NP.x, 2) + Mathf.Pow(CP.z - NP.z, 2));
             if (dist <= .2)
@@ -226,7 +225,7 @@ namespace PrototypeGame
                 if (Physics.Raycast(transform.position,Vector3.down,out hit))
                 {
                     if (hit.distance >.35 && (transform.position.y-nextPos.y)>.2)
-                        characterRigidBody.velocity += (Vector3.down * 500f * delta);
+                        characterRigidBody.velocity += (Vector3.down * 250f * delta);
                 }
                     
                 animationHandler.UpdateAnimatorValues(delta, 1f);
@@ -259,14 +258,14 @@ namespace PrototypeGame
             }
         }
 
-        public void UseSkill(Skill skill, float delta)
+        public void UseSkill(SkillAbstract skillScript, float delta)
         {
-            SkillFactory.instance.Activate(characterStats, animationHandler, this, skill, delta);
+            skillScript.Activate(delta);
         }
 
         public void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Enemy")
+            if (other.gameObject.tag == "Enemy"|| other.gameObject.tag == "Player")
                 stateManager.skillColliderTiggered = true;
         }
     }

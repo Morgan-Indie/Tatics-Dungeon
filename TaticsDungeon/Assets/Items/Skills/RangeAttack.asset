@@ -19,6 +19,11 @@ MonoBehaviour:
   APcost: 1
   type: 3
   coolDown: 0
+  skillScriptObject: {fileID: 5587677330032345258, guid: 7596eaf062c185e4e9a83e0e4196f2e7,
+    type: 3}
+  castableSettings:
+    castableSpell: 0
+    range: 1
   strScaleType: 0
   _scaleValueStrength: 0
   vitScaleType: 0

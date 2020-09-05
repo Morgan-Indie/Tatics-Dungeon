@@ -59,6 +59,7 @@ namespace PrototypeGame
         public int APcost;
         public SkillType type;
         public int coolDown;
+        public GameObject skillScriptObject;
 
         [ConditionalHide("type", (int)SkillType.Castable)]
         public CastableSettings castableSettings;

@@ -76,8 +76,8 @@ namespace PrototypeGame
             gridIndex = new IntVector2(x + mx * maxMeshSize, y + my * maxMeshSize);
         }
 
-        public void SetCharacter(GameObject o) { occupyingObject = o;}
-        public GameObject GetCharacter() { return occupyingObject; }
+        public void SetOccupyingObject(GameObject o) { occupyingObject = o;}
+        public GameObject GetOccupyingObject() { return occupyingObject; }
 
         public void SetCellState()
         {

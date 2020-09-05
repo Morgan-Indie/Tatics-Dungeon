@@ -4,10 +4,22 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public static class RangeAttack
+    public class RangeAttack : SkillAbstract
     {
-        public static void Activate(CharacterStats characterStats, AnimationHandler animationHandler,
-            TaticalMovement taticalMovement, Skill skill, float delta)
+        public bool animationCompleted;
+        public CharacterStats characterStats;
+        public AnimationHandler animationHandler;
+        public TaticalMovement taticalMovement;
+
+        public override void AttachToCharacter(CharacterStats _characterStats, AnimationHandler _animationHandler,
+            TaticalMovement _taticalMovement)
+        {
+            characterStats = _characterStats;
+            animationHandler = _animationHandler;
+            taticalMovement = _taticalMovement;
+        }
+
+        public override void Activate(float delta)
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
             int distance = index.GetDistance(taticalMovement.currentIndex);
@@ -17,18 +29,22 @@ namespace PrototypeGame
                 if (Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput)
                 {
                     InputHandler.instance.tacticsXInput = false;
-                    GameObject target = taticalMovement.EnemyCheck(index);
+                    GridCell targetCell = taticalMovement.mapAdapter.GetCellByIndex(index);
 
-                    if (target != null)
-                    {
-                        characterStats.transform.LookAt(target.transform);
-                        characterStats.transform.Rotate(Quaternion.Euler(0f,60f,0f).eulerAngles);
-                        animationHandler.PlayTargetAnimation("Attack");
-                        characterStats.GetComponentInChildren<ArrowHolder>().target = target;
-                        characterStats.UseAP(skill.APcost);                        
-                    }
+                    Excute(delta, targetCell);
                 }
             }
+        }
+
+        public override void Excute(float delta, GridCell targetCell)
+        {
+            GameObject target = targetCell.GetOccupyingObject();
+            if (target != null)
+                characterStats.transform.LookAt(target.transform);
+                characterStats.transform.Rotate(Quaternion.Euler(0f, 60f, 0f).eulerAngles);
+                animationHandler.PlayTargetAnimation("Attack");
+                characterStats.GetComponentInChildren<ArrowHolder>().target = target;
+                characterStats.UseAP(skill.APcost);
         }
     }
 }

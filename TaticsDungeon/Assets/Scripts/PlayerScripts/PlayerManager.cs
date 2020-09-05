@@ -24,7 +24,7 @@ namespace PrototypeGame
         public InventoryHandler inventoryHandler;
         public SkillSlotsHandler skillSlotsHandler;
         public bool isCurrentPlayer;
-        public Skill selectedSkill;
+        public SkillAbstract selectedSkill;
 
         private void Start()
         {
@@ -53,9 +53,10 @@ namespace PrototypeGame
                 CameraHandler.instance.HandleCamera(delta);
                 if (GameManager.instance.gameState != GameState.InMenu)
                 {
-                    if (selectedSkill == null)
-                        selectedSkill = skillSlotsHandler.Move;
-                    taticalMovement.UseSkill(selectedSkill, delta);
+                    if (selectedSkill == null || selectedSkill.skill.type == SkillType.Move)
+                        taticalMovement.ExcuteMovement(delta);
+                    else
+                        taticalMovement.UseSkill(selectedSkill, delta);
                 }                
             }
         }

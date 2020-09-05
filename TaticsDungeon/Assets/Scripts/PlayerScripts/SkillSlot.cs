@@ -11,26 +11,32 @@ namespace PrototypeGame
         public bool empty;
         public Skill skill;
         public Transform slotIconPanel;
+        public SkillAbstract skillScript;        
 
         [Header("Required")]
         public Sprite defaultSprite;
 
         private void Awake()
         {
-            slotIconPanel = transform.GetChild(0);
+            slotIconPanel = transform.GetChild(0);            
         }
 
-        public void UpdateSlot()
+        public void UpdateSlot(CharacterStats characterStats, AnimationHandler animationHandler,
+            TaticalMovement taticalMovement)
         {
             if (skill == null)
                 slotIconPanel.GetComponent<Image>().sprite = defaultSprite;
             else
+            {
                 slotIconPanel.GetComponent<Image>().sprite = skill.icon;
+                skillScript = skill.skillScriptObject.GetComponent<SkillObjectInterface>().skillScript;
+                skillScript.AttachToCharacter(characterStats, animationHandler, taticalMovement);
+            }
         }
 
         public void OnClick()
         {
-            GameManager.instance.SwitchSkill(skill);
+            GameManager.instance.SwitchSkill(skillScript);
         }
     }
 }
