@@ -11,9 +11,17 @@ namespace PrototypeGame
         public InventoryHandler inventoryHandler;
         public EquipmentModifiersHandler modHandler;
         public StatPreviewSetText statpreview;
+        public CharacterStats characterStats;
 
         [Header("Not Required")]
         public GameObject currentInventoryObject;
+
+        public void Start()
+        {
+            equipmentSlotManager = GetComponentInParent<EquipmentSlotManager>();
+            characterStats = GetComponentInParent<CharacterStats>();
+            modHandler = GetComponentInParent<EquipmentModifiersHandler>();
+        }
 
         #region Item Use Dispatch On Equipable Items
         public void Use(EquipableItem item)
@@ -25,6 +33,8 @@ namespace PrototypeGame
                 item.equipped = false;
                 modHandler.RemoveAllModifiers(item);
                 inventoryHandler.AddItem(item);
+                characterStats.SetMaxAPFromStamina();
+                characterStats.SetMaxHealthFromVitality();
             }
 
             else
@@ -33,6 +43,8 @@ namespace PrototypeGame
                 equipmentSlotManager.LoadEquipementOnEquipMenu(item, item.slotType);
                 item.equipped = true;                
                 modHandler.ApplyEquipmentModifiers(item);
+                characterStats.SetMaxAPFromStamina();
+                characterStats.SetMaxHealthFromVitality();
             }
             statpreview.updateStatTexts();
         }

@@ -36,7 +36,7 @@ namespace PrototypeGame
         public bool isDirty;
 
         float movementSpeed = 4f;
-        float rotationSpeed = 15f;
+        float rotationSpeed = 25f;
 
         // Start is called before the first frame update
         void Start()
@@ -90,6 +90,7 @@ namespace PrototypeGame
                 moveDirection = characterTransform.forward;
 
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            targetRotation.x = 0f;
             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation,
                 targetRotation, rotationSpeed * delta);
         }
@@ -108,20 +109,6 @@ namespace PrototypeGame
                 }
             }
             return new IntVector2(-1, -1);
-        }
-
-        public GameObject EnemyCheck(IntVector2 index)
-        {
-            GridCell cell = mapAdapter.GetCellByIndex(index);
-            Vector3 targetLocation = cell.transform.position;
-            RaycastHit hit;
-
-            Vector3 rayCastLoction = targetLocation + Vector3.down * 2;
-            if (Physics.Raycast(rayCastLoction, Vector3.up, out hit, Mathf.Infinity, attackCheckLayerMask))
-            {
-                return hit.collider.gameObject;
-            }
-            return null;
         }
 
         public int GetRequiredMoves(IntVector2 index, List<IntVector2> path)
@@ -154,7 +141,7 @@ namespace PrototypeGame
         public void SetNextPos(IntVector2 nextIndex)
         {
             GridCell nextCell = mapAdapter.GetCellByIndex(nextIndex);
-            nextPos = nextCell.transform.position + nextCell.height * GridMetrics.squareSize * Vector3.up;
+            nextPos = nextCell.transform.position + nextCell.height * (GridMetrics.squareSize) * Vector3.up;
             if (nextCell.isStairs)
             {
                 nextPos += Vector3.up * .75f;
@@ -220,14 +207,14 @@ namespace PrototypeGame
                 currentDirection.y = 0f;
                 currentDirection.Normalize();
                 HandleRotation(delta, currentDirection);
-                characterRigidBody.velocity = currentDirection * movementSpeed;
+
+                characterRigidBody.velocity = movementSpeed * currentDirection;
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position,Vector3.down,out hit))
+                if (Physics.Raycast(transform.position,Vector3.down,out hit,(1<<0)))
                 {
-                    if (hit.distance >.35 && (transform.position.y-nextPos.y)>.2)
-                        characterRigidBody.velocity += (Vector3.down * 250f * delta);
+                    if (hit.distance>.6 && transform.position.y>nextPos.y+.2f)
+                        characterRigidBody.velocity += Vector3.down*10f;
                 }
-                    
                 animationHandler.UpdateAnimatorValues(delta, 1f);
             }
         }
@@ -245,7 +232,7 @@ namespace PrototypeGame
                     path = NavigationHandler.instance.GetPath(currentNavDict, index, currentIndex);
                     int distance = GetRequiredMoves(index,path);
                     
-                    if (characterStats.currentAP >= distance && EnemyCheck(index) == null)
+                    if (characterStats.currentAP >= distance && currentNavDict.ContainsKey(index))
                     {
                         GridManager.Instance.HighlightPathWithList(path);
                         if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput) 

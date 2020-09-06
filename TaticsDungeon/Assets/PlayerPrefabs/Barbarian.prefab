@@ -3233,7 +3233,6 @@ MonoBehaviour:
   attackCheckLayerMask:
     serializedVersion: 2
     m_Bits: 8192
-  navDummy: {fileID: 0}
   currentIndex:
     x: 0
     y: 0
@@ -3288,6 +3287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillPanel: {fileID: 0}
+  animationHandler: {fileID: 0}
   skillPanelPrefab: {fileID: 1861432900393455044, guid: e664b3749c9abe942bc6910d0ea0ec6a,
     type: 3}
   skillPanelBack: {fileID: 0}
@@ -3752,9 +3752,9 @@ MonoBehaviour:
   m_UVRect:
     serializedVersion: 2
     x: 0.2
-    y: 0.2
-    width: 1
-    height: 1
+    y: 0.25
+    width: 0.75
+    height: 0.75
 --- !u!1 &4542952941693398404
 GameObject:
   m_ObjectHideFlags: 0

@@ -124,7 +124,7 @@ namespace PrototypeGame
             playerCombatStatDict.Add(CombatStatType.curseDamage, curseDamage);
         }
 
-        private int SetMaxHealthFromVitality()
+        public int SetMaxHealthFromVitality()
         {
             maxHealth = (int)Vitality.Value * 10;
             Debug.Log(characterName + " have max health: "+maxHealth);

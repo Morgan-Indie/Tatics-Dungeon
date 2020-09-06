@@ -20,6 +20,7 @@ namespace PrototypeGame
         public List<EquipmentHolderSlot> equipmentHolderSlots;
         public List<EquipableItem> Equipments;
 
+        CharacterStats characterStats;
         EquipmentModifiersHandler modHandler;
         
         public void Start()
@@ -62,6 +63,7 @@ namespace PrototypeGame
             #endregion
 
             modHandler = GetComponent<EquipmentModifiersHandler>();
+            characterStats = GetComponent<CharacterStats>();
 
             foreach (EquipableItem item in Equipments)
                 EquipItem(item);
@@ -170,6 +172,8 @@ namespace PrototypeGame
             LoadEquipmentOnSlot(item, item.slotType);
             item.equipped = true;
             modHandler.ApplyEquipmentModifiers(item);
+            characterStats.SetMaxAPFromStamina();
+            characterStats.SetMaxHealthFromVitality();
         }
     }
 }
