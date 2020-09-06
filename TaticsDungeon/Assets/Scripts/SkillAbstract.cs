@@ -6,10 +6,14 @@ namespace PrototypeGame
 {
     public enum SkillType
     {
-        MeleeAttack,
+        PyhsicalAttack,
         Move,
-        ShieldCharge,
-        RangeAttack,
+        Fire,
+        Water,
+        Poison,
+        Shock,
+        Curse,
+        Bless,
         Castable
     }
 
@@ -19,6 +23,11 @@ namespace PrototypeGame
         public CharacterStats characterStats;
         public AnimationHandler animationHandler;
         public TaticalMovement taticalMovement;
+        public CombatStat normalDamage;
+        public CombatStat peirceDamage;
+        public CombatStat alchemicalDamage;
+        public CombatStat armor;
+        public CombatStat resistance;
 
         public abstract SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
             TaticalMovement _taticalMovement, Skill _skill);

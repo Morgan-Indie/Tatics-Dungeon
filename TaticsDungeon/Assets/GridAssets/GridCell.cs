@@ -13,12 +13,14 @@ namespace PrototypeGame
         public CellTemplate cellTemplate;
         bool highlighted = false;
         Color highlightColor = Color.magenta;
-        public GameObject occupyingObject;
+        public GameObject occupyingObject=null;
         public CellState state;
         GameObject highlightEffect;
         public CellHighlightType highlightType = CellHighlightType.None;
         public CellAlchemyState alchemyState;
         public bool isStairs=false;
+        public int BurnDamage;
+        public int PoisonDamage;
 
         public bool HasAdjacentStair = false;
         //If cell is a stair cell, sets this tuple to its Entrance and Exit respectively 

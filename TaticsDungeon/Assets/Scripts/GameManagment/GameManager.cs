@@ -254,6 +254,7 @@ namespace PrototypeGame
                 foreach (PlayerManager player in playersDict.Values.ToArray())
                 {
                     player.isCurrentPlayer = false;
+                    player.stateManager.UpdateTurns();
                 }
                 currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
                 GridManager.Instance.RemoveAllHighlights();

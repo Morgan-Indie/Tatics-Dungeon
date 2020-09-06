@@ -44,7 +44,7 @@ namespace PrototypeGame
             if (target != null)
                 characterStats.transform.LookAt(target.transform);
                 animationHandler.PlayTargetAnimation("Attack");
-                characterStats.GetComponent<CombatUtils>().Attack(target);
+                characterStats.GetComponent<CombatUtils>().PhyiscalAttack(target);
                 characterStats.UseAP(skill.APcost);
         }
     }       

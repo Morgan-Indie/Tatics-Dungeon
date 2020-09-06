@@ -22,6 +22,7 @@ namespace PrototypeGame
         CastWater,
         CastOil,
         CastPoison,
+        CastPhysical,
     };
 
     public enum CastableShape
@@ -83,6 +84,14 @@ namespace PrototypeGame
         [Header("Combat Stat Scaling")]
         public StatModType normalDamageScaleType;
         public float _scaleValueNormalDamage;
+        public StatModType fireDamageScaleType;
+        public float _scaleValueFireDamage;
+        public StatModType waterDamageScaleType;
+        public float _scaleValueWaterDamage;
+        public StatModType poisonDamageScaleType;
+        public float _scaleValuePoisonDamage;
+        public StatModType shockDamageScaleType;
+        public float _scaleValueShockDamage;
         public StatModType armorScaleType;
         public float _scaleValueArmor;
         public StatModType resistanceScaleType;
@@ -143,8 +152,6 @@ namespace PrototypeGame
                 attributeScaleModDict.Add(AttributeType.stamina, new StatScalingStruct(strScaleType, _scaleValueStamina));
             if (_scaleValueIntelligence != 0f)
                 attributeScaleModDict.Add(AttributeType.intelligence, new StatScalingStruct(strScaleType, _scaleValueIntelligence));
-            if (_scaleValueIntelligence != 0f)
-                attributeScaleModDict.Add(AttributeType.intelligence, new StatScalingStruct(strScaleType, _scaleValueIntelligence));
             if (_scaleValueLevel != 0f)
                 attributeScaleModDict.Add(AttributeType.level, new StatScalingStruct(levScaleType, _scaleValueLevel));
         }
@@ -153,6 +160,14 @@ namespace PrototypeGame
         {
             if (_scaleValueNormalDamage != 0f)
                 combatStatScaleDict.Add(CombatStatType.normalDamage, new StatScalingStruct(normalDamageScaleType, _scaleValueNormalDamage));
+            if (_scaleValueFireDamage != 0f)
+                combatStatScaleDict.Add(CombatStatType.fireDamage, new StatScalingStruct(fireDamageScaleType, _scaleValueFireDamage));
+            if (_scaleValueWaterDamage != 0f)
+                combatStatScaleDict.Add(CombatStatType.waterDamage, new StatScalingStruct(waterDamageScaleType, _scaleValueWaterDamage));
+            if (_scaleValueShockDamage != 0f)
+                combatStatScaleDict.Add(CombatStatType.shockDamage, new StatScalingStruct(shockDamageScaleType, _scaleValueShockDamage));
+            if (_scaleValuePoisonDamage != 0f)
+                combatStatScaleDict.Add(CombatStatType.poisonDamage, new StatScalingStruct(poisonDamageScaleType, _scaleValuePoisonDamage));
             if (_scaleValueArmor != 0f)
                 combatStatScaleDict.Add(CombatStatType.armor, new StatScalingStruct(armorScaleType, _scaleValueArmor));
             if (_scaleValueResistance != 0f)
