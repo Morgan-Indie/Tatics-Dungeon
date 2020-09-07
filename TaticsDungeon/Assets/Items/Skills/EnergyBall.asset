@@ -19,7 +19,7 @@ MonoBehaviour:
   APcost: 0
   type: 4
   coolDown: 0
-  effectPrefab: {fileID: 1804384742432318, guid: d1909472a3f4bfc40a598eaa701eb430,
+  effectPrefab: {fileID: 1677021684008438, guid: c0656a76591eba14baf66b614fffb060,
     type: 3}
   castableSettings:
     castableSpell: 8

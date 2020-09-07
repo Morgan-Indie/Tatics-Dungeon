@@ -28350,7 +28350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4505724947450586}
-  - component: {fileID: -6867562580379478530}
+  - component: {fileID: 8780814343334651755}
   m_Layer: 0
   m_Name: BlackHole_Purple_Spawn
   m_TagString: Untagged
@@ -28379,7 +28379,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6867562580379478530
+--- !u!114 &8780814343334651755
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -28388,10 +28388,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660946341742122}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fb4cad1b72341d4c944628c8a5ef41f, type: 3}
+  m_Script: {fileID: 11500000, guid: e27563aa7c6e922448e6d0e3f8467e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1056940179976286, guid: f9c81e89af5b3384689b30bb9710bbb4,
+  projectilePrefab: {fileID: 1056940179976286, guid: 6e9508e739b7ae946ac1c9655857f157,
     type: 3}
   lifeTime: 1
 --- !u!1 &1939622657503710

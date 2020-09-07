@@ -33126,7 +33126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4753183054323716}
-  - component: {fileID: 9029174831465001258}
+  - component: {fileID: 7152628873479615304}
   m_Layer: 0
   m_Name: BlackHole_Orange_Spawn
   m_TagString: Untagged
@@ -33155,7 +33155,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9029174831465001258
+--- !u!114 &7152628873479615304
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -33164,9 +33164,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1733395234720496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fb4cad1b72341d4c944628c8a5ef41f, type: 3}
+  m_Script: {fileID: 11500000, guid: e27563aa7c6e922448e6d0e3f8467e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1737381284161942, guid: b8745ef0ea7bca949a6f69de8538afbc,
+  projectilePrefab: {fileID: 1737381284161942, guid: a8166e340f8be814287409896c6ccf0b,
     type: 3}
   lifeTime: 1

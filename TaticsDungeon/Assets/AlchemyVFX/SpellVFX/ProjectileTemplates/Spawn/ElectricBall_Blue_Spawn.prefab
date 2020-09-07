@@ -14445,9 +14445,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4210327725245758}
-  - component: {fileID: 8624890734317088937}
+  - component: {fileID: 3715412346582165380}
   m_Layer: 0
-  m_Name: ElecticBall_Blue_Spawn
+  m_Name: ElectricBall_Blue_Spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14474,7 +14474,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8624890734317088937
+--- !u!114 &3715412346582165380
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14483,10 +14483,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1419324454515648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fb4cad1b72341d4c944628c8a5ef41f, type: 3}
+  m_Script: {fileID: 11500000, guid: e27563aa7c6e922448e6d0e3f8467e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1136050290210760, guid: 1ffb4163de809e8478e8896ee971f8c8,
+  projectilePrefab: {fileID: 1136050290210760, guid: 8cb9fed2ae865f44ebdd70034eb07e17,
     type: 3}
   lifeTime: 1
 --- !u!1 &1506748128664264

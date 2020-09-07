@@ -4839,7 +4839,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4196153398243026}
-  - component: {fileID: -6158367228267630302}
+  - component: {fileID: 3150122175577629879}
   m_Layer: 0
   m_Name: ElectricBall_Green_Spawn
   m_TagString: Untagged
@@ -4868,7 +4868,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6158367228267630302
+--- !u!114 &3150122175577629879
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4877,10 +4877,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1463520409267208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fb4cad1b72341d4c944628c8a5ef41f, type: 3}
+  m_Script: {fileID: 11500000, guid: e27563aa7c6e922448e6d0e3f8467e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1136050290210760, guid: e57b09ed457ca2846a8866d2eef21564,
+  projectilePrefab: {fileID: 1136050290210760, guid: 5ff5a7260656d65478a193890d809486,
     type: 3}
   lifeTime: 1
 --- !u!1 &1529975771832892

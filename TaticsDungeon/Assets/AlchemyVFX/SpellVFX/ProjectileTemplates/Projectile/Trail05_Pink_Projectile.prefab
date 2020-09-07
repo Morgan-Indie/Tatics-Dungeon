@@ -19679,7 +19679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960ad88bb22e44c45a2357d87817bcbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactPrefab: {fileID: 1653409047422494, guid: 83d7d863bf6bfe74c82ae4a0d23bc357,
+  impactPrefab: {fileID: 1653409047422494, guid: 04acdb9c1b1a0d94dbb5fc61487d0264,
     type: 3}
   offset: 1
   projectileSpeed: 1

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4380902841396660}
-  - component: {fileID: -547041285676719159}
+  - component: {fileID: 6561774694919976343}
   m_Layer: 0
   m_Name: Fireball02_Orange_Spawn
   m_TagString: Untagged
@@ -38,7 +38,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-547041285676719159
+--- !u!114 &6561774694919976343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,10 +47,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1034775600002406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fb4cad1b72341d4c944628c8a5ef41f, type: 3}
+  m_Script: {fileID: 11500000, guid: e27563aa7c6e922448e6d0e3f8467e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1745751436853880, guid: 9f0e4b41a274ad04d8fef21b9f4e6030,
+  projectilePrefab: {fileID: 1745751436853880, guid: 59a996e3395a2674e92e2737350aff67,
     type: 3}
   lifeTime: 1
 --- !u!1 &1112369124376790

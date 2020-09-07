@@ -23602,10 +23602,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1705981935938252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fb4cad1b72341d4c944628c8a5ef41f, type: 3}
+  m_Script: {fileID: 11500000, guid: e27563aa7c6e922448e6d0e3f8467e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1999246531747006, guid: 12ac2cee0b0cf924188628849b32b122,
+  projectilePrefab: {fileID: 1999246531747006, guid: 44f1b1f8f9a7f034cbb7b59398ff3c0e,
     type: 3}
   lifeTime: 1
 --- !u!1 &1759877245748736
