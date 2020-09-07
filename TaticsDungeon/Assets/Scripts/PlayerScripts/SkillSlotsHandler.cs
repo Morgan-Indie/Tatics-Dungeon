@@ -12,7 +12,8 @@ namespace PrototypeGame
         private SkillSlot[] slots;
         PlayerManager playerManager;
         CharacterStateManager stateManager;
-        public GameObject skillPanel;        
+        public GameObject skillPanel;
+        public AnimationHandler animationHandler;
 
         [Header("Required")]
         public GameObject skillPanelPrefab;
@@ -38,6 +39,7 @@ namespace PrototypeGame
 
             stateManager = GetComponent<CharacterStateManager>();
             playerManager = GetComponent<PlayerManager>();
+            animationHandler = GetComponent<AnimationHandler>();
 
             AddSkill(Move);
             AddSkill(NormalAttack);
@@ -57,9 +59,8 @@ namespace PrototypeGame
                 {
                     slots[i].skill = skill;
 
-                    slots[i].UpdateSlot();
+                    slots[i].UpdateSlot(playerManager.characterStats,animationHandler,playerManager.taticalMovement);
                     slots[i].empty = false;
-                    //item.SetActive(false);
                     return;
                 }
             }

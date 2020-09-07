@@ -18,9 +18,16 @@ namespace PrototypeGame
             CharacterStateManager stateManager = animator.GetComponent<CharacterStateManager>();
 
             if (animator.GetFloat("MovementThreshold") >= .5f)
-                stateManager.characterState = CharacterState.IsInteracting;                
+            {
+                stateManager.characterState = CharacterState.IsInteracting;
+                GameManager.instance.gameState = GameState.ResolvingInteraction;
+            }
             else
+            {
                 stateManager.characterState = CharacterState.Ready;
+                GameManager.instance.gameState = GameState.Ready;
+            }
+                
         }
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

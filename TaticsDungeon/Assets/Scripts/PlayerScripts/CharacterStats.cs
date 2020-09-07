@@ -54,6 +54,7 @@ namespace PrototypeGame
         [HideInInspector]
         public CharacterStateManager stateManager;
         public AnimationHandler animationHandler;
+        public TaticalMovement taticalMovement;
 
         private void Awake()
         {
@@ -80,6 +81,7 @@ namespace PrototypeGame
 
             stateManager = GetComponent<CharacterStateManager>();
             animationHandler = GetComponent<AnimationHandler>();
+            taticalMovement = GetComponent<TaticalMovement>();
         }
 
         public void CollectPlayerAttributes()
@@ -92,11 +94,11 @@ namespace PrototypeGame
             Dexterity = new Stat(_dexterity);
 
             playerAttributeDict.Add(AttributeType.strength, Strength);
-            playerAttributeDict.Add(AttributeType.dexterity, Vitality);
-            playerAttributeDict.Add(AttributeType.luck, Stamina);
-            playerAttributeDict.Add(AttributeType.vitality, Luck);
-            playerAttributeDict.Add(AttributeType.stamina, Intelligence);
-            playerAttributeDict.Add(AttributeType.intelligence, Dexterity);
+            playerAttributeDict.Add(AttributeType.dexterity, Dexterity);
+            playerAttributeDict.Add(AttributeType.luck, Luck);
+            playerAttributeDict.Add(AttributeType.vitality, Vitality);
+            playerAttributeDict.Add(AttributeType.stamina, Stamina);
+            playerAttributeDict.Add(AttributeType.intelligence, Intelligence);
         }
 
         public void CollectPlayerCombatStats()
@@ -122,9 +124,10 @@ namespace PrototypeGame
             playerCombatStatDict.Add(CombatStatType.curseDamage, curseDamage);
         }
 
-        private int SetMaxHealthFromVitality()
+        public int SetMaxHealthFromVitality()
         {
             maxHealth = (int)Vitality.Value * 10;
+            Debug.Log(characterName + " have max health: "+maxHealth);
             return maxHealth;
         }
 
@@ -138,10 +141,12 @@ namespace PrototypeGame
         {
             currentHealth -= damange;
             healthBar.SetCurrentHealth(currentHealth);
-
+            Debug.Log(characterName + " took "+ damange+" damage and have "+ currentHealth+" remaining");
             if (currentHealth <= 0)
             {
                 stateManager.characterState = CharacterState.Dead;
+                taticalMovement.currentCell.occupyingObject = null;
+                taticalMovement.currentCell.state = CellState.open;
                 animationHandler.PlayTargetAnimation("Death");
             }
 
@@ -154,6 +159,7 @@ namespace PrototypeGame
         public void UseAP(int AP)
         {
             currentAP -= AP;
+            Debug.Log(characterName + " AP Used: " + AP);
             apBar.SetCurrentAP(currentAP);
         }
     }

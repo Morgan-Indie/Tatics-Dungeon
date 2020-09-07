@@ -18,34 +18,37 @@ namespace PrototypeGame
         CharacterStateManager stateManager;
         CombatUtils combatUtils;
         CharacterStats characterStats;
+        Rigidbody characterRigidbody;
 
         public Vector3 moveLocation=Vector3.up;
 
         public LayerMask characterCheckLayerMask;
         public LayerMask attackCheckLayerMask;
-        public GameObject navDummy;
         public IntVector2 currentIndex;
         public GridCell currentCell;
         public IntVector2 targetIndex;
         public int currentPathIndex=0;
         public Dictionary<IntVector2, IntVector2> currentNavDict;
+        public Dictionary<IntVector2, IntVector2> currentTargetsNavDict;
         public Vector3 nextPos;
         public List<IntVector2> path;
         public LayerMask meshMask;
+        public bool isDirty;
 
         float movementSpeed = 4f;
-        float rotationSpeed = 10f;
+        float rotationSpeed = 25f;
 
         // Start is called before the first frame update
         void Start()
         {
-            combatUtils = GetComponent<CombatUtils>();
+            combatUtils = GetComponent<CombatUtils>();            
             stateManager = GetComponent<CharacterStateManager>();
             characterTransform = transform;
             isometricCamera = Camera.main;
             animationHandler = GetComponent<AnimationHandler>();
             characterRigidBody = GetComponent<Rigidbody>();
             characterStats = GetComponent<CharacterStats>();
+            characterRigidbody = GetComponent<Rigidbody>();
 
             SetCurrentCell();
             triggerCollider.enabled = false;
@@ -56,10 +59,10 @@ namespace PrototypeGame
             currentIndex = mapAdapter.GetIndexByPos(transform.position);
         }
         public void SetCurrentCell()
-        {
+        {                           
             SetCurrentIndex();
             currentCell = mapAdapter.GetCellByIndex(currentIndex);
-            currentCell.SetCharacter(this.gameObject);
+            currentCell.SetOccupyingObject(this.gameObject);
 
             CellState cellstate;
             if (gameObject.tag=="Player")
@@ -72,9 +75,9 @@ namespace PrototypeGame
         }
 
         public void UpdateGridState()
-        {
-            currentCell.SetCharacter(null);
-
+        {            
+            currentCell.SetOccupyingObject(null);
+            
             currentCell.state=CellState.open;
             GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
             SetCurrentCell();
@@ -87,6 +90,7 @@ namespace PrototypeGame
                 moveDirection = characterTransform.forward;
 
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            targetRotation.x = 0f;
             characterTransform.rotation = Quaternion.Slerp(characterTransform.rotation,
                 targetRotation, rotationSpeed * delta);
         }
@@ -100,7 +104,6 @@ namespace PrototypeGame
 
                 if (Physics.Raycast(ray, out meshHit,meshMask))
                 {
-                    //IntVector2 index = mapAdapter.GetIndexByPos(mapAdapter.transform.InverseTransformPoint(ray.GetPoint(rayDistance)));
                     IntVector2 index = mapAdapter.GetIndexByPos(meshHit.point);
                     return index;
                 }
@@ -108,21 +111,7 @@ namespace PrototypeGame
             return new IntVector2(-1, -1);
         }
 
-        public GameObject EnemyCheck(IntVector2 index)
-        {
-            GridCell cell = mapAdapter.GetCellByIndex(index);
-            Vector3 targetLocation = cell.transform.position;
-            RaycastHit hit;
-
-            Vector3 rayCastLoction = targetLocation + Vector3.down * 2;
-            if (Physics.Raycast(rayCastLoction, Vector3.up, out hit, Mathf.Infinity, attackCheckLayerMask))
-            {
-                return hit.collider.gameObject;
-            }
-            return null;
-        }
-
-        public int GetMouseDistance(IntVector2 index)
+        public int GetRequiredMoves(IntVector2 index, List<IntVector2> path)
         {
             if(path!=null)
             {
@@ -131,7 +120,7 @@ namespace PrototypeGame
             }
             else
                 return -1;
-        }
+        }        
 
         public void PrintPath(List<IntVector2> path)
         {
@@ -143,10 +132,30 @@ namespace PrototypeGame
 
         public void SetCurrentNavDict()
         {
-            currentNavDict = NavigationHandler.instance.Navigate(currentIndex, characterStats.currentAP);
+            (currentNavDict,currentTargetsNavDict) = NavigationHandler.instance.Navigate(currentIndex, characterStats.currentAP);
             if (gameObject.tag == "Player")
                 GridManager.Instance.HighlightNavDict(currentNavDict);
             Debug.Log(characterStats.characterName +" NavDict Updated");
+        }
+
+        public void SetNextPos(IntVector2 nextIndex)
+        {
+            GridCell nextCell = mapAdapter.GetCellByIndex(nextIndex);
+            nextPos = nextCell.transform.position + nextCell.height * (GridMetrics.squareSize) * Vector3.up;
+            if (nextCell.isStairs)
+            {
+                nextPos += Vector3.up * .75f;
+            }
+        }
+
+        public bool ReachedPosition(Vector3 CP, Vector3 NP)
+        {
+            float dist = Mathf.Sqrt(Mathf.Pow(CP.x - NP.x, 2) + Mathf.Pow(CP.z - NP.z, 2));
+            if (dist <= .2)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void SetTargetDestination(IntVector2 targetIndex, int distance)
@@ -155,83 +164,97 @@ namespace PrototypeGame
             GridCell cell = mapAdapter.GetCellByIndex(targetIndex);
             moveLocation = cell.transform.position;
 
+            if (cell.isStairs)
+                moveLocation += Vector3.up * .75f;
+            
             characterStats.UseAP(distance);
             stateManager.characterAction = CharacterAction.Moving;
-            currentPathIndex = 0;
+            stateManager.characterState = CharacterState.IsInteracting;
+            characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+            currentPathIndex = 1;
 
-            nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
-            Debug.Log(characterStats.characterName + " Setting Destination");
+            SetNextPos(path[currentPathIndex]);
+            Debug.Log(characterStats.characterName + " Setting Destination");    
         }
 
         public void TraverseToDestination(float delta)
         {
-            if ((nextPos - transform.position).magnitude < .15)
+            if (ReachedPosition(transform.position,moveLocation))
             {
-                if ((transform.position - moveLocation).magnitude <= .15)
-                {
-                    stateManager.characterAction = CharacterAction.None;
+                UpdateGridState();
+                characterRigidBody.velocity = Vector3.zero;
 
-                    UpdateGridState();
-                    characterRigidBody.velocity = Vector3.zero;
+                animationHandler.UpdateAnimatorValues(delta, 0f);
+                transform.position = moveLocation;
+                currentPathIndex = 0;
+                SetCurrentNavDict();
 
-                    animationHandler.UpdateAnimatorValues(delta, 0f);
-                    transform.position = moveLocation;
-                    currentPathIndex = 0;
-                    SetCurrentNavDict();
+                stateManager.characterAction = CharacterAction.None;
+                stateManager.characterState = CharacterState.Ready;
+                characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
+                Debug.Log(characterStats.characterName + " Reached Destination");
+            }
 
-                    Debug.Log(characterStats.characterName + " Reached Destination");
-                }
-                else
-                {
-                    currentPathIndex++;
-                    nextPos = mapAdapter.GetCellByIndex(path[currentPathIndex]).transform.position;
-                }
+            else if ((ReachedPosition(transform.position, nextPos)))
+            {
+                currentPathIndex++;
+                SetNextPos(path[currentPathIndex]);
             }
 
             else
             {
-                Vector3 currentDirection = (nextPos - transform.position).normalized;
+                Vector3 currentDirection = (nextPos - transform.position);
+                currentDirection.y = 0f;
+                currentDirection.Normalize();
                 HandleRotation(delta, currentDirection);
-                characterRigidBody.velocity = currentDirection * movementSpeed;
+
+                characterRigidBody.velocity = movementSpeed * currentDirection;
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position,Vector3.down,out hit,(1<<0)))
+                {
+                    if (hit.distance>.6 && transform.position.y>nextPos.y+.2f)
+                        characterRigidBody.velocity += Vector3.down*10f;
+                }
                 animationHandler.UpdateAnimatorValues(delta, 1f);
             }
         }
 
         public void ExcuteMovement(float delta)
-        {
+        {            
             if (stateManager.characterAction == CharacterAction.Moving)
                 TraverseToDestination(delta);
             else
             {
                 IntVector2 index = GetMouseIndex();
-
+                
                 if (currentNavDict.ContainsKey(index))
                 {
                     path = NavigationHandler.instance.GetPath(currentNavDict, index, currentIndex);
-                    int distance = GetMouseDistance(index);
-
-                    if (characterStats.currentAP >= distance && EnemyCheck(index) == null)
+                    int distance = GetRequiredMoves(index,path);
+                    
+                    if (characterStats.currentAP >= distance && currentNavDict.ContainsKey(index))
                     {
                         GridManager.Instance.HighlightPathWithList(path);
-                        if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput)
+                        if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput) 
                             && stateManager.characterAction == CharacterAction.None)
-                        {
-                            SetTargetDestination(index, distance);
+                        {                           
+                            SetTargetDestination(index, distance);                            
                         }
                     }
                 }
             }
         }
 
-        public void UseSkill(Skill skill, float delta)
+        public void UseSkill(SkillAbstract skillScript, float delta)
         {
-            SkillFactory.instance.Activate(characterStats, animationHandler, this, skill, delta);
+            skillScript.Activate(delta);
         }
 
         public void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Enemy")
+            if (other.gameObject.tag == "Enemy"|| other.gameObject.tag == "Player")
                 stateManager.skillColliderTiggered = true;
         }
     }
 }
+

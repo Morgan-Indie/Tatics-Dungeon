@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1599487607743812192}
   m_Layer: 0
   m_Name: InfernoEffect
-  m_TagString: Untagged
+  m_TagString: InfernoEffect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 6668020945446936510}
   m_Layer: 0
   m_Name: InfernoEffect
-  m_TagString: Untagged
+  m_TagString: FireEffect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,10 +116,7 @@ VFXRenderer:
   m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

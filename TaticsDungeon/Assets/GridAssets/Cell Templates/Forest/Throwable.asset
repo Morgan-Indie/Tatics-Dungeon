@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a768a03a2a7a7428852746dd7f6490, type: 3}
+  m_Name: Throwable
+  m_EditorClassIdentifier: 
+  cellName: Throwable
+  tint: {r: 0.110137075, g: 0.5188679, b: 0.16255158, a: 1}
+  cellMode: 0
+  singlePrefab:
+    prefab: {fileID: 185158, guid: 067161ae46386c14c842800eb27cf27b, type: 3}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 0.32, y: 0.3, z: 0.32}
+  prefabList:
+    prefabs: []
+    offsets: []
+    scales: []
+  wallMode: 0
+  wallSinglePrefab:
+    prefab: {fileID: 0}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotationOffset: 0
+  wallPrefabList:
+    prefabs: []
+    offsets: []
+    scales: []
+    rotationOffsets: []
+  railingMode: 0
+  railingSinglePrefab:
+    prefab: {fileID: 0}
+    positiveOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+  railingPrefabList:
+    prefabs: []
+    positiveOffsets: []
+    scales: []
+  obstacleMode: 2
+  obstacleSinglePrefab:
+    percentToSpawn: 100
+    placeRandomly: 0
+    randomLimit: {x: 0, y: 0, z: 0}
+    prefab: {fileID: 0}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+  obstaclePrefabList:
+    percentToSpawn: 100
+    placeRandomly: 0
+    randomLimit: {x: 0, y: 0, z: 0}
+    prefabs:
+    - {fileID: 139386, guid: c2849fd453abd0445a702a035f04ac60, type: 3}
+    - {fileID: 143208, guid: b02bc145bce4ede4da8151c54b21e0e0, type: 3}
+    - {fileID: 124282, guid: 4a0161dd17a0d6b42b4f8046836bcb22, type: 3}
+    - {fileID: 176366, guid: febd7f03c03be1e468a98ba8024a2b8c, type: 3}
+    offsets:
+    - {x: 0, y: 0.01, z: 0}
+    - {x: 0, y: 0.01, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    scales:
+    - {x: 1, y: 1, z: 1}
+    - {x: 1, y: 1, z: 1}
+    - {x: 1.5, y: 1.5, z: 1.5}
+    - {x: 0.7, y: 0.7, z: 0.7}
+  decorationMode: 0
+  decorationSinglePrefab:
+    percentToSpawn: 100
+    placeRandomly: 0
+    randomLimit: {x: 0, y: 0, z: 0}
+    prefab: {fileID: 0}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+  decorationPrefabList:
+    percentToSpawn: 100
+    placeRandomly: 0
+    randomLimit: {x: 0, y: 0, z: 0}
+    prefabs: []
+    offsets: []
+    scales: []
+  stairMode: 0
+  stairSinglePrefab:
+    prefab: {fileID: 0}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    rotationOffset: 0
+    stairDecorationMode: 0
+    stairDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+    stairConditionalDecoration: 0
+    stairConditionData:
+      conditionType: 0
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+  stairPrefabList:
+    prefabs: []
+    offsets: []
+    scales: []
+    rotationOffset: 0
+    stairDecorationMode: 0
+    stairDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+    stairConditionalDecoration: 0
+    stairConditionData:
+      conditionType: 0
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+  isAPath: 0
+  pathData:
+    straightPath: {fileID: 0}
+    cornerPath: {fileID: 0}
+    tPath: {fileID: 0}
+    crossPath: {fileID: 0}
+    bridge: {fileID: 0}
+    offsets: []
+    scales: []
+    rotationOffsets: []
+    bridgeDecorationMode: 0
+    bridgeDecorationData:
+      prefabs: []
+      offsets: []
+      scales: []
+      rotationOffsets: []
+  isARiver: 0
+  riverData:
+    straightPrefab: {fileID: 0}
+    cornerPrefab: {fileID: 0}
+    offsets: []
+    scales: []
+    rotationOffset: 0

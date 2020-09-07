@@ -24,7 +24,7 @@ namespace PrototypeGame
         public InventoryHandler inventoryHandler;
         public SkillSlotsHandler skillSlotsHandler;
         public bool isCurrentPlayer;
-        public Skill selectedSkill;
+        public SkillAbstract selectedSkill=null;
 
         private void Start()
         {
@@ -36,6 +36,12 @@ namespace PrototypeGame
             skillSlotsHandler = GetComponent<SkillSlotsHandler>();
         }
 
+        public void DisableCharacter()
+        {
+            GameManager.instance.playersDict.Remove(characterStats.characterName);
+            gameObject.SetActive(false);
+        }
+
         // Update is called once per frame
         public void PlayerUpdate(float delta)
         {
@@ -45,11 +51,12 @@ namespace PrototypeGame
                 InputHandler.instance.TickInput(delta);
 
                 CameraHandler.instance.HandleCamera(delta);
-                if (GameManager.instance.playerState != CharacterState.InMenu)
+                if (GameManager.instance.gameState != GameState.InMenu)
                 {
-                    if (selectedSkill == null)
-                        selectedSkill = skillSlotsHandler.Move;
-                    taticalMovement.UseSkill(selectedSkill, delta);
+                    if (selectedSkill == null || selectedSkill.skill.type == SkillType.Move)
+                        taticalMovement.ExcuteMovement(delta);
+                    else
+                        taticalMovement.UseSkill(selectedSkill, delta);
                 }                
             }
         }

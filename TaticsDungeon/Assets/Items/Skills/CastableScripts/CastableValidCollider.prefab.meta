@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 <<<<<<< HEAD:TaticsDungeon/Assets/AlchemyVFX/AlchemyVFX/TileShock/LightningPlane.mtl.meta
 guid: 6169b74d920cde54c8577893e0bda67d
 DefaultImporter:
@@ -6,6 +7,10 @@ DefaultImporter:
 guid: 6f85b2ebea62ed542a8f3de985e97733
 PrefabImporter:
 >>>>>>> CastableEditing:TaticsDungeon/Assets/Items/Skills/CastableScripts/CastableValidCollider.prefab.meta
+=======
+guid: 0ff89592af23cff41b812d291e9142b0
+PrefabImporter:
+>>>>>>> master
   externalObjects: {}
   userData: 
   assetBundleName: 

@@ -21,10 +21,10 @@ MonoBehaviour:
   coolDown: 0
   castableSettings:
     castableSpell: 1
-    range: 5
-    shape: 2
-    inclusive: 0
-    radius: 2
+    range: 3
+    shape: 1
+    inclusive: 1
+    radius: 1
     lineOrientation: 0
     crossOrientation: 0
   strScaleType: 0

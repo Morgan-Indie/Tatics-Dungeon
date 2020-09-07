@@ -40,11 +40,6 @@ namespace PrototypeGame
 
         public void UpdateAnimatorValues(float delta, float moveAmount)
         {
-            if (moveAmount > 0)
-                animator.SetBool("Moving", true);
-            else
-                animator.SetBool("Moving", false);
-
             if (moveAmount > .2 && moveAmount < .5f)
                 animator.SetFloat("MovementThreshold", .25f, .1f, delta);
             else if (moveAmount >= .5f && moveAmount < 1f)

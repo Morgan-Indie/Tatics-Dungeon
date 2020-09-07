@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace PrototypeGame
 {
@@ -10,8 +11,8 @@ namespace PrototypeGame
         public AnimationHandler animationHandler;
         public CharacterStateManager stateManager;
         public TaticalMovement taticalMovement;
-        public PlayerManager[] playersList;
-        public EnemyManager[] enemiesList;
+        public bool DestinationReached = false;
+
         public PlayerManager target;
         Dictionary<SkillType, Skill> skillDict;
 
@@ -24,8 +25,6 @@ namespace PrototypeGame
             stateManager = states;
             taticalMovement = tatical;
             animationHandler = animation;
-            playersList = GameManager.instance.playersList;
-            enemiesList = GameManager.instance.enemiesList;
             skillDict = skills;
         }
 
@@ -37,65 +36,70 @@ namespace PrototypeGame
         public override void Act(float delta)
         {
             if (target == null)
-            {
-                List<(PlayerManager, int)> playersHealthList = new List<(PlayerManager, int)>();
+            {                
+                List<(PlayerManager, int)> playersHealthList = new List<(PlayerManager, int)>();                   
+                foreach (PlayerManager player in GameManager.instance.playersDict.Values.ToArray())
+                {                    
+                    List<IntVector2> targetsPath = NavigationHandler.instance.GetPath(taticalMovement.currentTargetsNavDict,
+                        player.taticalMovement.currentIndex, taticalMovement.currentIndex);
+
+                    int distance = taticalMovement.GetRequiredMoves(player.taticalMovement.currentIndex, targetsPath);
                     
-                foreach (PlayerManager player in playersList)
-                {
-                    if (taticalMovement.GetMouseDistance(player.taticalMovement.currentIndex) <= characterStats.currentAP)
+                    if (distance!=-1 && player.characterStats.currentHealth>0)
                     {
+                        Debug.Log("Checking Player" + player.characterStats.characterName);
                         playersHealthList.Add((player, player.characterStats.currentHealth));
                     }
                 }
 
                 playersHealthList.Sort((c1, c2) => c1.Item2.CompareTo(c2.Item2));
-                target = playersHealthList[0].Item1;
 
-                List<IntVector2> directions = new List<IntVector2>
+                //set the target destination
+                for (int i =0; i< playersHealthList.Count; i++)
                 {
-                    new IntVector2(0,1),
-                    new IntVector2(0,-1),
-                    new IntVector2(1,0),
-                    new IntVector2(-1,0)
-                };
-
-                List<IntVector2> targetIndicies = new List<IntVector2>();
-                foreach (IntVector2 direction in directions)
-                {
-                    IntVector2 i = target.taticalMovement.currentIndex.Add(direction);
-
-                    if (i.IsValid(taticalMovement.mapAdapter))
+                    target = playersHealthList[i].Item1;
+                    IntVector2 targetIndex = target.taticalMovement.currentIndex;
+                    List<IntVector2> targetPath = NavigationHandler.instance.GetPath(taticalMovement.currentTargetsNavDict,
+                            targetIndex, taticalMovement.currentIndex);
+                    if (taticalMovement.GetRequiredMoves(targetIndex, targetPath)<=characterStats.currentAP)
                     {
-                        if (taticalMovement.currentNavDict.ContainsKey(i))
-                            targetIndicies.Add(i);                                
+                        targetPath.RemoveAt(targetPath.Count - 1);
+                        taticalMovement.path = targetPath;
+                        int targetDistance = taticalMovement.GetRequiredMoves(targetIndex, taticalMovement.path);
+                        taticalMovement.SetTargetDestination(targetPath[targetPath.Count - 1], targetDistance);
+                        return;
                     }
                 }
 
-                IntVector2 targetIndex = targetIndicies[0];
-
-                taticalMovement.path = NavigationHandler.instance.GetPath(taticalMovement.currentNavDict,
-                                        targetIndex, taticalMovement.currentIndex);
-                    
-                taticalMovement.SetTargetDestination(targetIndex, 
-                    taticalMovement.GetMouseDistance(target.taticalMovement.currentIndex));
+                target = playersHealthList[0].Item1;
+                List<IntVector2> secondaryPath = NavigationHandler.instance.GetPath(taticalMovement.currentTargetsNavDict,
+                        target.taticalMovement.currentIndex, taticalMovement.currentIndex);
+                taticalMovement.SetTargetDestination(secondaryPath[characterStats.currentAP-1], characterStats.currentAP);
             }
 
             else
             {
                 if (taticalMovement.transform.position == taticalMovement.moveLocation)
+                    DestinationReached = true;
+
+                if (DestinationReached)
                 {
-                    if (characterStats.currentAP > 0 && stateManager.characterState==CharacterState.Ready)
-                    {                                     
-                        MeleeAttack.Activate(characterStats, animationHandler,
-                            taticalMovement, skillDict[SkillType.MeleeAttack], target, delta);
+                    if (characterStats.currentAP > 0 && GameManager.instance.gameState == GameState.Ready)
+                    {
+                        
+                        if (target.characterStats.currentHealth <= 0)
+                        {
+                            target = null;
+                            taticalMovement.SetCurrentNavDict();
+                        }
                     }
                 }
+
                 else
                 {
                     taticalMovement.TraverseToDestination(delta);
                 }
-            }
-            
+            }            
         }
     }
 }

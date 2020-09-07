@@ -18,6 +18,12 @@ MonoBehaviour:
   LevelRequired: 0
   APcost: 0
   type: 1
+  coolDown: 0
+  skillScriptObject: {fileID: 5587677330032345258, guid: 614235dec116d404c9a4c4bc71edd5b0,
+    type: 3}
+  castableSettings:
+    castableSpell: 0
+    range: 1
   strScaleType: 0
   _scaleValueStrength: 0
   vitScaleType: 0

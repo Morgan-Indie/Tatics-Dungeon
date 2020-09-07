@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 <<<<<<< HEAD:TaticsDungeon/Assets/AlchemyVFX/AlchemyVFX/TileFrost.meta
 guid: db124bfc8aaf4fd41acd3dc5d2695dc3
 folderAsset: yes
@@ -7,6 +8,10 @@ DefaultImporter:
 guid: cbca9086d7a02bf469ca05d3f11d8ad1
 NativeFormatImporter:
 >>>>>>> CastableEditing:TaticsDungeon/Assets/Items/Skills/CastableScripts/CastableValidMat.mat.meta
+=======
+guid: 6cbbabed688581e4ca5d08a6bd708d93
+NativeFormatImporter:
+>>>>>>> master
   externalObjects: {}
   mainObjectFileID: 0
   userData: 

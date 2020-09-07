@@ -4,13 +4,26 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public static class MeleeAttack
+    public class MeleeAttack : SkillAbstract
     {
-        public static void Activate(CharacterStats characterStats, AnimationHandler animationHandler,
-            TaticalMovement taticalMovement, Skill skill, float delta)
+        public bool animationCompleted;
+        public GameObject target;
+
+        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
+            TaticalMovement _taticalMovement, Skill _skill)
+        {
+            MeleeAttack meleeAttack = _characterStats.gameObject.AddComponent<MeleeAttack>();
+            meleeAttack.characterStats = _characterStats;
+            meleeAttack.animationHandler = _animationHandler;
+            meleeAttack.taticalMovement = _taticalMovement;
+            meleeAttack.skill = _skill;
+            return meleeAttack;
+        }
+
+        public override void Activate(float delta)
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
-            int distance = Mathf.Abs(index.x - taticalMovement.currentIndex.x) + Mathf.Abs(index.y - taticalMovement.currentIndex.y);
+            int distance = taticalMovement.currentIndex.GetDistance(index);
 
             if (index.x >= 0 && characterStats.currentAP >= skill.APcost && distance == 1)
             {
@@ -18,33 +31,21 @@ namespace PrototypeGame
                     characterStats.stateManager.characterState!= CharacterState.IsInteracting)
                 {
                     InputHandler.instance.tacticsXInput = false;
-                    GameObject target = taticalMovement.EnemyCheck(index);
+                    GridCell targetCell = taticalMovement.mapAdapter.GetCellByIndex(index);
 
-                    if (target != null)
-                    {
-                        characterStats.transform.LookAt(target.transform);
-                        animationHandler.PlayTargetAnimation("Attack");
-                        characterStats.GetComponent<CombatUtils>().Attack(target);
-                        characterStats.UseAP(skill.APcost);
-                    }
-                    else
-                    {
-                        Debug.LogError("No TargetDetected");
-                    }
+                    Excute(delta, targetCell);
                 }
             }
         }
 
-        public static void Activate(CharacterStats characterStats, AnimationHandler animationHandler,
-            TaticalMovement taticalMovement, Skill skill,PlayerManager target, float delta)
+        public override void Excute(float delta, GridCell targetCell)
         {
-            if (target != null && characterStats.stateManager.characterState != CharacterState.IsInteracting)
-            {
+            target = targetCell.GetOccupyingObject();
+            if (target != null)
                 characterStats.transform.LookAt(target.transform);
                 animationHandler.PlayTargetAnimation("Attack");
-                characterStats.GetComponent<CombatUtils>().Attack(target.gameObject);
+                characterStats.GetComponent<CombatUtils>().PhyiscalAttack(target);
                 characterStats.UseAP(skill.APcost);
-            }
         }
     }       
 }

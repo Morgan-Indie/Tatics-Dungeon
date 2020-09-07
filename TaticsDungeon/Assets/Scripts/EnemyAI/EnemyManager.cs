@@ -24,14 +24,20 @@ namespace PrototypeGame
             enemyController = GetComponent<EnemyController>();
         }
 
+        public void DisableCharacter()
+        {
+            GameManager.instance.enemiesDict.Remove(characterStats.characterName);
+            gameObject.SetActive(false);
+        }
+
         // Update is called once per frame
         public void EnemyUpdate(float delta)
         {
             if (isCurrentEnemy)
             {
-                enemyController.FSMUpdate(delta);
-                if (characterStats.currentAP == 0)
+                if (characterStats.currentAP == 0 && GameManager.instance.gameState == GameState.Ready)
                     GameManager.instance.SetNextEnemy();
+                enemyController.FSMUpdate(delta);             
             }
         }
     }

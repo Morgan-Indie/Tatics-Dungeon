@@ -41,7 +41,7 @@ namespace PrototypeGame
 
         public void ArrowHit()
         {
-            characterStats.GetComponent<CombatUtils>().Attack(target);
+            characterStats.GetComponent<CombatUtils>().PhyiscalAttack(target);
             Destroy(arrow);
         }
     }

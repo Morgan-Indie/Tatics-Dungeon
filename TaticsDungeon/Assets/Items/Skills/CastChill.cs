@@ -10,7 +10,7 @@ namespace PrototypeGame
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
             GridManager.Instance.HighlightCastableRange(taticalMovement.currentIndex, index, skill);
-            int distance = taticalMovement.GetMouseDistance(index);
+            int distance = taticalMovement.GetRequiredMoves(index, taticalMovement.path);
 
             if (index.x >= 0 && characterStats.currentAP >= skill.APcost)
             {

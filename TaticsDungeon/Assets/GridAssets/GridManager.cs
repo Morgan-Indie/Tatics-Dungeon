@@ -6,10 +6,10 @@ namespace PrototypeGame
 {
     public enum CellHighlightType
     {
-        None, 
-        Walkable, 
+        None,
+        Walkable,
         Invalid,
-        Path, 
+        Path,
         InRange,
         Castable,
     }
@@ -42,6 +42,8 @@ namespace PrototypeGame
         public List<IntVector2> highlightedPath;
         [HideInInspector]
         public List<IntVector2> allHighlightedTiles;
+        public List<GameObject> castableRangeHighlights;
+        IntVector2 castableHighlightOrigin = new IntVector2(-1, -1);
         public GameObject castableHighlightPrefab;
         public GameObject castableValidPrefab;
 
@@ -99,6 +101,7 @@ namespace PrototypeGame
         public GridCell[] GetCellOrthogonalNeighbors(GridCell cell) { return mapAdapter.GetOrthogonalNeighbors(cell); }
         public GridCell GetCellByIndex(IntVector2 index) { return mapAdapter.GetCellByIndex(index); }
 
+
         void UpdateGridLineHighlights()
         {
             if (gridHolder == null)
@@ -108,7 +111,7 @@ namespace PrototypeGame
             GridCell[,] cells = mapAdapter.GetCellMatrix();
             foreach (GridCell cell in cells)
             {
-                GameObject ob = Instantiate(tileHighlightPrefab, cell.transform.position + new Vector3(0, 0.3f + GridMetrics.squareSize * cell.height, 0), Quaternion.identity);
+                GameObject ob = Instantiate(tileHighlightPrefab, cell.transform.position + new Vector3(0, 0.3f, 0), Quaternion.identity);
                 ob.transform.SetParent(gridHolder.transform);
             }
         }
@@ -130,32 +133,41 @@ namespace PrototypeGame
             GridCell cell = mapAdapter.GetCellByIndex(index);
             CellState currentState = cell.GetCellState();
             if (currentState == CellState.open)
-                cell.ApplyHighlight(validTileHighlightPrefab, CellHighlightType.Walkable);
+                cell.ApplyHighlight(validTileHighlightPrefab);
             else
-                cell.ApplyHighlight(inValidTileHighlightPrefab, CellHighlightType.Invalid);
+                cell.ApplyHighlight(inValidTileHighlightPrefab);
         }
 
         public void HighlightPathWithList(List<IntVector2> indices)
         {
+            List<int> omits = new List<int>();
             GridCell cell;
             for (int i = 0; i < highlightedPath.Count; i++)
             {
                 if (!highlightedPath[i].IsIn(indices))
                 {
                     cell = mapAdapter.GetCellByIndex(highlightedPath[i]);
-                    cell.ApplyHighlight(validTileHighlightPrefab, CellHighlightType.Walkable);
+                    cell.RemoveHighlight();
+                    cell.ApplyHighlight(validTileHighlightPrefab);
+                }
+                else
+                {
+                    //   omits.Add(highlightedPath[i].IndexInList(indices));
                 }
             }
             highlightedPath.Clear();
             for (int i = 0; i < indices.Count; i++)
             {
-                mapAdapter.GetCellByIndex(indices[i]).ApplyHighlight(pathTileHighlightPrefab, CellHighlightType.Path);
+                if (omits.Contains(i))
+                    continue;
+                mapAdapter.GetCellByIndex(indices[i]).ApplyHighlight(pathTileHighlightPrefab);
                 highlightedPath.Add(indices[i]);
             }
         }
 
         public void RemoveAllHighlights()
         {
+            /*
             foreach (IntVector2 index in allHighlightedTiles)
             {
                 mapAdapter.GetCellByIndex(index).RemoveHighlight();
@@ -167,8 +179,17 @@ namespace PrototypeGame
                     mapAdapter.GetCellByIndex(index).RemoveHighlight();
                 }
             }
+            */
             allHighlightedTiles.Clear();
             highlightedPath.Clear();
+            
+            for (int y=0; y<mapAdapter.gridMap.height; y++)
+            {
+                for (int x=0; x<mapAdapter.gridMap.width; x++)
+                {
+                    mapAdapter.GetCellByIndex(new IntVector2(x, y)).RemoveHighlight();
+                }
+            }
         }
 
         public void HighlightCastableRange(IntVector2 playerOrigin, IntVector2 castOrigin, Skill skill)
@@ -176,22 +197,24 @@ namespace PrototypeGame
             List<GridCell> rangeCells = CastableShapes.GetRangeCells(skill, playerOrigin);
             List<GridCell> castRange = CastableShapes.GetCastableCells(skill, castOrigin);
             List<GridCell> outerRange = CastableShapes.CircularCells(playerOrigin, skill.castableSettings.radius + skill.castableSettings.range, skill.castableSettings.range + 1);
+            foreach (GridCell cell in outerRange)
+            {
+                  if (!castRange.Contains(cell))
+                     cell.RemoveHighlight();
+            }
+
             foreach (GridCell cell in rangeCells)
             {
                 cell.ApplyHighlight(castableValidPrefab, CellHighlightType.InRange);
             }
-            if (castOrigin.Distance(playerOrigin) <= skill.castableSettings.range)
+            if (castOrigin.GetDistance(playerOrigin) <= skill.castableSettings.range)
             {
                 foreach (GridCell cell in castRange)
                 {
                     cell.ApplyHighlight(castableHighlightPrefab, CellHighlightType.Castable);
                 }
             }
-            foreach (GridCell cell in outerRange)
-            {
-                if (!castRange.Contains(cell))
-                    cell.RemoveHighlight();
-            }
+            
         }
 
         public bool IndexIsOnGrid(IntVector2 index)

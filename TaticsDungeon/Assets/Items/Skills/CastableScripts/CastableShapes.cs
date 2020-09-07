@@ -4,7 +4,11 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
+<<<<<<< HEAD
     public static class CastableShapes 
+=======
+    public static class CastableShapes
+>>>>>>> master
     {
         public static List<GridCell> GetRangeCells(Skill skill, IntVector2 index)
         {
@@ -31,7 +35,11 @@ namespace PrototypeGame
             AddExculsiveCellToListByIndex(cells, index);
             return cells;
         }
+<<<<<<< HEAD
         public static List<GridCell> CircularCells(IntVector2 index, int radius, int exclusionRadius=0)
+=======
+        public static List<GridCell> CircularCells(IntVector2 index, int radius, int exclusionRadius = 0)
+>>>>>>> master
         {
             List<GridCell> cells = new List<GridCell>();
             IntVector2 checkIndex = new IntVector2(index.x, index.y);
@@ -75,9 +83,15 @@ namespace PrototypeGame
             int curX = 0;
             int upY = Mathf.FloorToInt((radius) / 2);
             int downY = Mathf.FloorToInt((radius + 1) / 2);
+<<<<<<< HEAD
             for (int x=0; x<=radius; x++)
             {
                 for (int y=1; y<=upY; y++)
+=======
+            for (int x = 0; x <= radius; x++)
+            {
+                for (int y = 1; y <= upY; y++)
+>>>>>>> master
                 {
                     if (x % 2 == 0)
                         AddExculsiveCellToListByIndex(cells, new IntVector2(index.x - curX, index.y + y));
@@ -109,7 +123,11 @@ namespace PrototypeGame
             //0 vertical
             //1 horizontal
             IntVector2 ori = new IntVector2(orientation, Mathf.Abs(orientation - 1));
+<<<<<<< HEAD
             for (int i=0; i<=length; i++)
+=======
+            for (int i = 0; i <= length; i++)
+>>>>>>> master
             {
                 AddExculsiveCellToListByIndex(cells, new IntVector2(ori.x * i + index.x, ori.y * i + index.y));
                 if (i != 0)
@@ -133,7 +151,11 @@ namespace PrototypeGame
                 oriA = new IntVector2(1, 1);
                 oriB = new IntVector2(-1, 1);
             }
+<<<<<<< HEAD
             for (int i=0; i<=length; i++)
+=======
+            for (int i = 0; i <= length; i++)
+>>>>>>> master
             {
                 AddExculsiveCellToListByIndex(cells, new IntVector2(oriA.x * i + index.x, oriA.y * i + index.y));
                 if (i != 0)
@@ -164,7 +186,11 @@ namespace PrototypeGame
                         else
                             AddExculsiveCellToListByIndex(cells, new IntVector2(index.x + curX, index.y + y));
                     }
+<<<<<<< HEAD
                     
+=======
+
+>>>>>>> master
                 }
                 for (int y = 1; y <= downY; y++)
                 {
@@ -175,9 +201,15 @@ namespace PrototypeGame
                         else
                             AddExculsiveCellToListByIndex(cells, new IntVector2(index.x + curX, index.y - y));
                     }
+<<<<<<< HEAD
                     
                 }
                 
+=======
+
+                }
+
+>>>>>>> master
                 if (x % 2 == 0)
                 {
                     if (curX % 2 == 1)
@@ -186,7 +218,11 @@ namespace PrototypeGame
                 }
                 else if (curX % 2 == 1)
                     AddExculsiveCellToListByIndex(cells, new IntVector2(index.x + curX, index.y));
+<<<<<<< HEAD
                     
+=======
+
+>>>>>>> master
             }
 
             return cells;
@@ -200,4 +236,8 @@ namespace PrototypeGame
             if (!cells.Contains(cell)) { cells.Add(cell); }
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master
