@@ -76,6 +76,7 @@ namespace PrototypeGame
                 {
                     GridCell cell = (GridCell)source;
                     targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Burning);
+                    ElementalVFX.Instance.ActivateEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
                     if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Oiled))
                     {
                         targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Oiled);
@@ -95,6 +96,8 @@ namespace PrototypeGame
                     SkillAbstract skill = (SkillAbstract)source;
                     if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Oiled))
                     {
+                        targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Burning);
+                        ElementalVFX.Instance.ActivateEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
                         targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Oiled);
                         StatModifier burnDamageMod = new StatModifier(skill.alchemicalDamage.Value * .5f, StatModType.Flat, skill);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
@@ -102,7 +105,8 @@ namespace PrototypeGame
                     }
                     
                     else if (Random.value>=.5f)
-                    {                        
+                    {
+                        ElementalVFX.Instance.ActivateEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
                         targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Burning);
                         StatModifier burnDamageMod = new StatModifier(skill.alchemicalDamage.Value * .25f, StatModType.Flat, skill);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);

@@ -16,13 +16,15 @@ MonoBehaviour:
   skillClass: 0
   icon: {fileID: 21300000, guid: a59c751c587cf3a41857354161b41609, type: 3}
   LevelRequired: 0
-  APcost: 0
-  type: 4
-  coolDown: 0
+  APcost: 3
+  type: 2
+  coolDown: 3
+  skillScriptObject: {fileID: 5587677330032345258, guid: d741ce5775966e44e9a13e2b2f19593c,
+    type: 3}
   castableSettings:
     castableSpell: 0
     range: 3
-    shape: 2
+    shape: 4
     inclusive: 1
     radius: 2
     lineOrientation: 0
@@ -36,13 +38,21 @@ MonoBehaviour:
   lucScaleType: 0
   _scaleValueLuck: 0
   intScaleType: 0
-  _scaleValueIntelligence: 0
+  _scaleValueIntelligence: 1.2
   staScaleType: 0
   _scaleValueStamina: 0
   levScaleType: 0
   _scaleValueLevel: 0
   normalDamageScaleType: 0
   _scaleValueNormalDamage: 0
+  fireDamageScaleType: 0
+  _scaleValueFireDamage: 15
+  waterDamageScaleType: 0
+  _scaleValueWaterDamage: 0
+  poisonDamageScaleType: 0
+  _scaleValuePoisonDamage: 0
+  shockDamageScaleType: 0
+  _scaleValueShockDamage: 0
   armorScaleType: 0
   _scaleValueArmor: 0
   resistanceScaleType: 0

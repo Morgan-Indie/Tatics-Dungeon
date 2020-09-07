@@ -28,7 +28,7 @@ namespace PrototypeGame
         public EnemyManager currentEnemy;
         public int playerIndex=0;
         public int enemyIndex=0;
-        protected int Turn = 1;
+        public int Turn = 1;
 
         [Header("Required")]
         public TurnPopUpFade popUpUI;

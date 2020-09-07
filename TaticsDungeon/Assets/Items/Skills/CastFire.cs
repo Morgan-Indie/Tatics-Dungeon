@@ -13,19 +13,20 @@ namespace PrototypeGame
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
             TaticalMovement _taticalMovement, Skill _skill)
         {
-            CastFire CastFire = _characterStats.gameObject.AddComponent<CastFire>();
-            CastFire.characterStats = _characterStats;
-            CastFire.animationHandler = _animationHandler;
-            CastFire.taticalMovement = _taticalMovement;
-            CastFire.skill = _skill;
+            CastFire castFire = _characterStats.gameObject.AddComponent<CastFire>();
+            castFire.characterStats = _characterStats;
+            castFire.animationHandler = _animationHandler;
+            castFire.taticalMovement = _taticalMovement;
+            castFire.skill = _skill;
 
-            CastFire.alchemicalDamage = new CombatStat(_firedamage, CombatStatType.fireDamage);
+            castFire.alchemicalDamage = new CombatStat(_firedamage, CombatStatType.fireDamage);
 
-            CastFire.intScaleValue = skill.attributeScaleModDict[AttributeType.intelligence].Value * _characterStats.Intelligence.Value;
+            castFire.intScaleValue = skill.attributeScaleModDict[AttributeType.intelligence].Value * _characterStats.Intelligence.Value;
             StatModifier intScaling = new StatModifier(intScaleValue, StatModType.Flat);
 
-            CastFire.alchemicalDamage.AddModifier(intScaling);
-            return CastFire;
+            castFire.alchemicalDamage.AddModifier(intScaling);
+            Debug.Log(castFire.alchemicalDamage.Value);
+            return castFire;
         }
 
         public override void Activate(float delta)

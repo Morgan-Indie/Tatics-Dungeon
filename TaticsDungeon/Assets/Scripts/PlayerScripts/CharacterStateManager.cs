@@ -48,6 +48,11 @@ namespace PrototypeGame
                     {
                         case CombatStatType.fireDamage:
                             burnDamageOverTime.RemoveAllModifiersFromSource(damageSources.Key);
+                            if (!statusEffects.Contains(StatusEffect.Burning))
+                            {
+                                Destroy(GameObject.FindGameObjectWithTag("FireEffect"));
+                                Destroy(GameObject.FindGameObjectWithTag("InfernoEffect"));
+                            }
                             break;
                         case CombatStatType.poisonDamage:
                             poisonDamageOverTime.RemoveAllModifiersFromSource(damageSources.Key);

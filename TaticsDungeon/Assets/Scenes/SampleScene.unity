@@ -4887,8 +4887,14 @@ PrefabInstance:
     - target: {fileID: 5012251641638902140, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
       propertyPath: skills.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5012251641638902140, guid: dbef1ad53e25e9e41a81c041caa74373,
+        type: 3}
+      propertyPath: skills.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: cf28006038f359c4682d536ff1515349,
+        type: 2}
     - target: {fileID: 5885915574917985009, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
       propertyPath: m_AnchorMin.y
