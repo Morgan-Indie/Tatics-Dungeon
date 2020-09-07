@@ -24,6 +24,8 @@ namespace PrototypeGame
         CastPoison,
         CastShock,
         FireStorm,
+        IceBomb,
+        EnergyBall,
     };
 
     public enum CastableShape

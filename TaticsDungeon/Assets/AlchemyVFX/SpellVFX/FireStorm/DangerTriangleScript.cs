@@ -18,7 +18,6 @@ namespace PrototypeGame
         {
             rangeCells = new List<GridCell>();
             GridCell[] holdCells = cells.ToArray();
-            Debug.Log("Total cells " + holdCells.Length);
             LeanTween.moveY(gameObject, hoverHeight, 0.5f).setOnComplete(ShootProjectile);
             for (int i=0; i<holdCells.Length / 2; i++)
             {
@@ -32,7 +31,6 @@ namespace PrototypeGame
 
         void ShootProjectile()
         {
-            Debug.Log("After Range Cell Length" + rangeCells.Count);
             int index = Mathf.FloorToInt(Random.Range(0, rangeCells.Count));
             GameObject ob = Instantiate(projectilePrefab, transform.position, transform.rotation);
             ob.GetComponent<FireStormProjectile>().Initalize(rangeCells[index]);

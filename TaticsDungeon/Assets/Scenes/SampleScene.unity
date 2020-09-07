@@ -916,6 +916,7 @@ GameObject:
   - component: {fileID: 973224553}
   - component: {fileID: 973224552}
   - component: {fileID: 973224554}
+  - component: {fileID: 973224555}
   m_Layer: 0
   m_Name: UICamera
   m_TagString: Untagged
@@ -1007,6 +1008,37 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &973224555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973224550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1001 &1030144627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1826,7 +1858,7 @@ PrefabInstance:
     - target: {fileID: 306594214909376139, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
       propertyPath: skills.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 306594214909376139, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
@@ -1839,6 +1871,18 @@ PrefabInstance:
       propertyPath: skills.Array.data[3]
       value: 
       objectReference: {fileID: 11400000, guid: 784cc7f428848cc40bd4b6feeefc2834,
+        type: 2}
+    - target: {fileID: 306594214909376139, guid: dbef1ad53e25e9e41a81c041caa74373,
+        type: 3}
+      propertyPath: skills.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1aeb6016d0fffe14cb13b6ed1f6d9530,
+        type: 2}
+    - target: {fileID: 306594214909376139, guid: dbef1ad53e25e9e41a81c041caa74373,
+        type: 3}
+      propertyPath: skills.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0288ca242d138eb449c49be5c85d9cc0,
         type: 2}
     - target: {fileID: 831799078184822845, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}

@@ -65,6 +65,12 @@ namespace PrototypeGame
                         case (CastableSpell.FireStorm):
                             FireStorm.Activate(characterStats, animationHandler, taticalMovement, skill, delta);
                             break;
+                        case (CastableSpell.IceBomb):
+                            IceBomb.Activate(characterStats, animationHandler, taticalMovement, skill, delta);
+                            break;
+                        case (CastableSpell.EnergyBall):
+                            EnergyBall.Activate(characterStats, animationHandler, taticalMovement, skill, delta);
+                            break;
                     }
                     break;
             }
