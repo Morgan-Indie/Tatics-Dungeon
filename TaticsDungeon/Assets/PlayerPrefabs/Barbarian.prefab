@@ -3070,9 +3070,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3511859065010113456}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6, y: 0, z: 4.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 5083206688206276910}
   - {fileID: 5083206688206276154}
@@ -3128,7 +3128,7 @@ CapsuleCollider:
   m_Radius: 0.2
   m_Height: 1.9
   m_Direction: 1
-  m_Center: {x: 0, y: 1.1, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!114 &6748818103412828766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3273,7 +3273,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterState: 0
   characterAction: 0
+  characterStats: {fileID: 0}
   skillColliderTiggered: 0
+  statusEffects: 
 --- !u!114 &6968551849030414281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3320,9 +3322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6de8b5b4191aba4abf2459318b023c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skills:
-  - {fileID: 11400000, guid: 8148fbf028444fe489d429b20eb0a04f, type: 2}
-  - {fileID: 11400000, guid: a45948b4d204b1f49854ada283144da6, type: 2}
+  skills: []
 --- !u!114 &1187855733736333432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3918,6 +3918,7 @@ MonoBehaviour:
   inventoryHandler: {fileID: 3644014842949302078}
   modHandler: {fileID: 5832476047702548752}
   statpreview: {fileID: 4542952943348370358}
+  characterStats: {fileID: 0}
   currentInventoryObject: {fileID: 0}
 --- !u!1 &4542952941702850629
 GameObject:

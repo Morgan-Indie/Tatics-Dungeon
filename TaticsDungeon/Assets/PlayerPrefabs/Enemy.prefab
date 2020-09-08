@@ -288,7 +288,7 @@ Transform:
   m_GameObject: {fileID: 4347284167483555766}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 6, y: 0, z: 6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4342355023568612670}
   m_Father: {fileID: 0}
@@ -450,7 +450,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterState: 0
   characterAction: 0
+  characterStats: {fileID: 0}
   skillColliderTiggered: 0
+  statusEffects: 
 --- !u!114 &4346658694915827363
 MonoBehaviour:
   m_ObjectHideFlags: 0

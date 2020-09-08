@@ -110,6 +110,8 @@ namespace PrototypeGame
                         targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Burning);
                         StatModifier burnDamageMod = new StatModifier(skill.alchemicalDamage.Value * .25f, StatModType.Flat, skill);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
+                        if (targetCharacterStats.stateManager.DamageSourceTurns.ContainsKey(skill))
+                            targetCharacterStats.stateManager.DamageSourceTurns.Remove(skill);
                         targetCharacterStats.stateManager.DamageSourceTurns.Add(skill, (CombatStatType.fireDamage, 3));
                     }
                 }

@@ -25,7 +25,6 @@ namespace PrototypeGame
             StatModifier intScaling = new StatModifier(intScaleValue, StatModType.Flat);
 
             castFire.alchemicalDamage.AddModifier(intScaling);
-            Debug.Log(castFire.alchemicalDamage.Value);
             return castFire;
         }
 
@@ -51,7 +50,7 @@ namespace PrototypeGame
         public override void Excute(float delta, GridCell targetCell)
         {
             characterStats.transform.LookAt(targetCell.transform);
-            animationHandler.PlayTargetAnimation("Attack");
+            animationHandler.PlayTargetAnimation("SpellCastHand");
             
             characterStats.UseAP(skill.APcost);
 

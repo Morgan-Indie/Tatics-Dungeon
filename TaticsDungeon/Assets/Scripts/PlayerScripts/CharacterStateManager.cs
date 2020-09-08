@@ -62,9 +62,10 @@ namespace PrototypeGame
                     DamageSourceTurns.Remove(damageSources.Key);
                 }
             }
-
-            characterStats.TakeDamage((int)poisonDamageOverTime.Value);
-            characterStats.TakeDamage((int)burnDamageOverTime.Value-(int)characterStats.resistance.Value);
+            if (poisonDamageOverTime.Value>0)
+                characterStats.TakeDamage((int)poisonDamageOverTime.Value);
+            if (burnDamageOverTime.Value > 0)
+                characterStats.TakeDamage((int)burnDamageOverTime.Value-(int)characterStats.resistance.Value);
         }
     }
 }
