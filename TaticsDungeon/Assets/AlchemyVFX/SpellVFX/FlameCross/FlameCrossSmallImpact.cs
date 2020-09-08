@@ -4,14 +4,11 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public class InstantCastImpact : MonoBehaviour
+    public class FlameCrossSmallImpact : MonoBehaviour
     {
-        GridCell destination;
         public float lifeTime = 1f;
-
         public void Initalize(GridCell cell, SkillAbstract skill)
         {
-            destination = cell;
             skill.Excute(Time.deltaTime, cell);
             Destroy(gameObject, lifeTime);
         }

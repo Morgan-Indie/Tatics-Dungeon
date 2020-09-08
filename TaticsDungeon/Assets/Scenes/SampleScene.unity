@@ -1765,7 +1765,7 @@ MonoBehaviour:
   castableRangeHighlights: []
   castableHighlightPrefab: {fileID: 2015886591300925424, guid: 45f81241aff918c459795841e047692e,
     type: 3}
-  castableValidPrefab: {fileID: 2015886591300925424, guid: 0ff89592af23cff41b812d291e9142b0,
+  castableValidPrefab: {fileID: 2015886591300925424, guid: dd08ce2b5229c9d4bb87fede33fbcdad,
     type: 3}
 --- !u!4 &1157780373
 Transform:
@@ -2458,6 +2458,7 @@ MonoBehaviour:
   currentEnemy: {fileID: 0}
   playerIndex: 0
   enemyIndex: 0
+  Turn: 1
   popUpUI: {fileID: 764040022}
   endTurn: {fileID: 1268537438}
   playerStatusPrefab: {fileID: 78394042420887159, guid: e6dd5339f0f0bf8449e9e222e05e5e5f,
@@ -2554,6 +2555,10 @@ MonoBehaviour:
     type: 3}
   InfernoEffectPrefab: {fileID: 4029089394443433646, guid: dca4d7a29be926241a5800769bfa064b,
     type: 3}
+  ChillEffectPrefab: {fileID: 0}
+  ShockSolidEffectPrefab: {fileID: 0}
+  ShockLiquidEffectPrefab: {fileID: 0}
+  ShockGasEffectPrefab: {fileID: 0}
 --- !u!1001 &2152099509589680769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3484,13 +3489,14 @@ PrefabInstance:
     - target: {fileID: 9015926559626107006, guid: e2018849fe655fa419a569b7ea3d7d5d,
         type: 3}
       propertyPath: skills.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9015926559626107006, guid: e2018849fe655fa419a569b7ea3d7d5d,
         type: 3}
       propertyPath: skills.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 0288ca242d138eb449c49be5c85d9cc0,
+        type: 2}
     - target: {fileID: 9015926559626107006, guid: e2018849fe655fa419a569b7ea3d7d5d,
         type: 3}
       propertyPath: skills.Array.data[1]
@@ -4887,13 +4893,19 @@ PrefabInstance:
     - target: {fileID: 5012251641638902140, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
       propertyPath: skills.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5012251641638902140, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
       propertyPath: skills.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: cf28006038f359c4682d536ff1515349,
+        type: 2}
+    - target: {fileID: 5012251641638902140, guid: dbef1ad53e25e9e41a81c041caa74373,
+        type: 3}
+      propertyPath: skills.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 42cc8227f1707244c857ffa893e35696,
         type: 2}
     - target: {fileID: 5885915574917985009, guid: dbef1ad53e25e9e41a81c041caa74373,
         type: 3}
