@@ -127,7 +127,7 @@ namespace PrototypeGame
         public int SetMaxHealthFromVitality()
         {
             maxHealth = (int)Vitality.Value * 10;
-            Debug.Log(characterName + " have max health: "+maxHealth);
+            //Debug.Log(characterName + " have max health: "+maxHealth);
             return maxHealth;
         }
 
@@ -159,7 +159,7 @@ namespace PrototypeGame
         public void UseAP(int AP)
         {
             currentAP -= AP;
-            Debug.Log(characterName + " AP Used: " + AP);
+            //Debug.Log(characterName + " AP Used: " + AP);
             apBar.SetCurrentAP(currentAP);
         }
     }

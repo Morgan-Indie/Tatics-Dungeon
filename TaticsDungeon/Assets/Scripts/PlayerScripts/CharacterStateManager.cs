@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace PrototypeGame
 {
@@ -30,42 +31,49 @@ namespace PrototypeGame
         public CombatStat burnDamageOverTime = new CombatStat(0f,CombatStatType.fireDamage);
         public CombatStat poisonDamageOverTime = new CombatStat(0f, CombatStatType.poisonDamage);
         public Dictionary<Object, (CombatStatType,int)> DamageSourceTurns = new Dictionary<Object, (CombatStatType, int)>();
+        public int burnDamage;
 
         public void Start()
         {
             characterStats = GetComponent<CharacterStats>();
+            burnDamage = (int)burnDamageOverTime.Value;
+
         }
 
-        public void UpdateTurns()
+    public void UpdateTurns()
         {
-            foreach (var damageSources in DamageSourceTurns)
+            foreach (Object damageSource in DamageSourceTurns.Keys.ToArray())
             {
-                DamageSourceTurns[damageSources.Key] = (DamageSourceTurns[damageSources.Key].Item1,
-                    DamageSourceTurns[damageSources.Key].Item2-1);
-                if (DamageSourceTurns[damageSources.Key].Item2 == 0)
+                DamageSourceTurns[damageSource] = (DamageSourceTurns[damageSource].Item1,
+                    DamageSourceTurns[damageSource].Item2-1);
+                if (DamageSourceTurns[damageSource].Item2 == 0)
                 {
-                    switch (DamageSourceTurns[damageSources.Key].Item1)
+                    switch (DamageSourceTurns[damageSource].Item1)
                     {
                         case CombatStatType.fireDamage:
-                            burnDamageOverTime.RemoveAllModifiersFromSource(damageSources.Key);
-                            if (!statusEffects.Contains(StatusEffect.Burning))
+                            burnDamageOverTime.RemoveAllModifiersFromSource(damageSource);
+                            if (statusEffects.Contains(StatusEffect.Burning))
                             {
                                 Destroy(GameObject.FindGameObjectWithTag("FireEffect"));
                                 Destroy(GameObject.FindGameObjectWithTag("InfernoEffect"));
                             }
                             break;
                         case CombatStatType.poisonDamage:
-                            poisonDamageOverTime.RemoveAllModifiersFromSource(damageSources.Key);
+                            poisonDamageOverTime.RemoveAllModifiersFromSource(damageSource);
                             break;                        
                     }
 
-                    DamageSourceTurns.Remove(damageSources.Key);
+                    DamageSourceTurns.Remove(damageSource);
                 }
             }
+
             if (poisonDamageOverTime.Value>0)
                 characterStats.TakeDamage((int)poisonDamageOverTime.Value);
             if (burnDamageOverTime.Value > 0)
-                characterStats.TakeDamage((int)burnDamageOverTime.Value-(int)characterStats.resistance.Value);
+            {
+                Debug.Log("here");
+                characterStats.TakeDamage((int)burnDamageOverTime.Value - (int)characterStats.resistance.Value);
+            }
         }
     }
 }
