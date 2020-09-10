@@ -2742,7 +2742,7 @@ MonoBehaviour:
   castableRangeHighlights: []
   castableHighlightPrefab: {fileID: 2015886591300925424, guid: 45f81241aff918c459795841e047692e,
     type: 3}
-  castableValidPrefab: {fileID: 2015886591300925424, guid: 0ff89592af23cff41b812d291e9142b0,
+  castableValidPrefab: {fileID: 2015886591300925424, guid: dd08ce2b5229c9d4bb87fede33fbcdad,
     type: 3}
 --- !u!4 &1157780373
 Transform:
@@ -5256,6 +5256,10 @@ MonoBehaviour:
     type: 3}
   InfernoEffectPrefab: {fileID: 4029089394443433646, guid: dca4d7a29be926241a5800769bfa064b,
     type: 3}
+  ChillEffectPrefab: {fileID: 0}
+  ShockSolidEffectPrefab: {fileID: 0}
+  ShockLiquidEffectPrefab: {fileID: 0}
+  ShockGasEffectPrefab: {fileID: 0}
 --- !u!1001 &2152099509589680769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6153,5 +6157,16 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9015926559626107006, guid: e2018849fe655fa419a569b7ea3d7d5d,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015926559626107006, guid: e2018849fe655fa419a569b7ea3d7d5d,
+        type: 3}
+      propertyPath: skills.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e7b0579582655504d8e600020dd1a1d8,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2018849fe655fa419a569b7ea3d7d5d, type: 3}
