@@ -7,7 +7,6 @@ namespace PrototypeGame
     public class CastFire : SkillAbstract
     {
         public List<GameObject> targets;
-        public float _firedamage = 20f;
         public float intScaleValue;
 
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
@@ -19,13 +18,12 @@ namespace PrototypeGame
             castFire.taticalMovement = _taticalMovement;
             castFire.skill = _skill;
 
-            castFire.alchemicalDamage = new CombatStat(_firedamage, CombatStatType.fireDamage);
+            castFire.alchemicalDamage = new CombatStat(_skill._scaleValueFireDamage, CombatStatType.fireDamage);
 
-            castFire.intScaleValue = skill.attributeScaleModDict[AttributeType.intelligence].Value * _characterStats.Intelligence.Value;
-            StatModifier intScaling = new StatModifier(intScaleValue, StatModType.Flat);
+            castFire.intScaleValue = _skill.attributeScaleModDict[AttributeType.intelligence].Value * _characterStats.Intelligence.Value;
+            StatModifier intScaling = new StatModifier(castFire.intScaleValue, StatModType.Flat);
 
             castFire.alchemicalDamage.AddModifier(intScaling);
-            Debug.Log(castFire.alchemicalDamage.Value);
             return castFire;
         }
 
@@ -51,7 +49,7 @@ namespace PrototypeGame
         public override void Excute(float delta, GridCell targetCell)
         {
             characterStats.transform.LookAt(targetCell.transform);
-            animationHandler.PlayTargetAnimation("Attack");
+            animationHandler.PlayTargetAnimation("SpellCastHand");
             
             characterStats.UseAP(skill.APcost);
 

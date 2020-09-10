@@ -35,7 +35,7 @@ namespace PrototypeGame
         public LayerMask meshMask;
         public bool isDirty;
 
-        float movementSpeed = 4f;
+        float movementSpeed = 3f;
         float rotationSpeed = 25f;
 
         // Start is called before the first frame update
@@ -183,6 +183,7 @@ namespace PrototypeGame
             {
                 UpdateGridState();
                 characterRigidBody.velocity = Vector3.zero;
+                animationHandler.PlayTargetAnimation("CombatIdle");
 
                 animationHandler.UpdateAnimatorValues(delta, 0f);
                 transform.position = moveLocation;

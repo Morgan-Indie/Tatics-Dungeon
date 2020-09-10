@@ -137,7 +137,7 @@ namespace PrototypeGame
             currentCharacter.taticalMovement.SetCurrentNavDict();
             isPlayerTurn = true;
 
-            Debug.Log("Player Turn Intialized");
+            //Debug.Log("Player Turn Intialized");
         }
 
         public void InitalizeEnemyTurn()
@@ -152,7 +152,7 @@ namespace PrototypeGame
             currentEnemy.isCurrentEnemy = true;
             currentEnemy.taticalMovement.SetCurrentNavDict();
             isPlayerTurn = false;
-            Debug.Log("Enemy Turn Intialized");
+            //Debug.Log("Enemy Turn Intialized");
         }
 
         #region Player Selecting
@@ -265,8 +265,9 @@ namespace PrototypeGame
                 foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
                 {
                     enemy.isCurrentEnemy = false;
+                    enemy.stateManager.UpdateTurns();
                 }
-                    
+
                 Turn++;
                 InitalizePlayerTurn();
             }
@@ -277,7 +278,6 @@ namespace PrototypeGame
             if (currentCharacter.stateManager.characterState!= CharacterState.IsInteracting)
             {
                 currentCharacter.selectedSkill = skillScript;
-                Debug.Log(currentCharacter.selectedSkill.taticalMovement);
                 if (skillScript == null||skillScript.skill.type == SkillType.Move)
                     GridManager.Instance.HighlightNavDict(currentCharacter.taticalMovement.currentNavDict);
                 else
@@ -294,18 +294,18 @@ namespace PrototypeGame
                 if (player.stateManager.characterState == CharacterState.InMenu)
                 {
                     gameState = GameState.InMenu;
-                    if (log)
-                        Debug.Log("Game State Set To InMenu");
+                    //if (log)
+                    //    Debug.Log("Game State Set To InMenu");
                     return;
                 }
 
                 if (player.stateManager.characterState!=CharacterState.Ready)
                 {
                     gameState = GameState.ResolvingInteraction;
-                    if (!log)
-                    {
-                        Debug.Log(player.characterStats.characterName+" Game State Set To ResolvingInteraction");
-                    }
+                    //if (!log)
+                    //{
+                        //Debug.Log(player.characterStats.characterName+" Game State Set To ResolvingInteraction");
+                    //}
                     return;
                 }
             }
@@ -315,15 +315,15 @@ namespace PrototypeGame
                 if (enemy.stateManager.characterState != CharacterState.Ready)
                 {
                     gameState = GameState.ResolvingInteraction;
-                    if (!log)
-                       Debug.Log(" Game State Set To ResolvingInteraction");
+                    //if (!log)
+                       //Debug.Log(" Game State Set To ResolvingInteraction");
                     return;
                 }
             }
             
             gameState = GameState.Ready;
-            if (log)
-                Debug.Log("Game State Set To Ready");
+            //if (log)
+                //Debug.Log("Game State Set To Ready");
         }
     }
 }

@@ -12,6 +12,10 @@ TagManager:
   - Enemy
   - APSlot
   - GridMesh
+  - FireEffect
+  - InfernoEffect
+  - OilEffect
+  - WetEffect
   layers:
   - Default
   - TransparentFX

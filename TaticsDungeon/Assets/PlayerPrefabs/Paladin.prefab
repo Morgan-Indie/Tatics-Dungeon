@@ -2908,6 +2908,7 @@ MonoBehaviour:
   inventoryHandler: {fileID: 5826108626438358100}
   modHandler: {fileID: 3655028217359897210}
   statpreview: {fileID: 3586181844920293064}
+  characterStats: {fileID: 0}
   currentInventoryObject: {fileID: 0}
 --- !u!1 &3586181845440945228
 GameObject:
@@ -4040,9 +4041,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4500155906802865870}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5, y: 0, z: 3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 8829844305037328902}
   - {fileID: 8829844305037321568}
@@ -4098,7 +4099,7 @@ CapsuleCollider:
   m_Radius: 0.2
   m_Height: 1.9
   m_Direction: 1
-  m_Center: {x: 0, y: 1.1, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!114 &4602894953875069236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4243,7 +4244,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterState: 0
   characterAction: 0
+  characterStats: {fileID: 0}
   skillColliderTiggered: 0
+  statusEffects: 
 --- !u!114 &215361482049035427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4292,10 +4295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skills:
   - {fileID: 11400000, guid: c93b98a65ba91ee479788fda2c9230ba, type: 2}
-  - {fileID: 11400000, guid: ff113eb2a607d9b44b6fcec1715b61ba, type: 2}
-  - {fileID: 11400000, guid: 9c34907f2c477a148b08eddc9bcb3e80, type: 2}
   - {fileID: 11400000, guid: cf28006038f359c4682d536ff1515349, type: 2}
-  - {fileID: 11400000, guid: 8148fbf028444fe489d429b20eb0a04f, type: 2}
 --- !u!114 &8229280085783286546
 MonoBehaviour:
   m_ObjectHideFlags: 0
