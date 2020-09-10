@@ -14,7 +14,8 @@ namespace PrototypeGame
         Shock,
         Curse,
         Bless,
-        Castable
+        Castable,
+        Chill
     }
 
     public abstract class SkillAbstract:MonoBehaviour

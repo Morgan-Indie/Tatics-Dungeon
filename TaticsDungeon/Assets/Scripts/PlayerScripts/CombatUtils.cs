@@ -59,7 +59,7 @@ namespace PrototypeGame
             targetStats.TakeDamage(totalDamage);
         }
 
-        public void SetOnFire(CharacterStats targetCharacterStats, Object source)
+        public void SetFireInteractions(CharacterStats targetCharacterStats, Object source)
         {
             if (targetCharacterStats.stateManager.statusEffects.Contains (StatusEffect.Wet))
             {
@@ -82,13 +82,13 @@ namespace PrototypeGame
                         targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Oiled);
                         StatModifier burnDamageMod = new StatModifier(cell.BurnDamage * .5f, StatModType.Flat, cell);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
-                        targetCharacterStats.stateManager.DamageSourceTurns.Add(cell, (CombatStatType.fireDamage, 3));
+                        targetCharacterStats.stateManager.DamageSourceTurns.Add(cell.alchemyState, (CombatStatType.fireDamage, 3));
                     }
                     else
                     {
                         StatModifier burnDamageMod = new StatModifier(cell.BurnDamage * .25f, StatModType.Flat, cell);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
-                        targetCharacterStats.stateManager.DamageSourceTurns.Add(cell, (CombatStatType.fireDamage, 3));
+                        targetCharacterStats.stateManager.DamageSourceTurns.Add(cell.alchemyState, (CombatStatType.fireDamage, 3));
                     }
                 }
                 else
@@ -120,7 +120,25 @@ namespace PrototypeGame
 
         public void SetWaterInteractions(CharacterStats targetCharacterStats)
         {
+            if (!targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Wet))
+            {
+                targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Wet);
+                ElementalVFX.Instance.ActivateEffect(StatusEffect.Wet, targetCharacterStats.gameObject);
+            }
+        }
 
+        public void SetChillInteractions(CharacterStats targetCharacterStats)
+        {
+            if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Wet))
+            {
+                targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Wet);
+                targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Frozen);
+            }
+            else if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Shocked))
+            {
+                targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Shocked);
+                targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Electricuted);
+            }
         }
 
         public void OffensiveSpell(GameObject targetCharacter, SkillAbstract skillScript)
@@ -132,12 +150,17 @@ namespace PrototypeGame
                 case SkillType.Fire:
                     int fireDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.resistance.Value;
                     targetStats.TakeDamage(fireDamage);
-                    SetOnFire(targetStats, skillScript);
+                    SetFireInteractions(targetStats, skillScript);
                     break;
                 case SkillType.Water:
                     int WaterDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.resistance.Value;
                     targetStats.TakeDamage(WaterDamage);
                     SetWaterInteractions(targetStats);
+                    break;
+                case SkillType.Chill:
+                    int ChillDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.resistance.Value;
+                    targetStats.TakeDamage(ChillDamage);
+                    SetChillInteractions(targetStats);
                     break;
             }
         }

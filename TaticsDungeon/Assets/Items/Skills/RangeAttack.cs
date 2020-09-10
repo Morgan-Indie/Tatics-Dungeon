@@ -24,7 +24,7 @@ namespace PrototypeGame
             IntVector2 index = taticalMovement.GetMouseIndex();
             int distance = index.GetDistance(taticalMovement.currentIndex);
 
-            if (index.x >= 0 && characterStats.currentAP >= skill.APcost && distance <= 3)
+            if (index.x >= 0 && characterStats.currentAP >= skill.APcost && distance <= 3 && distance!=0)
             {
                 if (Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput)
                 {
