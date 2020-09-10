@@ -21,7 +21,7 @@ MonoBehaviour:
   coolDown: 0
   skillScriptObject: {fileID: 4362544423787047711, guid: 9f68bebef9569c04495b2a113bd1c9f7,
     type: 3}
-  effectPrefab: {fileID: 1997484122971342, guid: d8b89d60591ff0b49b8a7d299c956764,
+  effectPrefab: {fileID: 1453318106977052, guid: b297c584b05b8fb4c9c899c722277768,
     type: 3}
   castableSettings:
     castableSpell: 6

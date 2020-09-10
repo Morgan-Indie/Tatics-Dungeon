@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202ef75a2b06e9e409a440d8a111434e, type: 3}
+  m_Name: CarrotDeath
+  m_EditorClassIdentifier: 
+  skillName: CarrotDeath
+  skillClass: 0
+  icon: {fileID: 21300000, guid: 33d2e28416d37144b8a32c7e4a52a6e7, type: 3}
+  LevelRequired: 0
+  APcost: 0
+  type: 8
+  coolDown: 0
+  skillScriptObject: {fileID: 3901484207619081484, guid: c1bd3cff40e0c4d4886b6a980a115b06,
+    type: 3}
+  effectPrefab: {fileID: 1453318106977052, guid: b297c584b05b8fb4c9c899c722277768,
+    type: 3}
+  castableSettings:
+    castableSpell: 0
+    range: 8
+    shape: 0
+    inclusive: 1
+    radius: 1
+    lineOrientation: 0
+    crossOrientation: 0
+  strScaleType: 0
+  _scaleValueStrength: 0
+  vitScaleType: 0
+  _scaleValueVitality: 0
+  dexScaleType: 0
+  _scaleValueDexterity: 0
+  lucScaleType: 0
+  _scaleValueLuck: 0
+  intScaleType: 0
+  _scaleValueIntelligence: 0
+  staScaleType: 0
+  _scaleValueStamina: 0
+  levScaleType: 0
+  _scaleValueLevel: 0
+  normalDamageScaleType: 0
+  _scaleValueNormalDamage: 0
+  fireDamageScaleType: 0
+  _scaleValueFireDamage: 0
+  waterDamageScaleType: 0
+  _scaleValueWaterDamage: 0
+  poisonDamageScaleType: 0
+  _scaleValuePoisonDamage: 0
+  shockDamageScaleType: 0
+  _scaleValueShockDamage: 0
+  armorScaleType: 0
+  _scaleValueArmor: 0
+  resistanceScaleType: 0
+  _scaleValueResistance: 0
+  strModValue: 0
+  strModType: 0
+  dexModValue: 0
+  dexModType: 0
+  lucModValue: 0
+  lucModType: 0
+  intModValue: 0
+  intModType: 0
+  staModValue: 0
+  staModType: 0
+  vitModValue: 0
+  vitModType: 0
