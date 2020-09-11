@@ -7,9 +7,11 @@ namespace PrototypeGame
     public class ArrowHolder : MonoBehaviour
     {
         public CharacterStats characterStats;
+        public SkillAbstract rangeAttack;
         public GameObject arrowPrefab;
         public GameObject arrow;
         public GameObject target;
+        public GridCell targetCell;
         public Transform parentOverride;
 
         public void Start()
@@ -41,7 +43,7 @@ namespace PrototypeGame
 
         public void ArrowHit()
         {
-            characterStats.GetComponent<CombatUtils>().PhyiscalAttack(target);
+            rangeAttack.Excute(Time.deltaTime, targetCell);
             Destroy(arrow);
         }
     }

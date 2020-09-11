@@ -4,48 +4,40 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public class MeleeAttack : SkillAbstract
+    public class MeleeAttack : CastPhysical
     {
-        public bool animationCompleted;
         public GameObject target;
 
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
         {
             MeleeAttack meleeAttack = _characterStats.gameObject.AddComponent<MeleeAttack>();
             meleeAttack.characterStats = _characterStats;
             meleeAttack.animationHandler = _animationHandler;
             meleeAttack.taticalMovement = _taticalMovement;
             meleeAttack.skill = _skill;
+            meleeAttack.combatUtils = _combatUtils;
             return meleeAttack;
         }
 
-        public override void Activate(float delta)
+        public override void Cast(float delta, IntVector2 targetIndex)
         {
-            IntVector2 index = taticalMovement.GetMouseIndex();
-            int distance = taticalMovement.currentIndex.GetDistance(index);
+            List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
+            GridCell targetCell = cells[0];
 
-            if (index.x >= 0 && characterStats.currentAP >= skill.APcost && distance == 1)
+            target = targetCell.GetOccupyingObject();
+            
+            if (target != null)
             {
-                if (Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput && 
-                    characterStats.stateManager.characterState!= CharacterState.IsInteracting)
-                {
-                    InputHandler.instance.tacticsXInput = false;
-                    GridCell targetCell = taticalMovement.mapAdapter.GetCellByIndex(index);
-
-                    Excute(delta, targetCell);
-                }
+                characterStats.transform.LookAt(target.transform);
+                characterStats.UseAP(skill.APcost);
+                animationHandler.PlayTargetAnimation("Attack");
             }
         }
 
         public override void Excute(float delta, GridCell targetCell)
         {
-            target = targetCell.GetOccupyingObject();
-            if (target != null)
-                characterStats.transform.LookAt(target.transform);
-                animationHandler.PlayTargetAnimation("Attack");
-                characterStats.GetComponent<CombatUtils>().PhyiscalAttack(target);
-                characterStats.UseAP(skill.APcost);
+            combatUtils.PhyiscalAttack(target);
         }
     }       
 }

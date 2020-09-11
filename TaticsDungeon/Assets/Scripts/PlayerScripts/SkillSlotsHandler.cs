@@ -14,6 +14,7 @@ namespace PrototypeGame
         CharacterStateManager stateManager;
         public GameObject skillPanel;
         public AnimationHandler animationHandler;
+        public CombatUtils combatUtils;
 
         [Header("Required")]
         public GameObject skillPanelPrefab;
@@ -30,6 +31,7 @@ namespace PrototypeGame
             skillPanel.transform.SetParent(skillPanelBack.transform,false);
             slots = skillPanel.GetComponentsInChildren<SkillSlot>();
             addNewSkills = GetComponent<TestAddNewSkills>();
+            combatUtils = GetComponent<CombatUtils>();
 
             foreach (SkillSlot slot in slots)
             {
@@ -58,7 +60,7 @@ namespace PrototypeGame
                 if (slots[i].empty)
                 {
                     slots[i].skill = skill;
-                    slots[i].UpdateSlot(playerManager.characterStats,animationHandler,playerManager.taticalMovement);
+                    slots[i].UpdateSlot(playerManager.characterStats,animationHandler,playerManager.taticalMovement, combatUtils);
                     slots[i].empty = false;
                     return;
                 }

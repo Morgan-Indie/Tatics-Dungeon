@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public class ShieldCharge : SkillAbstract
+    public class ShieldCharge : CastPhysical
     {
         public GameObject target=null;
         public Vector3 targetDirection;
@@ -13,11 +13,10 @@ namespace PrototypeGame
 
         public Rigidbody characterRigidBody;
         public CharacterStateManager stateManager;
-        GridCell targetCell;
-        bool isExcuting = false;
+        GridCell targetCell = null;
 
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
         {
             ShieldCharge shieldCharge = _characterStats.gameObject.AddComponent<ShieldCharge>();
             shieldCharge.characterStats = _characterStats;
@@ -26,61 +25,44 @@ namespace PrototypeGame
             shieldCharge.characterRigidBody = _taticalMovement.GetComponent<Rigidbody>();
             shieldCharge. stateManager = _animationHandler.stateManager;
             shieldCharge.skill= _skill;
+            shieldCharge.combatUtils = _combatUtils;
             return shieldCharge;
         }
 
-        public override void Activate(float delta)
+        public override void Cast(float delta, IntVector2 targetIndex)
         {
-            if (!isExcuting)
+            if (stateManager.characterAction != CharacterAction.ShieldCharge)
             {
-                IntVector2 index = taticalMovement.GetMouseIndex();
-                int distance = index.GetDistance(taticalMovement.currentIndex);
-                if (index.x >= 0 && characterStats.currentAP >= skill.APcost &&
-                    taticalMovement.currentIndex.IsOrtho(index) && distance <= 3)
+                List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
+                animationHandler.PlayTargetAnimation("ShieldCharge");
+                characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+                characterStats.UseAP(skill.APcost);
+                foreach(GridCell cell in cells)
                 {
-                    if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput))
+                    if (cell.occupyingObject != null)
                     {
-                        InputHandler.instance.tacticsXInput = false;
-                        targetCell = taticalMovement.mapAdapter.GetCellByIndex(index);
-                        Excute(delta, targetCell);
+                        target = cell.occupyingObject;
+                        targetCell = cell;
+                        break;
                     }
                 }
-            }
-            else
-                Excute(delta, targetCell);
-        }
+                if (targetCell == null)
+                    targetCell = cells[cells.Count - 1];
 
-        public override void Excute(float delta, GridCell targetCell)
-        {            
-            if (stateManager.characterAction!=CharacterAction.ShieldCharge)
-            {
-                target = targetCell.GetOccupyingObject();
-                characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-                if (target != null)
-                    targetPos = target.transform.position;
-                else
-                    targetPos = targetCell.transform.position;
-
-                characterStats.UseAP(skill.APcost);
+                targetPos = targetCell.transform.position;
                 targetDirection = (targetPos - characterStats.transform.position).normalized;
-                animationHandler.PlayTargetAnimation("ShieldCharge");
-                isExcuting = true;
             }
+
             else
             {
-                characterStats.transform.LookAt(target.transform);
+                characterStats.transform.LookAt(targetPos);
                 if (stateManager.skillColliderTiggered)
-                {
+                {                    
                     if (target.tag == "Enemy" || target.tag == "Player")
                     {
-                        target.transform.LookAt(characterRigidBody.transform);
-                        float percentNormalDamage = skill.combatStatScaleDict[CombatStatType.normalDamage].Value;
-                        int damage = (int)(percentNormalDamage * characterStats.normalDamage.Value);
-                        target.GetComponent<CharacterStats>().TakeDamage(damage);
-                        target.GetComponent<TaticalMovement>().moveLocation = target.transform.position + 1.5f * targetDirection;
-                        target.GetComponent<AnimationHandler>().PlayTargetAnimation("StumbleAndFall");
-                        stateManager.skillColliderTiggered = false;
+                        Excute(delta, targetCell);
                     }
+                    stateManager.skillColliderTiggered = false;
                 }
 
                 if (taticalMovement.ReachedPosition(taticalMovement.transform.position, targetPos))
@@ -91,7 +73,6 @@ namespace PrototypeGame
                     animationHandler.PlayTargetAnimation("CombatIdle");
                     taticalMovement.UpdateGridState();
                     taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
-                    isExcuting = false;
 
                     taticalMovement.SetCurrentNavDict();
                 }
@@ -101,6 +82,15 @@ namespace PrototypeGame
                     characterRigidBody.velocity = 5f * targetDirection;
                 }
             }
+        }
+
+        public override void Excute(float delta, GridCell targetCell)
+        {
+            target.transform.LookAt(characterRigidBody.transform);
+            int damage = (int)(characterStats.normalDamage.Value);
+            target.GetComponent<CharacterStats>().TakeDamage(damage);
+            target.GetComponent<TaticalMovement>().moveLocation = target.transform.position + 1.5f * targetDirection;
+            target.GetComponent<AnimationHandler>().PlayTargetAnimation("StumbleAndFall");
         }
     }
 }
