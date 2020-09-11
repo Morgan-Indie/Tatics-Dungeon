@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1052772975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1052772976}
+  m_Layer: 0
+  m_Name: LeftHandOverride
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1052772976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052772975}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2181295552928960064}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2182423102782672224
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,6 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2181295552928960064}
+  - component: {fileID: 1323498183}
   m_Layer: 0
   m_Name: Hand_L
   m_TagString: Untagged
@@ -217,9 +248,26 @@ Transform:
   - {fileID: 2187363435853521086}
   - {fileID: 2180872696266910250}
   - {fileID: 2187179126595858036}
+  - {fileID: 1052772976}
   m_Father: {fileID: 2187277213512238784}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1323498183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2182530662264552924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c69413f18059c49a37422444b0e687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentOverride: {fileID: 1052772976}
+  currentModel: {fileID: 0}
+  animationHandler: {fileID: 0}
+  slotType: 0
 --- !u!1 &2183137404392184674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,6 +1589,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2181033527056479862}
+  - component: {fileID: 1309098349}
+  - component: {fileID: 1309098350}
   m_Layer: 0
   m_Name: Hand_R
   m_TagString: Untagged
@@ -1565,6 +1615,37 @@ Transform:
   m_Father: {fileID: 2187159369363490080}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1309098349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2184159710459994146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c69413f18059c49a37422444b0e687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentOverride: {fileID: 2181033527056479862}
+  currentModel: {fileID: 0}
+  animationHandler: {fileID: 0}
+  slotType: 0
+--- !u!114 &1309098350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2184159710459994146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cdbbd85a67bde7449aa10e9f54df388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHandler: {fileID: 0}
+  animator: {fileID: 0}
+  stateManager: {fileID: 0}
 --- !u!1 &2184159907439776616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,12 +1848,17 @@ GameObject:
   - component: {fileID: 4346658694915827366}
   - component: {fileID: 4346658694915827365}
   - component: {fileID: 4346658694915827364}
-  - component: {fileID: 4346658694915827363}
   - component: {fileID: 1810680448}
   - component: {fileID: 1810680449}
   - component: {fileID: 1810680461}
+<<<<<<< Updated upstream
   - component: {fileID: 4320899425195220810}
   - component: {fileID: 3205336997497007730}
+=======
+  - component: {fileID: 853582931}
+  - component: {fileID: 853582941}
+  - component: {fileID: 853582942}
+>>>>>>> Stashed changes
   m_Layer: 13
   m_Name: Enemy 1
   m_TagString: Enemy
@@ -1830,7 +1916,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!136 &4346658694915827362
 CapsuleCollider:
@@ -1955,6 +2041,7 @@ MonoBehaviour:
   characterAction: 0
   characterStats: {fileID: 0}
   skillColliderTiggered: 0
+<<<<<<< Updated upstream
   statusEffects: 
 --- !u!114 &4346658694915827363
 MonoBehaviour:
@@ -1971,6 +2058,8 @@ MonoBehaviour:
   inputHandler: {fileID: 0}
   animator: {fileID: 0}
   stateManager: {fileID: 0}
+=======
+>>>>>>> Stashed changes
 --- !u!114 &1810680448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,11 +2110,16 @@ MonoBehaviour:
   enemyController: {fileID: 0}
   isCurrentEnemy: 0
   selectedSkill: {fileID: 0}
+<<<<<<< Updated upstream
 --- !u!114 &4320899425195220810
+=======
+--- !u!114 &853582931
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
+<<<<<<< Updated upstream
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4347284167483555766}
   m_Enabled: 1
@@ -2039,12 +2133,51 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
+=======
+>>>>>>> Stashed changes
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4347284167483555766}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< Updated upstream
   m_Script: {fileID: 11500000, guid: 72469e5a75fc8dc4ab6b706b02547fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   equipmentHolderSlots: []
   Equipments: []
+=======
+  m_Script: {fileID: 11500000, guid: 2cdbbd85a67bde7449aa10e9f54df388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHandler: {fileID: 0}
+  animator: {fileID: 0}
+  stateManager: {fileID: 0}
+--- !u!114 &853582941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4347284167483555766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa60a4c5bb5b0b4c85f77582c3d5ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterStats: {fileID: 0}
+--- !u!114 &853582942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4347284167483555766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d541387efd928144d80266a8bb1e5d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipmentHolderSlots: []
+  equipments:
+  - {fileID: 11400000, guid: 583bc15a019bceb43a71f775dc3e38da, type: 2}
+>>>>>>> Stashed changes

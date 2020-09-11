@@ -16,7 +16,8 @@ namespace PrototypeGame
 
         public void Start()
         {
-            animationHandler = GetComponentInParent<AnimationHandler>();
+            if (animationHandler == null)
+                animationHandler = GetComponentInParent<AnimationHandler>();
         }
 
         public void UnloadEquipment()

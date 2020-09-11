@@ -10,25 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35b4613d8ef677f48aa37fd98150549c, type: 3}
-  m_Name: CurvedGreatSword
+  m_Name: Dagger
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
-  itemIcon: {fileID: 21300000, guid: b3d7010556b567247878bcd1f6717f95, type: 3}
-  itemName: Curved Great Sword
-  ID: 10
-  type: 0
-  description: Legendary Great Sword
-  pickedUp: 0
-  modelPrefab: {fileID: 8595304952611151154, guid: 2d091572b44b9574f91f0352063d426b,
-    type: 3}
-  isUnarmed: 0
-  equipped: 0
-  slotType: 0
-  equipmentType: 1
-  range: 1
-  _scaleValueStrength: 1.5
-  _scaleValueVitality: 1.2
-=======
   itemIcon: {fileID: 0}
   itemName: 
   ID: 0
@@ -43,16 +26,11 @@ MonoBehaviour:
   range: 1
   _scaleValueStrength: 0
   _scaleValueVitality: 0
->>>>>>> Stashed changes
   _scaleValueDexterity: 0
   _scaleValueLuck: 0
   _scaleValueIntelligence: 0
   _scaleValueStamina: 0
-<<<<<<< Updated upstream
-  _normalDamage: 30
-=======
   _normalDamage: 0
->>>>>>> Stashed changes
   _pierceDamage: 0
   _poisonDamage: 0
   _fireDamage: 0
@@ -69,11 +47,7 @@ MonoBehaviour:
   lucModType: 0
   intModValue: 0
   intModType: 0
-<<<<<<< Updated upstream
-  staModValue: -2
-=======
   staModValue: 0
->>>>>>> Stashed changes
   staModType: 0
   vitModValue: 0
   vitModType: 0

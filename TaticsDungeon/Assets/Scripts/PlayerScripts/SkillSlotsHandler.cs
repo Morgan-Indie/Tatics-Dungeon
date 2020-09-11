@@ -12,8 +12,13 @@ namespace PrototypeGame
         private SkillSlot[] slots;
         PlayerManager playerManager;
         CharacterStateManager stateManager;
+<<<<<<< Updated upstream
         public GameObject skillPanel;
         public AnimationHandler animationHandler;
+=======
+        AnimationHandler animationHandler;
+        public GameObject skillPanel;        
+>>>>>>> Stashed changes
 
         [Header("Required")]
         public GameObject skillPanelPrefab;
@@ -58,7 +63,12 @@ namespace PrototypeGame
                 if (slots[i].empty)
                 {
                     slots[i].skill = skill;
+<<<<<<< Updated upstream
                     slots[i].UpdateSlot(playerManager.characterStats,animationHandler,playerManager.taticalMovement);
+=======
+
+                    slots[i].UpdateSlot(playerManager.characterStats, animationHandler,playerManager.taticalMovement);
+>>>>>>> Stashed changes
                     slots[i].empty = false;
                     return;
                 }
