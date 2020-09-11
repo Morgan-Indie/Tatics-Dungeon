@@ -21,13 +21,8 @@ namespace PrototypeGame
             slotIconPanel = transform.GetChild(0);            
         }
 
-<<<<<<< Updated upstream
         public void UpdateSlot(CharacterStats characterStats, AnimationHandler animationHandler,
             TaticalMovement taticalMovement)
-=======
-        public void UpdateSlot(CharacterStats _characterStats,
-            AnimationHandler _animationHandler, TaticalMovement _taticalMovement)
->>>>>>> Stashed changes
         {
             if (skill == null)
                 slotIconPanel.GetComponent<Image>().sprite = defaultSprite;
@@ -35,11 +30,7 @@ namespace PrototypeGame
             {
                 slotIconPanel.GetComponent<Image>().sprite = skill.icon;
                 skillScript = skill.skillScriptObject.GetComponent<SkillAbstract>();
-<<<<<<< Updated upstream
                 skillScript = skillScript.AttachSkill(characterStats, animationHandler, taticalMovement,skill);
-=======
-                skillScript.AttachToCharacter(_characterStats, _animationHandler, _taticalMovement);
->>>>>>> Stashed changes
             }
         }
 
