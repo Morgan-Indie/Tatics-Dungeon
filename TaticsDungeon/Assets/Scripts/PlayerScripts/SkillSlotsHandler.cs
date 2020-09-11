@@ -60,7 +60,8 @@ namespace PrototypeGame
                 if (slots[i].empty)
                 {
                     slots[i].skill = skill;
-                    slots[i].UpdateSlot(playerManager.characterStats,animationHandler,playerManager.taticalMovement, combatUtils);
+                    slots[i].UpdateSlot(playerManager.characterStats,animationHandler,
+                        playerManager.taticalMovement, combatUtils);
                     slots[i].empty = false;
                     return;
                 }

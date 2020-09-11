@@ -25,5 +25,15 @@ namespace PrototypeGame
             // Debug.Log(flameCross.alchemicalDamage.Value);
             return flameCross;
         }
+
+        public override void Cast(float delta, IntVector2 targetIndex)
+        {
+            base.Cast(delta, targetIndex);
+        }
+
+        public override void Excute(float delta, GridCell targetCell)
+        {
+            base.Excute(delta, targetCell);
+        }
     }
 }

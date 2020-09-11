@@ -48,13 +48,17 @@ namespace PrototypeGame
             if (isCurrentPlayer && !stateManager.statusEffects.Contains(StatusEffect.Frozen))
             {                
                 inventoryHandler.ActivateInventoryUI();
+                Debug.Log(selectedSkill);
 
                 if (GameManager.instance.gameState != GameState.InMenu)
                 {
                     if (selectedSkill == null || selectedSkill.skill.type == SkillType.Move)
                         taticalMovement.ExcuteMovement(delta);
                     else
+                    {
+                        Debug.Log(selectedSkill);
                         taticalMovement.UseSkill(selectedSkill, delta);
+                    }
                 }                
             }
         }

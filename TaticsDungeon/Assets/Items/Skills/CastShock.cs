@@ -8,10 +8,6 @@ namespace PrototypeGame
     {
         public float intScaleValue;
 
-        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-                        TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
-        { return null; }
-
         public override void Excute(float delta, GridCell targetCell)
         {
             AlchemyManager.Instance.ApplyChill(targetCell.alchemyState);

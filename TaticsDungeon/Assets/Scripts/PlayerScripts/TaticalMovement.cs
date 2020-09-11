@@ -15,12 +15,13 @@ namespace PrototypeGame
         Camera isometricCamera;
         AnimationHandler animationHandler;
         Rigidbody characterRigidBody;
-        CharacterStateManager stateManager;
         CombatUtils combatUtils;
         CharacterStats characterStats;
         Rigidbody characterRigidbody;
 
         public Vector3 moveLocation=Vector3.up;
+
+        public CharacterStateManager stateManager;
 
         public LayerMask characterCheckLayerMask;
         public LayerMask attackCheckLayerMask;
@@ -81,7 +82,7 @@ namespace PrototypeGame
             currentCell.state=CellState.open;
             GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
             SetCurrentCell();
-            Debug.Log(characterStats.characterName+" Grid State Updated");
+            //Debug.Log(characterStats.characterName+" Grid State Updated");
         }
 
         public void HandleRotation(float delta, Vector3 moveDirection)
@@ -135,7 +136,7 @@ namespace PrototypeGame
             (currentNavDict,currentTargetsNavDict) = NavigationHandler.instance.Navigate(currentIndex, characterStats.currentAP);
             if (gameObject.tag == "Player")
                 GridManager.Instance.HighlightNavDict(currentNavDict);
-            Debug.Log(characterStats.characterName +" NavDict Updated");
+            //Debug.Log(characterStats.characterName +" NavDict Updated");
         }
 
         public void SetNextPos(IntVector2 nextIndex)
@@ -174,7 +175,7 @@ namespace PrototypeGame
             currentPathIndex = 1;
 
             SetNextPos(path[currentPathIndex]);
-            Debug.Log(characterStats.characterName + " Setting Destination");    
+            //Debug.Log(characterStats.characterName + " Setting Destination");    
         }
 
         public void TraverseToDestination(float delta)
@@ -193,7 +194,7 @@ namespace PrototypeGame
                 stateManager.characterAction = CharacterAction.None;
                 stateManager.characterState = CharacterState.Ready;
                 characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
-                Debug.Log(characterStats.characterName + " Reached Destination");
+                //Debug.Log(characterStats.characterName + " Reached Destination");
             }
 
             else if ((ReachedPosition(transform.position, nextPos)))

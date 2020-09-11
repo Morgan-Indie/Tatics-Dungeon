@@ -289,25 +289,17 @@ namespace PrototypeGame
 
         public void CheckGameState()
         {
-            bool log = (gameState == GameState.ResolvingInteraction);
-
             foreach (PlayerManager player in playersDict.Values.ToArray())
             {
                 if (player.stateManager.characterState == CharacterState.InMenu)
                 {
                     gameState = GameState.InMenu;
-                    if (log)
-                        Debug.Log("Game State Set To InMenu");
                     return;
                 }
 
                 if (player.stateManager.characterState==CharacterState.IsInteracting)
                 {
                     gameState = GameState.ResolvingInteraction;
-                    if (log)
-                    {
-                        Debug.Log(player.characterStats.characterName+" Game State Set To ResolvingInteraction");
-                    }
                     return;
                 }
             }
@@ -317,15 +309,11 @@ namespace PrototypeGame
                 if (enemy.stateManager.characterState != CharacterState.Ready)
                 {
                     gameState = GameState.ResolvingInteraction;
-                    if (log)
-                       Debug.Log(" Game State Set To ResolvingInteraction");
                     return;
                 }
             }
             
             gameState = GameState.Ready;
-            if (log)
-                Debug.Log("Game State Set To Ready");
         }
     }
 }

@@ -8,9 +8,6 @@ namespace PrototypeGame
     {
         public float intScaleValue;
 
-        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-                        TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill) { return null; }
-
         public override void Cast(float delta, IntVector2 targetIndex)
         {
             List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
@@ -39,6 +36,6 @@ namespace PrototypeGame
                     combatUtils.SetChillInteractions(targetStats, targetCell);
                 combatUtils.HandleAlchemicalSkill(targetStats, this);
             }
-        }
+        }       
     }
 }

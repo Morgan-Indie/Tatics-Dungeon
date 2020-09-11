@@ -18,7 +18,7 @@ namespace PrototypeGame
 
             flameCircle.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.fireDamage);
             flameCircle.intScaleValue = skill._scaleValue * _characterStats.Intelligence.Value;
-            StatModifier intScaling = new StatModifier(intScaleValue, StatModType.Flat);
+            StatModifier intScaling = new StatModifier(flameCircle.intScaleValue, StatModType.Flat);
             flameCircle.alchemicalDamage.AddModifier(intScaling);
 
             return flameCircle;

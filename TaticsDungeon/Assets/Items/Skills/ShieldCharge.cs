@@ -9,6 +9,7 @@ namespace PrototypeGame
         public GameObject target=null;
         public Vector3 targetDirection;
         public Vector3 targetPos;
+        public IntVector2 targetIndex;
         public bool animationCompleted;
 
         public Rigidbody characterRigidBody;
@@ -23,39 +24,16 @@ namespace PrototypeGame
             shieldCharge.animationHandler = _animationHandler;
             shieldCharge.taticalMovement = _taticalMovement;
             shieldCharge.characterRigidBody = _taticalMovement.GetComponent<Rigidbody>();
-            shieldCharge. stateManager = _animationHandler.stateManager;
+            shieldCharge.stateManager = _taticalMovement.GetComponent<CharacterStateManager>();
             shieldCharge.skill= _skill;
             shieldCharge.combatUtils = _combatUtils;
             return shieldCharge;
         }
 
-        public override void Cast(float delta, IntVector2 targetIndex)
+        public override void Cast(float delta, IntVector2 _targetIndex)
         {
-            if (stateManager.characterAction != CharacterAction.ShieldCharge)
+            if (stateManager.characterAction == CharacterAction.ShieldCharge)
             {
-                List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
-                animationHandler.PlayTargetAnimation("ShieldCharge");
-                characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-                characterStats.UseAP(skill.APcost);
-                foreach(GridCell cell in cells)
-                {
-                    if (cell.occupyingObject != null)
-                    {
-                        target = cell.occupyingObject;
-                        targetCell = cell;
-                        break;
-                    }
-                }
-                if (targetCell == null)
-                    targetCell = cells[cells.Count - 1];
-
-                targetPos = targetCell.transform.position;
-                targetDirection = (targetPos - characterStats.transform.position).normalized;
-            }
-
-            else
-            {
-                characterStats.transform.LookAt(targetPos);
                 if (stateManager.skillColliderTiggered)
                 {                    
                     if (target.tag == "Enemy" || target.tag == "Player")
@@ -70,18 +48,38 @@ namespace PrototypeGame
                     characterRigidBody.velocity = Vector3.zero;
                     characterRigidBody.position = targetPos;
                     characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
-                    animationHandler.PlayTargetAnimation("CombatIdle");
+                    animationHandler.animator.SetBool("TransitionToCombatIdle", true);
                     taticalMovement.UpdateGridState();
                     taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
-
                     taticalMovement.SetCurrentNavDict();
                 }
-
                 else
-                {
                     characterRigidBody.velocity = 5f * targetDirection;
-                }
             }
+
+            else
+            {
+                targetIndex = _targetIndex;
+                List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
+                animationHandler.PlayTargetAnimation("ShieldCharge");
+                characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+                characterStats.UseAP(skill.APcost);
+                foreach (GridCell cell in cells)
+                {
+                    if (cell.occupyingObject != null)
+                    {
+                        target = cell.occupyingObject;
+                        targetCell = cell;
+                        break;
+                    }
+                }
+                if (targetCell == null)
+                    targetCell = cells[cells.Count - 1];
+
+                targetPos = targetCell.transform.position;
+                targetDirection = (targetPos - characterStats.transform.position).normalized;
+                characterStats.transform.LookAt(targetPos);
+            }            
         }
 
         public override void Excute(float delta, GridCell targetCell)
