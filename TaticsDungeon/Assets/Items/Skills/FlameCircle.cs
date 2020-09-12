@@ -18,6 +18,7 @@ namespace PrototypeGame
             flameCircle.skill = _skill;
             return flameCircle;
         }
+        
         public override void Activate(float delta)
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
@@ -37,7 +38,7 @@ namespace PrototypeGame
                 }
             }
         }
-
+        
         public override void Excute(float delta, GridCell targetCell)
         {
             AlchemyManager.Instance.ApplyHeat(targetCell.alchemyState);

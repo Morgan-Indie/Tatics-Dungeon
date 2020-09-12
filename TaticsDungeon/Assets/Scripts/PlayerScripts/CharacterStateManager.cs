@@ -39,7 +39,7 @@ namespace PrototypeGame
             burnDamage = (int)burnDamageOverTime.Value;
 
         }
-
+        //Called once at turn start 
     public void UpdateTurns()
         {
             foreach (Object damageSource in DamageSourceTurns.Keys.ToArray())

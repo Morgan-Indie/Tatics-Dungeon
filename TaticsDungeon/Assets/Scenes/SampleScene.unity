@@ -1131,6 +1131,23 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5012251641638902140, guid: 80375e631406d2c4898ae3626ab976e6,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5012251641638902140, guid: 80375e631406d2c4898ae3626ab976e6,
+        type: 3}
+      propertyPath: skills.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0288ca242d138eb449c49be5c85d9cc0,
+        type: 2}
+    - target: {fileID: 5012251641638902140, guid: 80375e631406d2c4898ae3626ab976e6,
+        type: 3}
+      propertyPath: skills.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 42cc8227f1707244c857ffa893e35696,
+        type: 2}
     - target: {fileID: 5885915574917985009, guid: 80375e631406d2c4898ae3626ab976e6,
         type: 3}
       propertyPath: m_AnchorMin.y
