@@ -18,7 +18,11 @@ namespace PrototypeGame
                 for (int i = 0; i < iters; i++)
                 {
                     transform.LookAt(cell.transform);
-                    GameObject ob = Instantiate(projectilePrefab, transform.position - Vector3.up * transform.position.y + Vector3.forward * 0.5f, Quaternion.identity);
+
+                    GameObject ob = Instantiate(projectilePrefab, 
+                        transform.position - Vector3.up * transform.position.y + Vector3.forward * 0.5f, 
+                        Quaternion.identity);
+
                     ob.GetComponent<CarrotDeathProjectile>().Initalize(cell, skill, i == 0 ? true : false);
                     Destroy(gameObject, lifeTime);
                 }

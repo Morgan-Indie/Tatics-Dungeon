@@ -34,6 +34,8 @@ namespace PrototypeGame
         {
             if (stateManager.characterAction == CharacterAction.ShieldCharge)
             {
+                characterRigidBody.velocity = 5f * targetDirection;
+
                 if (stateManager.skillColliderTiggered)
                 {                    
                     if (target.tag == "Enemy" || target.tag == "Player")
@@ -53,8 +55,6 @@ namespace PrototypeGame
                     taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
                     taticalMovement.SetCurrentNavDict();
                 }
-                else
-                    characterRigidBody.velocity = 5f * targetDirection;
             }
 
             else
@@ -83,6 +83,15 @@ namespace PrototypeGame
         }
 
         public override void Excute(float delta, GridCell targetCell)
+        {
+            target.transform.LookAt(characterRigidBody.transform);
+            int damage = (int)(characterStats.normalDamage.Value);
+            target.GetComponent<CharacterStats>().TakeDamage(damage);
+            target.GetComponent<TaticalMovement>().moveLocation = target.transform.position + 1.5f * targetDirection;
+            target.GetComponent<AnimationHandler>().PlayTargetAnimation("StumbleAndFall");
+        }
+
+        public override void Excute(float delta)
         {
             target.transform.LookAt(characterRigidBody.transform);
             int damage = (int)(characterStats.normalDamage.Value);

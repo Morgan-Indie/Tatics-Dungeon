@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class ArrowHolder : MonoBehaviour
     {
         public CharacterStats characterStats;
-        public SkillAbstract rangeAttack;
+        public RangeAttack rangeAttack;
         public GameObject arrowPrefab;
         public GameObject arrow;
         public GameObject target;

@@ -18,6 +18,8 @@ namespace PrototypeGame
             rangeAttack.taticalMovement = _taticalMovement;
             rangeAttack.skill = _skill;
             rangeAttack.combatUtils = _combatUtils;
+            rangeAttack.arrowHolder = _taticalMovement.GetComponent<ArrowHolder>();
+            rangeAttack.arrowHolder.rangeAttack = rangeAttack;
             return rangeAttack;
         }
 
@@ -43,6 +45,12 @@ namespace PrototypeGame
         }
 
         public override void Excute(float delta, GridCell targetCell)
+        {
+            combatUtils.PhyiscalAttack(target);
+        }
+
+
+        public override void Excute(float delta)
         {
             combatUtils.PhyiscalAttack(target);
         }

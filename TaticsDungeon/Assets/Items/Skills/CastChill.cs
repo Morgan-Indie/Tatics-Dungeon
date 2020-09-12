@@ -36,6 +36,6 @@ namespace PrototypeGame
                     combatUtils.SetChillInteractions(targetStats, targetCell);
                 combatUtils.HandleAlchemicalSkill(targetStats, this);
             }
-        }       
+        }
     }
 }

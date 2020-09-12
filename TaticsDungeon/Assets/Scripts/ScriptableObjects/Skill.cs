@@ -14,7 +14,7 @@ namespace PrototypeGame
         Shock,
         Curse,
         Bless,
-        Castable,
+        Oil,
         Chill
     }
 

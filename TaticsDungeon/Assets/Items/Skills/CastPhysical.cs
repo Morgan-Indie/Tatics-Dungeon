@@ -8,5 +8,7 @@ namespace PrototypeGame
     {
         public float scaleValue;
         public AttributeType scaleType;
+
+        public abstract void Excute(float delta);
     }
 }

@@ -26,5 +26,8 @@ namespace PrototypeGame
         public override void Excute(float delta, GridCell targetCell)
         {
         }
+        public override void Excute(float delta)
+        {
+        }
     }
 }

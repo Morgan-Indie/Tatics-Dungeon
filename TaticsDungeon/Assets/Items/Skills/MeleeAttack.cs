@@ -39,6 +39,11 @@ namespace PrototypeGame
         {
             combatUtils.PhyiscalAttack(target);
         }
+
+        public override void Excute(float delta)
+        {
+            combatUtils.PhyiscalAttack(target);
+        }
     }       
 }
 

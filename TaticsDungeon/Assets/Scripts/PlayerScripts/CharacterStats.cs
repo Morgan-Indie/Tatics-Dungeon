@@ -159,7 +159,6 @@ namespace PrototypeGame
         public void UseAP(int AP)
         {
             currentAP -= AP;
-            //Debug.Log(characterName + " AP Used: " + AP);
             apBar.SetCurrentAP(currentAP);
         }
     }

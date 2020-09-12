@@ -6,9 +6,6 @@ namespace PrototypeGame
 {
     public class CarrotDeath : CastFire
     {
-        public bool animationCompleted;
-        public GameObject target;
-
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
             TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
         {
