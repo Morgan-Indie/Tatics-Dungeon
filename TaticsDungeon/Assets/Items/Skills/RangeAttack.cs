@@ -6,7 +6,6 @@ namespace PrototypeGame
 {
     public class RangeAttack : SkillAbstract
     {
-<<<<<<< Updated upstream
         public bool animationCompleted;
 
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
@@ -18,18 +17,6 @@ namespace PrototypeGame
             rangeAttack.taticalMovement = _taticalMovement;
             rangeAttack.skill = _skill;
             return rangeAttack;
-=======
-        public CharacterStats characterStats;
-        public AnimationHandler animationHandler;
-        public TaticalMovement taticalMovement;
-
-        public override void AttachToCharacter(CharacterStats _characterStats,
-            AnimationHandler _animationHandler, TaticalMovement _taticalMovement)
-        {
-            characterStats = _characterStats;
-            taticalMovement = _taticalMovement;
-            animationHandler = _animationHandler;
->>>>>>> Stashed changes
         }
 
         public override void Activate(float delta)
