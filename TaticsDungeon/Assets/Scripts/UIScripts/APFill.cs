@@ -34,7 +34,7 @@ namespace PrototypeGame
                 FadeAPOut(apPoints[i]);
         }
 
-        public void RecoverAP()
+        public void RecoverAPUI()
         {
             for (int i = 0; i < maxAP; i++)
                 FadeAPIn(apPoints[i]);

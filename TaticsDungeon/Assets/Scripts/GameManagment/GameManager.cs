@@ -131,7 +131,7 @@ namespace PrototypeGame
             {
                 // must recover AP first before setting navDict
                 player.characterStats.currentAP= player.characterStats.maxAP;
-                player.characterStats.apBar.RecoverAP();
+                player.characterStats.apBar.RecoverAPUI();
             }
             currentCharacter = playersDict.Values.ToArray()[0];
             currentCharacter.isCurrentPlayer = true;
@@ -148,7 +148,7 @@ namespace PrototypeGame
             {
                 // must recover AP first before setting navDict
                 enemy.characterStats.currentAP= enemy.characterStats.maxAP;
-                enemy.characterStats.apBar.RecoverAP();
+                enemy.characterStats.apBar.RecoverAPUI();
             }
             currentEnemy = enemiesDict.Values.ToArray()[0];
             currentEnemy.isCurrentEnemy = true;
