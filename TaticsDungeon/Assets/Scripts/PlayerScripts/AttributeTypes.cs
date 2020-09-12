@@ -41,6 +41,9 @@ namespace PrototypeGame
         curseDamage,
         poisonDamage,
         armor,
-        resistance,
+        fireResistance,
+        waterResistance,
+        shockResistance,
+        poisonResistance,
     }
 }

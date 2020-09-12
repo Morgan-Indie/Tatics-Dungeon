@@ -69,10 +69,10 @@ namespace PrototypeGame
             }
 
             if (poisonDamageOverTime.Value>0)
-                characterStats.TakeDamage((int)poisonDamageOverTime.Value);
+                characterStats.TakeDamage((int)poisonDamageOverTime.Value - (int)characterStats.poisonResistance.Value);
             if (burnDamageOverTime.Value > 0)
             {
-                characterStats.TakeDamage((int)burnDamageOverTime.Value - (int)characterStats.resistance.Value);
+                characterStats.TakeDamage((int)burnDamageOverTime.Value - (int)characterStats.fireResistance.Value);
             }
         }
     }

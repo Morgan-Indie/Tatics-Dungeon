@@ -41,7 +41,7 @@ namespace PrototypeGame
             Transform targetTransform = GameManager.instance.currentCharacter.transform;
             Vector3 targetPosition = targetTransform.position + targetTransform.forward*2.5f + offset;
             transform.position = targetPosition;
-            transform.LookAt(GameManager.instance.currentCharacter.transform.position);
+            transform.LookAt(targetTransform);
         }
     }
 }

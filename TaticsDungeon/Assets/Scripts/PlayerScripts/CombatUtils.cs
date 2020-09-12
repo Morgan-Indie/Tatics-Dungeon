@@ -50,10 +50,10 @@ namespace PrototypeGame
             DamageStruct outputDamage = ComputeDamage();
             int damageDeltNormal = outputDamage.normal - (int)targetStats.armor.Value;
             int damageDeltPierce = outputDamage.pierce;
-            int damageDeltFire = outputDamage.fire - (int)targetStats.resistance.Value;
-            int damageDeltWater = outputDamage.water - (int)targetStats.resistance.Value;
-            int damageDeltShock = outputDamage.shock - (int)targetStats.resistance.Value;
-            int damageDeltPoison = outputDamage.poison;
+            int damageDeltFire = outputDamage.fire - (int)targetStats.fireResistance.Value;
+            int damageDeltWater = outputDamage.water - (int)targetStats.waterResistance.Value;
+            int damageDeltShock = outputDamage.shock - (int)targetStats.shockResistance.Value;
+            int damageDeltPoison = outputDamage.poison - (int)targetStats.poisonResistance.Value;
 
             int totalDamage = damageDeltPierce + damageDeltPoison + damageDeltNormal + damageDeltWater + damageDeltFire + damageDeltShock;
             targetStats.TakeDamage(totalDamage);
@@ -156,15 +156,15 @@ namespace PrototypeGame
             switch (skillScript.skill.type)
             {
                 case SkillType.Fire:
-                    int fireDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.resistance.Value;
+                    int fireDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.fireResistance.Value;
                     targetStats.TakeDamage(fireDamage);
                     break;
                 case SkillType.Water:
-                    int WaterDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.resistance.Value;
+                    int WaterDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.waterResistance.Value;
                     targetStats.TakeDamage(WaterDamage);
                     break;
                 case SkillType.Chill:
-                    int ChillDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.resistance.Value;
+                    int ChillDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.waterResistance.Value;
                     targetStats.TakeDamage(ChillDamage);
                     break;
             }

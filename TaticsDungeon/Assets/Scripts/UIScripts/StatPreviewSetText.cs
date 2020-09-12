@@ -12,6 +12,7 @@ namespace PrototypeGame
 
         public void Start()
         {
+            playerStats = GetComponentInParent<CharacterStats>();
             statTexts = GetComponentsInChildren<Text>();
         }
 
@@ -46,7 +47,13 @@ namespace PrototypeGame
                 else if (text.text.Contains("Pierce"))
                     text.text = "Pierce  " + playerStats.pierceDamage.Value.ToString();
                 else if (text.text.Contains("Resistance"))
-                    text.text = "Resistance  " + playerStats.resistance.Value.ToString();
+                    text.text = "Fire Resistance  " + playerStats.fireResistance.Value.ToString();
+                else if (text.text.Contains("Resistance"))
+                    text.text = "Water Resistance  " + playerStats.waterResistance.Value.ToString();
+                else if (text.text.Contains("Resistance"))
+                    text.text = "Shock Resistance  " + playerStats.shockResistance.Value.ToString();
+                else if (text.text.Contains("Resistance"))
+                    text.text = "Poison Resistance  " + playerStats.poisonResistance.Value.ToString();
                 else if (text.text.Contains("Curse"))
                     text.text = "Curse  " + playerStats.curseDamage.Value.ToString();
             }
