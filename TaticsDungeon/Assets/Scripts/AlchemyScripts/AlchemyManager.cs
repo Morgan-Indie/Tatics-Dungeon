@@ -91,7 +91,7 @@ namespace PrototypeGame
         }
 
         public void ApplyHeat(CellAlchemyState cellState)
-        {
+        {            
             ApplyHeatInternal(cellState);
             ApplyVFX(cellState);
         }

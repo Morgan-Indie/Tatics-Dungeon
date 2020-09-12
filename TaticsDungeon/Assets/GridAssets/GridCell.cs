@@ -19,6 +19,7 @@ namespace PrototypeGame
         public CellHighlightType highlightType = CellHighlightType.None;
         public CellAlchemyState alchemyState;
         public bool isStairs=false;
+        public bool isFlammable = false;
         public int BurnDamage;
         public int PoisonDamage;
 

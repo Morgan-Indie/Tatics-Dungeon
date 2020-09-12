@@ -45,12 +45,10 @@ namespace PrototypeGame
         // Update is called once per frame
         public void PlayerUpdate(float delta)
         {
-            if (isCurrentPlayer)
+            if (isCurrentPlayer && !stateManager.statusEffects.Contains(StatusEffect.Frozen))
             {                
                 inventoryHandler.ActivateInventoryUI();
-                InputHandler.instance.TickInput(delta);
 
-                CameraHandler.instance.HandleCamera(delta);
                 if (GameManager.instance.gameState != GameState.InMenu)
                 {
                     if (selectedSkill == null || selectedSkill.skill.type == SkillType.Move)

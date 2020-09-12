@@ -14,7 +14,8 @@ namespace PrototypeGame
         Shock,
         Curse,
         Bless,
-        Castable
+        Castable,
+        Chill
     }
 
     public abstract class SkillAbstract:MonoBehaviour
@@ -29,12 +30,21 @@ namespace PrototypeGame
         public CombatStat armor;
         public CombatStat resistance;
 
+<<<<<<< Updated upstream
         public abstract SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
             TaticalMovement _taticalMovement, Skill _skill);
 
         public abstract void Activate(float delta);
 
         public abstract void Excute(float delta, GridCell targetCell);
+=======
+        public abstract void Activate( float delta);
+
+        public abstract void Excute(float delta, GridCell targetCell);
+
+        public abstract void AttachToCharacter(CharacterStats characterStats,
+            AnimationHandler animationHandler, TaticalMovement taticalMovement);
+>>>>>>> Stashed changes
     }
 }
 

@@ -56,8 +56,9 @@ namespace PrototypeGame
             GridManager.Instance.RemoveAllHighlights();
             List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetCell.index);
             foreach (GridCell cell in cells)
-            {
-                AlchemyManager.Instance.ApplyHeat(cell.alchemyState);
+            {   
+                if (cell.isFlammable)
+                    AlchemyManager.Instance.ApplyHeat(cell.alchemyState);
                 if (cell.occupyingObject != null)
                     characterStats.GetComponent<CombatUtils>().OffensiveSpell(cell.occupyingObject, this);
             }

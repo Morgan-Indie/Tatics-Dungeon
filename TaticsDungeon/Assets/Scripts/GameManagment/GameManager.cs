@@ -91,6 +91,8 @@ namespace PrototypeGame
         {
             float delta = Time.deltaTime;
             CheckGameState();
+            InputHandler.instance.TickInput(delta);
+            CameraHandler.instance.HandleCamera(delta);
 
             if (isPlayerTurn)
             {
@@ -294,18 +296,18 @@ namespace PrototypeGame
                 if (player.stateManager.characterState == CharacterState.InMenu)
                 {
                     gameState = GameState.InMenu;
-                    //if (log)
-                    //    Debug.Log("Game State Set To InMenu");
+                    if (log)
+                        Debug.Log("Game State Set To InMenu");
                     return;
                 }
 
-                if (player.stateManager.characterState!=CharacterState.Ready)
+                if (player.stateManager.characterState==CharacterState.IsInteracting)
                 {
                     gameState = GameState.ResolvingInteraction;
-                    //if (!log)
-                    //{
-                        //Debug.Log(player.characterStats.characterName+" Game State Set To ResolvingInteraction");
-                    //}
+                    if (log)
+                    {
+                        Debug.Log(player.characterStats.characterName+" Game State Set To ResolvingInteraction");
+                    }
                     return;
                 }
             }
@@ -315,15 +317,15 @@ namespace PrototypeGame
                 if (enemy.stateManager.characterState != CharacterState.Ready)
                 {
                     gameState = GameState.ResolvingInteraction;
-                    //if (!log)
-                       //Debug.Log(" Game State Set To ResolvingInteraction");
+                    if (log)
+                       Debug.Log(" Game State Set To ResolvingInteraction");
                     return;
                 }
             }
             
             gameState = GameState.Ready;
-            //if (log)
-                //Debug.Log("Game State Set To Ready");
+            if (log)
+                Debug.Log("Game State Set To Ready");
         }
     }
 }
