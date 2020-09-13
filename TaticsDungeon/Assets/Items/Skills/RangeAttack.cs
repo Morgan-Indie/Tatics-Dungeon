@@ -32,27 +32,25 @@ namespace PrototypeGame
 
             if (target != null)
             {
-                if (target != null)
-                {
-                    characterStats.transform.LookAt(target.transform);
-                    characterStats.transform.Rotate(Quaternion.Euler(0f, 60f, 0f).eulerAngles);
-                    animationHandler.PlayTargetAnimation("Attack");
-                    arrowHolder.targetCell = targetCell;
-                    arrowHolder.target = target;
-                    characterStats.UseAP(skill.APcost);
-                }
+                characterStats.transform.LookAt(target.transform);
+                characterStats.transform.Rotate(Quaternion.Euler(0f, 60f, 0f).eulerAngles);
+                animationHandler.PlayTargetAnimation("Attack");
+                arrowHolder.targetCell = targetCell;
+                arrowHolder.target = target;
+                characterStats.UseAP(skill.APcost);
             }
         }
 
         public override void Excute(float delta, GridCell targetCell)
         {
             combatUtils.PhyiscalAttack(target);
+            target.GetComponent<BloodVFX>().PlayPeirceBloodEffects();
         }
-
 
         public override void Excute(float delta)
         {
             combatUtils.PhyiscalAttack(target);
+            target.GetComponent<BloodVFX>().PlayPeirceBloodEffects();
         }
     }
 }

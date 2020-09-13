@@ -163,7 +163,10 @@ namespace PrototypeGame
         {            
             currentCharacter.isCurrentPlayer = false;
             if (gameState == GameState.InMenu)
+            {
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(false);
+                currentCharacter.stateManager.characterState = CharacterState.Ready;
+            }
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
             playerIndex++;
@@ -180,13 +183,22 @@ namespace PrototypeGame
             currentCharacter.taticalMovement.SetCurrentNavDict();
 
             if (gameState == GameState.InMenu)
+            {
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(true);
+                currentCharacter.stateManager.characterState = CharacterState.InMenu;
+                currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
+            }
         }
 
         public void SetPreviousPlayer()
         {
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
             currentCharacter.isCurrentPlayer = false;
+            if (gameState == GameState.InMenu)
+            {
+                currentCharacter.inventoryHandler.inventoryUI.SetActive(false);
+                currentCharacter.stateManager.characterState = CharacterState.Ready;
+            }
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
 
             playerIndex--;
@@ -202,7 +214,11 @@ namespace PrototypeGame
             currentCharacter.taticalMovement.SetCurrentNavDict();
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(true);
             if (gameState == GameState.InMenu)
+            {
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(true);
+                currentCharacter.stateManager.characterState = CharacterState.InMenu;
+                currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
+            }
         }
 
         #endregion

@@ -78,7 +78,7 @@ namespace PrototypeGame
                     if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Oiled) || cell.alchemyState.fireState == FireState.Inferno)
                     {
                         targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Inferno);
-                        ElementalVFX.Instance.ActivateEffect(StatusEffect.Inferno, targetCharacterStats.gameObject);
+                        ActivateVFX.Instance.ActivateElementalEffect(StatusEffect.Inferno, targetCharacterStats.gameObject);
                         targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Oiled);
                         StatModifier burnDamageMod = new StatModifier(burnDamage * .5f, StatModType.Flat, cell.burnSource);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
@@ -87,7 +87,7 @@ namespace PrototypeGame
                     else
                     {
                         targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Burning);
-                        ElementalVFX.Instance.ActivateEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
+                        ActivateVFX.Instance.ActivateElementalEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
                         StatModifier burnDamageMod = new StatModifier(burnDamage * .25f, StatModType.Flat, cell.burnSource);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
                         targetCharacterStats.stateManager.DamageSourceTurns.Add(cell.burnSource, (CombatStatType.fireDamage, 3));
@@ -98,7 +98,7 @@ namespace PrototypeGame
                     if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Oiled))
                     {
                         targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Inferno);
-                        ElementalVFX.Instance.ActivateEffect(StatusEffect.Inferno, targetCharacterStats.gameObject);
+                        ActivateVFX.Instance.ActivateElementalEffect(StatusEffect.Inferno, targetCharacterStats.gameObject);
                         targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Oiled);
                         StatModifier burnDamageMod = new StatModifier(burnDamage * .5f, StatModType.Flat, source);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
@@ -107,7 +107,7 @@ namespace PrototypeGame
 
                     else if (Random.value >= .5f)
                     {
-                        ElementalVFX.Instance.ActivateEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
+                        ActivateVFX.Instance.ActivateElementalEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
                         targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Burning);
                         StatModifier burnDamageMod = new StatModifier(burnDamage * .25f, StatModType.Flat, source);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
@@ -124,7 +124,7 @@ namespace PrototypeGame
             if (!targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Wet))
             {
                 targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Wet);
-                ElementalVFX.Instance.ActivateEffect(StatusEffect.Wet, targetCharacterStats.gameObject);
+                ActivateVFX.Instance.ActivateElementalEffect(StatusEffect.Wet, targetCharacterStats.gameObject);
             }
         }
 

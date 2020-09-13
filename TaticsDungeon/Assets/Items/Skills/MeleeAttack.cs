@@ -7,6 +7,7 @@ namespace PrototypeGame
     public class MeleeAttack : CastPhysical
     {
         public GameObject target;
+        public GridCell targetCell;
 
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
             TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
@@ -23,7 +24,7 @@ namespace PrototypeGame
         public override void Cast(float delta, IntVector2 targetIndex)
         {
             List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
-            GridCell targetCell = cells[0];
+            targetCell = cells[0];
 
             target = targetCell.GetOccupyingObject();
             
@@ -38,11 +39,13 @@ namespace PrototypeGame
         public override void Excute(float delta, GridCell targetCell)
         {
             combatUtils.PhyiscalAttack(target);
+            target.GetComponent<BloodVFX>().PlaySplashBloodEffects();
         }
 
         public override void Excute(float delta)
         {
             combatUtils.PhyiscalAttack(target);
+            target.GetComponent<BloodVFX>().PlaySplashBloodEffects();
         }
     }       
 }

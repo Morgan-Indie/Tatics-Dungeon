@@ -9,11 +9,14 @@ namespace PrototypeGame
     {
         public Text[] statTexts;
         public CharacterStats playerStats;
+        public Text characterName;
 
         public void Start()
         {
             playerStats = GetComponentInParent<CharacterStats>();
             statTexts = GetComponentsInChildren<Text>();
+
+            characterName.text = playerStats.characterName;
         }
 
         public void updateStatTexts()

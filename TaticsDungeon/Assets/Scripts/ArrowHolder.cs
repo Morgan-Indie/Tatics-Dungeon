@@ -43,7 +43,7 @@ namespace PrototypeGame
 
         public void ArrowHit()
         {
-            rangeAttack.Excute(Time.deltaTime, targetCell);
+            rangeAttack.Excute(Time.deltaTime);
             Destroy(arrow);
         }
     }

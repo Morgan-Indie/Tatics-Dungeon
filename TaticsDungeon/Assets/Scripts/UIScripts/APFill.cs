@@ -8,7 +8,7 @@ namespace PrototypeGame
     public class APFill : MonoBehaviour
     {
         [Header("Required")]
-        public int APConstriant = 17;
+        public int APConstriant = 10;
 
         [HideInInspector]
         public Image[] apPoints;
