@@ -34,7 +34,7 @@ namespace PrototypeGame
         public Vector3 nextPos;
         public List<IntVector2> path;
         public LayerMask meshMask;
-        public bool isDirty;
+        public IntVector2 prevIndex=new IntVector2(-1,-1);
 
         float movementSpeed = 3f;
         float rotationSpeed = 25f;
@@ -228,15 +228,17 @@ namespace PrototypeGame
             else
             {
                 IntVector2 index = GetMouseIndex();
-                
+
                 if (currentNavDict.ContainsKey(index))
                 {
-                    path = NavigationHandler.instance.GetPath(currentNavDict, index, currentIndex);
-                    int distance = GetRequiredMoves(index,path);
-                    
+                    if (!index.Equals(prevIndex))
+                        path = NavigationHandler.instance.GetPath(currentNavDict, index, currentIndex);
+
+                    int distance = GetRequiredMoves(index,path);                    
                     if (characterStats.currentAP >= distance && currentNavDict.ContainsKey(index))
                     {
-                        GridManager.Instance.HighlightPathWithList(path);
+                        if (!index.Equals(prevIndex))
+                            GridManager.Instance.HighlightPathWithList(path);
                         if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput) 
                             && stateManager.characterAction == CharacterAction.None)
                         {                           
@@ -244,6 +246,7 @@ namespace PrototypeGame
                         }
                     }
                 }
+                prevIndex = index;
             }
         }
 

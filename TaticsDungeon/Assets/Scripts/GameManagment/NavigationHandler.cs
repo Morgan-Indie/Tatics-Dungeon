@@ -29,18 +29,21 @@ namespace PrototypeGame
             void UpdateNavDicts(IntVector2 currentCellIndex, IntVector2 nextCellIndex, bool targetDictOnly = false)
             {
                 int altDistance = cellDistances[currentCellIndex] + 1;
-                if (!cellDistances.ContainsKey(nextCellIndex) || altDistance < cellDistances[nextCellIndex])
+                if (altDistance <= AP)
                 {
-                    cellDistances[nextCellIndex] = altDistance;
-                    prevCellTargets[nextCellIndex] = currentCellIndex;
-                    if (!targetDictOnly)
-                        prevCellNav[nextCellIndex] = currentCellIndex;
+                    if (!cellDistances.ContainsKey(nextCellIndex) || altDistance < cellDistances[nextCellIndex])
+                    {
+                        cellDistances[nextCellIndex] = altDistance;
+                        prevCellTargets[nextCellIndex] = currentCellIndex;
+                        if (!targetDictOnly)
+                            prevCellNav[nextCellIndex] = currentCellIndex;
 
-                }
-                if (!targetDictOnly)
-                {
-                    if (!que.Contains((nextCellIndex, cellDistances[nextCellIndex])))
-                        que.Add((nextCellIndex, cellDistances[nextCellIndex]));
+                    }
+                    if (!targetDictOnly)
+                    {
+                        if (!que.Contains((nextCellIndex, cellDistances[nextCellIndex])))
+                            que.Add((nextCellIndex, cellDistances[nextCellIndex]));
+                    }
                 }
             }
 
