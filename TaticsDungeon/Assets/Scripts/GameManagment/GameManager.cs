@@ -103,9 +103,10 @@ namespace PrototypeGame
                     UIcam.GetComponent<UICam>().HandleUICam();
                 }
 
-                currentCharacter.PlayerUpdate(delta);
+
                 if (gameState != GameState.ResolvingInteraction)
                     CharacterSwitch();
+                currentCharacter.PlayerUpdate(delta);
             }
                 
             else

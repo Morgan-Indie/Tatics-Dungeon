@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7488fd0e684a204597980d32ce8477d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Jeehye
+  characterName: Huxley
   _strength: 10
   _vitality: 7
   _dexterity: 13

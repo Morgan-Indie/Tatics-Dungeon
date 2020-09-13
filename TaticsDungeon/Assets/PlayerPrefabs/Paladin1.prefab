@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 2539169310615810921}
   - component: {fileID: 5826108626438358100}
   - component: {fileID: 3655028217359897210}
+  - component: {fileID: 4710430847785346498}
   m_Layer: 11
   m_Name: Paladin1
   m_TagString: Player
@@ -125,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5b953e01c8f7c4b8ae37d86aaedf51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerModel: {fileID: 0}
+  playerModel: {fileID: 8714181810360467012}
   playerNumber: 2
   characterClass: 1
   playerTransform: {fileID: 0}
@@ -148,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7488fd0e684a204597980d32ce8477d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Bo
+  characterName: Boyang
   _strength: 15
   _vitality: 10
   _dexterity: 8
@@ -361,6 +362,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterStats: {fileID: 0}
+--- !u!114 &4710430847785346498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4500155906802865870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2216c9826e0439d45bd3656bd765117f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerManager: {fileID: 0}
+  _selectedSkill: {fileID: 0}
 --- !u!1 &7895285342713168245
 GameObject:
   m_ObjectHideFlags: 0

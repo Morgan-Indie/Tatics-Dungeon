@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 2539169310615810921}
   - component: {fileID: 5826108626438358100}
   - component: {fileID: 3655028217359897210}
+  - component: {fileID: 7479853675386943280}
   m_Layer: 10
   m_Name: Mage
   m_TagString: Player
@@ -127,13 +128,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerModel: {fileID: 7665080925271206364}
   playerNumber: 1
-  characterClass: 4
+  characterClass: 3
   playerTransform: {fileID: 0}
-  taticalMovement: {fileID: 0}
-  characterStats: {fileID: 0}
-  stateManager: {fileID: 0}
-  inventoryHandler: {fileID: 0}
-  skillSlotsHandler: {fileID: 0}
+  taticalMovement: {fileID: 2370315296092375697}
+  characterStats: {fileID: 3995932572631023307}
+  stateManager: {fileID: 7113353025256091502}
+  inventoryHandler: {fileID: 5826108626438358100}
+  skillSlotsHandler: {fileID: 215361482049035427}
   isCurrentPlayer: 0
   selectedSkill: {fileID: 0}
 --- !u!114 &3995932572631023307
@@ -148,13 +149,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7488fd0e684a204597980d32ce8477d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Bo
-  _strength: 15
-  _vitality: 10
+  characterName: Jessie
+  _strength: 8
+  _vitality: 8
   _dexterity: 8
-  _intelligence: 8
+  _intelligence: 15
   _luck: 10
-  _stamina: 7
+  _stamina: 6
   maxHealth: 0
   currentHealth: 0
   maxAP: 0
@@ -297,7 +298,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills:
-  - {fileID: 11400000, guid: cf28006038f359c4682d536ff1515349, type: 2}
+  - {fileID: 11400000, guid: e7b0579582655504d8e600020dd1a1d8, type: 2}
+  - {fileID: 11400000, guid: 42cc8227f1707244c857ffa893e35696, type: 2}
 --- !u!114 &8229280085783286546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ea8250acc941a40bcc4eb8422fcfdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 11400000, guid: 17e0a39c684103b4bac5e848f49c878a, type: 2}
   item1: {fileID: 0}
   inventoryHandler: {fileID: 0}
 --- !u!114 &2539169310615810921
@@ -361,6 +363,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterStats: {fileID: 0}
+--- !u!114 &7479853675386943280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4500155906802865870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2216c9826e0439d45bd3656bd765117f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerManager: {fileID: 0}
+  _selectedSkill: {fileID: 0}
 --- !u!1 &4757413597114427612
 GameObject:
   m_ObjectHideFlags: 0
