@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public class IceBombSpawn : MonoBehaviour
+    public class IceBombSpawn : VFXSpawns
     {
         public List<GridCell> rangeCells;
-        public GameObject projectilePrefab;
-
         public LeanTweenType expandType;
 
-        public void Initalize(List<GridCell> cells, IntVector2 origin)
+        public override void Initialize(List<GridCell> cells, SkillAbstract skill) { }
+
+        public void Initialize(List<GridCell> cells, IntVector2 origin)
         {
             rangeCells = new List<GridCell>();
             GridCell[] holdCells = cells.ToArray();

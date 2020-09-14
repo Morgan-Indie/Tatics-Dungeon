@@ -4,27 +4,25 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public class IceBomb
+    public class IceBomb : CastChill
     {
-        public static void Activate(CharacterStats characterStats, AnimationHandler animationHandler, TaticalMovement taticalMovement, Skill skill, float delta)
+        public override SkillAbstract AttachSkill(CharacterStats _characterStats,
+            AnimationHandler _animationHandler, TaticalMovement _taticalMovement, 
+            CombatUtils _combatUtils, Skill _skill)
         {
-            IntVector2 index = taticalMovement.GetMouseIndex();
-            GridManager.Instance.HighlightCastableRange(taticalMovement.currentIndex, index, skill);
+            IceBomb iceBomb = _characterStats.gameObject.AddComponent<IceBomb>();
+            iceBomb.characterStats = _characterStats;
+            iceBomb.animationHandler = _animationHandler;
+            iceBomb.taticalMovement = _taticalMovement;
+            iceBomb.skill = _skill;
+            iceBomb.combatUtils = _combatUtils;
 
-            if (index.x >= 0 && characterStats.currentAP >= skill.APcost)
-            {
-                if (Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput)
-                {
-                    InputHandler.instance.tacticsXInput = false;
+            iceBomb.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.waterDamage);
+            iceBomb.intScaleValue = skill._scaleValue * _characterStats.Intelligence.Value;
+            StatModifier intScaling = new StatModifier(intScaleValue, StatModType.Flat);
+            iceBomb.alchemicalDamage.AddModifier(intScaling);
 
-                    animationHandler.PlayTargetAnimation("Attack");
-                    characterStats.UseAP(skill.APcost);
-                    GridManager.Instance.RemoveAllHighlights();
-                    List<GridCell> cells = CastableShapes.GetCastableCells(skill, index);
-                    GameObject effect = SpellManager.Instance.BuildSpellPrefab(skill.effectPrefab, GridManager.Instance.GetCellByIndex(index).transform.position);
-                    effect.GetComponent<IceBombSpawn>().Initalize(cells, index);
-                }
-            }
+            return iceBomb;
         }
     }
 }

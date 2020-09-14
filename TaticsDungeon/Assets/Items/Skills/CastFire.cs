@@ -4,64 +4,47 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public class CastFire : SkillAbstract
+    public abstract class CastFire : SkillAbstract
     {
-        public List<GameObject> targets;
         public float intScaleValue;
 
-        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, Skill _skill)
+        public override void Cast(float delta, IntVector2 targetIndex)
         {
-            CastFire castFire = _characterStats.gameObject.AddComponent<CastFire>();
-            castFire.characterStats = _characterStats;
-            castFire.animationHandler = _animationHandler;
-            castFire.taticalMovement = _taticalMovement;
-            castFire.skill = _skill;
+            List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
 
-            castFire.alchemicalDamage = new CombatStat(_skill._scaleValueFireDamage, CombatStatType.fireDamage);
+            characterStats.transform.LookAt(cells[0].transform);
+            animationHandler.PlayTargetAnimation("SpellCastHand");
+            characterStats.UseAP(skill.APcost);
 
-            castFire.intScaleValue = _skill.attributeScaleModDict[AttributeType.intelligence].Value * _characterStats.Intelligence.Value;
-            StatModifier intScaling = new StatModifier(castFire.intScaleValue, StatModType.Flat);
-
-            castFire.alchemicalDamage.AddModifier(intScaling);
-            return castFire;
-        }
-
-        public override void Activate(float delta)
-        {
-            IntVector2 index = taticalMovement.GetMouseIndex();
-            GridManager.Instance.HighlightCastableRange(taticalMovement.currentIndex, index, skill);
-            int distance = taticalMovement.currentIndex.GetDistance(index);
-
-            if (index.x >= 0 && characterStats.currentAP >= skill.APcost)
-            {
-                if (Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput &&
-                    characterStats.stateManager.characterState != CharacterState.IsInteracting)
-                {
-                    InputHandler.instance.tacticsXInput = false;
-                    GridCell targetCell = taticalMovement.mapAdapter.GetCellByIndex(index);
-
-                    Excute(delta, targetCell);
-                }
-            }
+            GridManager.Instance.RemoveAllHighlights();
+            GameObject effect = Instantiate(skill.effectPrefab,
+                taticalMovement.transform.position + Vector3.up * 1.5f + taticalMovement.transform.forward * 1f,
+                Quaternion.identity);
+            effect.GetComponent<VFXSpawns>().Initialize(cells, this);
         }
 
         public override void Excute(float delta, GridCell targetCell)
         {
-            characterStats.transform.LookAt(targetCell.transform);
-            animationHandler.PlayTargetAnimation("SpellCastHand");
-            
-            characterStats.UseAP(skill.APcost);
-
-            GridManager.Instance.RemoveAllHighlights();
-            List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetCell.index);
-            foreach (GridCell cell in cells)
-            {   
-                if (cell.isFlammable)
-                    AlchemyManager.Instance.ApplyHeat(cell.alchemyState);
-                if (cell.occupyingObject != null)
-                    characterStats.GetComponent<CombatUtils>().OffensiveSpell(cell.occupyingObject, this);
+            bool cellBurn = false;
+            if (targetCell.isFlammable || targetCell.alchemyState.liquidState == LiquidPhaseState.Oil)
+            {
+                AlchemyManager.Instance.ApplyHeat(targetCell.alchemyState);
+                if (targetCell.alchemyState.fireState == FireState.Burning || targetCell.alchemyState.fireState == FireState.Inferno)
+                {
+                    targetCell.burnSource = this;
+                    cellBurn = true;
+                }
             }
+
+            if (targetCell.occupyingObject != null)
+            {
+                CharacterStats targetStats = targetCell.occupyingObject.GetComponent<CharacterStats>();
+                if (cellBurn)
+                    combatUtils.SetFireInteractions(targetStats, targetCell, (int)alchemicalDamage.Value, true);
+                else
+                    combatUtils.SetFireInteractions(targetStats, this, (int)alchemicalDamage.Value);
+                combatUtils.HandleAlchemicalSkill(targetStats, this);
+            }           
         }
     }
 }

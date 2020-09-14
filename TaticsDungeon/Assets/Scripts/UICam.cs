@@ -8,7 +8,7 @@ namespace PrototypeGame
     {
         // Start is called before the first frame update
         public Transform cameraTransform;
-        public Vector3 offset = new Vector3(.77f, -2.14f, 5.86f);
+        public Vector3 offset = new Vector3(.77f, -2.14f, 2f);
         public Camera cam;
         public LayerMask mask;
 
@@ -39,9 +39,9 @@ namespace PrototypeGame
             cam.cullingMask = mask;
 
             Transform targetTransform = GameManager.instance.currentCharacter.transform;
-            Vector3 targetPosition = targetTransform.position + targetTransform.forward*2.5f + offset;
+            Vector3 targetPosition = targetTransform.position + targetTransform.forward*2.5f;
             transform.position = targetPosition;
-            transform.LookAt(GameManager.instance.currentCharacter.transform.position);
+            transform.LookAt(targetTransform);
         }
     }
 }

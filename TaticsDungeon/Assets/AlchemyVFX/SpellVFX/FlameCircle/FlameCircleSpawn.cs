@@ -4,13 +4,11 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public class FlameCircleSpawn : MonoBehaviour
+    public class FlameCircleSpawn : VFXSpawns
     {
-        public float lifeTime = 1f;
-
-        public void Initalize(GridCell _cell, SkillAbstract _skill)
+        public override void Initialize(List<GridCell> cells, SkillAbstract skill)
         {
-            _skill.Excute(Time.deltaTime, _cell);
+            skill.Excute(Time.deltaTime, cells[0]);
             Destroy(gameObject, lifeTime);
         }
     }

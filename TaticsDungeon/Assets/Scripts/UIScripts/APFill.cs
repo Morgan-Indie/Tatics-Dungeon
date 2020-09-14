@@ -8,7 +8,7 @@ namespace PrototypeGame
     public class APFill : MonoBehaviour
     {
         [Header("Required")]
-        public int APConstriant = 17;
+        public int APConstriant = 10;
 
         [HideInInspector]
         public Image[] apPoints;
@@ -34,7 +34,7 @@ namespace PrototypeGame
                 FadeAPOut(apPoints[i]);
         }
 
-        public void RecoverAP()
+        public void RecoverAPUI()
         {
             for (int i = 0; i < maxAP; i++)
                 FadeAPIn(apPoints[i]);

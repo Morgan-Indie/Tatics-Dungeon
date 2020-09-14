@@ -103,9 +103,10 @@ namespace PrototypeGame
                     UIcam.GetComponent<UICam>().HandleUICam();
                 }
 
-                currentCharacter.PlayerUpdate(delta);
+
                 if (gameState != GameState.ResolvingInteraction)
                     CharacterSwitch();
+                currentCharacter.PlayerUpdate(delta);
             }
                 
             else
@@ -131,7 +132,7 @@ namespace PrototypeGame
             {
                 // must recover AP first before setting navDict
                 player.characterStats.currentAP= player.characterStats.maxAP;
-                player.characterStats.apBar.RecoverAP();
+                player.characterStats.apBar.RecoverAPUI();
             }
             currentCharacter = playersDict.Values.ToArray()[0];
             currentCharacter.isCurrentPlayer = true;
@@ -148,7 +149,7 @@ namespace PrototypeGame
             {
                 // must recover AP first before setting navDict
                 enemy.characterStats.currentAP= enemy.characterStats.maxAP;
-                enemy.characterStats.apBar.RecoverAP();
+                enemy.characterStats.apBar.RecoverAPUI();
             }
             currentEnemy = enemiesDict.Values.ToArray()[0];
             currentEnemy.isCurrentEnemy = true;
@@ -162,7 +163,10 @@ namespace PrototypeGame
         {            
             currentCharacter.isCurrentPlayer = false;
             if (gameState == GameState.InMenu)
+            {
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(false);
+                currentCharacter.stateManager.characterState = CharacterState.Ready;
+            }
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
             playerIndex++;
@@ -179,13 +183,22 @@ namespace PrototypeGame
             currentCharacter.taticalMovement.SetCurrentNavDict();
 
             if (gameState == GameState.InMenu)
+            {
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(true);
+                currentCharacter.stateManager.characterState = CharacterState.InMenu;
+                currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
+            }
         }
 
         public void SetPreviousPlayer()
         {
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
             currentCharacter.isCurrentPlayer = false;
+            if (gameState == GameState.InMenu)
+            {
+                currentCharacter.inventoryHandler.inventoryUI.SetActive(false);
+                currentCharacter.stateManager.characterState = CharacterState.Ready;
+            }
             currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
 
             playerIndex--;
@@ -201,7 +214,11 @@ namespace PrototypeGame
             currentCharacter.taticalMovement.SetCurrentNavDict();
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(true);
             if (gameState == GameState.InMenu)
+            {
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(true);
+                currentCharacter.stateManager.characterState = CharacterState.InMenu;
+                currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
+            }
         }
 
         #endregion
@@ -289,25 +306,17 @@ namespace PrototypeGame
 
         public void CheckGameState()
         {
-            bool log = (gameState == GameState.ResolvingInteraction);
-
             foreach (PlayerManager player in playersDict.Values.ToArray())
             {
                 if (player.stateManager.characterState == CharacterState.InMenu)
                 {
                     gameState = GameState.InMenu;
-                    if (log)
-                        Debug.Log("Game State Set To InMenu");
                     return;
                 }
 
                 if (player.stateManager.characterState==CharacterState.IsInteracting)
                 {
                     gameState = GameState.ResolvingInteraction;
-                    if (log)
-                    {
-                        Debug.Log(player.characterStats.characterName+" Game State Set To ResolvingInteraction");
-                    }
                     return;
                 }
             }
@@ -317,15 +326,11 @@ namespace PrototypeGame
                 if (enemy.stateManager.characterState != CharacterState.Ready)
                 {
                     gameState = GameState.ResolvingInteraction;
-                    if (log)
-                       Debug.Log(" Game State Set To ResolvingInteraction");
                     return;
                 }
             }
             
             gameState = GameState.Ready;
-            if (log)
-                Debug.Log("Game State Set To Ready");
         }
     }
 }

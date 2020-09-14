@@ -26,7 +26,7 @@ MonoBehaviour:
   range: 1
   _scaleValueStrength: 0
   _scaleValueVitality: 0
-  _scaleValueDexterity: 0
+  _scaleValueDexterity: 0.2
   _scaleValueLuck: 0
   _scaleValueIntelligence: 0
   _scaleValueStamina: 0
@@ -38,7 +38,10 @@ MonoBehaviour:
   _curseDamage: 0
   _shockDamage: 0
   _armor: 10
-  _resistance: 2
+  _fireResistance: 5
+  _waterResistance: 0
+  _shockResistance: 0
+  _poisonResistance: 0
   strModValue: 0
   strModType: 0
   dexModValue: 0

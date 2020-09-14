@@ -39,7 +39,10 @@ MonoBehaviour:
   _curseDamage: 0
   _shockDamage: 0
   _armor: 0
-  _resistance: 3
+  _fireResistance: 0
+  _waterResistance: 0
+  _shockResistance: 0
+  _poisonResistance: 0
   strModValue: 0
   strModType: 0
   dexModValue: 0

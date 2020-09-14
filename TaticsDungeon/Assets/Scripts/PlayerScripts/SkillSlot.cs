@@ -22,7 +22,7 @@ namespace PrototypeGame
         }
 
         public void UpdateSlot(CharacterStats characterStats, AnimationHandler animationHandler,
-            TaticalMovement taticalMovement)
+            TaticalMovement taticalMovement,CombatUtils combatUtils)
         {
             if (skill == null)
                 slotIconPanel.GetComponent<Image>().sprite = defaultSprite;
@@ -30,7 +30,8 @@ namespace PrototypeGame
             {
                 slotIconPanel.GetComponent<Image>().sprite = skill.icon;
                 skillScript = skill.skillScriptObject.GetComponent<SkillAbstract>();
-                skillScript = skillScript.AttachSkill(characterStats, animationHandler, taticalMovement,skill);
+                skillScript = skillScript.AttachSkill(characterStats, animationHandler, 
+                    taticalMovement, combatUtils,skill);
             }
         }
 

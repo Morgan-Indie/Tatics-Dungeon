@@ -40,6 +40,7 @@ namespace PrototypeGame
             slotIconPanel = transform.GetChild(0);
             itemUseDropDown.SetActive(false);
             rectTransform = gameObject.GetComponent<RectTransform>();
+            defaultSprite = GetComponentsInChildren<Image>()[1].sprite;
         }
 
         public void UpdateSlot()

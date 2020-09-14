@@ -47,5 +47,7 @@ MonoBehaviour:
   characterStats: {fileID: 0}
   animationHandler: {fileID: 0}
   taticalMovement: {fileID: 0}
-  animationCompleted: 0
+  combatUtils: {fileID: 0}
+  scaleValue: 0
+  scaleType: 0
   target: {fileID: 0}

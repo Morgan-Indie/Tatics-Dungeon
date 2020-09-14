@@ -12,7 +12,7 @@ namespace PrototypeGame
 
     public enum StatusEffect
     {
-        None, Burning, Frozen, Shocked, Poisoned, Cursed, Blessed,Wet,Oiled, Electricuted
+        None, Burning, Frozen, Shocked, Poisoned, Cursed, Blessed,Wet,Oiled, Electricuted,Inferno
     }
 
     public enum CharacterAction
@@ -30,7 +30,7 @@ namespace PrototypeGame
         public List<StatusEffect> statusEffects = new List<StatusEffect>();
         public CombatStat burnDamageOverTime = new CombatStat(0f,CombatStatType.fireDamage);
         public CombatStat poisonDamageOverTime = new CombatStat(0f, CombatStatType.poisonDamage);
-        public Dictionary<Object, (CombatStatType,int)> DamageSourceTurns = new Dictionary<Object, (CombatStatType, int)>();
+        public Dictionary<object, (CombatStatType,int)> DamageSourceTurns = new Dictionary<object, (CombatStatType, int)>();
         public int burnDamage;
         public int poisonDamage;
 
@@ -69,10 +69,10 @@ namespace PrototypeGame
             }
 
             if (poisonDamageOverTime.Value>0)
-                characterStats.TakeDamage((int)poisonDamageOverTime.Value);
+                characterStats.TakeDamage((int)poisonDamageOverTime.Value - (int)characterStats.poisonResistance.Value);
             if (burnDamageOverTime.Value > 0)
             {
-                characterStats.TakeDamage((int)burnDamageOverTime.Value - (int)characterStats.resistance.Value);
+                characterStats.TakeDamage((int)burnDamageOverTime.Value - (int)characterStats.fireResistance.Value);
             }
         }
     }

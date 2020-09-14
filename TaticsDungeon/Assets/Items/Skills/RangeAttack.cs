@@ -4,47 +4,53 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public class RangeAttack : SkillAbstract
+    public class RangeAttack : CastPhysical
     {
-        public bool animationCompleted;
+        public GameObject target;
+        public ArrowHolder arrowHolder;
 
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils,Skill _skill)
         {
             RangeAttack rangeAttack = _characterStats.gameObject.AddComponent<RangeAttack>();
             rangeAttack.characterStats = _characterStats;
             rangeAttack.animationHandler = _animationHandler;
             rangeAttack.taticalMovement = _taticalMovement;
             rangeAttack.skill = _skill;
+            rangeAttack.combatUtils = _combatUtils;
+            rangeAttack.arrowHolder = _taticalMovement.GetComponent<ArrowHolder>();
+            rangeAttack.arrowHolder.rangeAttack = rangeAttack;
             return rangeAttack;
         }
 
-        public override void Activate(float delta)
+        public override void Cast(float delta, IntVector2 targetIndex)
         {
-            IntVector2 index = taticalMovement.GetMouseIndex();
-            int distance = index.GetDistance(taticalMovement.currentIndex);
+            List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
+            GridCell targetCell = cells[0];
 
-            if (index.x >= 0 && characterStats.currentAP >= skill.APcost && distance <= 3 && distance!=0)
+            target = targetCell.GetOccupyingObject();
+
+            if (target != null)
             {
-                if (Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput)
-                {
-                    InputHandler.instance.tacticsXInput = false;
-                    GridCell targetCell = taticalMovement.mapAdapter.GetCellByIndex(index);
-
-                    Excute(delta, targetCell);
-                }
+                characterStats.transform.LookAt(target.transform);
+                characterStats.transform.Rotate(Quaternion.Euler(0f, 60f, 0f).eulerAngles);
+                animationHandler.PlayTargetAnimation("Attack");
+                arrowHolder.targetCell = targetCell;
+                arrowHolder.target = target;
+                characterStats.UseAP(skill.APcost);
             }
         }
 
         public override void Excute(float delta, GridCell targetCell)
         {
-            GameObject target = targetCell.GetOccupyingObject();
-            if (target != null)
-                characterStats.transform.LookAt(target.transform);
-                characterStats.transform.Rotate(Quaternion.Euler(0f, 60f, 0f).eulerAngles);
-                animationHandler.PlayTargetAnimation("Attack");
-                characterStats.GetComponentInChildren<ArrowHolder>().target = target;
-                characterStats.UseAP(skill.APcost);
+            combatUtils.PhyiscalAttack(target);
+            target.GetComponent<BloodVFX>().PlayPeirceBloodEffects();
+        }
+
+        public override void Excute(float delta)
+        {
+            combatUtils.PhyiscalAttack(target);
+            target.GetComponent<BloodVFX>().PlayPeirceBloodEffects();
         }
     }
 }

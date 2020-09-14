@@ -20,8 +20,8 @@ namespace PrototypeGame
         public CellAlchemyState alchemyState;
         public bool isStairs=false;
         public bool isFlammable = false;
-        public int BurnDamage;
-        public int PoisonDamage;
+        public SkillAbstract burnSource = null;
+        public SkillAbstract poisonSource = null;
 
         public bool HasAdjacentStair = false;
         //If cell is a stair cell, sets this tuple to its Entrance and Exit respectively 
