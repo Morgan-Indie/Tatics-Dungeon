@@ -14,10 +14,13 @@ namespace PrototypeGame
 
     public enum ShockState { Dry, Shocked};
 
+    public enum AlchemyChangeType { Heat, Solid, Liquid, Gas, Bless, Shock }
+
     public class AlchemyManager : MonoBehaviour
     {
-        enum ChangeValues { Gas, Liquid, Solid, Blessed, Fire, Shock};
-        List<ChangeValues> changeValues;
+        
+     //   enum ChangeValues { Gas, Liquid, Solid, Blessed, Fire, Shock};
+      //  List<ChangeValues> changeValues;
 
         public static AlchemyManager Instance { get; private set; }
 
@@ -46,56 +49,100 @@ namespace PrototypeGame
         public GameObject ShockLiquidEffectPrefab;
         public GameObject ShockGasEffectPrefab;
 
+        [Header("Player Status Times")]
+        public int playerBurnTime = 2;
+        public int playerInfernoTime = 2;
+        public int playerPoisonTime = 4;
+        public int playerShockTime = 2;
+        public int playerFrozenTime = 2;
+        public int playerCurseTime = 10;
+        public int playerBlessTime = 10;
+        public int playerWetTime = 4;
+        public int playerOilTime = 4;
+        public int playerElectricuteTime = 2;
+
         private void Awake()
         {
             if (Instance == null)
                 Instance = this;
-            changeValues = new List<ChangeValues>();
         }
 
         public void ApplyGas(CellAlchemyState cellState, GasPhaseState gas)
         {
-            cellState.gasState = gas;
-            changeValues.Add(ChangeValues.Gas);
-            ShockCheck(cellState);
+            ApplyGasInternal(cellState, gas);
             ApplyVFX(cellState);
+        }
+        void ApplyGasInternal(CellAlchemyState cellState, GasPhaseState gas)
+        {
+            cellState.gasState = gas;
+            cellState.changedValues.Add(AlchemyChangeType.Gas);
+            ShockCheck(cellState);
+        }
+        public CellAlchemyState SimulateGas(CellAlchemyState cellState, GasPhaseState gas)
+        {
+            CellAlchemyState simulateState = new CellAlchemyState();
+            simulateState.CopyInformation(cellState);
+            ApplyGasInternal(simulateState, gas);
+            return simulateState;
         }
 
         public void ApplyLiquid(CellAlchemyState cellState, LiquidPhaseState liquid)
         {
+            ApplyLiquidInternal(cellState, liquid);
+            ApplyVFX(cellState);
+        }
+        void ApplyLiquidInternal(CellAlchemyState cellState, LiquidPhaseState liquid)
+        {
             cellState.liquidState = liquid;
-            changeValues.Add(ChangeValues.Liquid);
+            cellState.changedValues.Add(AlchemyChangeType.Liquid);
             if ((int)cellState.fireState > (int)FireState.Dry)
             {
                 ApplyHeatInternal(cellState);
                 if (liquid != LiquidPhaseState.Oil)
                     ReduceFireState(cellState);
-            } else if ((int)cellState.fireState < (int)FireState.Dry)
+            }
+            else if ((int)cellState.fireState < (int)FireState.Dry)
             {
                 ApplyChillInternal(cellState);
             }
             ShockCheck(cellState);
-            ApplyVFX(cellState);
+        }
+        public CellAlchemyState SimulateLiquid(CellAlchemyState cellState, LiquidPhaseState liquid)
+        {
+            CellAlchemyState simulateState = new CellAlchemyState();
+            simulateState.CopyInformation(cellState);
+            ApplyLiquidInternal(simulateState, liquid);
+            return simulateState;
         }
 
         public void ApplySolid(CellAlchemyState cellState, SolidPhaseState solid)
         {
+            ApplySolidInternal(cellState, solid);
+            ApplyVFX(cellState);
+        }
+        void ApplySolidInternal(CellAlchemyState cellState, SolidPhaseState solid)
+        {
             cellState.solidState = solid;
-            changeValues.Add(ChangeValues.Solid);
+            cellState.changedValues.Add(AlchemyChangeType.Solid);
             if ((int)cellState.fireState > (int)FireState.Dry)
             {
                 ApplyHeatInternal(cellState, 2);
             }
             ShockCheck(cellState);
-            ApplyVFX(cellState);
+        }
+        public CellAlchemyState SimulateSolid(CellAlchemyState cellState, SolidPhaseState solid)
+        {
+            CellAlchemyState simulateState = new CellAlchemyState();
+            simulateState.CopyInformation(cellState);
+            ApplySolidInternal(simulateState, solid);
+            return simulateState;
         }
 
         public void ApplyHeat(CellAlchemyState cellState)
-        {            
+        {
             ApplyHeatInternal(cellState);
             ApplyVFX(cellState);
         }
-
         void ApplyHeatInternal(CellAlchemyState cellState, int itters = 1)
         {
             LiquidToGas(cellState);
@@ -103,15 +150,19 @@ namespace PrototypeGame
             if (itters - 1 > 0)
                 ApplyHeatInternal(cellState, itters - 1);
         }
+        public CellAlchemyState SimulateHeat(CellAlchemyState cellState)
+        {
+            CellAlchemyState simulateState = new CellAlchemyState();
+            simulateState.CopyInformation(cellState);
+            ApplyHeatInternal(simulateState);
+            return simulateState;
+        }
 
         public void ApplyChill(CellAlchemyState cellState)
         {
             ApplyChillInternal(cellState);
-            if (changeValues.Contains(ChangeValues.Solid) || changeValues.Contains(ChangeValues.Liquid) && cellState.fireState == FireState.Chill)
-                cellState.fireState = FireState.Dry;
             ApplyVFX(cellState);
         }
-
         void ApplyChillInternal(CellAlchemyState cellState, int itters = 1)
         {
             LiquidToSolid(cellState);
@@ -119,13 +170,34 @@ namespace PrototypeGame
             ReduceFireWithChill(cellState);
             if (itters - 1 > 0)
                 ApplyChillInternal(cellState, itters - 1);
+            else
+                if (cellState.changedValues.Contains(AlchemyChangeType.Solid) || cellState.changedValues.Contains(AlchemyChangeType.Liquid) && cellState.fireState == FireState.Chill)
+                    cellState.fireState = FireState.Dry;
+        }
+        public CellAlchemyState SimulateChill(CellAlchemyState cellState)
+        {
+            CellAlchemyState simulateState = new CellAlchemyState();
+            simulateState.CopyInformation(cellState);
+            ApplyChillInternal(simulateState);
+            return simulateState;
         }
 
         public void ApplyShock(CellAlchemyState cellState)
         {
-            cellState.shockState = ShockState.Shocked;
-            changeValues.Add(ChangeValues.Shock);
+            ApplyShockInternal(cellState);
             ApplyVFX(cellState);
+        }
+        void ApplyShockInternal(CellAlchemyState cellState)
+        {
+            cellState.shockState = ShockState.Shocked;
+            cellState.changedValues.Add(AlchemyChangeType.Shock);
+        }
+        public CellAlchemyState SimulateShock(CellAlchemyState cellState)
+        {
+            CellAlchemyState simulateState = new CellAlchemyState();
+            simulateState.CopyInformation(cellState);
+            ApplyShockInternal(simulateState);
+            return simulateState;
         }
 
         void SolidToLiquid(CellAlchemyState cellState)
@@ -133,10 +205,10 @@ namespace PrototypeGame
             if (cellState.solidState == SolidPhaseState.Dry)
                 return;
             cellState.liquidState = (LiquidPhaseState)cellState.solidState;
-            changeValues.Add(ChangeValues.Liquid);
+            cellState.changedValues.Add(AlchemyChangeType.Liquid);
             ReduceFireState(cellState);
             cellState.solidState = SolidPhaseState.Dry;
-            changeValues.Add(ChangeValues.Solid);
+            cellState.changedValues.Add(AlchemyChangeType.Solid);
             ShockCheck(cellState);
         }
         void LiquidToGas(CellAlchemyState cellState)
@@ -146,18 +218,18 @@ namespace PrototypeGame
                 case (LiquidPhaseState.Dry):
                     if (cellState.fireState != FireState.Inferno)
                         cellState.fireState = FireState.Burning;
-                    changeValues.Add(ChangeValues.Fire);
+                    cellState.changedValues.Add(AlchemyChangeType.Heat);
                     break;
                 case (LiquidPhaseState.Oil):
                     IncreaseFire(cellState, 2);
                     cellState.liquidState = LiquidPhaseState.Dry;
-                    changeValues.Add(ChangeValues.Liquid);
+                    cellState.changedValues.Add(AlchemyChangeType.Liquid);
                     break;
                 default:
                     cellState.gasState = (GasPhaseState)cellState.liquidState;
                     cellState.liquidState = LiquidPhaseState.Dry;
-                    changeValues.Add(ChangeValues.Liquid);
-                    changeValues.Add(ChangeValues.Gas);
+                    cellState.changedValues.Add(AlchemyChangeType.Liquid);
+                    cellState.changedValues.Add(AlchemyChangeType.Gas);
                     break;
             }
             InfernoCheck(cellState);
@@ -173,9 +245,9 @@ namespace PrototypeGame
                     break;
                 default:
                     cellState.solidState = (SolidPhaseState)cellState.liquidState;
-                    changeValues.Add(ChangeValues.Solid);
+                    cellState.changedValues.Add(AlchemyChangeType.Solid);
                     cellState.liquidState = LiquidPhaseState.Dry;
-                    changeValues.Add(ChangeValues.Liquid);
+                    cellState.changedValues.Add(AlchemyChangeType.Liquid);
                     break;
 
             }
@@ -186,7 +258,7 @@ namespace PrototypeGame
             if (cellState.gasState == GasPhaseState.Dry)
                 return;
             cellState.liquidState = (LiquidPhaseState)cellState.gasState;
-            changeValues.Add(ChangeValues.Liquid);
+            cellState.changedValues.Add(AlchemyChangeType.Liquid);
             cellState.gasState = GasPhaseState.Dry;
             ShockCheck(cellState);
         }
@@ -194,35 +266,23 @@ namespace PrototypeGame
         void ReduceFireState(CellAlchemyState cellState, int levels = 1)
         {
             for (int i = 0; i < levels; i++)
-            {
                 if ((int)cellState.fireState > (int)FireState.Dry)
-                {
                     cellState.fireState -= 1;
-                    changeValues.Add(ChangeValues.Fire);
-                }
-            }
+                    cellState.changedValues.Add(AlchemyChangeType.Heat);
         }
         void ReduceFireWithChill(CellAlchemyState cellState, int levels = 1)
         {
             for (int i = 0; i < levels; i++)
-            {
                 if ((int)cellState.fireState > (int)FireState.Chill)
-                {
                     cellState.fireState -= 1;
-                    changeValues.Add(ChangeValues.Fire);
-                }
-            }
+                    cellState.changedValues.Add(AlchemyChangeType.Heat);
         }
         void IncreaseFire(CellAlchemyState cellState, int levels = 1)
         {
             for (int i = 0; i < levels; i++)
-            {
                 if ((int)cellState.fireState < (int)FireState.Inferno)
-                {
                     cellState.fireState += 1;
-                    changeValues.Add(ChangeValues.Fire);
-                }
-            }
+                    cellState.changedValues.Add(AlchemyChangeType.Heat);
             InfernoCheck(cellState);
         }
 
@@ -231,9 +291,9 @@ namespace PrototypeGame
         {
             if (cellState.fireState >= FireState.Inferno)
             {
-                if (cellState.gasState != GasPhaseState.Dry) { cellState.gasState = GasPhaseState.Dry; changeValues.Add(ChangeValues.Gas); }
-                if (cellState.liquidState != LiquidPhaseState.Dry) { cellState.liquidState = LiquidPhaseState.Dry; changeValues.Add(ChangeValues.Liquid); }
-                if (cellState.solidState != SolidPhaseState.Dry) { cellState.solidState = SolidPhaseState.Dry; changeValues.Add(ChangeValues.Solid); }
+                if (cellState.gasState != GasPhaseState.Dry) { cellState.gasState = GasPhaseState.Dry; cellState.changedValues.Add(AlchemyChangeType.Gas); }
+                if (cellState.liquidState != LiquidPhaseState.Dry) { cellState.liquidState = LiquidPhaseState.Dry; cellState.changedValues.Add(AlchemyChangeType.Liquid); }
+                if (cellState.solidState != SolidPhaseState.Dry) { cellState.solidState = SolidPhaseState.Dry; cellState.changedValues.Add(AlchemyChangeType.Solid); }
             }
         }
 
@@ -242,53 +302,51 @@ namespace PrototypeGame
             if (cellState.shockState == ShockState.Dry)
                 return;
             if (cellState.gasState != GasPhaseState.Dry || cellState.liquidState != LiquidPhaseState.Dry || cellState.solidState != SolidPhaseState.Dry)
-                changeValues.Add(ChangeValues.Shock);
+                cellState.changedValues.Add(AlchemyChangeType.Shock);
             else
                 cellState.shockState = ShockState.Dry;
         }
 
         public void ApplyVFX(CellAlchemyState cellState)
         {
-            List<ChangeValues> processedValues = new List<ChangeValues>();
-            //remove duplicates
-            foreach (ChangeValues value in changeValues) { if (!processedValues.Contains(value)){ processedValues.Add(value); } }
+            List<AlchemyChangeType> processedValues = cellState.GetChangedValues();
             //remove previous effect
-            foreach (ChangeValues value in processedValues)
+            foreach (AlchemyChangeType value in processedValues)
             {
                 switch (value)
                 {
-                    case (ChangeValues.Gas):
+                    case (AlchemyChangeType.Gas):
                         if (cellState.gasEffect != null)
                             Destroy(cellState.gasEffect);           
                         break;
-                    case (ChangeValues.Liquid):
+                    case (AlchemyChangeType.Liquid):
                         if (cellState.liquidEffect != null)
                             Destroy(cellState.liquidEffect);
                         break;
-                    case (ChangeValues.Solid):
+                    case (AlchemyChangeType.Solid):
                         if (cellState.solidEffect != null)
                             Destroy(cellState.solidEffect);
                         break;
-                    case (ChangeValues.Blessed):
+                    case (AlchemyChangeType.Bless):
                         if (cellState.blessedEffect != null)
                             Destroy(cellState.blessedEffect);
                         break;
-                    case (ChangeValues.Fire):
+                    case (AlchemyChangeType.Heat):
                         if (cellState.fireEffect != null)
                             Destroy(cellState.fireEffect);
                         break;
-                    case (ChangeValues.Shock):
+                    case (AlchemyChangeType.Shock):
                         if (cellState.shockEffect != null)
                             Destroy(cellState.shockEffect);
                         break;
                 }
             }
             //instansiate new effect, if applicapable
-            foreach (ChangeValues value in processedValues)
+            foreach (AlchemyChangeType value in processedValues)
             {
                 switch (value)
                 {
-                    case (ChangeValues.Gas):
+                    case (AlchemyChangeType.Gas):
                         switch (cellState.gasState)
                         {
                             case (GasPhaseState.Water):
@@ -299,7 +357,7 @@ namespace PrototypeGame
                                 break;
                         }
                         break;
-                    case (ChangeValues.Liquid):
+                    case (AlchemyChangeType.Liquid):
                         switch (cellState.liquidState)
                         {
                             case (LiquidPhaseState.Water):
@@ -313,7 +371,7 @@ namespace PrototypeGame
                                 break;
                         }
                         break;
-                    case (ChangeValues.Solid):
+                    case (AlchemyChangeType.Solid):
                         switch (cellState.solidState)
                         {
                             case (SolidPhaseState.Water):
@@ -324,7 +382,7 @@ namespace PrototypeGame
                                 break;
                         }
                         break;
-                    case (ChangeValues.Blessed):
+                    case (AlchemyChangeType.Bless):
                         switch (cellState.blessingState)
                         {
                             case (BlessingState.Blessed):
@@ -335,7 +393,7 @@ namespace PrototypeGame
                                 break;
                         }
                         break;
-                    case (ChangeValues.Fire):
+                    case (AlchemyChangeType.Heat):
                         switch (cellState.fireState)
                         {
                             case (FireState.Chill):
@@ -349,7 +407,7 @@ namespace PrototypeGame
                                 break;
                         }
                         break;
-                    case (ChangeValues.Shock):
+                    case (AlchemyChangeType.Shock):
                         if (cellState.shockState == ShockState.Dry) { 
 
                         } else if (cellState.solidState != SolidPhaseState.Dry)
@@ -368,6 +426,7 @@ namespace PrototypeGame
                         break;
                 }
             }
+            cellState.changedValues.Clear();
         }
     }
 }
