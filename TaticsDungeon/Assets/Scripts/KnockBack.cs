@@ -10,7 +10,7 @@ namespace PrototypeGame
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        {
+        {            
             TaticalMovement taticalMovement = animator.GetComponent<TaticalMovement>();
             targetPosition = taticalMovement.moveLocation;
             animator.GetComponent<CharacterStateManager>().characterAction = CharacterAction.LyingDown;
@@ -31,6 +31,7 @@ namespace PrototypeGame
             animator.transform.position = targetPosition;
             taticalMovement.moveLocation = Vector3.up;
             targetPosition = Vector3.up;
+            animator.GetComponent<StatusVFX>().StunVFXPlay();
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()
