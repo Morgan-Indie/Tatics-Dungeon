@@ -41,7 +41,6 @@ namespace PrototypeGame
 
         [HideInInspector]
         public List<IntVector2> highlightedPath;
-        public Dictionary<IntVector2,IntVector2> currentHighlightDict=null;
         [HideInInspector]
         public List<IntVector2> allHighlightedTiles;
         public List<GameObject> castableRangeHighlights;
@@ -124,8 +123,8 @@ namespace PrototypeGame
             foreach (KeyValuePair<IntVector2, IntVector2> n in dict)
             {
                 HighlightTileByIndex(n.Key);
+                allHighlightedTiles.Add(n.Key);
             }
-            currentHighlightDict = dict;
         }
 
         public void HighlightTileByIndex(IntVector2 index)
@@ -141,17 +140,14 @@ namespace PrototypeGame
 
         public void HighlightPathWithList(List<IntVector2> indices)
         {
-            IEnumerable<IntVector2> indiciesToHighlight = from index in indices.Except(highlightedPath) select index;
-            IEnumerable<IntVector2> indiciesToRemove = from index in highlightedPath.Except(indices) select index;
-
-            foreach (IntVector2 index in indiciesToRemove)
+            foreach (IntVector2 index in highlightedPath.Except(indices))
             {
                 GridCell cell = mapAdapter.GetCellByIndex(index);
                 cell.RemoveHighlight();
                 cell.ApplyHighlight(validTileHighlightPrefab);
             }
 
-            foreach (IntVector2 index in indiciesToHighlight)
+            foreach (IntVector2 index in indices.Except(highlightedPath))
             {
                 GridCell cell = mapAdapter.GetCellByIndex(index);
                 cell.RemoveHighlight();
@@ -159,64 +155,16 @@ namespace PrototypeGame
             }
 
             highlightedPath = indices;
-
-            //List<int> omits = new List<int>();
-            //GridCell cell;
-            //for (int i = 0; i < highlightedPath.Count; i++)
-            //{
-            //    if (!highlightedPath[i].IsIn(indices))
-            //    {
-            //        cell = mapAdapter.GetCellByIndex(highlightedPath[i]);
-            //        cell.RemoveHighlight();
-            //        cell.ApplyHighlight(validTileHighlightPrefab);
-            //    }
-            //    else
-            //    {
-            //        //   omits.Add(highlightedPath[i].IndexInList(indices));
-            //    }
-            //}
-            //highlightedPath.Clear();
-            //for (int i = 0; i < indices.Count; i++)
-            //{
-            //    if (omits.Contains(i))
-            //        continue;
-            //    mapAdapter.GetCellByIndex(indices[i]).ApplyHighlight(pathTileHighlightPrefab);
-            //    highlightedPath.Add(indices[i]);
-            //}
         }
 
         public void RemoveAllHighlights()
-        {
-            /*
-            foreach (IntVector2 index in allHighlightedTiles)
+        {           
+            foreach(var item in allHighlightedTiles.Union(highlightedPath))
             {
-                mapAdapter.GetCellByIndex(index).RemoveHighlight();
+                mapAdapter.GetCellByIndex(item).RemoveHighlight();
             }
-            foreach (IntVector2 index in highlightedPath)
-            {
-                if (!index.IsIn(allHighlightedTiles))
-                {
-                    mapAdapter.GetCellByIndex(index).RemoveHighlight();
-                }
-            }
-            */
             allHighlightedTiles.Clear();
-            //highlightedPath.Clear();
-            
-            if (currentHighlightDict !=null)
-            {
-                foreach(var item in currentHighlightDict)
-                {
-                    mapAdapter.GetCellByIndex(item.Key).RemoveHighlight();
-                }
-            }
-            //for (int y=0; y<mapAdapter.gridMap.height; y++)
-            //{
-            //    for (int x=0; x<mapAdapter.gridMap.width; x++)
-            //    {
-            //        mapAdapter.GetCellByIndex(new IntVector2(x, y)).RemoveHighlight();
-            //    }
-            //}
+            highlightedPath.Clear();
         }
 
         public void HighlightCastableRange(IntVector2 playerOrigin, IntVector2 castOrigin, Skill skill)
@@ -233,12 +181,14 @@ namespace PrototypeGame
             foreach (GridCell cell in rangeCells)
             {
                 cell.ApplyHighlight(castableValidPrefab, CellHighlightType.InRange);
+                allHighlightedTiles.Add(cell.index);
             }
             if (castOrigin.GetDistance(playerOrigin) <= skill.castableSettings.range)
             {
                 foreach (GridCell cell in castRange)
                 {
                     cell.ApplyHighlight(castableHighlightPrefab, CellHighlightType.Castable);
+                    allHighlightedTiles.Add(cell.index);
                 }
             }
             
