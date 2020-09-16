@@ -27,6 +27,7 @@ namespace PrototypeGame
 
             if (index.x >= 0 && characterStats.currentAP >= skill.APcost && distance <= skill.castableSettings.range)
             {
+                Debug.Log(taticalMovement.currentIndex.GetSection(index, 4));
                 if (Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput &&
                     characterStats.stateManager.characterState != CharacterState.IsInteracting)
                 {

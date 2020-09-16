@@ -26,16 +26,6 @@ namespace PrototypeGame
         EnergyBall,
     };
 
-    public enum CastableShape
-    {
-        Single,
-        Circular,
-        Area,
-        Line,
-        Cross,
-        Checker,
-    }
-
     [System.Serializable]
     public class CastableSettings
     {
@@ -48,6 +38,23 @@ namespace PrototypeGame
         public int lineOrientation = 0;
         [ConditionalHide("shape", (int)CastableShape.Cross)]
         public int crossOrientation = 0;
+    }
+
+    [System.Serializable]
+    public class PinnedSettings
+    {
+        public PinnedShape shape = PinnedShape.Single;
+        public int radius = 1;
+        public bool inclusive = false;
+        [ConditionalHide("shape", (int)PinnedShape.Cone)]
+        public PinnedConeSettings coneSettings;
+    }
+
+    [System.Serializable]
+    public class PinnedConeSettings
+    {
+        [Header("Cone Expansion Rate")]
+        public int expansion = 1;
     }
 
     [CreateAssetMenu(fileName ="Skill")]
@@ -66,6 +73,8 @@ namespace PrototypeGame
 
         [ConditionalHide("type", (int)SkillType.Castable)]
         public CastableSettings castableSettings;
+        [ConditionalHide("type", (int)SkillType.Pinned)]
+        public PinnedSettings pinnedSettings;
 
         [Header("Attribute Scaling")]
         public StatModType strScaleType;

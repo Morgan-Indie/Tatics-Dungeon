@@ -188,5 +188,31 @@ namespace PrototypeGame
         {
             return new IntVector2(this.x - index.x, this.y - index.y);
         }
+
+        public static IntVector2 operator +(IntVector2 a, IntVector2 b)
+        {
+            return new IntVector2(a.x + b.x, a.y + b.y);
+        }
+
+        public static IntVector2 operator -(IntVector2 a, IntVector2 b)
+        {
+            return new IntVector2(a.x - b.x, a.y - b.y);
+        }
+
+        public int GetSection(IntVector2 point,int sections)
+        {
+            float sectionSize = 360f / (float)sections;
+            float Vx = point.x - x;
+            float Vy = point.y - y;
+
+            float radians = Mathf.Atan2(Vy, Vx); 
+            if (radians < 0) { radians += 2 * Mathf.PI; }
+
+            float degrees = 360f - radians * Mathf.Rad2Deg;
+            degrees += sectionSize / 2;
+            if (degrees >= 360) { degrees -= 360; }
+            int result = Mathf.FloorToInt(degrees / sectionSize);
+            return result;
+        }
     }
 }

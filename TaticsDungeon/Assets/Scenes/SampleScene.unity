@@ -3947,6 +3947,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 5012251641638902140, guid: 4313f318457d4144f88606ebab0434c8,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5012251641638902140, guid: 4313f318457d4144f88606ebab0434c8,
+        type: 3}
+      propertyPath: skills.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ba18eb7a9d0578e449b55e30887a6488,
+        type: 2}
     - target: {fileID: 5885915574917985009, guid: 4313f318457d4144f88606ebab0434c8,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -5277,6 +5288,16 @@ MonoBehaviour:
   ShockSolidEffectPrefab: {fileID: 0}
   ShockLiquidEffectPrefab: {fileID: 0}
   ShockGasEffectPrefab: {fileID: 0}
+  playerBurnTime: 2
+  playerInfernoTime: 2
+  playerPoisonTime: 4
+  playerShockTime: 2
+  playerFrozenTime: 2
+  playerCurseTime: 10
+  playerBlessTime: 10
+  playerWetTime: 4
+  playerOilTime: 4
+  playerElectricuteTime: 2
 --- !u!1001 &2152099509589680769
 PrefabInstance:
   m_ObjectHideFlags: 0

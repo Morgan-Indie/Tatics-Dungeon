@@ -15,6 +15,7 @@ namespace PrototypeGame
         Curse,
         Bless,
         Castable,
+        Pinned,
         Chill
     }
 
