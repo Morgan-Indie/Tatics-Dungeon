@@ -7,11 +7,14 @@ namespace PrototypeGame
     [CreateAssetMenu(menuName = "Items/Equipable Item")]
     public class EquipableItem : Items
     {
-        public bool isUnarmed;
         public bool equipped;
         public SlotType slotType;
         public EquipmentType equipmentType;
         public int range=1;
+
+        public List<meshLocation> itemMeshLocs;
+        public List<Mesh> itemMeshesMale;
+        public List<Mesh> itemMeshesFemale;
 
         [Header("Stat Scaling")]
         public float _scaleValueStrength;
@@ -58,9 +61,12 @@ namespace PrototypeGame
 
         public void Init()
         {
-            CollectCharacterModifiers();
-            CollectScalingModifiers();
-            CollectEquipmentStats();
+            if (statModDict.Count ==0)
+                CollectCharacterModifiers();
+            if (scaleModDict.Count==0)
+                CollectScalingModifiers();
+            if (equipmentStatDict.Count==0)
+                CollectEquipmentStats();
         }
 
         public void CollectCharacterModifiers()
@@ -116,7 +122,7 @@ namespace PrototypeGame
             if (_poisonResistance != 0f)
                 equipmentStatDict.Add(CombatStatType.poisonResistance, new StatModifier(_poisonResistance, StatModType.Flat, this));
             if (_waterResistance != 0f)
-                equipmentStatDict.Add(CombatStatType.fireResistance, new StatModifier(_waterResistance, StatModType.Flat, this));
+                equipmentStatDict.Add(CombatStatType.waterResistance, new StatModifier(_waterResistance, StatModType.Flat, this));
             if (_shockResistance != 0f)
                 equipmentStatDict.Add(CombatStatType.shockResistance, new StatModifier(_shockResistance, StatModType.Flat, this));
         }

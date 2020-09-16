@@ -6,26 +6,23 @@ namespace PrototypeGame
 {
     public class TestInventoryItemScript : MonoBehaviour
     {
-        public EquipableItem item;
-        public EquipableItem item1;
+        public List<EquipableItem> items;
         public InventoryHandler inventoryHandler;
 
         public void Awake()
         {
-            if (item!=null)
+            foreach (EquipableItem item in items)
                 item.Init();
-            if (item1 != null)
-                item1.Init();
             inventoryHandler = GetComponent<InventoryHandler>();
         }
 
         // Start is called before the first frame update
         public void AddItem()
         {
-            if (item != null)
+            foreach (EquipableItem item in items)
+            {
                 inventoryHandler.AddItem(item);
-            if (item1 != null)
-                inventoryHandler.AddItem(item1);
+            }
         }
     }
 }

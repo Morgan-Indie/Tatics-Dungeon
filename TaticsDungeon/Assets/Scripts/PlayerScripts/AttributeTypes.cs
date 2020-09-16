@@ -22,7 +22,7 @@ namespace PrototypeGame
         helmet,
         amulet,
         boots,
-        leggins,
+        leggings,
         shield,
         torso,
         gloves,

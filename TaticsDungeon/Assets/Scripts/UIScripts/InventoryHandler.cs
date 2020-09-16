@@ -62,7 +62,7 @@ namespace PrototypeGame
 
                     EventSystem.current.SetSelectedGameObject(first_slot.gameObject);
                     stateManager.characterState = CharacterState.InMenu;
-                    playerManager.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
+                    //playerManager.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
                     //Time.timeScale = 0f;
                 }
 
@@ -76,7 +76,7 @@ namespace PrototypeGame
                     UIcamLight.enabled = false;
 
                     stateManager.characterState = CharacterState.Ready;
-                    playerManager.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
+                    //playerManager.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
                 }
             }
         }

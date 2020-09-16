@@ -52,6 +52,10 @@ namespace PrototypeGame
                 equipmentModel.transform.localPosition = Vector3.zero;
                 equipmentModel.transform.localRotation = Quaternion.identity;
                 equipmentModel.transform.localScale = Vector3.one;
+
+                if (animationHandler.tag == "Player")
+                    equipmentModel.transform.GetChild(0).GetChild(0).localScale = Vector3.one*100f;
+
             }
             currentModel = equipmentModel;
             animationHandler.animator.SetBool("Equiped", true);

@@ -27,7 +27,9 @@ namespace PrototypeGame
         private void ApplyEquipmentStats(EquipableItem item)
         {
             foreach (var mod in item.equipmentStatDict)
+            {
                 characterStats.playerCombatStatDict[mod.Key].AddModifier(mod.Value);
+            }
         }
 
         private void ApplyEquipmentScalers(EquipableItem item)

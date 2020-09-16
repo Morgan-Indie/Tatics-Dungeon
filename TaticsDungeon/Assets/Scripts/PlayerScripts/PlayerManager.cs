@@ -12,7 +12,6 @@ namespace PrototypeGame
     public class PlayerManager : MonoBehaviour
     {
         [Header("Required")]
-        public GameObject playerModel;
         public PlayerNumber playerNumber;
         public CharacterClass characterClass;
 
@@ -26,7 +25,7 @@ namespace PrototypeGame
         public bool isCurrentPlayer;
         public SkillAbstract selectedSkill=null;
 
-        private void Start()
+        private void Awake()
         {
             playerTransform = GetComponent<Transform>();
             inventoryHandler = GetComponent<InventoryHandler>();

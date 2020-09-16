@@ -10,7 +10,7 @@ namespace PrototypeGame
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             if (animator.gameObject.tag == "Player")
-                LeanTween.alpha(animator.GetComponent<PlayerManager>().playerModel, 0, 3.5f).setOnComplete(animator.gameObject.GetComponent<PlayerManager>().DisableCharacter);
+                LeanTween.alpha(animator.gameObject, 0, 3.5f).setOnComplete(animator.gameObject.GetComponent<PlayerManager>().DisableCharacter);
             else
                 LeanTween.alpha(animator.gameObject, 0, 3.5f).setOnComplete(animator.gameObject.GetComponent<EnemyManager>().DisableCharacter);
         }

@@ -63,7 +63,7 @@ namespace PrototypeGame
             isPlayerTurn = true;
 
             currentEnemy = enemiesDict.Values.ToArray()[0];            
-            currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
+            //currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
             SetUICam();            
         }
 
@@ -167,7 +167,7 @@ namespace PrototypeGame
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(false);
                 currentCharacter.stateManager.characterState = CharacterState.Ready;
             }
-            currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
+            //currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
             playerIndex++;
 
@@ -179,14 +179,14 @@ namespace PrototypeGame
             currentCharacter = playersDict.Values.ToArray()[playerIndex];
             currentCharacter.isCurrentPlayer = true;
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(true);
-            currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
+            //currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
             currentCharacter.taticalMovement.SetCurrentNavDict();
 
             if (gameState == GameState.InMenu)
             {
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(true);
                 currentCharacter.stateManager.characterState = CharacterState.InMenu;
-                currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
+                //currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
             }
         }
 
@@ -199,7 +199,7 @@ namespace PrototypeGame
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(false);
                 currentCharacter.stateManager.characterState = CharacterState.Ready;
             }
-            currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
+            //currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
 
             playerIndex--;
 
@@ -210,14 +210,14 @@ namespace PrototypeGame
 
             currentCharacter = playersDict.Values.ToArray()[playerIndex];
             currentCharacter.isCurrentPlayer = true;
-            currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
+            //currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
             currentCharacter.taticalMovement.SetCurrentNavDict();
             currentCharacter.skillSlotsHandler.skillPanel.SetActive(true);
             if (gameState == GameState.InMenu)
             {
                 currentCharacter.inventoryHandler.inventoryUI.SetActive(true);
                 currentCharacter.stateManager.characterState = CharacterState.InMenu;
-                currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
+                //currentCharacter.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
             }
         }
 
