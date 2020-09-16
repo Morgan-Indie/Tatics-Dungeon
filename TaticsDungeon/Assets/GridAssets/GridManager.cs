@@ -173,14 +173,14 @@ namespace PrototypeGame
             List<GridCell> rangeCells = new List<GridCell>();
             List<GridCell> castRange = new List<GridCell>();
             List<GridCell> outerRange = new List<GridCell>();
-            switch (skill.type)
+            switch (skill.castType)
             {
-                case SkillType.Castable:
+                case CastType.Free:
                     rangeCells = CastableShapes.GetRangeCells(skill, playerOrigin);
                     castRange = CastableShapes.GetCastableCells(skill, castOrigin);
                     outerRange = CastableShapes.CircularCells(playerOrigin, skill.castableSettings.radius + skill.castableSettings.range, skill.castableSettings.range + 1);
                     break;
-                case SkillType.Pinned:
+                case CastType.Pinned:
                     rangeCells = new List<GridCell>();
                     castRange = PinnedShapes.GetPinnedCells(skill, playerOrigin, castOrigin);
                     outerRange = PinnedShapes.CircularCells(skill, playerOrigin);

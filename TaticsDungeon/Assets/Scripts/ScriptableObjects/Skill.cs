@@ -29,6 +29,12 @@ namespace PrototypeGame
         None
     }
 
+    public enum CastType
+    {
+        Free,
+        Pinned,
+    }
+
     public enum CastableSpell
     {
         CastFire,
@@ -81,12 +87,14 @@ namespace PrototypeGame
         public int LevelRequired;
         public int APcost;
         public SkillType type;
+        public CastType castType;
         public int coolDown;
         public GameObject skillScriptObject;
         public GameObject effectPrefab;
 
+        [ConditionalHide("castType", (int)CastType.Free)]
         public CastableSettings castableSettings;
-        [ConditionalHide("type", (int)SkillType.Pinned)]
+        [ConditionalHide("castType", (int)CastType.Pinned)]
         public PinnedSettings pinnedSettings;
 
         public float damage;
