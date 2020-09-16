@@ -17,33 +17,22 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 4833d468b0a93594bb82d1b632753e8f, type: 3}
   LevelRequired: 0
   APcost: 1
-  type: 3
+  type: 0
   coolDown: 0
   skillScriptObject: {fileID: 5587677330032345258, guid: 7596eaf062c185e4e9a83e0e4196f2e7,
     type: 3}
+  effectPrefab: {fileID: 0}
   castableSettings:
-    castableSpell: 0
-    range: 1
-  strScaleType: 0
-  _scaleValueStrength: 0
-  vitScaleType: 0
-  _scaleValueVitality: 0
-  dexScaleType: 0
-  _scaleValueDexterity: 0
-  lucScaleType: 0
-  _scaleValueLuck: 0
-  intScaleType: 0
-  _scaleValueIntelligence: 0
-  staScaleType: 0
-  _scaleValueStamina: 0
-  levScaleType: 0
-  _scaleValueLevel: 0
-  normalDamageScaleType: 0
-  _scaleValueNormalDamage: 0
-  armorScaleType: 0
-  _scaleValueArmor: 0
-  resistanceScaleType: 0
-  _scaleValueResistance: 0
+    castableSpell: 5
+    range: 3
+    shape: 0
+    inclusive: 0
+    radius: 0
+    lineOrientation: 0
+    crossOrientation: 0
+  damage: 0
+  scaleType: 0
+  _scaleValue: 0
   strModValue: 0
   strModType: 0
   dexModValue: 0

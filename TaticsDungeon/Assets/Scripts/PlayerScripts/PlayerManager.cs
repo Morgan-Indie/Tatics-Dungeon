@@ -12,7 +12,6 @@ namespace PrototypeGame
     public class PlayerManager : MonoBehaviour
     {
         [Header("Required")]
-        public GameObject playerModel;
         public PlayerNumber playerNumber;
         public CharacterClass characterClass;
 
@@ -26,7 +25,7 @@ namespace PrototypeGame
         public bool isCurrentPlayer;
         public SkillAbstract selectedSkill=null;
 
-        private void Start()
+        private void Awake()
         {
             playerTransform = GetComponent<Transform>();
             inventoryHandler = GetComponent<InventoryHandler>();
@@ -45,10 +44,9 @@ namespace PrototypeGame
         // Update is called once per frame
         public void PlayerUpdate(float delta)
         {
-            if (isCurrentPlayer && !stateManager.statusEffects.Contains(StatusEffect.Frozen))
+            if (isCurrentPlayer)
             {                
                 inventoryHandler.ActivateInventoryUI();
-
                 if (GameManager.instance.gameState != GameState.InMenu)
                 {
                     if (selectedSkill == null || selectedSkill.skill.type == SkillType.Move)

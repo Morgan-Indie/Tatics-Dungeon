@@ -15,12 +15,13 @@ namespace PrototypeGame
         Camera isometricCamera;
         AnimationHandler animationHandler;
         Rigidbody characterRigidBody;
-        CharacterStateManager stateManager;
         CombatUtils combatUtils;
         CharacterStats characterStats;
         Rigidbody characterRigidbody;
 
         public Vector3 moveLocation=Vector3.up;
+
+        public CharacterStateManager stateManager;
 
         public LayerMask characterCheckLayerMask;
         public LayerMask attackCheckLayerMask;
@@ -33,7 +34,7 @@ namespace PrototypeGame
         public Vector3 nextPos;
         public List<IntVector2> path;
         public LayerMask meshMask;
-        public bool isDirty;
+        public IntVector2 prevIndex=new IntVector2(-1,-1);
 
         float movementSpeed = 3f;
         float rotationSpeed = 25f;
@@ -81,7 +82,7 @@ namespace PrototypeGame
             currentCell.state=CellState.open;
             GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
             SetCurrentCell();
-            Debug.Log(characterStats.characterName+" Grid State Updated");
+            //Debug.Log(characterStats.characterName+" Grid State Updated");
         }
 
         public void HandleRotation(float delta, Vector3 moveDirection)
@@ -135,7 +136,7 @@ namespace PrototypeGame
             (currentNavDict,currentTargetsNavDict) = NavigationHandler.instance.Navigate(currentIndex, characterStats.currentAP);
             if (gameObject.tag == "Player")
                 GridManager.Instance.HighlightNavDict(currentNavDict);
-            Debug.Log(characterStats.characterName +" NavDict Updated");
+            //Debug.Log(characterStats.characterName +" NavDict Updated");
         }
 
         public void SetNextPos(IntVector2 nextIndex)
@@ -174,7 +175,7 @@ namespace PrototypeGame
             currentPathIndex = 1;
 
             SetNextPos(path[currentPathIndex]);
-            Debug.Log(characterStats.characterName + " Setting Destination");    
+            //Debug.Log(characterStats.characterName + " Setting Destination");    
         }
 
         public void TraverseToDestination(float delta)
@@ -193,17 +194,17 @@ namespace PrototypeGame
                 stateManager.characterAction = CharacterAction.None;
                 stateManager.characterState = CharacterState.Ready;
                 characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
-                Debug.Log(characterStats.characterName + " Reached Destination");
-            }
-
-            else if ((ReachedPosition(transform.position, nextPos)))
-            {
-                currentPathIndex++;
-                SetNextPos(path[currentPathIndex]);
+                //Debug.Log(characterStats.characterName + " Reached Destination");
             }
 
             else
             {
+                if ((ReachedPosition(transform.position, nextPos)))
+                {
+                    currentPathIndex++;
+                    SetNextPos(path[currentPathIndex]);
+                }
+
                 Vector3 currentDirection = (nextPos - transform.position);
                 currentDirection.y = 0f;
                 currentDirection.Normalize();
@@ -227,15 +228,17 @@ namespace PrototypeGame
             else
             {
                 IntVector2 index = GetMouseIndex();
-                
+
                 if (currentNavDict.ContainsKey(index))
                 {
-                    path = NavigationHandler.instance.GetPath(currentNavDict, index, currentIndex);
-                    int distance = GetRequiredMoves(index,path);
-                    
+                    if (!index.Equals(prevIndex))
+                        path = NavigationHandler.instance.GetPath(currentNavDict, index, currentIndex);
+
+                    int distance = GetRequiredMoves(index,path);                    
                     if (characterStats.currentAP >= distance && currentNavDict.ContainsKey(index))
                     {
-                        GridManager.Instance.HighlightPathWithList(path);
+                        if (!index.Equals(prevIndex))
+                            GridManager.Instance.HighlightPathWithList(path);
                         if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput) 
                             && stateManager.characterAction == CharacterAction.None)
                         {                           
@@ -243,6 +246,7 @@ namespace PrototypeGame
                         }
                     }
                 }
+                prevIndex = index;
             }
         }
 

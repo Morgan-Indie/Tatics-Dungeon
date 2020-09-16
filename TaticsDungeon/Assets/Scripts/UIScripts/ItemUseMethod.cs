@@ -21,6 +21,7 @@ namespace PrototypeGame
             equipmentSlotManager = GetComponentInParent<EquipmentSlotManager>();
             characterStats = GetComponentInParent<CharacterStats>();
             modHandler = GetComponentInParent<EquipmentModifiersHandler>();
+            inventoryHandler = GetComponentInParent<InventoryHandler>();
         }
 
         #region Item Use Dispatch On Equipable Items

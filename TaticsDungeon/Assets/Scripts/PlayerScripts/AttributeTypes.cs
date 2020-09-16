@@ -22,7 +22,7 @@ namespace PrototypeGame
         helmet,
         amulet,
         boots,
-        leggins,
+        leggings,
         shield,
         torso,
         gloves,
@@ -41,6 +41,9 @@ namespace PrototypeGame
         curseDamage,
         poisonDamage,
         armor,
-        resistance,
+        fireResistance,
+        waterResistance,
+        shockResistance,
+        poisonResistance,
     }
 }

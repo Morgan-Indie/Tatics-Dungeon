@@ -1,5 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 8a0ad01fc872c974a80237e9b2f464dc
+=======
+
+guid: a9d62bba03dc12a42a2dd1cce73cfa13
+NewSkillSystem:TaticsDungeon/Assets/Items/Armor.meta
+>>>>>>> master
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

@@ -7,11 +7,14 @@ namespace PrototypeGame
     [CreateAssetMenu(menuName = "Items/Equipable Item")]
     public class EquipableItem : Items
     {
-        public bool isUnarmed;
         public bool equipped;
         public SlotType slotType;
         public EquipmentType equipmentType;
         public int range=1;
+
+        public List<meshLocation> itemMeshLocs;
+        public List<Mesh> itemMeshesMale;
+        public List<Mesh> itemMeshesFemale;
 
         [Header("Stat Scaling")]
         public float _scaleValueStrength;
@@ -32,7 +35,10 @@ namespace PrototypeGame
 
         [Header("Resistances")]
         public float _armor;
-        public float _resistance;
+        public float _fireResistance;
+        public float _waterResistance;
+        public float _shockResistance;
+        public float _poisonResistance;
 
         [Header("StatModifiers")]
         public float strModValue = 0f;
@@ -55,9 +61,12 @@ namespace PrototypeGame
 
         public void Init()
         {
-            CollectCharacterModifiers();
-            CollectScalingModifiers();
-            CollectEquipmentStats();
+            if (statModDict.Count ==0)
+                CollectCharacterModifiers();
+            if (scaleModDict.Count==0)
+                CollectScalingModifiers();
+            if (equipmentStatDict.Count==0)
+                CollectEquipmentStats();
         }
 
         public void CollectCharacterModifiers()
@@ -108,8 +117,14 @@ namespace PrototypeGame
                 equipmentStatDict.Add(CombatStatType.waterDamage, new StatModifier(_waterDamage, StatModType.Flat, this));
             if (_armor != 0f)
                 equipmentStatDict.Add(CombatStatType.armor, new StatModifier(_armor, StatModType.Flat, this));
-            if (_resistance != 0f)
-                equipmentStatDict.Add(CombatStatType.resistance, new StatModifier(_resistance, StatModType.Flat, this));
+            if (_fireResistance != 0f)
+                equipmentStatDict.Add(CombatStatType.fireResistance, new StatModifier(_fireResistance, StatModType.Flat, this));
+            if (_poisonResistance != 0f)
+                equipmentStatDict.Add(CombatStatType.poisonResistance, new StatModifier(_poisonResistance, StatModType.Flat, this));
+            if (_waterResistance != 0f)
+                equipmentStatDict.Add(CombatStatType.waterResistance, new StatModifier(_waterResistance, StatModType.Flat, this));
+            if (_shockResistance != 0f)
+                equipmentStatDict.Add(CombatStatType.shockResistance, new StatModifier(_shockResistance, StatModType.Flat, this));
         }
     }
 }

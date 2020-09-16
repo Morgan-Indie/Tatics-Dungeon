@@ -38,7 +38,7 @@ namespace PrototypeGame
                 else if (damageStat.Key == CombatStatType.poisonDamage)
                     totalPoisonDamge += damageStat.Value.Value;
 
-            DamageStruct outputDamage = new DamageStruct(totalFireDamge, 
+            DamageStruct outputDamage = new DamageStruct(totalFireDamge,
                 totalWaterDamge, totalPoisonDamge, totalShockDamge,
                 totalPierceDamage, totalNormalDamage);
             return outputDamage;
@@ -48,20 +48,20 @@ namespace PrototypeGame
         {
             CharacterStats targetStats = targetCharacter.GetComponent<CharacterStats>();
             DamageStruct outputDamage = ComputeDamage();
-            int damageDeltNormal = outputDamage.normal -(int)targetStats.armor.Value;
+            int damageDeltNormal = outputDamage.normal - (int)targetStats.armor.Value;
             int damageDeltPierce = outputDamage.pierce;
-            int damageDeltFire = outputDamage.fire -(int)targetStats.resistance.Value;
-            int damageDeltWater = outputDamage.water - (int)targetStats.resistance.Value;
-            int damageDeltShock = outputDamage.shock - (int)targetStats.resistance.Value;
-            int damageDeltPoison = outputDamage.poison;
+            int damageDeltFire = outputDamage.fire - (int)targetStats.fireResistance.Value;
+            int damageDeltWater = outputDamage.water - (int)targetStats.waterResistance.Value;
+            int damageDeltShock = outputDamage.shock - (int)targetStats.shockResistance.Value;
+            int damageDeltPoison = outputDamage.poison - (int)targetStats.poisonResistance.Value;
 
-            int totalDamage = damageDeltPierce + damageDeltPoison + damageDeltNormal+ damageDeltWater + damageDeltFire+ damageDeltShock;
+            int totalDamage = damageDeltPierce + damageDeltPoison + damageDeltNormal + damageDeltWater + damageDeltFire + damageDeltShock;
             targetStats.TakeDamage(totalDamage);
         }
 
-        public void SetFireInteractions(CharacterStats targetCharacterStats, Object source)
+        public void SetFireInteractions(CharacterStats targetCharacterStats, object source, int burnDamage, bool fromCell = false)
         {
-            if (targetCharacterStats.stateManager.statusEffects.Contains (StatusEffect.Wet))
+            if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Wet))
             {
                 targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Wet);
             }
@@ -72,47 +72,48 @@ namespace PrototypeGame
 
             else
             {
-                if (typeof(GridCell)== source.GetType())
+                if (fromCell)
                 {
                     GridCell cell = (GridCell)source;
-                    targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Burning);
-                    ElementalVFX.Instance.ActivateEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
-                    if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Oiled))
+                    if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Oiled) || cell.alchemyState.fireState == FireState.Inferno)
                     {
+                        targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Inferno);
+                        ActivateVFX.Instance.ActivateElementalEffect(StatusEffect.Inferno, targetCharacterStats.gameObject);
                         targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Oiled);
-                        StatModifier burnDamageMod = new StatModifier(cell.BurnDamage * .5f, StatModType.Flat, cell);
+                        StatModifier burnDamageMod = new StatModifier(burnDamage * .5f, StatModType.Flat, cell.burnSource);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
-                        targetCharacterStats.stateManager.DamageSourceTurns.Add(cell.alchemyState, (CombatStatType.fireDamage, 3));
+                        targetCharacterStats.stateManager.DamageSourceTurns.Add(cell.burnSource, (CombatStatType.fireDamage, 3));
                     }
                     else
                     {
-                        StatModifier burnDamageMod = new StatModifier(cell.BurnDamage * .25f, StatModType.Flat, cell);
+                        targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Burning);
+                        ActivateVFX.Instance.ActivateElementalEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
+                        StatModifier burnDamageMod = new StatModifier(burnDamage * .25f, StatModType.Flat, cell.burnSource);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
-                        targetCharacterStats.stateManager.DamageSourceTurns.Add(cell.alchemyState, (CombatStatType.fireDamage, 3));
+                        targetCharacterStats.stateManager.DamageSourceTurns.Add(cell.burnSource, (CombatStatType.fireDamage, 3));
                     }
                 }
                 else
                 {
-                    SkillAbstract skill = (SkillAbstract)source;
                     if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Oiled))
                     {
-                        targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Burning);
-                        ElementalVFX.Instance.ActivateEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
+                        targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Inferno);
+                        ActivateVFX.Instance.ActivateElementalEffect(StatusEffect.Inferno, targetCharacterStats.gameObject);
                         targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Oiled);
-                        StatModifier burnDamageMod = new StatModifier(skill.alchemicalDamage.Value * .5f, StatModType.Flat, skill);
+                        StatModifier burnDamageMod = new StatModifier(burnDamage * .5f, StatModType.Flat, source);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
-                        targetCharacterStats.stateManager.DamageSourceTurns.Add(skill, (CombatStatType.fireDamage, 3));
+                        targetCharacterStats.stateManager.DamageSourceTurns.Add(source, (CombatStatType.fireDamage, 3));
                     }
-                    
-                    else if (Random.value>=.5f)
+
+                    else if (Random.value >= .5f)
                     {
-                        ElementalVFX.Instance.ActivateEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
+                        ActivateVFX.Instance.ActivateElementalEffect(StatusEffect.Burning, targetCharacterStats.gameObject);
                         targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Burning);
-                        StatModifier burnDamageMod = new StatModifier(skill.alchemicalDamage.Value * .25f, StatModType.Flat, skill);
+                        StatModifier burnDamageMod = new StatModifier(burnDamage * .25f, StatModType.Flat, source);
                         targetCharacterStats.stateManager.burnDamageOverTime.AddModifier(burnDamageMod);
-                        if (targetCharacterStats.stateManager.DamageSourceTurns.ContainsKey(skill))
-                            targetCharacterStats.stateManager.DamageSourceTurns.Remove(skill);
-                        targetCharacterStats.stateManager.DamageSourceTurns.Add(skill, (CombatStatType.fireDamage, 3));
+                        if (targetCharacterStats.stateManager.DamageSourceTurns.ContainsKey(source))
+                            targetCharacterStats.stateManager.DamageSourceTurns.Remove(source);
+                        targetCharacterStats.stateManager.DamageSourceTurns.Add(source, (CombatStatType.fireDamage, 3));
                     }
                 }
             }
@@ -123,44 +124,48 @@ namespace PrototypeGame
             if (!targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Wet))
             {
                 targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Wet);
-                ElementalVFX.Instance.ActivateEffect(StatusEffect.Wet, targetCharacterStats.gameObject);
+                ActivateVFX.Instance.ActivateElementalEffect(StatusEffect.Wet, targetCharacterStats.gameObject);
             }
         }
 
-        public void SetChillInteractions(CharacterStats targetCharacterStats)
+        public void SetChillInteractions(CharacterStats targetCharacterStats, GridCell cell, bool fromCell = false)
         {
-            if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Wet))
+            if (fromCell)
+            {
+                if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Wet))
+                    targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Wet);
+                if (!targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Frozen))
+                    targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Frozen);
+            }
+
+            else if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Wet))
             {
                 targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Wet);
-                targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Frozen);
-            }
-            else if (targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Shocked))
-            {
-                targetCharacterStats.stateManager.statusEffects.Remove(StatusEffect.Shocked);
-                targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Electricuted);
+                if (!targetCharacterStats.stateManager.statusEffects.Contains(StatusEffect.Frozen))
+                    targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Frozen);
+                AlchemyManager.Instance.ApplySolid(cell.alchemyState, SolidPhaseState.Water);
             }
         }
 
-        public void OffensiveSpell(GameObject targetCharacter, SkillAbstract skillScript)
+        public void SetShockInteractions(CharacterStats targetCharacterStats, bool fromCell = false)
         {
-            CharacterStats targetStats = targetCharacter.GetComponent<CharacterStats>();
+        }
 
+        public void HandleAlchemicalSkill(CharacterStats targetStats, SkillAbstract skillScript)
+        {
             switch (skillScript.skill.type)
             {
                 case SkillType.Fire:
-                    int fireDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.resistance.Value;
+                    int fireDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.fireResistance.Value;
                     targetStats.TakeDamage(fireDamage);
-                    SetFireInteractions(targetStats, skillScript);
                     break;
                 case SkillType.Water:
-                    int WaterDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.resistance.Value;
+                    int WaterDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.waterResistance.Value;
                     targetStats.TakeDamage(WaterDamage);
-                    SetWaterInteractions(targetStats);
                     break;
                 case SkillType.Chill:
-                    int ChillDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.resistance.Value;
+                    int ChillDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.waterResistance.Value;
                     targetStats.TakeDamage(ChillDamage);
-                    SetChillInteractions(targetStats);
                     break;
             }
         }

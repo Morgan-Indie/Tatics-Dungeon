@@ -6,27 +6,33 @@ namespace PrototypeGame
 {
     public class ShieldChargeAnimation : StateMachineBehaviour
     {
+        public ShieldCharge shieldCharge;
+        public CharacterStateManager stateManager;
+        public TaticalMovement taticalMovement;
+
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            CharacterStateManager stateManager = animator.GetComponent<CharacterStateManager>();
+            stateManager = animator.GetComponent<CharacterStateManager>();
+            shieldCharge = animator.GetComponent<ShieldCharge>();
+            taticalMovement = animator.GetComponent<TaticalMovement>();
             stateManager.characterAction = CharacterAction.ShieldCharge;
             stateManager.characterState = CharacterState.IsInteracting;
-            animator.GetComponent<TaticalMovement>().triggerCollider.enabled = true;
+            taticalMovement.triggerCollider.enabled = true;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-        //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //}
+        override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            shieldCharge.Cast(Time.deltaTime, shieldCharge.targetIndex);
+        }
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            CharacterStateManager stateManager = animator.GetComponent<CharacterStateManager>();
             stateManager.characterAction = CharacterAction.None;
             stateManager.characterState = CharacterState.Ready;
-            animator.GetComponent<TaticalMovement>().triggerCollider.enabled = false;
+            taticalMovement.triggerCollider.enabled = false;
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()

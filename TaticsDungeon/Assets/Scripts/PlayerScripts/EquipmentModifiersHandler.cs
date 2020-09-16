@@ -27,7 +27,9 @@ namespace PrototypeGame
         private void ApplyEquipmentStats(EquipableItem item)
         {
             foreach (var mod in item.equipmentStatDict)
+            {
                 characterStats.playerCombatStatDict[mod.Key].AddModifier(mod.Value);
+            }
         }
 
         private void ApplyEquipmentScalers(EquipableItem item)
@@ -49,8 +51,14 @@ namespace PrototypeGame
                     characterStats.normalDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
                 if (item._armor != 0)
                     characterStats.armor.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._resistance != 0)
-                    characterStats.resistance.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
+                if (item._fireResistance != 0)
+                    characterStats.fireResistance.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
+                if (item._waterResistance != 0)
+                    characterStats.waterResistance.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
+                if (item._shockResistance != 0)
+                    characterStats.shockResistance.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
+                if (item._poisonResistance != 0)
+                    characterStats.poisonResistance.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
             }
         }
         #endregion      

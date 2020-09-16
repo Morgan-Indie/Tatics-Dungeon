@@ -39,7 +39,10 @@ namespace PrototypeGame
         public CombatStat curseDamage;
         public CombatStat shockDamage;
         public CombatStat armor;
-        public CombatStat resistance;
+        public CombatStat fireResistance;
+        public CombatStat waterResistance;
+        public CombatStat shockResistance;
+        public CombatStat poisonResistance;
 
         [Header("Not Required")]
         public HealthBar healthBar;
@@ -65,7 +68,6 @@ namespace PrototypeGame
         // Start is called before the first frame update
         void Start()
         {
-            //statusPanel = Instantiate(GameManager.instance.playerStatusPrefab);
             healthBar = statusPanel.GetComponentInChildren<HealthBar>();
             apBar = statusPanel.GetComponentInChildren<APFill>();
             panelName = statusPanel.GetComponentInChildren<Text>();
@@ -111,7 +113,10 @@ namespace PrototypeGame
             curseDamage = new CombatStat(0, CombatStatType.curseDamage);
             shockDamage = new CombatStat(0, CombatStatType.shockDamage);
             armor = new CombatStat(0, CombatStatType.armor);
-            resistance = new CombatStat(0, CombatStatType.resistance);
+            fireResistance = new CombatStat(0, CombatStatType.fireResistance);
+            waterResistance = new CombatStat(0, CombatStatType.waterResistance);
+            shockResistance = new CombatStat(0, CombatStatType.shockResistance);
+            poisonResistance = new CombatStat(0, CombatStatType.poisonResistance);
 
             playerCombatStatDict.Add(CombatStatType.normalDamage, normalDamage);
             playerCombatStatDict.Add(CombatStatType.poisonDamage, poisonDamage);
@@ -120,7 +125,10 @@ namespace PrototypeGame
             playerCombatStatDict.Add(CombatStatType.shockDamage, shockDamage);
             playerCombatStatDict.Add(CombatStatType.fireDamage, fireDamage);
             playerCombatStatDict.Add(CombatStatType.armor, armor);
-            playerCombatStatDict.Add(CombatStatType.resistance, resistance);
+            playerCombatStatDict.Add(CombatStatType.fireResistance, fireResistance);
+            playerCombatStatDict.Add(CombatStatType.waterResistance, waterResistance);
+            playerCombatStatDict.Add(CombatStatType.shockResistance, shockResistance);
+            playerCombatStatDict.Add(CombatStatType.poisonResistance, poisonResistance);
             playerCombatStatDict.Add(CombatStatType.curseDamage, curseDamage);
         }
 
@@ -159,7 +167,6 @@ namespace PrototypeGame
         public void UseAP(int AP)
         {
             currentAP -= AP;
-            //Debug.Log(characterName + " AP Used: " + AP);
             apBar.SetCurrentAP(currentAP);
         }
     }

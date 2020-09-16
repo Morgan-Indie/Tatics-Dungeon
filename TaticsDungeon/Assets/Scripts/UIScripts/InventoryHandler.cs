@@ -9,7 +9,6 @@ namespace PrototypeGame
     public class InventoryHandler : MonoBehaviour
     {
         [HideInInspector]
-        public bool inventoryUIEnabled=false;
         private int allSlots=10;
         private int enabledSlots;
         private InventorySlot[] slots;
@@ -53,9 +52,8 @@ namespace PrototypeGame
         {
             if (stateManager.characterState!= CharacterState.IsInteracting)
             {
-                if (InputHandler.instance.gamepadNorthInput && !inventoryUIEnabled)
+                if (InputHandler.instance.gamepadNorthInput && stateManager.characterState!=CharacterState.InMenu)
                 {
-                    inventoryUIEnabled = true;
                     inventoryUI.SetActive(true);
                     InputHandler.instance.gamepadNorthInput = false;
 
@@ -64,12 +62,12 @@ namespace PrototypeGame
 
                     EventSystem.current.SetSelectedGameObject(first_slot.gameObject);
                     stateManager.characterState = CharacterState.InMenu;
+                    //playerManager.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 0);
                     //Time.timeScale = 0f;
                 }
 
-                else if (InputHandler.instance.gamepadNorthInput && inventoryUIEnabled)
+                else if (InputHandler.instance.gamepadNorthInput && stateManager.characterState == CharacterState.InMenu)
                 {
-                    inventoryUIEnabled = false;
                     inventoryUI.SetActive(false);
                     InputHandler.instance.gamepadNorthInput = false;
                     itemUseDropDown.SetActive(false);
@@ -78,6 +76,7 @@ namespace PrototypeGame
                     UIcamLight.enabled = false;
 
                     stateManager.characterState = CharacterState.Ready;
+                    //playerManager.playerModel.GetComponent<Renderer>().material.SetFloat("OnOff", 1);
                 }
             }
         }
