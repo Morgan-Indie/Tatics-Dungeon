@@ -9,7 +9,7 @@ namespace PrototypeGame
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
             TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
         {
-            Move move = _characterStats.gameObject.AddComponent<Move> ();
+            Move move = _characterStats.gameObject.AddComponent<Move>();
             move.characterStats = _characterStats;
             move.animationHandler = _animationHandler;
             move.taticalMovement = _taticalMovement;

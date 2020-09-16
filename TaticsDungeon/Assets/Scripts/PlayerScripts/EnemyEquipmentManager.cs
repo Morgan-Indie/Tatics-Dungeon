@@ -30,30 +30,12 @@ namespace PrototypeGame
             foreach (EquipmentHolderSlot equipmentHolderSlot in equipmentHolderSlots)
             {
                 switch (equipmentHolderSlot.slotType)
-                {
-                    case SlotType.helmet:
-                        helmetSlot = equipmentHolderSlot;
-                        break;
-                    case SlotType.gloves:
-                        gloveSlot = equipmentHolderSlot;
-                        break;
-                    case SlotType.leggings:
-                        leggingSlot = equipmentHolderSlot;
-                        break;
-                    case SlotType.torso:
-                        torsoSlot = equipmentHolderSlot;
-                        break;
+                {                   
                     case SlotType.leftHandSlot:
                         leftHandSlot = equipmentHolderSlot;
                         break;
                     case SlotType.rightHandSlot:
                         rightHandSlot = equipmentHolderSlot;
-                        break;
-                    case SlotType.amulet:
-                        amuletSlot = equipmentHolderSlot;
-                        break;
-                    case SlotType.boots:
-                        bootSlot = equipmentHolderSlot;
                         break;
                     case SlotType.quiver:
                         quiverSlot = equipmentHolderSlot;
@@ -74,37 +56,7 @@ namespace PrototypeGame
         public void LoadEquipmentOnSlot(EquipableItem item, SlotType slotType)
         {
             switch (slotType)
-            {
-                case SlotType.helmet:
-                    if (helmetSlot.currentModel != null)
-                        helmetSlot.UnloadEquipment();
-                    helmetSlot.LoadEquipmentModel(item);
-                    break;
-                case SlotType.amulet:
-                    if (amuletSlot.currentModel != null)
-                        amuletSlot.UnloadEquipment();
-                    amuletSlot.LoadEquipmentModel(item);
-                    break;
-                case SlotType.leggings:
-                    if (leggingSlot.currentModel != null)
-                        leggingSlot.UnloadEquipment();
-                    leggingSlot.LoadEquipmentModel(item);
-                    break;
-                case SlotType.gloves:
-                    if (gloveSlot.currentModel != null)
-                        gloveSlot.UnloadEquipment();
-                    gloveSlot.LoadEquipmentModel(item);
-                    break;
-                case SlotType.boots:
-                    if (bootSlot.currentModel != null)
-                        bootSlot.UnloadEquipment();
-                    bootSlot.LoadEquipmentModel(item);
-                    break;
-                case SlotType.torso:
-                    if (torsoSlot.currentModel != null)
-                        torsoSlot.UnloadEquipment();
-                    torsoSlot.LoadEquipmentModel(item);
-                    break;
+            {              
                 case SlotType.leftHandSlot:
                     if (leftHandSlot.currentModel != null)
                         leftHandSlot.UnloadEquipment();
@@ -126,31 +78,7 @@ namespace PrototypeGame
         public void UnloadEquipmentOnSlot(EquipableItem item, SlotType slotType)
         {
             switch (slotType)
-            {
-                case SlotType.helmet:
-                    if (helmetSlot.currentModel != null)
-                        helmetSlot.UnloadEquipment();
-                    break;
-                case SlotType.amulet:
-                    if (amuletSlot.currentModel != null)
-                        amuletSlot.UnloadEquipment();
-                    break;
-                case SlotType.leggings:
-                    if (leggingSlot.currentModel != null)
-                        leggingSlot.UnloadEquipment();
-                    break;
-                case SlotType.gloves:
-                    if (gloveSlot.currentModel != null)
-                        gloveSlot.UnloadEquipment();
-                    break;
-                case SlotType.boots:
-                    if (bootSlot.currentModel != null)
-                        bootSlot.UnloadEquipment();
-                    break;
-                case SlotType.torso:
-                    if (torsoSlot.currentModel != null)
-                        torsoSlot.UnloadEquipment();
-                    break;
+            {               
                 case SlotType.leftHandSlot:
                     if (leftHandSlot.currentModel != null)
                         leftHandSlot.UnloadEquipment();

@@ -68,7 +68,6 @@ namespace PrototypeGame
         // Start is called before the first frame update
         void Start()
         {
-            //statusPanel = Instantiate(GameManager.instance.playerStatusPrefab);
             healthBar = statusPanel.GetComponentInChildren<HealthBar>();
             apBar = statusPanel.GetComponentInChildren<APFill>();
             panelName = statusPanel.GetComponentInChildren<Text>();

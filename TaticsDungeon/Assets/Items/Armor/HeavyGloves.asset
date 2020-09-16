@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b4613d8ef677f48aa37fd98150549c, type: 3}
+  m_Name: HeavyGloves
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 21300000, guid: ea90c3aed2cf5a04dba9183e4e49cc61, type: 3}
+  itemName: HeavyGloves
+  ID: 0
+  type: 0
+  description: Heavy Gloves
+  pickedUp: 1
+  modelPrefab: {fileID: 0}
+  equipped: 1
+  slotType: 7
+  equipmentType: 8
+  range: 1
+  itemMeshLocs: 0200000003000000110000000f000000
+  itemMeshesMale:
+  - {fileID: 4300736, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4300700, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4301390, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4301388, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  itemMeshesFemale:
+  - {fileID: 4302042, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4302010, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4301990, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4301936, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  _scaleValueStrength: 0.1
+  _scaleValueVitality: 0
+  _scaleValueDexterity: 0
+  _scaleValueLuck: 0
+  _scaleValueIntelligence: 0
+  _scaleValueStamina: 0
+  _normalDamage: 0
+  _pierceDamage: 0
+  _poisonDamage: 0
+  _fireDamage: 0
+  _waterDamage: 0
+  _curseDamage: 0
+  _shockDamage: 0
+  _armor: 5
+  _fireResistance: 1
+  _waterResistance: 0
+  _shockResistance: 0
+  _poisonResistance: 0
+  strModValue: 0
+  strModType: 0
+  dexModValue: 0
+  dexModType: 0
+  lucModValue: 0
+  lucModType: 0
+  intModValue: 0
+  intModType: 0
+  staModValue: 0
+  staModType: 0
+  vitModValue: 0
+  vitModType: 0
+  itemEffect: {fileID: 0}
