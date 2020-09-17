@@ -14,6 +14,7 @@ namespace PrototypeGame
         public GameObject ShockVFX;
         public GameObject PoisonVFX;
         public List<GameObject> BloodVFXs;
+        public GameObject HealingVFX;
 
         public void Awake()
         {
@@ -51,6 +52,14 @@ namespace PrototypeGame
                     Inferno.transform.SetParent(target.transform);
                     break;
             }
+        }
+
+        public void ActivateHealingEffect(GameObject target)
+        {
+            GameObject healEffect = Instantiate(HealingVFX) as GameObject;
+            healEffect.transform.position = target.transform.position + Vector3.up * .5f;
+            healEffect.transform.SetParent(target.transform);
+            Destroy(healEffect, 2f);
         }
     }
 }

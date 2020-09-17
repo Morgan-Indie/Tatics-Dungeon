@@ -44,7 +44,7 @@ namespace PrototypeGame
                 instance = this;
 
             characterStatusLayout = GetComponent<CharacterStatusLayout>();
-            alchemyManager = GetComponent<AlchemyManager>();
+            alchemyManager = GetComponent<AlchemyManager>();            
 
             foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
             {
@@ -106,7 +106,10 @@ namespace PrototypeGame
 
                 if (gameState != GameState.ResolvingInteraction)
                     CharacterSwitch();
-                currentCharacter.PlayerUpdate(delta);
+                if (currentCharacter.stateManager.characterAction == CharacterAction.LyingDown)
+                    currentCharacter.characterStats.animationHandler.animator.SetBool("GetUpTrigger",true);
+                else
+                    currentCharacter.PlayerUpdate(delta);
             }
                 
             else
@@ -114,7 +117,12 @@ namespace PrototypeGame
                 if (CheckEnemyEndTurn())
                     SwitchTurns();
                 else
-                    currentEnemy.EnemyUpdate(delta);
+                {
+                    if (currentEnemy.stateManager.characterAction == CharacterAction.LyingDown)
+                        currentEnemy.characterStats.animationHandler.animator.SetBool("GetUpTrigger", true);
+                    else
+                        currentEnemy.EnemyUpdate(delta);
+                }
             }
         }
 

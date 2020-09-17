@@ -17,19 +17,19 @@ MonoBehaviour:
   ID: 0
   type: 0
   description: Mage Feet
-  pickedUp: 0
+  pickedUp: 1
   modelPrefab: {fileID: 0}
-  equipped: 0
+  equipped: 1
   slotType: 3
   equipmentType: 4
   range: 0
   itemMeshLocs: 1200000013000000
   itemMeshesMale:
-  - {fileID: 4300820, guid: 038320a534bd8b444b43734860d1a211, type: 3}
-  - {fileID: 4300860, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4300842, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4300882, guid: 038320a534bd8b444b43734860d1a211, type: 3}
   itemMeshesFemale:
-  - {fileID: 4301782, guid: 038320a534bd8b444b43734860d1a211, type: 3}
-  - {fileID: 4301818, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4301804, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4301840, guid: 038320a534bd8b444b43734860d1a211, type: 3}
   _scaleValueStrength: 0
   _scaleValueVitality: 0
   _scaleValueDexterity: 0

@@ -145,6 +145,12 @@ namespace PrototypeGame
             return maxAP;
         }
 
+        public void Heal(int healValue)
+        {
+            currentHealth = currentHealth + healValue <= maxHealth ? currentHealth + healValue : maxHealth;
+            Debug.Log(characterName + " healed " + healValue + " health and have " + currentHealth + " remaining");
+        }
+
         public void TakeDamage(int damange)
         {
             currentHealth -= damange;
