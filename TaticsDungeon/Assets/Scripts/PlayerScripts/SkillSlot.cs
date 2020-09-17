@@ -37,6 +37,8 @@ namespace PrototypeGame
 
         public void OnClick()
         {
+            if (skillScript.skill.type == SkillType.Move)
+                GameManager.instance.currentCharacter.taticalMovement.SetCurrentNavDict();
             GameManager.instance.SwitchSkill(skillScript);
         }
     }

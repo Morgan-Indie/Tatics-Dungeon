@@ -145,7 +145,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -374,7 +373,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -673,7 +671,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -755,7 +752,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Shock Resistance
+  m_Text: 'Shock Resistance:'
 --- !u!1 &1977191615284026544
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +830,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Poison Resistance
+  m_Text: 'Poison Resistance:'
 --- !u!1 &2084258810416393005
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,7 +1101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -1402,7 +1398,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -1632,7 +1627,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Water Resistance
+  m_Text: 'Water Resistance:'
 --- !u!1 &4588131960635327982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,7 +1773,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -1928,7 +1922,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -2078,7 +2071,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -2450,7 +2442,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -2600,7 +2591,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -2879,7 +2869,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Pierce
+  m_Text: 'Pierce:'
 --- !u!1 &7374452782765498996
 GameObject:
   m_ObjectHideFlags: 0
@@ -3002,7 +2992,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Armor
+  m_Text: 'Armor:'
 --- !u!1 &7374452782814965068
 GameObject:
   m_ObjectHideFlags: 0
@@ -3212,13 +3202,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7374452782876904270}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7374452784834371657}
   m_Father: {fileID: 7374452784168347070}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3310,7 +3300,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dexterity
+  m_Text: 'Dexterity:'
 --- !u!1 &7374452782941701523
 GameObject:
   m_ObjectHideFlags: 0
@@ -3838,7 +3828,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -3920,7 +3909,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Curse
+  m_Text: 'Curse:'
 --- !u!1 &7374452783325075117
 GameObject:
   m_ObjectHideFlags: 0
@@ -4144,7 +4133,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -4271,7 +4259,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Physical
+  m_Text: 'Physical:'
 --- !u!1 &7374452783462180174
 GameObject:
   m_ObjectHideFlags: 0
@@ -4417,7 +4405,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -4499,7 +4486,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Intelligence
+  m_Text: 'Intelligence:'
 --- !u!1 &7374452783527456067
 GameObject:
   m_ObjectHideFlags: 0
@@ -4577,7 +4564,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Fire
+  m_Text: 'Fire:'
 --- !u!1 &7374452783544511427
 GameObject:
   m_ObjectHideFlags: 0
@@ -4655,7 +4642,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Shock
+  m_Text: 'Shock:'
 --- !u!1 &7374452783635236120
 GameObject:
   m_ObjectHideFlags: 0
@@ -4733,7 +4720,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Luck
+  m_Text: 'Luck:'
 --- !u!1 &7374452783652593976
 GameObject:
   m_ObjectHideFlags: 0
@@ -4764,7 +4751,7 @@ RectTransform:
   m_Children:
   - {fileID: 7374452783635236121}
   m_Father: {fileID: 7374452784168347070}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4856,7 +4843,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Strength
+  m_Text: 'Strength:'
 --- !u!1 &7374452783796117770
 GameObject:
   m_ObjectHideFlags: 0
@@ -4934,7 +4921,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Health
+  m_Text: 'Health:'
 --- !u!1 &7374452783801926753
 GameObject:
   m_ObjectHideFlags: 0
@@ -5080,7 +5067,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -5120,11 +5106,11 @@ RectTransform:
   m_Father: {fileID: 7374452782814965072}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 255.16797, y: 220.3996}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 255.16797, y: 220.39966}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &7374452783988486974
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5342,8 +5328,8 @@ RectTransform:
   - {fileID: 7374452782975017649}
   - {fileID: 7374452784332094737}
   - {fileID: 7374452783370122660}
-  - {fileID: 7374452782876904271}
   - {fileID: 7374452783652593977}
+  - {fileID: 7374452782876904271}
   m_Father: {fileID: 7374452783147944289}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5902,7 +5888,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Damage:'
+  m_Text: Damage
 --- !u!1 &7374452784399281186
 GameObject:
   m_ObjectHideFlags: 0
@@ -6048,7 +6034,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -6693,7 +6678,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -7074,7 +7058,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}
@@ -7437,7 +7420,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Water
+  m_Text: 'Water:'
 --- !u!1 &7374452784834371656
 GameObject:
   m_ObjectHideFlags: 0
@@ -7515,7 +7498,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Stamina
+  m_Text: 'Stamina:'
 --- !u!1 &7374452784875730831
 GameObject:
   m_ObjectHideFlags: 0
@@ -7593,7 +7576,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Fire Resistance
+  m_Text: 'Fire Resistance:'
 --- !u!1 &7374452784878211404
 GameObject:
   m_ObjectHideFlags: 0
@@ -7813,7 +7796,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   empty: 0
   slotIconPanel: {fileID: 0}
-  rectTransform: {fileID: 0}
   itemUseDropDown: {fileID: 7374452783988486971}
   dropDownTransform: {fileID: 7374452783988486968}
   defaultSprite: {fileID: 21300000, guid: a30750f59d7643748b8ce9d0f6b138d0, type: 3}

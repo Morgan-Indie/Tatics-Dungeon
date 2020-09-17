@@ -26,7 +26,6 @@ namespace PrototypeGame
         public bool empty;
         public dynamic item;
         public Transform slotIconPanel;
-        public RectTransform rectTransform;
 
         [Header("Required")]
         public GameObject itemUseDropDown;
@@ -39,7 +38,6 @@ namespace PrototypeGame
         {
             slotIconPanel = transform.GetChild(0);
             itemUseDropDown.SetActive(false);
-            rectTransform = gameObject.GetComponent<RectTransform>();
             defaultSprite = GetComponentsInChildren<Image>()[1].sprite;
         }
 
@@ -61,8 +59,7 @@ namespace PrototypeGame
                 button.GetComponent<ItemUseSelection>().item = item;
                 button.GetComponent<ItemUseSelection>().currentSlot = this.transform.gameObject;
 
-                dropDownTransform = itemUseDropDown.GetComponent<RectTransform>();
-                dropDownTransform.anchoredPosition = rectTransform.anchoredPosition + Vector2.right * 200;
+                itemUseDropDown.transform.position = transform.position + Vector3.right * 40f+Vector3.up*150f;
             }
         }
     }

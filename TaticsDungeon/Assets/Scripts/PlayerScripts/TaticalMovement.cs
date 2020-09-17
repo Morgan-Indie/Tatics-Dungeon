@@ -80,7 +80,7 @@ namespace PrototypeGame
             currentCell.SetOccupyingObject(null);
             
             currentCell.state=CellState.open;
-            GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
+            //GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
             SetCurrentCell();
             //Debug.Log(characterStats.characterName+" Grid State Updated");
         }
