@@ -40,4 +40,3 @@ namespace PrototypeGame
         public abstract void Excute(float delta, GridCell targetCell);
     }
 }
-

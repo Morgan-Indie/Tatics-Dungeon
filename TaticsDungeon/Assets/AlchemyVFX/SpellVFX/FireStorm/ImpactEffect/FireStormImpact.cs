@@ -6,9 +6,9 @@ namespace PrototypeGame
 {
     public class FireStormImpact : MonoBehaviour
     {
-        public void Initalize(GridCell cell)
+        public void Initalize(GridCell cell, SkillAbstract skill)
         {
-            AlchemyManager.Instance.ApplyHeat(cell.alchemyState);
+            skill.Excute(Time.deltaTime, cell);
             Destroy(gameObject, 1f);
         }
     }

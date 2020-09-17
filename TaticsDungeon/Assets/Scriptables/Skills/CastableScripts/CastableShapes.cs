@@ -4,6 +4,16 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
+    public enum CastableShape
+    {
+        Single,
+        Circular,
+        Area,
+        Line,
+        Cross,
+        Checker,
+    }
+
     public static class CastableShapes 
     {
         public static List<GridCell> GetRangeCells(Skill skill, IntVector2 index)

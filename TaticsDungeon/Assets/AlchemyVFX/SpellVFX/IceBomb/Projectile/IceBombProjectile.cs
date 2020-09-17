@@ -13,9 +13,11 @@ namespace PrototypeGame
         Vector3 lastPos;
         public LeanTweenType upEase;
         public LeanTweenType downEase;
+        SkillAbstract skill;
 
-        public void Initalize(GridCell d)
+        public void Initalize(GridCell d, SkillAbstract _skill)
         {
+            skill = _skill;
             lastPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             destination = d;
             LeanTween.move(gameObject, Vector3.Lerp(d.transform.position, transform.position, 0.5f) + new Vector3(0, arcHeight, 0), 0.5f / projectileSpeed).setOnComplete(StartFall).setEase(upEase);
@@ -39,7 +41,7 @@ namespace PrototypeGame
         void TravelComplete()
         {
             GameObject ob = Instantiate(impactEffectPrefab, destination.transform.position, destination.transform.rotation);
-            ob.GetComponent<IceBombImpact>().Initalize(destination);
+            ob.GetComponent<IceBombImpact>().Initalize(destination, skill);
             Destroy(gameObject);
         }
     }

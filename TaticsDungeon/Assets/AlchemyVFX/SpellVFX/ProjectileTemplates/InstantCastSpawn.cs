@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PrototypeGame {
     public class InstantCastSpawn : VFXSpawns
     {        
-        public override void Initialize(List<GridCell> cells, SkillAbstract skill)
+        public override void Initialize(List<GridCell> cells, SkillAbstract skill, IntVector2 origin)
         {
             foreach (GridCell cell in cells)
             {

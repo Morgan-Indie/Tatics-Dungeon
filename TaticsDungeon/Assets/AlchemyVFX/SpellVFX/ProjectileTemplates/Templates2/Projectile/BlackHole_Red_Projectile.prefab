@@ -14339,7 +14339,7 @@ GameObject:
   - component: {fileID: 4037222302179086}
   - component: {fileID: 3737684659034251347}
   m_Layer: 0
-  m_Name: vfx_Projectile_BlackHole01_Red
+  m_Name: BlackHole_Red_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28631,7 +28631,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d6be627eb65e11e4e91549a65126a683, type: 2}
+  - {fileID: 2100000, guid: 99c511aab64e4b745abffb63f78619f6, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -33407,7 +33407,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5a1891907a96c214ca4af501b63d3aec, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

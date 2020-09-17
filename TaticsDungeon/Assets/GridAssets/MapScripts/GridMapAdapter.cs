@@ -13,6 +13,7 @@ namespace PrototypeGame
         //public GridManager gridManager;
 
         public EditorScript editor;
+        bool loaded = false;
 
         GridMesh[,] gridMeshes;
         List<GridMesh> meshesToUpdate;
@@ -27,12 +28,19 @@ namespace PrototypeGame
         {
             if (editor == null)
             {
-                GridManager.Instance.SetMapAdapter(this);
-                GridManager.Instance.SetAndLoadNewMap(gridMap);
-                GridManager.Instance.SetGridState(this);
+                Initalize();
             }
             else
                 LoadMap();
+        }
+
+        void Initalize()
+        {
+            if (loaded) { return; }
+            GridManager.Instance.SetMapAdapter(this);
+            GridManager.Instance.SetAndLoadNewMap(gridMap);
+            GridManager.Instance.SetGridState(this);
+            loaded = true;
         }
 
         public void SetAndLoadNewMap(GridMap map)
@@ -274,18 +282,27 @@ namespace PrototypeGame
 
         public GridCell GetCellByIndex(IntVector2 index)
         {
+            if (gridMeshes.Length == 0) { Initalize(); }
             if (index.x >= gridMap.width || index.y >= gridMap.height || index.x < 0 || index.y < 0)
             {
                 Debug.Log("Invalid Index for cell retrieval");
                 return null;
             }
-            return gridMeshes[
-                    Mathf.FloorToInt((float)index.x / (float)gridMap.maxMeshSize),
-                    Mathf.FloorToInt((float)index.y / (float)gridMap.maxMeshSize)
-                ].cells[
-                    index.x % gridMap.maxMeshSize,
-                    index.y % gridMap.maxMeshSize
-                ];
+            try
+            {
+                return gridMeshes[
+                        Mathf.FloorToInt((float)index.x / (float)gridMap.maxMeshSize),
+                        Mathf.FloorToInt((float)index.y / (float)gridMap.maxMeshSize)
+                    ].cells[
+                        index.x % gridMap.maxMeshSize,
+                        index.y % gridMap.maxMeshSize
+                    ];
+            }
+            catch (System.IndexOutOfRangeException e)
+            {
+                Debug.Log("GetCellByIndex Called While GridMap not yet initalized");
+                return null;
+            }
         }
 
         public GridCell[,] GetNeighbors(GridCell cell)

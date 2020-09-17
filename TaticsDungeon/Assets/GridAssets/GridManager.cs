@@ -169,9 +169,23 @@ namespace PrototypeGame
 
         public void HighlightCastableRange(IntVector2 playerOrigin, IntVector2 castOrigin, Skill skill)
         {
-            List<GridCell> rangeCells = CastableShapes.GetRangeCells(skill, playerOrigin);
-            List<GridCell> castRange = CastableShapes.GetCastableCells(skill, castOrigin);
-            List<GridCell> outerRange = CastableShapes.CircularCells(playerOrigin, skill.castableSettings.radius + skill.castableSettings.range, skill.castableSettings.range + 1);
+
+            List<GridCell> rangeCells = new List<GridCell>();
+            List<GridCell> castRange = new List<GridCell>();
+            List<GridCell> outerRange = new List<GridCell>();
+            switch (skill.castType)
+            {
+                case CastType.Free:
+                    rangeCells = CastableShapes.GetRangeCells(skill, playerOrigin);
+                    castRange = CastableShapes.GetCastableCells(skill, castOrigin);
+                    outerRange = CastableShapes.CircularCells(playerOrigin, skill.castableSettings.radius + skill.castableSettings.range, skill.castableSettings.range + 1);
+                    break;
+                case CastType.Pinned:
+                    rangeCells = new List<GridCell>();
+                    castRange = PinnedShapes.GetPinnedCells(skill, playerOrigin, castOrigin);
+                    outerRange = PinnedShapes.CircularCells(skill, playerOrigin);
+                    break;
+            }
             foreach (GridCell cell in outerRange)
             {
                   if (!castRange.Contains(cell))

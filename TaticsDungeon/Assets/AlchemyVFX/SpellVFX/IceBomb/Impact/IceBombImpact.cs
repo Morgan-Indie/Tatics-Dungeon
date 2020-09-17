@@ -6,9 +6,10 @@ namespace PrototypeGame
 {
     public class IceBombImpact : MonoBehaviour
     {
-        public void Initalize(GridCell cell)
+        public void Initalize(GridCell cell, SkillAbstract skill)
         {
-            AlchemyManager.Instance.ApplyChill(cell.alchemyState);
+            skill.Excute(Time.deltaTime, cell);
+            AlchemyManager.Instance.ApplyChill(cell);
             Destroy(gameObject, 0.75f);
         }
     }
