@@ -20,11 +20,13 @@ namespace PrototypeGame
             GameObject effect = Instantiate(skill.effectPrefab,
                 taticalMovement.transform.position + Vector3.up * 1.5f + taticalMovement.transform.forward * 1f,
                 Quaternion.identity);
-            effect.GetComponent<VFXSpawns>().Initialize(cells, this);
+            effect.GetComponent<VFXSpawns>().Initialize(cells, this, taticalMovement.currentIndex);
         }
 
         public override void Excute(float delta, GridCell targetCell)
         {
+            AlchemyManager.Instance.ApplyHeat(targetCell);
+            /*
             bool cellBurn = false;
             if (targetCell.isFlammable || targetCell.alchemyState.liquidState == LiquidPhaseState.Oil)
             {
@@ -44,7 +46,8 @@ namespace PrototypeGame
                 else
                     combatUtils.SetFireInteractions(targetStats, this, (int)alchemicalDamage.Value);
                 combatUtils.HandleAlchemicalSkill(targetStats, this);
-            }           
+            } 
+            */
         }
     }
 }

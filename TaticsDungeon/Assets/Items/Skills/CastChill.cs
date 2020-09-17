@@ -20,12 +20,13 @@ namespace PrototypeGame
             GameObject effect = Instantiate(skill.effectPrefab,
                 taticalMovement.transform.position + Vector3.up * 1.5f + taticalMovement.transform.forward * 1f,
                 Quaternion.identity);
-            effect.GetComponent<VFXSpawns>().Initialize(cells, this);
+            effect.GetComponent<VFXSpawns>().Initialize(cells, this, taticalMovement.currentIndex);
         }
 
         public override void Excute(float delta, GridCell targetCell)
         {
-            AlchemyManager.Instance.ApplyChill(targetCell.alchemyState);
+            AlchemyManager.Instance.ApplyChill(targetCell);
+            /*
             if (targetCell.occupyingObject != null)
             {
                 CharacterStats targetStats = targetCell.occupyingObject.GetComponent<CharacterStats>();
@@ -36,6 +37,7 @@ namespace PrototypeGame
                     combatUtils.SetChillInteractions(targetStats, targetCell);
                 combatUtils.HandleAlchemicalSkill(targetStats, this);
             }
+            */
         }
     }
 }

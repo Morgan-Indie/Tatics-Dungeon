@@ -18,6 +18,7 @@ MonoBehaviour:
   LevelRequired: 0
   APcost: 3
   type: 8
+  castType: 1
   coolDown: 3
   skillScriptObject: {fileID: 7238685604395584421, guid: 970a0a54ab1a4dd4e99aba651f40f986,
     type: 3}
@@ -31,6 +32,12 @@ MonoBehaviour:
     radius: 1
     lineOrientation: 0
     crossOrientation: 0
+  pinnedSettings:
+    shape: 3
+    radius: 3
+    inclusive: 0
+    coneSettings:
+      expansion: 2
   damage: 35
   scaleType: 1
   _scaleValue: 2

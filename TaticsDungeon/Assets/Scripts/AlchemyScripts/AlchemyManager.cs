@@ -138,10 +138,13 @@ namespace PrototypeGame
             return simulateState;
         }
 
-        public void ApplyHeat(CellAlchemyState cellState)
+        public void ApplyHeat(GridCell cell)
         {
+            CellAlchemyState cellState = cell.alchemyState;
             ApplyHeatInternal(cellState);
             ApplyVFX(cellState);
+            if (cell.occupyingObject != null)
+                cell.occupyingObject.GetComponent<CharacterStateManager>();
         }
         void ApplyHeatInternal(CellAlchemyState cellState, int itters = 1)
         {
@@ -158,10 +161,13 @@ namespace PrototypeGame
             return simulateState;
         }
 
-        public void ApplyChill(CellAlchemyState cellState)
+        public void ApplyChill(GridCell cell)
         {
+            CellAlchemyState cellState = cell.alchemyState;
             ApplyChillInternal(cellState);
             ApplyVFX(cellState);
+            if (cell.occupyingObject != null)
+                cell.occupyingObject.GetComponent<CharacterStateManager>();
         }
         void ApplyChillInternal(CellAlchemyState cellState, int itters = 1)
         {
@@ -182,10 +188,13 @@ namespace PrototypeGame
             return simulateState;
         }
 
-        public void ApplyShock(CellAlchemyState cellState)
+        public void ApplyShock(GridCell cell)
         {
+            CellAlchemyState cellState = cell.alchemyState;
             ApplyShockInternal(cellState);
             ApplyVFX(cellState);
+            if (cell.occupyingObject != null)
+                cell.occupyingObject.GetComponent<CharacterStateManager>();
         }
         void ApplyShockInternal(CellAlchemyState cellState)
         {
@@ -426,7 +435,7 @@ namespace PrototypeGame
                         break;
                 }
             }
-            cellState.changedValues.Clear();
+            cellState.UpdateInternalState();
         }
     }
 }

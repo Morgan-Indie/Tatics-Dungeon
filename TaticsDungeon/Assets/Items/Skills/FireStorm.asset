@@ -18,7 +18,10 @@ MonoBehaviour:
   LevelRequired: 0
   APcost: 0
   type: 4
+  castType: 0
   coolDown: 0
+  skillScriptObject: {fileID: 6862374743963206898, guid: ea0d7e18b7df9ad45bd23f8fd9db5463,
+    type: 3}
   effectPrefab: {fileID: 967347273800810734, guid: dc70b82da90c0254e97f76dec815c9d0,
     type: 3}
   castableSettings:
@@ -29,26 +32,15 @@ MonoBehaviour:
     radius: 5
     lineOrientation: 0
     crossOrientation: 0
-  strScaleType: 0
-  _scaleValueStrength: 0
-  vitScaleType: 0
-  _scaleValueVitality: 0
-  dexScaleType: 0
-  _scaleValueDexterity: 0
-  lucScaleType: 0
-  _scaleValueLuck: 0
-  intScaleType: 0
-  _scaleValueIntelligence: 0
-  staScaleType: 0
-  _scaleValueStamina: 0
-  levScaleType: 0
-  _scaleValueLevel: 0
-  normalDamageScaleType: 0
-  _scaleValueNormalDamage: 0
-  armorScaleType: 0
-  _scaleValueArmor: 0
-  resistanceScaleType: 0
-  _scaleValueResistance: 0
+  pinnedSettings:
+    shape: 0
+    radius: 1
+    inclusive: 0
+    coneSettings:
+      expansion: 1
+  damage: 0
+  scaleType: 0
+  _scaleValue: 0
   strModValue: 0
   strModType: 0
   dexModValue: 0

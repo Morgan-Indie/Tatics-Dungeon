@@ -8,12 +8,12 @@ namespace PrototypeGame
     {
         public List<GridCell> rangeCells;
         public LeanTweenType expandType;
+        SkillAbstract skill;
 
-        public override void Initialize(List<GridCell> cells, SkillAbstract skill) { }
-
-        public void Initialize(List<GridCell> cells, IntVector2 origin)
+        public override void Initialize(List<GridCell> cells, SkillAbstract _skill, IntVector2 origin)
         {
             rangeCells = new List<GridCell>();
+            skill = _skill;
             GridCell[] holdCells = cells.ToArray();
             for (int i = 0; i < holdCells.Length / 2; i++)
             {
@@ -33,7 +33,7 @@ namespace PrototypeGame
             {
                 GameObject ob = Instantiate(projectilePrefab, transform.position, transform.rotation);
                 ob.transform.LookAt(Vector3.up + transform.position);
-                ob.GetComponent<IceBombProjectile>().Initalize(cell);
+                ob.GetComponent<IceBombProjectile>().Initalize(cell, skill);
             }
         }
 

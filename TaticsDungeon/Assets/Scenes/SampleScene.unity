@@ -2131,6 +2131,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5012251641638902140, guid: 29586e19ecbd3f6409db602728730958,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5012251641638902140, guid: 29586e19ecbd3f6409db602728730958,
+        type: 3}
+      propertyPath: skills.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1aeb6016d0fffe14cb13b6ed1f6d9530,
+        type: 2}
     - target: {fileID: 5069317821699243155, guid: 29586e19ecbd3f6409db602728730958,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -6945,6 +6956,7 @@ MonoBehaviour:
   alchemyManager: {fileID: 0}
   currentCharacter: {fileID: 0}
   currentEnemy: {fileID: 0}
+  statusAffectedCells: []
   playerIndex: 0
   enemyIndex: 0
   Turn: 1
@@ -7064,7 +7076,21 @@ MonoBehaviour:
     type: 3}
   InfernoEffectPrefab: {fileID: 4029089394443433646, guid: dca4d7a29be926241a5800769bfa064b,
     type: 3}
-  ChillEffectPrefab: {fileID: 0}
-  ShockSolidEffectPrefab: {fileID: 0}
-  ShockLiquidEffectPrefab: {fileID: 0}
-  ShockGasEffectPrefab: {fileID: 0}
+  ChillEffectPrefab: {fileID: 4332221713764172744, guid: 6ecbfd6cef8f3414bb27f9933e7e1628,
+    type: 3}
+  ShockSolidEffectPrefab: {fileID: 1740139871691603000, guid: 96ce0b7f879da024da2a47ad8f1ba447,
+    type: 3}
+  ShockLiquidEffectPrefab: {fileID: 2764418381461071984, guid: 20be469f2f569404baeeb8d713f4cca7,
+    type: 3}
+  ShockGasEffectPrefab: {fileID: 4274387872410849155, guid: 94a03351ac6bf4d47adb85bff15271b1,
+    type: 3}
+  playerBurnTime: 2
+  playerInfernoTime: 2
+  playerPoisonTime: 4
+  playerShockTime: 2
+  playerFrozenTime: 2
+  playerCurseTime: 10
+  playerBlessTime: 10
+  playerWetTime: 4
+  playerOilTime: 4
+  playerElectricuteTime: 2

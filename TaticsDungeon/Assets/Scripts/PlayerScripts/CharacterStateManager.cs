@@ -106,12 +106,12 @@ namespace PrototypeGame
                 GameObject newEffect = null;
                 switch (status)
                 {
-                    case StatusEffect.Burning: newEffect = ElementalVFX.Instance.FireVFX; break;
-                    case StatusEffect.Wet: newEffect = ElementalVFX.Instance.WetVFX; break;
-                    case StatusEffect.Oiled: newEffect = ElementalVFX.Instance.OilVFX; break;
-                    case StatusEffect.Inferno: newEffect = ElementalVFX.Instance.InfernoVFX; break;
-                    case StatusEffect.Poisoned: newEffect = ElementalVFX.Instance.PoisonVFX; break;
-                    case StatusEffect.Shocked: newEffect = ElementalVFX.Instance.ShockVFX; break;
+                    case StatusEffect.Burning: newEffect = ActivateVFX.Instance.FireVFX; break;
+                    case StatusEffect.Wet: newEffect = ActivateVFX.Instance.WetVFX; break;
+                    case StatusEffect.Oiled: newEffect = ActivateVFX.Instance.OilVFX; break;
+                    case StatusEffect.Inferno: newEffect = ActivateVFX.Instance.InfernoVFX; break;
+                    case StatusEffect.Poisoned: newEffect = ActivateVFX.Instance.PoisonVFX; break;
+                    case StatusEffect.Shocked: newEffect = ActivateVFX.Instance.ShockVFX; break;
                 }
                 if (newEffect != null)
                 {
@@ -128,25 +128,33 @@ namespace PrototypeGame
         public void RemoveStatus(StatusEffect status)
         {
             if (statusEffects.Contains(status))
+            {
                 statusEffects.Remove(status);
                 statusTimers.Remove(status);
                 statusVFX.Remove(status);
+            }
         }
 
         public void ApplyHeat()
         {
             bool statusChanged = false;
             if (statusEffects.Contains(StatusEffect.Wet))
+            {
                 RemoveStatus(StatusEffect.Wet);
                 statusChanged = true;
+            }
             if (statusEffects.Contains(StatusEffect.Oiled))
+            {
                 RemoveStatus(StatusEffect.Oiled);
                 AddStatus(StatusEffect.Inferno, AlchemyManager.Instance.playerInfernoTime);
                 statusChanged = true;
+            }
             if (statusEffects.Contains(StatusEffect.Frozen))
+            {
                 RemoveStatus(StatusEffect.Frozen);
                 AddStatus(StatusEffect.Wet, AlchemyManager.Instance.playerWetTime);
                 statusChanged = true;
+            }
             if (!statusChanged)
                 AddStatus(StatusEffect.Burning, AlchemyManager.Instance.playerBurnTime);
         }

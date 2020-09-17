@@ -9,7 +9,7 @@ namespace PrototypeGame
         public float lowerSpawn = 10;
         public float upperSpawn = 15;
 
-        public override void Initialize(List<GridCell> cells, SkillAbstract skill)
+        public override void Initialize(List<GridCell> cells, SkillAbstract skill, IntVector2 origin)
         {
             lifeTime = 1.5f;
             foreach (GridCell cell in cells)

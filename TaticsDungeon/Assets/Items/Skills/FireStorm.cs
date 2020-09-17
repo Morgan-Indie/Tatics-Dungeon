@@ -4,8 +4,25 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public class FireStorm 
+    public class FireStorm : CastFire
     {
+        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler, TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+        {
+            FireStorm fireStorm = _characterStats.gameObject.AddComponent<FireStorm>();
+            fireStorm.characterStats = _characterStats;
+            fireStorm.animationHandler = _animationHandler;
+            fireStorm.taticalMovement = _taticalMovement;
+            fireStorm.skill = _skill;
+            fireStorm.combatUtils = _combatUtils;
+
+            fireStorm.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.fireDamage);
+            fireStorm.intScaleValue = skill._scaleValue * _characterStats.Intelligence.Value;
+            StatModifier intScaling = new StatModifier(fireStorm.intScaleValue, StatModType.Flat);
+            fireStorm.alchemicalDamage.AddModifier(intScaling);
+
+            return fireStorm;
+        }
+        /*
         public static void Activate(CharacterStats characterStats, AnimationHandler animationHandler, TaticalMovement taticalMovement, Skill skill, float delta)
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
@@ -26,5 +43,6 @@ namespace PrototypeGame
                 }
             }
         }
+        */
     }
 }
