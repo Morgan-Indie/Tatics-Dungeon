@@ -65,51 +65,51 @@ namespace PrototypeGame
                 }
             }
 
-            if (targetCell == null)
+            if (targetCell!=null)
             {
+                IntVector2 indexDirection = targetCell.index - taticalMovement.currentIndex;
+                if (indexDirection.x == 0 && indexDirection.y > 0)
+                {
+                    GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(0, 1));
+                    if (nextCell.occupyingObject != null)
+                    {
+                        targetPathBlocked = true;
+                        preTargetCellIndex = targetCell.index - new IntVector2(0, 1);
+                    }
+                }
+
+                else if (indexDirection.x == 0 && indexDirection.y < 0)
+                {
+                    GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(0, -1));
+                    if (nextCell.occupyingObject != null)
+                    {
+                        targetPathBlocked = true;
+                        preTargetCellIndex = targetCell.index - new IntVector2(0, -1);
+                    }
+                }
+
+                else if (indexDirection.x > 0 && indexDirection.y == 0)
+                {
+                    GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(1, 0));
+                    if (nextCell.occupyingObject != null)
+                    {
+                        targetPathBlocked = true;
+                        preTargetCellIndex = targetCell.index - new IntVector2(1, 0);
+                    }
+                }
+
+                else if (indexDirection.x < 0 && indexDirection.y == 0)
+                {
+                    GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(-1, 0));
+                    if (nextCell.occupyingObject != null)
+                    {
+                        targetPathBlocked = true;
+                        preTargetCellIndex = targetCell.index - new IntVector2(-1, 0);
+                    }
+                }
+            }
+            else
                 targetCell = cells[cells.Count - 1];
-            }
-
-            IntVector2 indexDirection = targetCell.index - taticalMovement.currentIndex;
-            if (indexDirection.x == 0 && indexDirection.y > 0)
-            {
-                GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(0, 1));
-                if (nextCell.occupyingObject != null)
-                {
-                    targetPathBlocked = true;
-                    preTargetCellIndex = targetCell.index - new IntVector2(0, 1);
-                }
-            }
-
-            else if (indexDirection.x == 0 && indexDirection.y < 0)
-            {
-                GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(0, -1));
-                if (nextCell.occupyingObject != null)
-                {
-                    targetPathBlocked = true;
-                    preTargetCellIndex = targetCell.index - new IntVector2(0, -1);
-                }
-            }
-
-            else if (indexDirection.x > 0 && indexDirection.y == 0)
-            {
-                GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(1, 0));
-                if (nextCell.occupyingObject != null)
-                {
-                    targetPathBlocked = true;
-                    preTargetCellIndex = targetCell.index - new IntVector2(1, 0);
-                }
-            }
-
-            else if (indexDirection.x < 0 && indexDirection.y == 0)
-            {
-                GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(-1, 0));
-                if (nextCell.occupyingObject != null)
-                {
-                    targetPathBlocked = true;
-                    preTargetCellIndex = targetCell.index - new IntVector2(-1, 0);
-                }
-            }
 
             targetPos = targetCell.transform.position;
 
