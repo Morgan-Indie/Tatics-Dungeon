@@ -1999,12 +1999,17 @@ PrefabInstance:
     - target: {fileID: 2833437495705221259, guid: 29586e19ecbd3f6409db602728730958,
         type: 3}
       propertyPath: m_Height
-      value: 1.7
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 2833437495705221259, guid: 29586e19ecbd3f6409db602728730958,
         type: 3}
       propertyPath: m_Radius
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833437495705221259, guid: 29586e19ecbd3f6409db602728730958,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 3081681028102216276, guid: 29586e19ecbd3f6409db602728730958,
         type: 3}
@@ -3361,7 +3366,7 @@ PrefabInstance:
     - target: {fileID: 2833437495705221259, guid: 90320c8ea753782449d11fa3a8de6c3b,
         type: 3}
       propertyPath: m_Height
-      value: 1.7
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 2833437495705221259, guid: 90320c8ea753782449d11fa3a8de6c3b,
         type: 3}
@@ -3372,6 +3377,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833437495705221259, guid: 90320c8ea753782449d11fa3a8de6c3b,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 3233927772318939829, guid: 90320c8ea753782449d11fa3a8de6c3b,
         type: 3}
@@ -6247,12 +6257,17 @@ PrefabInstance:
     - target: {fileID: 2833437495705221259, guid: 72879516dd2f96d44ac8e96c3bd38db9,
         type: 3}
       propertyPath: m_Height
-      value: 1.7
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 2833437495705221259, guid: 72879516dd2f96d44ac8e96c3bd38db9,
         type: 3}
       propertyPath: m_Radius
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833437495705221259, guid: 72879516dd2f96d44ac8e96c3bd38db9,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 3233927772318939829, guid: 72879516dd2f96d44ac8e96c3bd38db9,
         type: 3}

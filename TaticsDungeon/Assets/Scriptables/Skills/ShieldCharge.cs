@@ -37,7 +37,7 @@ namespace PrototypeGame
             characterRigidBody.velocity = Vector3.zero;
             characterRigidBody.position = targetPos;
             characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
-            animationHandler.animator.SetBool("TransitionToCombatIdle", true);
+            animationHandler.PlayTargetAnimation("CombatIdle");
             taticalMovement.UpdateGridState();
             taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
             taticalMovement.SetCurrentNavDict();
@@ -49,7 +49,7 @@ namespace PrototypeGame
             targetIndex = _targetIndex;
             List<GridCell> cells = PinnedShapes.GetPinnedCells(skill,taticalMovement.currentIndex , targetIndex);
             animationHandler.PlayTargetAnimation("ShieldCharge");
-            characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+            characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation| RigidbodyConstraints.FreezePositionY;
             characterStats.UseAP(skill.APcost);
 
             foreach (GridCell cell in cells)
