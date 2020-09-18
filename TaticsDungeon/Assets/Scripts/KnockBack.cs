@@ -14,24 +14,20 @@ namespace PrototypeGame
             TaticalMovement taticalMovement = animator.GetComponent<TaticalMovement>();
             targetPosition = taticalMovement.moveLocation;
             animator.GetComponent<CharacterStateManager>().characterAction = CharacterAction.LyingDown;
+            LeanTween.move(taticalMovement.gameObject, targetPosition, .5f);
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-        override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        {
-            Vector3 currentVelocity = Vector3.zero;
-            animator.transform.position = Vector3.SmoothDamp(animator.transform.position,
-                targetPosition, ref currentVelocity, Time.deltaTime*4f);
-        }
+        //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        //{
+        //
+        //}
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             TaticalMovement taticalMovement = animator.GetComponent<TaticalMovement>();
-            animator.transform.position = targetPosition;
             taticalMovement.UpdateGridState();
-            //taticalMovement.moveLocation = Vector3.up;
-            //targetPosition = Vector3.up;
             animator.GetComponent<StatusVFX>().StunVFXPlay();
         }
 

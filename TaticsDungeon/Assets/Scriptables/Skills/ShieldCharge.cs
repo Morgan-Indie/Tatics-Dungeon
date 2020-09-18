@@ -11,6 +11,8 @@ namespace PrototypeGame
         public Vector3 targetPos;
         public IntVector2 targetIndex;
         public bool reachedTarget=false;
+        public bool targetPathBlocked = false;
+        IntVector2 preTargetCellIndex = new IntVector2(-1, -1);
 
         public Rigidbody characterRigidBody;
         public CharacterStateManager stateManager;
@@ -37,7 +39,8 @@ namespace PrototypeGame
             characterRigidBody.velocity = Vector3.zero;
             characterRigidBody.position = targetPos;
             characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
-            animationHandler.PlayTargetAnimation("CombatIdle");
+            if (!targetPathBlocked)
+                animationHandler.PlayTargetAnimation("CombatIdle");
             taticalMovement.UpdateGridState();
             taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
             taticalMovement.SetCurrentNavDict();
@@ -63,10 +66,53 @@ namespace PrototypeGame
             }
 
             if (targetCell == null)
-                targetCell = cells[cells.Count-1];
+            {
+                targetCell = cells[cells.Count - 1];
+            }
+
+            IntVector2 indexDirection = targetCell.index - taticalMovement.currentIndex;
+            if (indexDirection.x == 0 && indexDirection.y > 0)
+            {
+                GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(0, 1));
+                if (nextCell.occupyingObject != null)
+                {
+                    targetPathBlocked = true;
+                    preTargetCellIndex = targetCell.index - new IntVector2(0, 1);
+                }
+            }
+
+            else if (indexDirection.x == 0 && indexDirection.y < 0)
+            {
+                GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(0, -1));
+                if (nextCell.occupyingObject != null)
+                {
+                    targetPathBlocked = true;
+                    preTargetCellIndex = targetCell.index - new IntVector2(0, -1);
+                }
+            }
+
+            else if (indexDirection.x > 0 && indexDirection.y == 0)
+            {
+                GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(1, 0));
+                if (nextCell.occupyingObject != null)
+                {
+                    targetPathBlocked = true;
+                    preTargetCellIndex = targetCell.index - new IntVector2(1, 0);
+                }
+            }
+
+            else if (indexDirection.x < 0 && indexDirection.y == 0)
+            {
+                GridCell nextCell = taticalMovement.mapAdapter.GetCellByIndex(targetCell.index + new IntVector2(-1, 0));
+                if (nextCell.occupyingObject != null)
+                {
+                    targetPathBlocked = true;
+                    preTargetCellIndex = targetCell.index - new IntVector2(-1, 0);
+                }
+            }
 
             targetPos = targetCell.transform.position;
-            targetCell.index.Print();
+
             targetDirection = (targetPos - taticalMovement.currentCell.transform.position);
             targetDirection.y = 0f;
             targetDirection.Normalize();
@@ -75,11 +121,7 @@ namespace PrototypeGame
 
         public override void Excute(float delta, GridCell targetCell)
         {
-            target.transform.LookAt(characterRigidBody.transform);
-            int damage = (int)(characterStats.normalDamage.Value);
-            target.GetComponent<CharacterStats>().TakeDamage(damage);
-            target.GetComponent<TaticalMovement>().moveLocation = target.transform.position + 1.5f * targetDirection;
-            target.GetComponent<AnimationHandler>().PlayTargetAnimation("StumbleAndFall");
+            Debug.Log("Excute dispatch not implemented");
         }
 
         public override void Excute(float delta)
@@ -87,7 +129,19 @@ namespace PrototypeGame
             target.transform.LookAt(characterRigidBody.transform);
             int damage = (int)(characterStats.normalDamage.Value);
             target.GetComponent<CharacterStats>().TakeDamage(damage);
-            target.GetComponent<TaticalMovement>().moveLocation = target.transform.position + 1.5f * targetDirection;
+            if (!targetPathBlocked)
+                target.GetComponent<TaticalMovement>().moveLocation = target.transform.position + 1.5f * targetDirection;
+            else
+            {
+                if (!preTargetCellIndex.Equals(new IntVector2(-1, -1)))
+                {
+                    taticalMovement.moveLocation = taticalMovement.mapAdapter.GetPosByIndex(preTargetCellIndex);
+                    target.GetComponent<TaticalMovement>().moveLocation = target.transform.position;
+                    animationHandler.PlayTargetAnimation("StumbleAndFall");
+                }
+                else
+                    Debug.Log("preTargetCellIndex not valid");
+            }
             target.GetComponent<AnimationHandler>().PlayTargetAnimation("StumbleAndFall");
         }
 
@@ -95,6 +149,8 @@ namespace PrototypeGame
         {
             if (other.tag == "Enemy" || other.tag == "Player")
                 Excute(Time.deltaTime);
+            if (targetPathBlocked)
+                EndCast();
         }
     }
 }

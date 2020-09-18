@@ -157,7 +157,7 @@ namespace PrototypeGame
             healthBar.SetCurrentHealth(currentHealth);
             Debug.Log(characterName + " took "+ damange+" damage and have "+ currentHealth+" remaining");
             if (currentHealth <= 0)
-            {
+            {   
                 stateManager.characterState = CharacterState.Dead;
                 taticalMovement.currentCell.occupyingObject = null;
                 taticalMovement.currentCell.state = CellState.open;

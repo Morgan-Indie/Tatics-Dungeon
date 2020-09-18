@@ -48,12 +48,24 @@ namespace PrototypeGame
         {
             CharacterStats targetStats = targetCharacter.GetComponent<CharacterStats>();
             DamageStruct outputDamage = ComputeDamage();
-            int damageDeltNormal = outputDamage.normal - (int)targetStats.armor.Value;
+
+            int damageDeltNormal = (int)(outputDamage.normal * (1-targetStats.armor.Value/300f));
+            Debug.Log(characterStats.characterName + " damageDeltNormal: " + damageDeltNormal);
+
             int damageDeltPierce = outputDamage.pierce;
-            int damageDeltFire = outputDamage.fire - (int)targetStats.fireResistance.Value;
-            int damageDeltWater = outputDamage.water - (int)targetStats.waterResistance.Value;
-            int damageDeltShock = outputDamage.shock - (int)targetStats.shockResistance.Value;
-            int damageDeltPoison = outputDamage.poison - (int)targetStats.poisonResistance.Value;
+            Debug.Log(characterStats.characterName + " damageDeltPierce: " + damageDeltPierce);
+
+            int damageDeltFire = (int)(outputDamage.fire * (1 - targetStats.fireResistance.Value/200f));
+            Debug.Log(characterStats.characterName + " damageDeltFire: " + damageDeltFire);
+
+            int damageDeltWater = (int)(outputDamage.water * (1 - targetStats.waterResistance.Value / 200f));
+            Debug.Log(characterStats.characterName + " damageDeltWater: " + damageDeltWater);
+
+            int damageDeltShock = (int)(outputDamage.shock * (1 - targetStats.shockResistance.Value / 200f));
+            Debug.Log(characterStats.characterName + " damageDeltShock: " + damageDeltShock);
+
+            int damageDeltPoison = (int)(outputDamage.poison * (1 - targetStats.poisonResistance.Value / 200f));
+            Debug.Log(characterStats.characterName + " damageDeltPoison: " + damageDeltPoison);
 
             int totalDamage = damageDeltPierce + damageDeltPoison + damageDeltNormal + damageDeltWater + damageDeltFire + damageDeltShock;
             totalDamage = totalDamage>0 ? totalDamage: 0;

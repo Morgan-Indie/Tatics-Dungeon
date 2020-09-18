@@ -28,15 +28,20 @@ namespace PrototypeGame
 
             if (taticalMovement.ReachedPosition(taticalMovement.transform.position, shieldCharge.targetPos)&& !shieldCharge.reachedTarget)
             {
-                shieldCharge.EndCast();
+                if (!shieldCharge.targetPathBlocked)
+                    shieldCharge.EndCast();
             }
         }
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            stateManager.characterAction = CharacterAction.None;
-            stateManager.characterState = CharacterState.Ready;
+            if (!shieldCharge.targetPathBlocked)
+            {
+                stateManager.characterAction = CharacterAction.None;
+                stateManager.characterState = CharacterState.Ready;
+            }
+
             shieldCharge.reachedTarget = false;
             shieldCharge.GetComponent<Collider>().isTrigger = false;
         }
