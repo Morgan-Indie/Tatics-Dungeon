@@ -19,7 +19,8 @@ MonoBehaviour:
   APcost: 2
   type: 10
   coolDown: 0
-  skillScriptObject: {fileID: 0}
+  skillScriptObject: {fileID: 465772608953933214, guid: 003d802451e86a448a76d77cf2061069,
+    type: 3}
   effectPrefab: {fileID: 0}
   castableSettings:
     castableSpell: 7

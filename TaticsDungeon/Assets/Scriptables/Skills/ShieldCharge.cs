@@ -30,40 +30,43 @@ namespace PrototypeGame
             return shieldCharge;
         }
 
+        void EndCast()
+        {
+            characterRigidBody.velocity = Vector3.zero;
+            characterRigidBody.position = targetPos;
+            characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
+            animationHandler.animator.SetBool("TransitionToCombatIdle", true);
+            taticalMovement.UpdateGridState();
+            taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
+            taticalMovement.SetCurrentNavDict();
+        }
+
         public override void Cast(float delta, IntVector2 _targetIndex)
         {
             if (stateManager.characterAction == CharacterAction.ShieldCharge)
             {
                 characterRigidBody.velocity = 5f * targetDirection;
-
                 if (stateManager.skillColliderTiggered)
-                {                    
-                    if (target.tag == "Enemy" || target.tag == "Player")
-                    {
-                        Excute(delta, targetCell);
-                    }
+                {
+                    Excute(delta);
+                    EndCast();
                     stateManager.skillColliderTiggered = false;
                 }
 
                 if (taticalMovement.ReachedPosition(taticalMovement.transform.position, targetPos))
                 {
-                    characterRigidBody.velocity = Vector3.zero;
-                    characterRigidBody.position = targetPos;
-                    characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
-                    animationHandler.animator.SetBool("TransitionToCombatIdle", true);
-                    taticalMovement.UpdateGridState();
-                    taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
-                    taticalMovement.SetCurrentNavDict();
+                    EndCast();
                 }
             }
 
             else
             {
                 targetIndex = _targetIndex;
-                List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
+                List<GridCell> cells = PinnedShapes.GetPinnedCells(skill,taticalMovement.currentIndex , targetIndex);
                 animationHandler.PlayTargetAnimation("ShieldCharge");
                 characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
                 characterStats.UseAP(skill.APcost);
+
                 foreach (GridCell cell in cells)
                 {
                     if (cell.occupyingObject != null)
@@ -73,9 +76,12 @@ namespace PrototypeGame
                         break;
                     }
                 }
-                if (targetCell == null)
-                    targetCell = cells[cells.Count - 1];
 
+                if (targetCell == null)
+                {
+                    targetCell = cells[cells.Count - 1];                    
+                }                
+                
                 targetPos = targetCell.transform.position;
                 targetDirection = (targetPos - characterStats.transform.position).normalized;
                 characterStats.transform.LookAt(targetPos);

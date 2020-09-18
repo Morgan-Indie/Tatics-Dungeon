@@ -18,6 +18,7 @@ namespace PrototypeGame
         CombatUtils combatUtils;
         CharacterStats characterStats;
         Rigidbody characterRigidbody;
+        PlayerManager playerManager;
 
         public Vector3 moveLocation=Vector3.up;
 
@@ -50,6 +51,7 @@ namespace PrototypeGame
             characterRigidBody = GetComponent<Rigidbody>();
             characterStats = GetComponent<CharacterStats>();
             characterRigidbody = GetComponent<Rigidbody>();
+            playerManager = GetComponent<PlayerManager>();
 
             SetCurrentCell();
             triggerCollider.enabled = false;
@@ -257,8 +259,8 @@ namespace PrototypeGame
 
         public void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Enemy"|| other.gameObject.tag == "Player")
-                stateManager.skillColliderTiggered = true;
+            Debug.Log("triggered: "+other);
+            stateManager.skillColliderTiggered = true;
         }
     }
 }

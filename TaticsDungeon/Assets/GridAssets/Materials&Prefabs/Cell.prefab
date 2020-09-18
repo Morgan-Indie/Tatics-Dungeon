@@ -89,7 +89,7 @@ MeshCollider:
   m_GameObject: {fileID: 775827043634320648}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -142,9 +142,15 @@ MonoBehaviour:
   color: {r: 0, g: 0, b: 0, a: 0}
   height: 0
   cellTemplate: {fileID: 0}
-  character: {fileID: 0}
+  occupyingObject: {fileID: 0}
   state: 0
+  highlightType: 0
   alchemyState: {fileID: 0}
+  isStairs: 0
+  isFlammable: 0
+  burnSource: {fileID: 0}
+  poisonSource: {fileID: 0}
+  HasAdjacentStair: 0
   index:
     x: 0
     y: 0
@@ -168,8 +174,14 @@ MonoBehaviour:
   solidState: 0
   blessingState: 0
   fireState: 0
+  shockState: 0
   gasEffect: {fileID: 0}
   liquidEffect: {fileID: 0}
   solidEffect: {fileID: 0}
   blessedEffect: {fileID: 0}
   fireEffect: {fileID: 0}
+  shockEffect: {fileID: 0}
+  fireTurnsRemaining: 0
+  shockTurnsRemaining: 0
+  isDry: 1
+  changedValues: 
