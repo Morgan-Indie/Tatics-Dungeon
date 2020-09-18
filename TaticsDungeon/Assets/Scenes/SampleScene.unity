@@ -3368,6 +3368,11 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 2833437495705221259, guid: 90320c8ea753782449d11fa3a8de6c3b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3233927772318939829, guid: 90320c8ea753782449d11fa3a8de6c3b,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -3603,6 +3608,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121810049349368248, guid: 90320c8ea753782449d11fa3a8de6c3b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7255527200958059964, guid: 90320c8ea753782449d11fa3a8de6c3b,
         type: 3}

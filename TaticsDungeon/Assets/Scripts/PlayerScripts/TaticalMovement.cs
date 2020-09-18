@@ -8,7 +8,6 @@ namespace PrototypeGame
     {
         [Header("Required")]
         public GridMapAdapter mapAdapter;
-        public Collider triggerCollider;
 
         InputHandler inputHandler;
         Transform characterTransform;
@@ -54,7 +53,6 @@ namespace PrototypeGame
             playerManager = GetComponent<PlayerManager>();
 
             SetCurrentCell();
-            triggerCollider.enabled = false;
         }
 
         public void SetCurrentIndex()
@@ -255,12 +253,6 @@ namespace PrototypeGame
         public void UseSkill(SkillAbstract skillScript, float delta)
         {
             skillScript.Activate(delta);
-        }
-
-        public void OnTriggerEnter(Collider other)
-        {
-            Debug.Log("triggered: "+other);
-            stateManager.skillColliderTiggered = true;
         }
     }
 }
