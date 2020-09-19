@@ -5087,9 +5087,9 @@ MonoBehaviour:
   highlightedPath: []
   allHighlightedTiles: []
   castableRangeHighlights: []
-  castableHighlightPrefab: {fileID: 2015886591300925424, guid: 45f81241aff918c459795841e047692e,
+  castableHighlightPrefab: {fileID: 3613861752756595353, guid: ec33079217439234899174f913feea99,
     type: 3}
-  castableValidPrefab: {fileID: 2015886591300925424, guid: dd08ce2b5229c9d4bb87fede33fbcdad,
+  castableValidPrefab: {fileID: 7012943677762847735, guid: 5df4d5f0ced65544d8f8510d73ad0087,
     type: 3}
 --- !u!4 &1157780373
 Transform:
@@ -5435,7 +5435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1440485451
 Transform:
   m_ObjectHideFlags: 0
@@ -7310,9 +7310,9 @@ MonoBehaviour:
     type: 3}
   OilLiquidEffectPrefab: {fileID: 5925526688476676265, guid: 7999524cfffd3c34199487891aba0481,
     type: 3}
-  BurningEffectPrefab: {fileID: 6375987105220089366, guid: 77ceab1076bfe054f8e8c611a10f3c83,
+  BurningEffectPrefab: {fileID: 1151502900046148, guid: d5e400a2a0d155d4db9970614680534f,
     type: 3}
-  InfernoEffectPrefab: {fileID: 4029089394443433646, guid: dca4d7a29be926241a5800769bfa064b,
+  InfernoEffectPrefab: {fileID: 1345027383935582, guid: 508c9f007a2bf724d88361f16953bbac,
     type: 3}
   ChillEffectPrefab: {fileID: 4332221713764172744, guid: 6ecbfd6cef8f3414bb27f9933e7e1628,
     type: 3}
