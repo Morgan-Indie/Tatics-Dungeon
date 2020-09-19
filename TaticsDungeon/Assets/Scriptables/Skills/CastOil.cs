@@ -12,7 +12,7 @@ namespace PrototypeGame
             GridManager.Instance.HighlightCastableRange(taticalMovement.currentIndex, index, skill);
             int distance = taticalMovement.GetRequiredMoves(index,taticalMovement.path);
 
-            if (index.x >= 0 && characterStats.currentAP >= skill.APcost)
+            if (index.x >= 0 && characterStats.currentAP >= skill.APcost && index.GetDistance(taticalMovement.currentIndex)<= skill.castableSettings.range)
             {
                 if (Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput)
                 {

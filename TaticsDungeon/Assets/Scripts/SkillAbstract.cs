@@ -16,14 +16,17 @@ namespace PrototypeGame
         public CombatStat alchemicalDamage;
         public CombatStat armor;
         public CombatStat resistance;
+        IntVector2 prevIndex;
 
         public void Activate(float delta)
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
-            GridManager.Instance.HighlightCastableRange(taticalMovement.currentIndex, index, skill);
+            if (!index.Equals(prevIndex))
+                GridManager.Instance.HighlightCastableRange(taticalMovement.currentIndex, index, skill);
             int distance = taticalMovement.currentIndex.GetDistance(index);
 
-            if (index.x >= 0 && characterStats.currentAP >= skill.APcost)
+            if (index.x >= 0 && characterStats.currentAP >= skill.APcost && 
+                index.GetDistance(taticalMovement.currentIndex) <= skill.castableSettings.range)
             {
                 if (Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput &&
                     characterStats.stateManager.characterState != CharacterState.IsInteracting)
@@ -32,6 +35,7 @@ namespace PrototypeGame
                     Cast(delta, index);
                 }
             }
+            prevIndex = index;
         }
 
         public abstract SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
