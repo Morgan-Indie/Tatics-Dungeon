@@ -169,15 +169,15 @@ namespace PrototypeGame
             switch (skillScript.skill.type)
             {
                 case SkillType.Fire:
-                    int fireDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.fireResistance.Value;
+                    int fireDamage = (int)(skillScript.alchemicalDamage.Value* (1- targetStats.fireResistance.Value/200f));
                     targetStats.TakeDamage(fireDamage);
                     break;
                 case SkillType.Water:
-                    int WaterDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.waterResistance.Value;
+                    int WaterDamage = (int)(skillScript.alchemicalDamage.Value* (1 - targetStats.waterResistance.Value));
                     targetStats.TakeDamage(WaterDamage);
                     break;
                 case SkillType.Chill:
-                    int ChillDamage = (int)skillScript.alchemicalDamage.Value - (int)targetStats.waterResistance.Value;
+                    int ChillDamage = (int)(skillScript.alchemicalDamage.Value * (1-targetStats.waterResistance.Value));
                     targetStats.TakeDamage(ChillDamage);
                     break;
             }

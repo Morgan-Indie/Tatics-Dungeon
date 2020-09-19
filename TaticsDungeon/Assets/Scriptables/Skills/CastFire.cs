@@ -26,28 +26,10 @@ namespace PrototypeGame
         public override void Excute(float delta, GridCell targetCell)
         {
             AlchemyManager.Instance.ApplyHeat(targetCell);
-            /*
-            bool cellBurn = false;
-            if (targetCell.isFlammable || targetCell.alchemyState.liquidState == LiquidPhaseState.Oil)
+            if (targetCell.occupyingObject!=null)
             {
-                AlchemyManager.Instance.ApplyHeat(targetCell.alchemyState);
-                if (targetCell.alchemyState.fireState == FireState.Burning || targetCell.alchemyState.fireState == FireState.Inferno)
-                {
-                    targetCell.burnSource = this;
-                    cellBurn = true;
-                }
+                combatUtils.HandleAlchemicalSkill(targetCell.occupyingObject.GetComponent<CharacterStats>(), this);
             }
-
-            if (targetCell.occupyingObject != null)
-            {
-                CharacterStats targetStats = targetCell.occupyingObject.GetComponent<CharacterStats>();
-                if (cellBurn)
-                    combatUtils.SetFireInteractions(targetStats, targetCell, (int)alchemicalDamage.Value, true);
-                else
-                    combatUtils.SetFireInteractions(targetStats, this, (int)alchemicalDamage.Value);
-                combatUtils.HandleAlchemicalSkill(targetStats, this);
-            } 
-            */
         }
     }
 }

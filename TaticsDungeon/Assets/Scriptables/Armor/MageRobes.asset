@@ -36,7 +36,7 @@ MonoBehaviour:
   _scaleValueVitality: 0
   _scaleValueDexterity: 0
   _scaleValueLuck: 0
-  _scaleValueIntelligence: 1
+  _scaleValueIntelligence: 0.5
   _scaleValueStamina: 0
   _normalDamage: 0
   _pierceDamage: 0

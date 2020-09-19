@@ -29,7 +29,7 @@ namespace PrototypeGame
         public List<InventorySlot> equipedItems;
         public GameObject EquipedItems;
 
-        public void Start()
+        public void Awake()
         {
             inventoryHandler = GetComponent<InventoryHandler>();
             playerEquipment = GetComponent<PlayerEquipment>();

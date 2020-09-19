@@ -32,7 +32,7 @@ MonoBehaviour:
   _scaleValueVitality: 0
   _scaleValueDexterity: 0
   _scaleValueLuck: 0
-  _scaleValueIntelligence: 0
+  _scaleValueIntelligence: 0.5
   _scaleValueStamina: 0
   _normalDamage: 0
   _pierceDamage: 0
@@ -41,11 +41,11 @@ MonoBehaviour:
   _waterDamage: 0
   _curseDamage: 0
   _shockDamage: 0
-  _armor: 0
-  _fireResistance: 0
-  _waterResistance: 0
-  _shockResistance: 0
-  _poisonResistance: 0
+  _armor: 1
+  _fireResistance: 1
+  _waterResistance: 1
+  _shockResistance: 1
+  _poisonResistance: 1
   strModValue: 0
   strModType: 0
   dexModValue: 0

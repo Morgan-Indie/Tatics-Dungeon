@@ -17,9 +17,9 @@ MonoBehaviour:
   ID: 0
   type: 0
   description: MageLeggings
-  pickedUp: 0
+  pickedUp: 1
   modelPrefab: {fileID: 0}
-  equipped: 0
+  equipped: 1
   slotType: 4
   equipmentType: 5
   range: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
   _scaleValueVitality: 0
   _scaleValueDexterity: 0
   _scaleValueLuck: 0
-  _scaleValueIntelligence: 1
+  _scaleValueIntelligence: 0.2
   _scaleValueStamina: 0
   _normalDamage: 0
   _pierceDamage: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   _waterDamage: 0
   _curseDamage: 0
   _shockDamage: 0
-  _armor: 5
+  _armor: 3
   _fireResistance: 2
   _waterResistance: 2
   _shockResistance: 2

@@ -200,9 +200,9 @@ namespace PrototypeGame
             else
             {
                 if ((ReachedPosition(transform.position, nextPos)))
-                {
+                {                    
                     currentPathIndex++;
-                    SetNextPos(path[currentPathIndex]);
+                    SetNextPos(path[currentPathIndex]);                    
                 }
 
                 Vector3 currentDirection = (nextPos - transform.position);

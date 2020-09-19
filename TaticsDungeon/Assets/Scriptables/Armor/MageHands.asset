@@ -17,9 +17,9 @@ MonoBehaviour:
   ID: 0
   type: 0
   description: MageHands
-  pickedUp: 0
+  pickedUp: 1
   modelPrefab: {fileID: 0}
-  equipped: 0
+  equipped: 1
   slotType: 7
   equipmentType: 8
   range: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
   _scaleValueVitality: 0
   _scaleValueDexterity: 0
   _scaleValueLuck: 0
-  _scaleValueIntelligence: 1
+  _scaleValueIntelligence: 0.5
   _scaleValueStamina: 0
   _normalDamage: 0
   _pierceDamage: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   _waterDamage: 0
   _curseDamage: 0
   _shockDamage: 0
-  _armor: 3
+  _armor: 1
   _fireResistance: 1
   _waterResistance: 1
   _shockResistance: 1

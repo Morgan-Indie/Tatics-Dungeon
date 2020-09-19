@@ -45,7 +45,7 @@ namespace PrototypeGame
 
             //test script for equiping items
             testInventoryItemScript = GetComponent<TestInventoryItemScript>();
-            testInventoryItemScript.AddItem();
+            testInventoryItemScript.AddItems();
         }
 
         public void ActivateInventoryUI()

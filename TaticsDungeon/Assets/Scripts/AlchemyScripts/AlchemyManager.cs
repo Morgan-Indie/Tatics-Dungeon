@@ -17,8 +17,7 @@ namespace PrototypeGame
     public enum AlchemyChangeType { Heat, Solid, Liquid, Gas, Bless, Shock }
 
     public class AlchemyManager : MonoBehaviour
-    {
-        
+    {        
      //   enum ChangeValues { Gas, Liquid, Solid, Blessed, Fire, Shock};
       //  List<ChangeValues> changeValues;
 
@@ -144,7 +143,7 @@ namespace PrototypeGame
             ApplyHeatInternal(cellState);
             ApplyVFX(cellState);
             if (cell.occupyingObject != null)
-                cell.occupyingObject.GetComponent<CharacterStateManager>();
+                cell.occupyingObject.GetComponent<CharacterStateManager>().ApplyHeat();
         }
         void ApplyHeatInternal(CellAlchemyState cellState, int itters = 1)
         {
@@ -167,7 +166,7 @@ namespace PrototypeGame
             ApplyChillInternal(cellState);
             ApplyVFX(cellState);
             if (cell.occupyingObject != null)
-                cell.occupyingObject.GetComponent<CharacterStateManager>();
+                cell.occupyingObject.GetComponent<CharacterStateManager>().ApplyChill();
         }
         void ApplyChillInternal(CellAlchemyState cellState, int itters = 1)
         {
@@ -194,7 +193,7 @@ namespace PrototypeGame
             ApplyShockInternal(cellState);
             ApplyVFX(cellState);
             if (cell.occupyingObject != null)
-                cell.occupyingObject.GetComponent<CharacterStateManager>();
+                cell.occupyingObject.GetComponent<CharacterStateManager>().ApplyShock();
         }
         void ApplyShockInternal(CellAlchemyState cellState)
         {

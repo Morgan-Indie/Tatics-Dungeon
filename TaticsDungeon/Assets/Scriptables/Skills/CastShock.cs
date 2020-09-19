@@ -26,6 +26,10 @@ namespace PrototypeGame
         public override void Excute(float delta, GridCell targetCell)
         {
             AlchemyManager.Instance.ApplyShock(targetCell);
+            if (targetCell.occupyingObject != null)
+            {
+                combatUtils.HandleAlchemicalSkill(targetCell.occupyingObject.GetComponent<CharacterStats>(), this);
+            }
         }
     }
 }

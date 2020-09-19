@@ -26,18 +26,10 @@ namespace PrototypeGame
         public override void Excute(float delta, GridCell targetCell)
         {
             AlchemyManager.Instance.ApplyChill(targetCell);
-            /*
             if (targetCell.occupyingObject != null)
             {
-                CharacterStats targetStats = targetCell.occupyingObject.GetComponent<CharacterStats>();
-                combatUtils.HandleAlchemicalSkill(targetStats, this);
-                if (targetCell.alchemyState.solidState != SolidPhaseState.Dry)
-                    combatUtils.SetChillInteractions(targetStats, targetCell, true);
-                else
-                    combatUtils.SetChillInteractions(targetStats, targetCell);
-                combatUtils.HandleAlchemicalSkill(targetStats, this);
+                combatUtils.HandleAlchemicalSkill(targetCell.occupyingObject.GetComponent<CharacterStats>(), this);
             }
-            */
         }
     }
 }
