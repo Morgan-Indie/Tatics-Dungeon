@@ -14,6 +14,7 @@ namespace PrototypeGame
         public GameObject ShockVFX;
         public GameObject PoisonVFX;
         public List<GameObject> BloodVFXs;
+        public Vector3 VFXoffset;
 
         public void Awake()
         {

@@ -96,5 +96,7 @@ namespace PrototypeGame
                 else { GameManager.instance.AddAffectedCell(this); }
             }
         }
+
+
     }
 }

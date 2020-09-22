@@ -168,7 +168,7 @@ namespace PrototypeGame
             Noise noise = new Noise();
             Vector3 position;
             position.x = x * GridMetrics.squareSize + xs * gridMap.maxMeshSize * GridMetrics.squareSize;
-            position.y = 0f;
+            position.y = gridMap.mapCells[gridMap.maxMeshSize * y + z].height[xs * gridMap.maxMeshSize + x];
             position.z = z * GridMetrics.squareSize + y * gridMap.maxMeshSize * GridMetrics.squareSize;
 
             GridCell cell = cells[x, z] = Instantiate<GridCell>(cellPrefab);
@@ -260,6 +260,8 @@ namespace PrototypeGame
 
         public void UpdateSpecificCells(Vector3 position, int range)
         {
+            UpdateMeshes();
+            return;
             int x = Mathf.FloorToInt((position.x + GridMetrics.squareSize / 2) / GridMetrics.squareSize);
             int z = Mathf.FloorToInt((position.z + GridMetrics.squareSize / 2) / GridMetrics.squareSize);
             int lowerX = x - range >= 0 ? Mathf.FloorToInt((x - range) / gridMap.maxMeshSize) : 0;

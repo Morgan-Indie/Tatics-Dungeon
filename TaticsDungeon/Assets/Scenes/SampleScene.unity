@@ -7002,6 +7002,7 @@ MonoBehaviour:
   ShockVFX: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570, type: 3}
   PoisonVFX: {fileID: 1471001059461388, guid: c1d501f0836891042af0a9b9060d3ff2, type: 3}
   BloodVFXs: []
+  VFXoffset: {x: 0, y: 1, z: 0}
 --- !u!224 &2143576071
 RectTransform:
   m_ObjectHideFlags: 0

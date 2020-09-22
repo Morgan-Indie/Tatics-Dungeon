@@ -144,7 +144,7 @@ namespace PrototypeGame
             ApplyHeatInternal(cellState);
             ApplyVFX(cellState);
             if (cell.occupyingObject != null)
-                cell.occupyingObject.GetComponent<CharacterStateManager>();
+                cell.occupyingObject.GetComponent<CharacterStateManager>().ApplyHeat();
         }
         void ApplyHeatInternal(CellAlchemyState cellState, int itters = 1)
         {
@@ -167,7 +167,7 @@ namespace PrototypeGame
             ApplyChillInternal(cellState);
             ApplyVFX(cellState);
             if (cell.occupyingObject != null)
-                cell.occupyingObject.GetComponent<CharacterStateManager>();
+                cell.occupyingObject.GetComponent<CharacterStateManager>().ApplyChill();
         }
         void ApplyChillInternal(CellAlchemyState cellState, int itters = 1)
         {
@@ -194,7 +194,7 @@ namespace PrototypeGame
             ApplyShockInternal(cellState);
             ApplyVFX(cellState);
             if (cell.occupyingObject != null)
-                cell.occupyingObject.GetComponent<CharacterStateManager>();
+                cell.occupyingObject.GetComponent<CharacterStateManager>().ApplyShock();
         }
         void ApplyShockInternal(CellAlchemyState cellState)
         {
@@ -436,6 +436,24 @@ namespace PrototypeGame
                 }
             }
             cellState.UpdateInternalState();
+        }
+
+        public void ApplyCellToPlayer(CellAlchemyState cell, CharacterStateManager character)
+        {
+            if (cell.isDry)
+                return;
+            if (cell.gasState == GasPhaseState.Poison)
+                character.ApplyPoison();
+            if (cell.gasState == GasPhaseState.Water)
+                character.ApplyWet();
+            if (cell.shockState == ShockState.Shocked)
+                character.ApplyShock();
+            if (cell.fireState == FireState.Chill)
+                character.ApplyChill();
+            if (cell.fireState == FireState.Burning)
+                character.ApplyHeat();
+            if (cell.fireState == FireState.Inferno)
+                character.ApplyInferno();
         }
     }
 }

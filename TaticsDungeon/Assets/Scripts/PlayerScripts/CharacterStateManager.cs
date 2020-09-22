@@ -115,7 +115,7 @@ namespace PrototypeGame
                 }
                 if (newEffect != null)
                 {
-                    GameObject ob = Instantiate(newEffect, transform.position, Quaternion.identity);
+                    GameObject ob = Instantiate(newEffect, transform.position + ActivateVFX.Instance.VFXoffset, Quaternion.identity);
                     ob.transform.SetParent(transform);
                     statusVFX.Add(status, ob);
                 }
@@ -137,6 +137,7 @@ namespace PrototypeGame
 
         public void ApplyHeat()
         {
+
             bool statusChanged = false;
             if (statusEffects.Contains(StatusEffect.Wet))
             {
@@ -157,6 +158,18 @@ namespace PrototypeGame
             }
             if (!statusChanged)
                 AddStatus(StatusEffect.Burning, AlchemyManager.Instance.playerBurnTime);
+        }
+
+        public void ApplyInferno()
+        {
+            if (statusEffects.Contains(StatusEffect.Burning))
+                RemoveStatus(StatusEffect.Burning);
+            if (statusEffects.Contains(StatusEffect.Wet))
+                RemoveStatus(StatusEffect.Wet);
+            if (statusEffects.Contains(StatusEffect.Oiled))
+                RemoveStatus(StatusEffect.Oiled);
+
+            AddStatus(StatusEffect.Inferno, AlchemyManager.Instance.playerInfernoTime);
         }
 
         public void ApplyChill()

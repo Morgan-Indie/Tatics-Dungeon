@@ -18,6 +18,7 @@ namespace PrototypeGame
         CombatUtils combatUtils;
         CharacterStats characterStats;
         Rigidbody characterRigidbody;
+        CharacterStateManager characterStateManager;
 
         public Vector3 moveLocation=Vector3.up;
 
@@ -50,6 +51,7 @@ namespace PrototypeGame
             characterRigidBody = GetComponent<Rigidbody>();
             characterStats = GetComponent<CharacterStats>();
             characterRigidbody = GetComponent<Rigidbody>();
+            characterStateManager = GetComponent<CharacterStateManager>();
 
             SetCurrentCell();
             triggerCollider.enabled = false;
@@ -199,6 +201,7 @@ namespace PrototypeGame
 
             else
             {
+                AlchemyManager.Instance.ApplyCellToPlayer(GridManager.Instance.GetCellByIndex(path[currentPathIndex]).GetComponent<CellAlchemyState>(), characterStateManager);
                 if ((ReachedPosition(transform.position, nextPos)))
                 {
                     currentPathIndex++;

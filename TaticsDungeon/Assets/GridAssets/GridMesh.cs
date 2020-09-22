@@ -92,7 +92,7 @@ namespace PrototypeGame
                 for (int n = 0; n < GridMetrics.sectionsPerSquare; n++)
                 {
                     //  Vector3[] heightOffsets = NeighborCompensatedHeightCalc(cell, new IntVector2(n, i)); 
-                    Vector3 increment = new Vector3(sectionSize * n, 0, sectionSize * i);
+                    Vector3 increment = new Vector3(sectionSize * n, cell.height * GridMetrics.heightIncrement, sectionSize * i);
                     AddTriangle(t1[0] + increment, t1[1] + increment, t1[2] + increment);
                     AddTriangleColor(cell.GetColor());
                     AddTriangle(t2[0] + increment, t2[1] + increment, t2[2] + increment);

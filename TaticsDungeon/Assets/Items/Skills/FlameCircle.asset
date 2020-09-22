@@ -18,7 +18,7 @@ MonoBehaviour:
   LevelRequired: 0
   APcost: 3
   type: 8
-  castType: 1
+  castType: 0
   coolDown: 3
   skillScriptObject: {fileID: 7238685604395584421, guid: 970a0a54ab1a4dd4e99aba651f40f986,
     type: 3}
