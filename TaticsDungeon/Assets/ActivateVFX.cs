@@ -53,6 +53,13 @@ namespace PrototypeGame
                     break;
             }
         }
+
+        public void ActivateHealingEffect(GameObject target)
+        {
+            GameObject healEffect = Instantiate(HealingVFX) as GameObject;
+            healEffect.transform.position = target.transform.position + Vector3.up * .5f;
+            healEffect.transform.SetParent(target.transform);
+            Destroy(healEffect, 2f);
+        }
     }
 }
-

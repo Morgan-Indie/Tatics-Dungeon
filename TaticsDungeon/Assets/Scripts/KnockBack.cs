@@ -29,8 +29,9 @@ namespace PrototypeGame
         {
             TaticalMovement taticalMovement = animator.GetComponent<TaticalMovement>();
             animator.transform.position = targetPosition;
-            taticalMovement.moveLocation = Vector3.up;
-            targetPosition = Vector3.up;
+            taticalMovement.UpdateGridState();
+            //taticalMovement.moveLocation = Vector3.up;
+            //targetPosition = Vector3.up;
             animator.GetComponent<StatusVFX>().StunVFXPlay();
         }
 

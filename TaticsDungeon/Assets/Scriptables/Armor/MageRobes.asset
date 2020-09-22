@@ -17,21 +17,21 @@ MonoBehaviour:
   ID: 0
   type: 0
   description: Mage Robes
-  pickedUp: 0
+  pickedUp: 1
   modelPrefab: {fileID: 0}
-  equipped: 0
+  equipped: 1
   slotType: 6
   equipmentType: 7
   range: 0
   itemMeshLocs: 0b000000100000000e000000
   itemMeshesMale:
   - {fileID: 4300492, guid: 038320a534bd8b444b43734860d1a211, type: 3}
-  - {fileID: 4300584, guid: 038320a534bd8b444b43734860d1a211, type: 3}
-  - {fileID: 4300544, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4300602, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4300562, guid: 038320a534bd8b444b43734860d1a211, type: 3}
   itemMeshesFemale:
   - {fileID: 4301442, guid: 038320a534bd8b444b43734860d1a211, type: 3}
-  - {fileID: 4301894, guid: 038320a534bd8b444b43734860d1a211, type: 3}
-  - {fileID: 4301856, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4301912, guid: 038320a534bd8b444b43734860d1a211, type: 3}
+  - {fileID: 4301874, guid: 038320a534bd8b444b43734860d1a211, type: 3}
   _scaleValueStrength: 0
   _scaleValueVitality: 0
   _scaleValueDexterity: 0

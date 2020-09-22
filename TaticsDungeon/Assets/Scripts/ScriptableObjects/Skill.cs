@@ -15,7 +15,8 @@ namespace PrototypeGame
         Curse,
         Bless,
         Oil,
-        Chill
+        Chill,
+        Healing,
     }
 
     public enum CharacterClass
@@ -44,6 +45,7 @@ namespace PrototypeGame
         CastPoison,
         CastPhysical,
         EnergyBall,
+        CastHeal,
     };
 
     [System.Serializable]

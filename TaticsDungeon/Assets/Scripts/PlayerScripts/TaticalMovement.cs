@@ -8,7 +8,6 @@ namespace PrototypeGame
     {
         [Header("Required")]
         public GridMapAdapter mapAdapter;
-        public Collider triggerCollider;
 
         InputHandler inputHandler;
         Transform characterTransform;
@@ -43,7 +42,7 @@ namespace PrototypeGame
         // Start is called before the first frame update
         void Start()
         {
-            combatUtils = GetComponent<CombatUtils>();            
+            combatUtils = GetComponent<CombatUtils>();
             stateManager = GetComponent<CharacterStateManager>();
             characterTransform = transform;
             isometricCamera = Camera.main;
@@ -54,7 +53,6 @@ namespace PrototypeGame
             characterStateManager = GetComponent<CharacterStateManager>();
 
             SetCurrentCell();
-            triggerCollider.enabled = false;
         }
 
         public void SetCurrentIndex()
@@ -62,7 +60,7 @@ namespace PrototypeGame
             currentIndex = mapAdapter.GetIndexByPos(transform.position);
         }
         public void SetCurrentCell()
-        {                           
+        {
             SetCurrentIndex();
             currentCell = mapAdapter.GetCellByIndex(currentIndex);
             currentCell.SetOccupyingObject(this.gameObject);
@@ -78,11 +76,11 @@ namespace PrototypeGame
         }
 
         public void UpdateGridState()
-        {            
+        {
             currentCell.SetOccupyingObject(null);
-            
+
             currentCell.state=CellState.open;
-            GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
+            //GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
             SetCurrentCell();
             //Debug.Log(characterStats.characterName+" Grid State Updated");
         }
@@ -123,7 +121,7 @@ namespace PrototypeGame
             }
             else
                 return -1;
-        }        
+        }
 
         public void PrintPath(List<IntVector2> path)
         {
@@ -169,7 +167,7 @@ namespace PrototypeGame
 
             if (cell.isStairs)
                 moveLocation += Vector3.up * .75f;
-            
+
             characterStats.UseAP(distance);
             stateManager.characterAction = CharacterAction.Moving;
             stateManager.characterState = CharacterState.IsInteracting;
@@ -177,7 +175,7 @@ namespace PrototypeGame
             currentPathIndex = 1;
 
             SetNextPos(path[currentPathIndex]);
-            //Debug.Log(characterStats.characterName + " Setting Destination");    
+            //Debug.Log(characterStats.characterName + " Setting Destination");
         }
 
         public void TraverseToDestination(float delta)
@@ -225,7 +223,7 @@ namespace PrototypeGame
         }
 
         public void ExcuteMovement(float delta)
-        {            
+        {
             if (stateManager.characterAction == CharacterAction.Moving)
                 TraverseToDestination(delta);
             else
@@ -237,15 +235,15 @@ namespace PrototypeGame
                     if (!index.Equals(prevIndex))
                         path = NavigationHandler.instance.GetPath(currentNavDict, index, currentIndex);
 
-                    int distance = GetRequiredMoves(index,path);                    
+                    int distance = GetRequiredMoves(index,path);
                     if (characterStats.currentAP >= distance && currentNavDict.ContainsKey(index))
                     {
                         if (!index.Equals(prevIndex))
                             GridManager.Instance.HighlightPathWithList(path);
-                        if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput) 
+                        if ((Input.GetMouseButtonDown(0) || InputHandler.instance.tacticsXInput)
                             && stateManager.characterAction == CharacterAction.None)
-                        {                           
-                            SetTargetDestination(index, distance);                            
+                        {
+                            SetTargetDestination(index, distance);
                         }
                     }
                 }
@@ -257,12 +255,5 @@ namespace PrototypeGame
         {
             skillScript.Activate(delta);
         }
-
-        public void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.tag == "Enemy"|| other.gameObject.tag == "Player")
-                stateManager.skillColliderTiggered = true;
-        }
     }
 }
-

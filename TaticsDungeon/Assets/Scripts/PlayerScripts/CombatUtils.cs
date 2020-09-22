@@ -56,6 +56,7 @@ namespace PrototypeGame
             int damageDeltPoison = outputDamage.poison - (int)targetStats.poisonResistance.Value;
 
             int totalDamage = damageDeltPierce + damageDeltPoison + damageDeltNormal + damageDeltWater + damageDeltFire + damageDeltShock;
+            totalDamage = totalDamage>0 ? totalDamage: 0;
             targetStats.TakeDamage(totalDamage);
         }
 

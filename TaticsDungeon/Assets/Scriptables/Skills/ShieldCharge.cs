@@ -10,7 +10,7 @@ namespace PrototypeGame
         public Vector3 targetDirection;
         public Vector3 targetPos;
         public IntVector2 targetIndex;
-        public bool animationCompleted;
+        public bool reachedTarget=false;
 
         public Rigidbody characterRigidBody;
         public CharacterStateManager stateManager;
@@ -30,56 +30,47 @@ namespace PrototypeGame
             return shieldCharge;
         }
 
+        public void EndCast()
+        {
+            reachedTarget = true;
+            //Excute(Time.deltaTime);
+            characterRigidBody.velocity = Vector3.zero;
+            characterRigidBody.position = targetPos;
+            characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
+            animationHandler.PlayTargetAnimation("CombatIdle");
+            taticalMovement.UpdateGridState();
+            taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
+            taticalMovement.SetCurrentNavDict();
+            targetCell = null;
+        }
+
         public override void Cast(float delta, IntVector2 _targetIndex)
         {
-            if (stateManager.characterAction == CharacterAction.ShieldCharge)
+            targetIndex = _targetIndex;
+            List<GridCell> cells = PinnedShapes.GetPinnedCells(skill,taticalMovement.currentIndex , targetIndex);
+            animationHandler.PlayTargetAnimation("ShieldCharge");
+            characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation| RigidbodyConstraints.FreezePositionY;
+            characterStats.UseAP(skill.APcost);
+
+            foreach (GridCell cell in cells)
             {
-                characterRigidBody.velocity = 5f * targetDirection;
-
-                if (stateManager.skillColliderTiggered)
-                {                    
-                    if (target.tag == "Enemy" || target.tag == "Player")
-                    {
-                        Excute(delta, targetCell);
-                    }
-                    stateManager.skillColliderTiggered = false;
-                }
-
-                if (taticalMovement.ReachedPosition(taticalMovement.transform.position, targetPos))
+                if (cell.occupyingObject != null && cell.occupyingObject!=this.gameObject)
                 {
-                    characterRigidBody.velocity = Vector3.zero;
-                    characterRigidBody.position = targetPos;
-                    characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
-                    animationHandler.animator.SetBool("TransitionToCombatIdle", true);
-                    taticalMovement.UpdateGridState();
-                    taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
-                    taticalMovement.SetCurrentNavDict();
+                    target = cell.occupyingObject;
+                    targetCell = cell;
+                    break;
                 }
             }
 
-            else
-            {
-                targetIndex = _targetIndex;
-                List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
-                animationHandler.PlayTargetAnimation("ShieldCharge");
-                characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-                characterStats.UseAP(skill.APcost);
-                foreach (GridCell cell in cells)
-                {
-                    if (cell.occupyingObject != null)
-                    {
-                        target = cell.occupyingObject;
-                        targetCell = cell;
-                        break;
-                    }
-                }
-                if (targetCell == null)
-                    targetCell = cells[cells.Count - 1];
+            if (targetCell == null)
+                targetCell = cells[cells.Count-1];
 
-                targetPos = targetCell.transform.position;
-                targetDirection = (targetPos - characterStats.transform.position).normalized;
-                characterStats.transform.LookAt(targetPos);
-            }            
+            targetPos = targetCell.transform.position;
+            targetCell.index.Print();
+            targetDirection = (targetPos - taticalMovement.currentCell.transform.position);
+            targetDirection.y = 0f;
+            targetDirection.Normalize();
+            characterStats.transform.LookAt(targetPos);
         }
 
         public override void Excute(float delta, GridCell targetCell)
@@ -98,6 +89,12 @@ namespace PrototypeGame
             target.GetComponent<CharacterStats>().TakeDamage(damage);
             target.GetComponent<TaticalMovement>().moveLocation = target.transform.position + 1.5f * targetDirection;
             target.GetComponent<AnimationHandler>().PlayTargetAnimation("StumbleAndFall");
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Enemy" || other.tag == "Player")
+                Excute(Time.deltaTime);
         }
     }
 }

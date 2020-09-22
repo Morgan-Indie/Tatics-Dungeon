@@ -18,13 +18,18 @@ namespace PrototypeGame
             taticalMovement = animator.GetComponent<TaticalMovement>();
             stateManager.characterAction = CharacterAction.ShieldCharge;
             stateManager.characterState = CharacterState.IsInteracting;
-            taticalMovement.triggerCollider.enabled = true;
+            shieldCharge.GetComponent<Collider>().isTrigger = true;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            shieldCharge.Cast(Time.deltaTime, shieldCharge.targetIndex);
+            shieldCharge.characterRigidBody.velocity = 5f * shieldCharge.targetDirection;
+
+            if (taticalMovement.ReachedPosition(taticalMovement.transform.position, shieldCharge.targetPos)&& !shieldCharge.reachedTarget)
+            {
+                shieldCharge.EndCast();
+            }
         }
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
@@ -32,7 +37,8 @@ namespace PrototypeGame
         {
             stateManager.characterAction = CharacterAction.None;
             stateManager.characterState = CharacterState.Ready;
-            taticalMovement.triggerCollider.enabled = false;
+            shieldCharge.reachedTarget = false;
+            shieldCharge.GetComponent<Collider>().isTrigger = false;
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()
