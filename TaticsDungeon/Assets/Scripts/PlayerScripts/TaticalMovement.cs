@@ -18,6 +18,7 @@ namespace PrototypeGame
         CharacterStats characterStats;
         Rigidbody characterRigidbody;
         CharacterStateManager characterStateManager;
+        PlayerManager playerManager;
 
         public Vector3 moveLocation=Vector3.up;
 
@@ -51,6 +52,7 @@ namespace PrototypeGame
             characterStats = GetComponent<CharacterStats>();
             characterRigidbody = GetComponent<Rigidbody>();
             characterStateManager = GetComponent<CharacterStateManager>();
+            playerManager = GetComponent<PlayerManager>();
 
             SetCurrentCell();
         }

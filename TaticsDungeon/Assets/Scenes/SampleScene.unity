@@ -7179,6 +7179,7 @@ MonoBehaviour:
   PoisonVFX: {fileID: 1471001059461388, guid: c1d501f0836891042af0a9b9060d3ff2, type: 3}
   BloodVFXs: []
   HealingVFX: {fileID: 1881552412633134, guid: da7875cab77480d49972b42ca872af40, type: 3}
+  VFXoffset: {x: 0, y: 0.75, z: 0}
 --- !u!224 &2143576071
 RectTransform:
   m_ObjectHideFlags: 0
