@@ -27,7 +27,7 @@ namespace PrototypeGame
         //  int team1units = 3;
         //  int team2units = 3;
 
-        GridMapAdapter mapAdapter;
+        public GridMapAdapter mapAdapter;
         public GameObject roomTranistionPrefab;
         List<GameObject> roomTransitions;
 

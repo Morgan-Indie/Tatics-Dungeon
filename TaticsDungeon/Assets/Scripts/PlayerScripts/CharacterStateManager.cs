@@ -10,19 +10,9 @@ namespace PrototypeGame
         Ready,InMenu, IsInteracting,Dead
     }
 
-    public enum StatusEffect
-    {
-        None, Burning, Inferno, Frozen, Shocked, Poisoned, Cursed, Blessed, Wet , Oiled, Electricuted
-    }
-
     public enum CharacterAction
     {
         None, Attacking, Moving,LyingDown, ShieldCharge
-    }
-
-    public enum PassiveActions
-    {
-        Guardian,
     }
 
     public class CharacterStateManager : MonoBehaviour
@@ -40,7 +30,6 @@ namespace PrototypeGame
         public Dictionary<object, (CombatStatType,int)> DamageSourceTurns = new Dictionary<object, (CombatStatType, int)>();
         public int burnDamage;
         public int poisonDamage;
-        public Dictionary<PassiveActions,int> passiveActions = new Dictionary<PassiveActions, int>();
 
         public void Start()
         {
@@ -78,16 +67,6 @@ namespace PrototypeGame
             }
         }
 
-        public void UpdatePassiveActions()
-        {
-            foreach (PassiveActions action in passiveActions.Keys.ToArray())
-            {
-                passiveActions[action] -= 1;
-                if (passiveActions[action] == 0)
-                    passiveActions.Remove(action);
-            }
-        }
-
         public void UpdateTurns()
         {
             UpdateStatusDamageTurns();
@@ -98,7 +77,6 @@ namespace PrototypeGame
                 characterStats.TakeDamage((int)burnDamageOverTime.Value - (int)characterStats.fireResistance.Value);
             }
 
-            UpdatePassiveActions();
             IncrementStatuses();
         }
 
@@ -119,33 +97,33 @@ namespace PrototypeGame
             foreach (StatusEffect status in removes) { statusEffects.Remove(status); }
         }
 
-        public void AddStatus(StatusEffect status, int turns)
-        {
-            if (!statusEffects.Contains(status))
-            {
-                statusEffects.Add(status);
-                statusTimers.Add(status, turns);
-                GameObject newEffect = null;
-                switch (status)
-                {
-                    case StatusEffect.Burning: newEffect = ActivateVFX.Instance.FireVFX; break;
-                    case StatusEffect.Wet: newEffect = ActivateVFX.Instance.WetVFX; break;
-                    case StatusEffect.Oiled: newEffect = ActivateVFX.Instance.OilVFX; break;
-                    case StatusEffect.Inferno: newEffect = ActivateVFX.Instance.InfernoVFX; break;
-                    case StatusEffect.Poisoned: newEffect = ActivateVFX.Instance.PoisonVFX; break;
-                    case StatusEffect.Shocked: newEffect = ActivateVFX.Instance.ShockVFX; break;
-                }
-                if (newEffect != null)
-                {
-                    GameObject ob = Instantiate(newEffect, transform.position, Quaternion.identity);
-                    ob.transform.SetParent(transform);
-                    statusVFX.Add(status, ob);
-                }
-            } else
-            {
-                statusTimers[status] = turns;
-            }
-        }
+        //public void AddStatus(StatusEffect status, int turns)
+        //{
+        //    if (!statusEffects.Contains(status))
+        //    {
+        //        statusEffects.Add(status);
+        //        statusTimers.Add(status, turns);
+        //        GameObject newEffect = null;
+        //        switch (status)
+        //        {
+        //            case StatusEffect.Burning: newEffect = ActivateVFX.Instance.FireVFX; break;
+        //            case StatusEffect.Wet: newEffect = ActivateVFX.Instance.WetVFX; break;
+        //            case StatusEffect.Oiled: newEffect = ActivateVFX.Instance.OilVFX; break;
+        //            case StatusEffect.Inferno: newEffect = ActivateVFX.Instance.InfernoVFX; break;
+        //            case StatusEffect.Poisoned: newEffect = ActivateVFX.Instance.PoisonVFX; break;
+        //            case StatusEffect.Shocked: newEffect = ActivateVFX.Instance.ShockVFX; break;
+        //        }
+        //        if (newEffect != null)
+        //        {
+        //            GameObject ob = Instantiate(newEffect, transform.position, Quaternion.identity);
+        //            ob.transform.SetParent(transform);
+        //            statusVFX.Add(status, ob);
+        //        }
+        //    } else
+        //    {
+        //        statusTimers[status] = turns;
+        //    }
+        //}
 
         public void RemoveStatus(StatusEffect status)
         {
@@ -155,86 +133,6 @@ namespace PrototypeGame
                 statusTimers.Remove(status);
                 statusVFX.Remove(status);
             }
-        }
-
-        public void ApplyHeat()
-        {
-            bool statusChanged = false;
-            if (statusEffects.Contains(StatusEffect.Wet))
-            {
-                RemoveStatus(StatusEffect.Wet);
-                statusChanged = true;
-            }
-            if (statusEffects.Contains(StatusEffect.Oiled))
-            {
-                RemoveStatus(StatusEffect.Oiled);
-                AddStatus(StatusEffect.Inferno, AlchemyManager.Instance.playerInfernoTime);
-                statusChanged = true;
-            }
-            if (statusEffects.Contains(StatusEffect.Frozen))
-            {
-                RemoveStatus(StatusEffect.Frozen);
-                AddStatus(StatusEffect.Wet, AlchemyManager.Instance.playerWetTime);
-                statusChanged = true;
-            }
-            if (!statusChanged)
-                AddStatus(StatusEffect.Burning, AlchemyManager.Instance.playerBurnTime);
-        }
-
-        public void ApplyChill()
-        {
-           // bool statusChanged = false;
-            if (statusEffects.Contains(StatusEffect.Burning))
-                RemoveStatus(StatusEffect.Burning);
-                //statusChanged = true;
-            if (statusEffects.Contains(StatusEffect.Inferno))
-                RemoveStatus(StatusEffect.Inferno);
-                //statusChanged = true;
-            if (statusEffects.Contains(StatusEffect.Wet))
-                RemoveStatus(StatusEffect.Wet);
-                AddStatus(StatusEffect.Frozen, AlchemyManager.Instance.playerFrozenTime);
-               // statusChanged = true;
-
-        }
-
-        public void ApplyWet()
-        {
-            bool applyWater = true;
-            if (statusEffects.Contains(StatusEffect.Burning))
-                RemoveStatus(StatusEffect.Burning);
-                applyWater = false;
-            if (statusEffects.Contains(StatusEffect.Inferno))
-                RemoveStatus(StatusEffect.Inferno);
-                applyWater = false;
-            if (statusEffects.Contains(StatusEffect.Oiled))
-                RemoveStatus(StatusEffect.Oiled);
-            if (applyWater)
-                AddStatus(StatusEffect.Wet, AlchemyManager.Instance.playerWetTime);
-        }
-
-        public void ApplyOil()
-        {
-            bool applyOil = true;
-            if (statusEffects.Contains(StatusEffect.Inferno))
-                applyOil = false;
-            if (statusEffects.Contains(StatusEffect.Burning))
-                RemoveStatus(StatusEffect.Burning);
-                AddStatus(StatusEffect.Inferno, AlchemyManager.Instance.playerInfernoTime);
-                applyOil = false;
-            if (statusEffects.Contains(StatusEffect.Wet))
-                RemoveStatus(StatusEffect.Wet);
-            if (applyOil)
-                AddStatus(StatusEffect.Oiled, AlchemyManager.Instance.playerOilTime);
-        }
-
-        public void ApplyPoison()
-        {
-            AddStatus(StatusEffect.Poisoned, AlchemyManager.Instance.playerPoisonTime);
-        }
-
-        public void ApplyShock()
-        {
-            AddStatus(StatusEffect.Shocked, AlchemyManager.Instance.playerShockTime);
         }
     }
 }

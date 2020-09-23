@@ -26,7 +26,7 @@ namespace PrototypeGame
         public Dictionary<string, SkinnedMeshRenderer> equipmentsMeshDict = new Dictionary<string, SkinnedMeshRenderer>();
         public GameObject facialFeatures;
 
-        private void Start()
+        private void Awake()
         {
             equipmentSlotManager = GetComponentInChildren<EquipmentSlotManager>();
             foreach (InventorySlot itemSlot in equipmentSlotManager.equipedItems)

@@ -458,6 +458,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 199545219481404436, guid: 5d31a5b9b348544439d8079453188ecc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d31a5b9b348544439d8079453188ecc, type: 3}
 --- !u!1 &503467025 stripped
@@ -2208,13 +2213,25 @@ PrefabInstance:
     - target: {fileID: 5012251641638902140, guid: 29586e19ecbd3f6409db602728730958,
         type: 3}
       propertyPath: skills.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5012251641638902140, guid: 29586e19ecbd3f6409db602728730958,
         type: 3}
       propertyPath: skills.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 1aeb6016d0fffe14cb13b6ed1f6d9530,
+      objectReference: {fileID: 11400000, guid: ee02113a17a6c424f8c5a37a394371f2,
+        type: 2}
+    - target: {fileID: 5012251641638902140, guid: 29586e19ecbd3f6409db602728730958,
+        type: 3}
+      propertyPath: skills.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9507fc0bd2cbb194f9773a8ba73108c2,
+        type: 2}
+    - target: {fileID: 5012251641638902140, guid: 29586e19ecbd3f6409db602728730958,
+        type: 3}
+      propertyPath: skills.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3a165c235ba95004b8aa98c4e6981fb7,
         type: 2}
     - target: {fileID: 5069317821699243155, guid: 29586e19ecbd3f6409db602728730958,
         type: 3}
@@ -2597,7 +2614,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.8
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3510,13 +3527,19 @@ PrefabInstance:
     - target: {fileID: 5012251641638902140, guid: 90320c8ea753782449d11fa3a8de6c3b,
         type: 3}
       propertyPath: skills.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5012251641638902140, guid: 90320c8ea753782449d11fa3a8de6c3b,
         type: 3}
       propertyPath: skills.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 59752e3534fc8bb4284f821a4c9b4f38,
+        type: 2}
+    - target: {fileID: 5012251641638902140, guid: 90320c8ea753782449d11fa3a8de6c3b,
+        type: 3}
+      propertyPath: skills.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 18283dbd2ae83614ba6e48b6cd2fd9b4,
         type: 2}
     - target: {fileID: 5069317821699243155, guid: 90320c8ea753782449d11fa3a8de6c3b,
         type: 3}
@@ -4637,6 +4660,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4347284167483555766, guid: c8b74629850b4944b81391306c65de8d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4347372243464129584, guid: c8b74629850b4944b81391306c65de8d,
         type: 3}
       propertyPath: m_TagString
@@ -4646,6 +4674,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447918577059529716, guid: c8b74629850b4944b81391306c65de8d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8b74629850b4944b81391306c65de8d, type: 3}
@@ -5073,6 +5106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df893205a7ef7b4191f1347c51655ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapAdapter: {fileID: 0}
   roomTranistionPrefab: {fileID: 2600087256740156317, guid: fd42d7bd9de97bf43813c227d0318510,
     type: 3}
   gridHolder: {fileID: 1440485450}
@@ -5435,7 +5469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1440485451
 Transform:
   m_ObjectHideFlags: 0
@@ -5521,6 +5555,11 @@ PrefabInstance:
         type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199719811051971104, guid: ed67c2cb8e3a7fb418c6fbb1b001dce2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed67c2cb8e3a7fb418c6fbb1b001dce2, type: 3}
@@ -6413,6 +6452,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangerFemale
       objectReference: {fileID: 0}
+    - target: {fileID: 5012251641638902140, guid: 72879516dd2f96d44ac8e96c3bd38db9,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5012251641638902140, guid: 72879516dd2f96d44ac8e96c3bd38db9,
+        type: 3}
+      propertyPath: skills.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: a198a150943026140b6994e3a913cffe,
+        type: 2}
+    - target: {fileID: 5012251641638902140, guid: 72879516dd2f96d44ac8e96c3bd38db9,
+        type: 3}
+      propertyPath: skills.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5c7a515c3efcc594393f8fb654664582,
+        type: 2}
     - target: {fileID: 5069317821699243155, guid: 72879516dd2f96d44ac8e96c3bd38db9,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -6832,6 +6888,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 199374299317278798, guid: e35f4911d07c78949bd6fcee2e707765,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199799585530978282, guid: e35f4911d07c78949bd6fcee2e707765,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e35f4911d07c78949bd6fcee2e707765, type: 3}
 --- !u!1 &1767703826 stripped
@@ -6935,6 +7001,11 @@ PrefabInstance:
         type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199800286776331750, guid: 4430919f14c50f84085d287cbcb2c30e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4430919f14c50f84085d287cbcb2c30e, type: 3}
@@ -7137,9 +7208,9 @@ GameObject:
   - component: {fileID: 2143576067}
   - component: {fileID: 2143576069}
   - component: {fileID: 2143576073}
-  - component: {fileID: 2143576075}
   - component: {fileID: 2143576072}
   - component: {fileID: 2143576070}
+  - component: {fileID: 2143576074}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -7190,10 +7261,8 @@ MonoBehaviour:
   characterStatusLayout: {fileID: 0}
   UIcam: {fileID: 0}
   UIcamLight: {fileID: 0}
-  alchemyManager: {fileID: 0}
   currentCharacter: {fileID: 0}
   currentEnemy: {fileID: 0}
-  statusAffectedCells: []
   playerIndex: 0
   enemyIndex: 0
   Turn: 1
@@ -7231,15 +7300,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781c3960b41e8a7428135d47e09132dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireVFX: {fileID: 1648978194837340, guid: c3039019fa1c65840b1b35eed158363c, type: 3}
-  WetVFX: {fileID: 5478021774202754969, guid: c1b743f196eec564fbc235356c54549e, type: 3}
-  OilVFX: {fileID: 4962391677518018257, guid: 3c5a1044254597a40b0f47b74bb36778, type: 3}
-  InfernoVFX: {fileID: 1715509065656949344, guid: bbfdbe3674981724e88f16ebe23dc342,
+  FireVFXCharacter: {fileID: 1648978194837340, guid: c3039019fa1c65840b1b35eed158363c,
     type: 3}
-  ShockVFX: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570, type: 3}
-  PoisonVFX: {fileID: 1471001059461388, guid: c1d501f0836891042af0a9b9060d3ff2, type: 3}
+  WetVFXCharacter: {fileID: 5478021774202754969, guid: c1b743f196eec564fbc235356c54549e,
+    type: 3}
+  OilVFXCharacter: {fileID: 4962391677518018257, guid: 3c5a1044254597a40b0f47b74bb36778,
+    type: 3}
+  InfernoVFXCharacter: {fileID: 1208781713066404, guid: aafad909270f83046bc79c06fe30321a,
+    type: 3}
+  ShockVFXCharacter: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570,
+    type: 3}
+  PoisonVFXCharacter: {fileID: 1447051283816784, guid: 61400dcd69108c64b970eb523f3d1783,
+    type: 3}
+  FrozenVFXCharacter: {fileID: 1202128272935260579, guid: a2de7477c7e43d84bb3e44a9bb893e4f,
+    type: 3}
+  FireVFXCell: {fileID: 1151502900046148, guid: d5e400a2a0d155d4db9970614680534f,
+    type: 3}
+  WetVFXCell: {fileID: 342596010867634176, guid: c7f6253b371700240a59edfb44bf9fd4,
+    type: 3}
+  OilVFXCell: {fileID: 5925526688476676265, guid: 7999524cfffd3c34199487891aba0481,
+    type: 3}
+  InfernoVFXCell: {fileID: 1345027383935582, guid: 508c9f007a2bf724d88361f16953bbac,
+    type: 3}
+  ShockVFXCell: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570,
+    type: 3}
+  FrozenVFXCell: {fileID: 1202128272935260579, guid: a2de7477c7e43d84bb3e44a9bb893e4f,
+    type: 3}
+  ChilledVFXCell: {fileID: 1560195616043144, guid: 9efac3ef75f3a054f93c32ffa91c05e7,
+    type: 3}
+  GasVFXCell: {fileID: 7679315228323006298, guid: 6d1de27a55f7cf2448415d81f72cd420,
+    type: 3}
   BloodVFXs: []
   HealingVFX: {fileID: 1881552412633134, guid: da7875cab77480d49972b42ca872af40, type: 3}
+  ShockCheckCell: {fileID: 0}
+  PoisonCheckCell: {fileID: 0}
 --- !u!224 &2143576071
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7284,7 +7378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88c44d8e809044f4283e7044648d3009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2143576075
+--- !u!114 &2143576074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7293,42 +7387,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2143576066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c541d0f615776d946991ce1d583dd8fe, type: 3}
+  m_Script: {fileID: 11500000, guid: e4e71977aac0fc44291e7ae75492a14c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterGasEffectPrefab: {fileID: 7679315228323006298, guid: 6d1de27a55f7cf2448415d81f72cd420,
-    type: 3}
-  WaterLiquidEffectPrefab: {fileID: 342596010867634176, guid: c7f6253b371700240a59edfb44bf9fd4,
-    type: 3}
-  WaterSolidEffectPrefab: {fileID: 8567278884308142943, guid: a2de7477c7e43d84bb3e44a9bb893e4f,
-    type: 3}
-  PoisonGasEffectPrefab: {fileID: 8266256815115088354, guid: 44dc24605dffef145bb6435b437c3dae,
-    type: 3}
-  PoisonLiquidEffectPrefab: {fileID: 8791312655970011879, guid: 75402d0abde7b4d458fbc2c9fd85aa98,
-    type: 3}
-  PoisonSolidEffectPrefab: {fileID: 2844287718051245069, guid: c93d680ae91b523438d2e94326cf9e18,
-    type: 3}
-  OilLiquidEffectPrefab: {fileID: 5925526688476676265, guid: 7999524cfffd3c34199487891aba0481,
-    type: 3}
-  BurningEffectPrefab: {fileID: 1151502900046148, guid: d5e400a2a0d155d4db9970614680534f,
-    type: 3}
-  InfernoEffectPrefab: {fileID: 1345027383935582, guid: 508c9f007a2bf724d88361f16953bbac,
-    type: 3}
-  ChillEffectPrefab: {fileID: 4332221713764172744, guid: 6ecbfd6cef8f3414bb27f9933e7e1628,
-    type: 3}
-  ShockSolidEffectPrefab: {fileID: 1740139871691603000, guid: 96ce0b7f879da024da2a47ad8f1ba447,
-    type: 3}
-  ShockLiquidEffectPrefab: {fileID: 2764418381461071984, guid: 20be469f2f569404baeeb8d713f4cca7,
-    type: 3}
-  ShockGasEffectPrefab: {fileID: 4274387872410849155, guid: 94a03351ac6bf4d47adb85bff15271b1,
-    type: 3}
-  playerBurnTime: 2
-  playerInfernoTime: 2
-  playerPoisonTime: 4
-  playerShockTime: 2
-  playerFrozenTime: 2
-  playerCurseTime: 10
-  playerBlessTime: 10
-  playerWetTime: 4
-  playerOilTime: 4
-  playerElectricuteTime: 2
+  activateVFX: {fileID: 0}
+  transferableEffects: 

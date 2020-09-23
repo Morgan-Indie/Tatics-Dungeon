@@ -44,6 +44,8 @@ namespace PrototypeGame
         public CombatStat shockResistance;
         public CombatStat poisonResistance;
 
+        public CombatStatType currentAlchemcialType = CombatStatType.normalDamage;
+
         [Header("Not Required")]
         public HealthBar healthBar;
         public APFill apBar;
@@ -53,6 +55,7 @@ namespace PrototypeGame
         [HideInInspector]
         public Dictionary<AttributeType, Stat> playerAttributeDict= new Dictionary<AttributeType, Stat>();
         public Dictionary<CombatStatType, Stat> playerCombatStatDict = new Dictionary<CombatStatType, Stat>();
+        public Dictionary<CombatStatType, Stat> playerResistanceStatDict = new Dictionary<CombatStatType, Stat>();
 
         [HideInInspector]
         public CharacterStateManager stateManager;
@@ -124,12 +127,18 @@ namespace PrototypeGame
             playerCombatStatDict.Add(CombatStatType.waterDamage, waterDamage);
             playerCombatStatDict.Add(CombatStatType.shockDamage, shockDamage);
             playerCombatStatDict.Add(CombatStatType.fireDamage, fireDamage);
+
             playerCombatStatDict.Add(CombatStatType.armor, armor);
             playerCombatStatDict.Add(CombatStatType.fireResistance, fireResistance);
             playerCombatStatDict.Add(CombatStatType.waterResistance, waterResistance);
             playerCombatStatDict.Add(CombatStatType.shockResistance, shockResistance);
             playerCombatStatDict.Add(CombatStatType.poisonResistance, poisonResistance);
             playerCombatStatDict.Add(CombatStatType.curseDamage, curseDamage);
+
+            playerResistanceStatDict.Add(CombatStatType.waterDamage, waterResistance);
+            playerResistanceStatDict.Add(CombatStatType.shockDamage, shockResistance);
+            playerResistanceStatDict.Add(CombatStatType.fireDamage, fireResistance);
+            playerResistanceStatDict.Add(CombatStatType.poisonDamage, poisonResistance);
         }
 
         public int SetMaxHealthFromVitality()
@@ -153,6 +162,9 @@ namespace PrototypeGame
 
         public void TakeDamage(int damange)
         {
+            if (damange == 0)
+                return;
+
             currentHealth -= damange;
             healthBar.SetCurrentHealth(currentHealth);
             Debug.Log(characterName + " took "+ damange+" damage and have "+ currentHealth+" remaining");
@@ -163,7 +175,7 @@ namespace PrototypeGame
                 taticalMovement.currentCell.state = CellState.open;
                 animationHandler.PlayTargetAnimation("Death");
             }
-
+            
             else if (stateManager.characterAction == CharacterAction.LyingDown)
                 animationHandler.PlayTargetAnimation("LyingHitReaction");
             else

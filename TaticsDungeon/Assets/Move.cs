@@ -20,12 +20,13 @@ namespace PrototypeGame
 
         public override void Cast(float delta, IntVector2 targetIndex)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public override void Excute(float delta, GridCell targetCell)
         {
         }
+
         public override void Excute(float delta)
         {
         }

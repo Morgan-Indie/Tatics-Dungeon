@@ -6,17 +6,11 @@ namespace PrototypeGame
 {
     public enum SkillType
     {
-        PyhsicalAttack,
+        CastPyhsical,
+        CastHeat,
+        CastHealing,
+        CastSubstance,
         Move,
-        Fire,
-        Water,
-        Poison,
-        Shock,
-        Curse,
-        Bless,
-        Oil,
-        Chill,
-        Healing,
     }
 
     public enum CharacterClass
@@ -36,22 +30,9 @@ namespace PrototypeGame
         Pinned,
     }
 
-    public enum CastableSpell
-    {
-        CastFire,
-        CastChill,
-        CastWater,
-        CastOil,
-        CastPoison,
-        CastPhysical,
-        EnergyBall,
-        CastHeal,
-    };
-
     [System.Serializable]
     public class CastableSettings
     {
-        public CastableSpell castableSpell;
         public int range = 3;
         public CastableShape shape = CastableShape.Single;
         public bool inclusive = true;
@@ -91,6 +72,7 @@ namespace PrototypeGame
         public SkillType type;
         public CastType castType;
         public int coolDown;
+
         public GameObject skillScriptObject;
         public GameObject effectPrefab;
 

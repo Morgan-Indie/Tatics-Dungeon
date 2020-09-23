@@ -27,11 +27,8 @@ namespace PrototypeGame
         [Header("Damage Types")]
         public float _normalDamage = 0f;
         public float _pierceDamage = 0f;
-        public float _poisonDamage = 0f;
-        public float _fireDamage = 0f;
-        public float _waterDamage = 0f;
-        public float _curseDamage = 0f;
-        public float _shockDamage = 0f;
+        public CombatStatType alchemicalType;
+        public float _alchemicalDamage = 0f;
 
         [Header("Resistances")]
         public float _armor;
@@ -105,16 +102,10 @@ namespace PrototypeGame
         {
             if (_normalDamage != 0f)
                 equipmentStatDict.Add(CombatStatType.normalDamage, new StatModifier(_normalDamage, StatModType.Flat, this));
-            if (_fireDamage != 0f)
-                equipmentStatDict.Add(CombatStatType.fireDamage, new StatModifier(_fireDamage, StatModType.Flat, this));
+            if (_alchemicalDamage != 0f)
+                equipmentStatDict.Add(alchemicalType, new StatModifier(_alchemicalDamage, StatModType.Flat, this));
             if (_pierceDamage != 0f)
-                equipmentStatDict.Add(CombatStatType.pierceDamage, new StatModifier(_pierceDamage, StatModType.Flat, this));
-            if (_poisonDamage != 0f)
-                equipmentStatDict.Add(CombatStatType.poisonDamage, new StatModifier(_poisonDamage, StatModType.Flat, this));
-            if (_shockDamage != 0f)
-                equipmentStatDict.Add(CombatStatType.shockDamage, new StatModifier(_shockDamage, StatModType.Flat, this));
-            if (_waterDamage != 0f)
-                equipmentStatDict.Add(CombatStatType.waterDamage, new StatModifier(_waterDamage, StatModType.Flat, this));
+                equipmentStatDict.Add(CombatStatType.pierceDamage, new StatModifier(_pierceDamage, StatModType.Flat, this));            
             if (_armor != 0f)
                 equipmentStatDict.Add(CombatStatType.armor, new StatModifier(_armor, StatModType.Flat, this));
             if (_fireResistance != 0f)

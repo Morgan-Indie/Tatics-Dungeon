@@ -14,8 +14,11 @@ namespace PrototypeGame
         public CombatStat normalDamage;
         public CombatStat peirceDamage;
         public CombatStat alchemicalDamage;
+        public CombatStatType alchemicalDamgeType;
         public CombatStat armor;
         public CombatStat resistance;
+        public HeatValue heatValue;
+        public string skillAnimation;
         IntVector2 prevIndex;
 
         public void Activate(float delta)

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202ef75a2b06e9e409a440d8a111434e, type: 3}
+  m_Name: ShieldCharge
+  m_EditorClassIdentifier: 
+  skillName: ShieldCharge
+  skillClass: 0
+  icon: {fileID: 21300000, guid: 55ea58a5a0c610d4298160eedba80a4d, type: 3}
+  LevelRequired: 0
+  APcost: 2
+  type: 0
+  castType: 1
+  coolDown: 3
+  skillScriptObject: {fileID: 5587677330032345258, guid: e0b8bfb184b0f1345884c0a4a5884ac5,
+    type: 3}
+  effectPrefab: {fileID: 0}
+  castableSettings:
+    range: 3
+    shape: 0
+    inclusive: 1
+    radius: 1
+    lineOrientation: 0
+    crossOrientation: 0
+  pinnedSettings:
+    shape: 1
+    radius: 3
+    inclusive: 0
+    coneSettings:
+      expansion: 1
+  damage: 0
+  scaleType: 0
+  _scaleValue: 1
+  strModValue: 0
+  strModType: 0
+  dexModValue: 0
+  dexModType: 0
+  lucModValue: 0
+  lucModType: 0
+  intModValue: 0
+  intModType: 0
+  staModValue: 0
+  staModType: 0
+  vitModValue: 0
+  vitModType: 0

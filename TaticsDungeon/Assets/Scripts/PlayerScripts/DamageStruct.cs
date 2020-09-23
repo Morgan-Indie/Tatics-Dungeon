@@ -6,24 +6,20 @@ namespace PrototypeGame
 {
     public class DamageStruct
     {
-        public int poison;
+        public int alchemical;
         public int pierce;
         public int normal;
-        public int shock;
-        public int fire;
-        public int water;
+        public CombatStatType alchemicalType;
 
-        public DamageStruct(float fireDamage,float waterDamage, float poisonDamage,float shockDamage, float pierceDamage, float normalDamage)
+        public DamageStruct(float pierceDamage, float normalDamage, float alchemicalDamage, CombatStatType _alchemicalType)
         {
-            poison = (int)poisonDamage;
+            alchemical = (int)alchemicalDamage;
             pierce = (int)pierceDamage;
             normal = (int)normalDamage;
-            fire = (int)fireDamage;
-            water = (int)waterDamage;
-            shock = (int)shockDamage;
+            alchemicalType = _alchemicalType;
         }
 
-        public DamageStruct() : this(0f, 0f, 0f, 0f, 0f, 0f) { }
+        public DamageStruct() : this(0f, 0f, 0f, CombatStatType.normalDamage) { }
     }
 }
 

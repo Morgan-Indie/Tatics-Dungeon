@@ -16,6 +16,8 @@ TagManager:
   - InfernoEffect
   - OilEffect
   - WetEffect
+  - Bullet
+  - AlchemicalVFX
   layers:
   - Default
   - TransparentFX

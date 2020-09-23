@@ -17,11 +17,25 @@ namespace PrototypeGame
         public CellState state;
         GameObject highlightEffect;
         public CellHighlightType highlightType = CellHighlightType.None;
-        public CellAlchemyState alchemyState;
         public bool isStairs=false;
         public bool isFlammable = false;
-        public SkillAbstract burnSource = null;
-        public SkillAbstract poisonSource = null;
+        public HeatState heatState = new HeatState();    
+
+        public Dictionary<AlchemicalState, AlchemicalSubstance> substances = new Dictionary<AlchemicalState, AlchemicalSubstance>()
+        {
+            { AlchemicalState.solid,new AlchemicalSubstance(AlchemicalState.None) },
+            { AlchemicalState.liquid,new AlchemicalSubstance(AlchemicalState.None) },
+            { AlchemicalState.gas,new AlchemicalSubstance(AlchemicalState.None) }
+        };
+
+        public Dictionary<AlchemicalState, GameObject> VFXDict = new Dictionary<AlchemicalState, GameObject>()
+        {
+            { AlchemicalState.solid, null },
+            { AlchemicalState.liquid, null },
+            { AlchemicalState.gas,null }
+        };
+
+        public List<GameObject> cellVFXList = new List<GameObject>();
 
         public bool HasAdjacentStair = false;
         //If cell is a stair cell, sets this tuple to its Entrance and Exit respectively 
@@ -34,7 +48,6 @@ namespace PrototypeGame
 
         public void Start()
         {
-            alchemyState = GetComponent<CellAlchemyState>();
             transform.position = new Vector3(transform.position.x, transform.position.y + height * GridMetrics.heightIncrement, transform.position.z);
         }
 
@@ -165,18 +178,18 @@ namespace PrototypeGame
 
         public int GetDistance(IntVector2 index)
         {
-            return Mathf.Abs(this.x - index.x) + Mathf.Abs(this.y - index.y);
+            return Mathf.Abs(x - index.x) + Mathf.Abs(y - index.y);
         }
 
         public bool IsOrtho(IntVector2 index)
         {
-            return this.x==index.x || this.y == index.y;
+            return x==index.x || y == index.y;
         }
 
         public bool IsValid(GridMapAdapter gridMapAdapter)
         {
-            return !(this.x < 0 || this.y < 0 || 
-                this.x >= gridMapAdapter.gridMap.width || this.y >= gridMapAdapter.gridMap.height);
+            return !(x < 0 ||y < 0 || 
+                x >= gridMapAdapter.gridMap.width || y >= gridMapAdapter.gridMap.height);
         }
 
         public IntVector2 Add(IntVector2 index)

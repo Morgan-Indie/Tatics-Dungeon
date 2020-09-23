@@ -214,9 +214,16 @@ namespace PrototypeGame
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position,Vector3.down,out hit,(1<<0)))
                 {
-                    if (hit.distance>.6 && transform.position.y>nextPos.y+.2f)
-                        characterRigidBody.velocity += Vector3.down*10f;
+                    if (hit.distance>.4f && transform.position.y>nextPos.y+.2f)
+                    {
+                        characterRigidBody.velocity += Vector3.down * 10f;
+                    }
                 }
+                if (transform.position.y < nextPos.y - .2f)
+                {
+                    characterRigidBody.velocity += Vector3.up * 1.5f;
+                }
+
                 animationHandler.UpdateAnimatorValues(delta, 1f);
             }
         }

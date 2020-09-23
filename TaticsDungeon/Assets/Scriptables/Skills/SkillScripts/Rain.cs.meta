@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4a409023fcd29fa46941a00db3651167
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - skill: {fileID: 11400000, guid: ee02113a17a6c424f8c5a37a394371f2, type: 2}
+  - characterStats: {instanceID: 0}
+  - animationHandler: {instanceID: 0}
+  - taticalMovement: {instanceID: 0}
+  - combatUtils: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

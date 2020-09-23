@@ -6,10 +6,10 @@ namespace PrototypeGame
 {
     public class EquipmentSlotManager : MonoBehaviour
     {
-        EquipmentHolderSlot leftHandSlot;
-        EquipmentHolderSlot rightHandSlot;
-        EquipmentHolderSlot amuletSlot;
-        EquipmentHolderSlot quiverSlot;
+        public EquipmentHolderSlot leftHandSlot;
+        public EquipmentHolderSlot rightHandSlot;
+        public EquipmentHolderSlot amuletSlot;
+        public EquipmentHolderSlot quiverSlot;
 
         InventorySlot EquipedAmulet;
         InventorySlot EquipedHelmet;

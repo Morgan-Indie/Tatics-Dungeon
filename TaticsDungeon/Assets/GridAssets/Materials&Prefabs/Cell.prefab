@@ -104,7 +104,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6920018076435440639}
   - component: {fileID: 8007888483546437700}
-  - component: {fileID: -1984979675487222120}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Untagged
@@ -145,11 +144,9 @@ MonoBehaviour:
   occupyingObject: {fileID: 0}
   state: 0
   highlightType: 0
-  alchemyState: {fileID: 0}
   isStairs: 0
   isFlammable: 0
-  burnSource: {fileID: 0}
-  poisonSource: {fileID: 0}
+  cellVFXList: []
   HasAdjacentStair: 0
   index:
     x: 0
@@ -157,31 +154,3 @@ MonoBehaviour:
   gridIndex:
     x: 0
     y: 0
---- !u!114 &-1984979675487222120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4044304574541403046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c0c8e5758ce5aa43affc91f12bf27b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gasState: 0
-  liquidState: 0
-  solidState: 0
-  blessingState: 0
-  fireState: 0
-  shockState: 0
-  gasEffect: {fileID: 0}
-  liquidEffect: {fileID: 0}
-  solidEffect: {fileID: 0}
-  blessedEffect: {fileID: 0}
-  fireEffect: {fileID: 0}
-  shockEffect: {fileID: 0}
-  fireTurnsRemaining: 0
-  shockTurnsRemaining: 0
-  isDry: 1
-  changedValues: 

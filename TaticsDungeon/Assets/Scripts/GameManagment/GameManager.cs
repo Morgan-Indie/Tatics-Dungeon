@@ -22,11 +22,9 @@ namespace PrototypeGame
         public CharacterStatusLayout characterStatusLayout;
         public Camera UIcam;
         public Light UIcamLight;
-        public AlchemyManager alchemyManager;
 
         public PlayerManager currentCharacter;
         public EnemyManager currentEnemy;
-        public List<CellAlchemyState> statusAffectedCells;
         public int playerIndex=0;
         public int enemyIndex=0;
         public int Turn = 1;
@@ -45,9 +43,6 @@ namespace PrototypeGame
                 instance = this;
 
             characterStatusLayout = GetComponent<CharacterStatusLayout>();
-
-            alchemyManager = GetComponent<AlchemyManager>();
-            statusAffectedCells = new List<CellAlchemyState>();
 
             foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
             {
@@ -105,7 +100,6 @@ namespace PrototypeGame
                     UIcamLight.enabled = true;
                     UIcam.GetComponent<UICam>().HandleUICam();
                 }
-
 
                 if (gameState != GameState.ResolvingInteraction)
                     CharacterSwitch();
@@ -278,10 +272,6 @@ namespace PrototypeGame
 
         public void SwitchTurns()
         {
-            for (int i=statusAffectedCells.Count-1; i >= 0; i--)
-            {
-                statusAffectedCells[i].UpdateTurn();
-            }
             popUpUI.Activate();
             if (isPlayerTurn)
             {
@@ -346,16 +336,6 @@ namespace PrototypeGame
             }
             
             gameState = GameState.Ready;
-        }
-
-        public void AddAffectedCell(CellAlchemyState cell)
-        {
-            if (!statusAffectedCells.Contains(cell)) { statusAffectedCells.Add(cell); }
-        }
-
-        public void RemoveAffectedCell(CellAlchemyState cell)
-        {
-            if (statusAffectedCells.Contains(cell)) { statusAffectedCells.Remove(cell); }
         }
     }
 }

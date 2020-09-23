@@ -9,7 +9,7 @@ namespace PrototypeGame
         public void Initalize(GridCell cell, SkillAbstract skill)
         {
             skill.Excute(Time.deltaTime, cell);
-            AlchemyManager.Instance.ApplyChill(cell);
+            //AlchemyManager.Instance.ApplyChill(cell);
             Destroy(gameObject, 0.75f);
         }
     }

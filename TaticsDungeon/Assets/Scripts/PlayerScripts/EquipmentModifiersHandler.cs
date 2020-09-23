@@ -36,17 +36,15 @@ namespace PrototypeGame
         {
             foreach (var mod in item.scaleModDict)
             {
-                float scaleFactor = characterStats.playerAttributeDict[mod.Key].Value * mod.Value;
-                if (item._fireDamage != 0)
-                    characterStats.fireDamage.AddModifier(new StatModifier(scaleFactor,StatModType.Flat, item));
-                if (item._waterDamage != 0)
-                    characterStats.waterDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._shockDamage != 0)
-                    characterStats.shockDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
+                float scaleFactor = characterStats.playerAttributeDict[mod.Key].Value * mod.Value;                
                 if (item._pierceDamage != 0)
                     characterStats.pierceDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._poisonDamage != 0)
-                    characterStats.poisonDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
+                if (item._alchemicalDamage != 0)
+                {
+                    characterStats.playerCombatStatDict[item.alchemicalType].AddModifier(new StatModifier(scaleFactor, 
+                        StatModType.Flat, item));
+                    characterStats.currentAlchemcialType = item.alchemicalType;
+                }
                 if (item._normalDamage != 0)
                     characterStats.normalDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
                 if (item._armor != 0)
@@ -69,6 +67,7 @@ namespace PrototypeGame
                 mod.Value.RemoveAllModifiersFromSource(item);
             foreach (var mod in characterStats.playerCombatStatDict)
                 mod.Value.RemoveAllModifiersFromSource(item);
+            characterStats.currentAlchemcialType = CombatStatType.normalDamage;
         }
 
         public void ApplyEquipmentModifiers(EquipableItem item)
