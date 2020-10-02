@@ -40,9 +40,15 @@ MonoBehaviour:
     positiveOffset: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}
   railingPrefabList:
-    prefabs: []
-    positiveOffsets: []
-    scales: []
+    prefabs:
+    - {fileID: 0}
+    - {fileID: 0}
+    positiveOffsets:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    scales:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
   obstacleMode: 0
   obstacleSinglePrefab:
     percentToSpawn: 100
