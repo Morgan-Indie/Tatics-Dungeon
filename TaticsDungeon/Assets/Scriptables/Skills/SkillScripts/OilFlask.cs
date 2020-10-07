@@ -17,7 +17,7 @@ namespace PrototypeGame
             oilFlask.combatUtils = _combatUtils;
             oilFlask.skillAnimation = "Toss";
 
-            oilFlask.heatValue = HeatValue.neutral;
+            oilFlask.heatState = new HeatState(HeatValue.neutral);
             oilFlask.substance = new AlchemicalSubstance(AlchemicalState.liquid);
             oilFlask.substance.AddAuxState(StatusEffect.Oiled);
 

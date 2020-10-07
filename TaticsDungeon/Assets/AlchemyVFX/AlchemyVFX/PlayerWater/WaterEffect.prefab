@@ -67,7 +67,13 @@ VisualEffect:
     m_NamedObject:
       m_Array: []
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 0
+        m_Name: Poisoned
+        m_Overridden: 0
+      - m_Value: 0
+        m_Name: Oiled
+        m_Overridden: 0
 --- !u!73398921 &3510546627203613609
 VFXRenderer:
   m_ObjectHideFlags: 0
@@ -85,7 +91,9 @@ VFXRenderer:
   m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

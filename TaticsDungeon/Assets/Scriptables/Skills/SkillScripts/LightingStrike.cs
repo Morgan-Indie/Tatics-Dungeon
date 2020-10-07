@@ -17,7 +17,7 @@ namespace PrototypeGame
             lightingStrike.combatUtils = _combatUtils;
             lightingStrike.skillAnimation = "SpellCastHand";
 
-            lightingStrike.heatValue = HeatValue.neutral;
+            lightingStrike.heatState = new HeatState(HeatValue.neutral);
 
             lightingStrike.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.shockDamage);
             lightingStrike.alchemicalDamgeType = CombatStatType.shockDamage;

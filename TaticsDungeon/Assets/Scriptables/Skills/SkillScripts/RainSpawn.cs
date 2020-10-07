@@ -12,7 +12,7 @@ namespace PrototypeGame
             GameObject ob = Instantiate(projectilePrefab, cells[2].transform.position, transform.rotation);
 
             foreach (GridCell cell in cells)
-            {                
+            {
                 skill.Excute(Time.deltaTime, cell);
             }
 

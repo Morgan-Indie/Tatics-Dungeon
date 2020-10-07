@@ -17,7 +17,7 @@ namespace PrototypeGame
             poisonFlask.combatUtils = _combatUtils;
             poisonFlask.skillAnimation = "Toss";
 
-            poisonFlask.heatValue = HeatValue.neutral;
+            poisonFlask.heatState = new HeatState(HeatValue.neutral);
             poisonFlask.substance = new AlchemicalSubstance(AlchemicalState.liquid);
             poisonFlask.substance.AddAuxState(StatusEffect.Poisoned);
 

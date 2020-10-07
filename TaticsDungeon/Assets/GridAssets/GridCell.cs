@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public enum CellState { open, obstacle, occupiedParty, occupiedEnemy , interactable};
+    public enum CellState { open, obstacle,occupiedParty, occupiedEnemy , interactable};
 
     public class GridCell : MonoBehaviour
     {
@@ -12,30 +12,77 @@ namespace PrototypeGame
         public int height;
         public CellTemplate cellTemplate;
         bool highlighted = false;
-        Color highlightColor = Color.magenta;
-        public GameObject occupyingObject=null;
-        public CellState state;
+        Color highlightColor = Color.magenta;        
+        public CellState baseState;
         GameObject highlightEffect;
         public CellHighlightType highlightType = CellHighlightType.None;
         public bool isStairs=false;
         public bool isFlammable = false;
-        public HeatState heatState = new HeatState();    
+        public HeatState heatState = new HeatState();
+        public LayerMask occupingObjectMask;
 
-        public Dictionary<AlchemicalState, AlchemicalSubstance> substances = new Dictionary<AlchemicalState, AlchemicalSubstance>()
+        public Dictionary<AlchemicalState, AlchemicalSubstance> substances;
+
+        public GameObject occupyingObject
         {
-            { AlchemicalState.solid,new AlchemicalSubstance(AlchemicalState.None) },
-            { AlchemicalState.liquid,new AlchemicalSubstance(AlchemicalState.None) },
-            { AlchemicalState.gas,new AlchemicalSubstance(AlchemicalState.None) }
-        };
+            get
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position,Vector3.up,out hit, 1f ,occupingObjectMask))
+                {
+                    return hit.transform.gameObject;
+                }
+                return null;
+            }
+        }
+
+        public CellState state
+        {
+            get
+            {
+                if (occupyingObject!=null)
+                {
+                    switch (occupyingObject.tag)
+                    {
+                        case "Player": return CellState.occupiedParty;
+                        case "Enemy": return CellState.occupiedEnemy;
+                        case "Interactable": return CellState.interactable;
+                    }
+                }
+                return baseState;
+            }
+        }
 
         public Dictionary<AlchemicalState, GameObject> VFXDict = new Dictionary<AlchemicalState, GameObject>()
         {
             { AlchemicalState.solid, null },
             { AlchemicalState.liquid, null },
-            { AlchemicalState.gas,null }
+            { AlchemicalState.gas,null },
+            { AlchemicalState.None,null }
         };
 
-        public List<GameObject> cellVFXList = new List<GameObject>();
+        public Dictionary<StatusEffect, GameObject> statusVFXDict = new Dictionary<StatusEffect, GameObject>()
+        {
+            {StatusEffect.Inferno,null },
+            {StatusEffect.Chilled,null }
+        };
+
+        public List<int> cellStatusEffects
+        {
+            get
+            {
+                List<int> _cellStatusEffects = new List<int>();
+                foreach (AlchemicalSubstance substance in substances.Values)
+                {
+                    if (substance.alchemicalState!=AlchemicalState.None)
+                    {
+                        foreach (int status in substance.auxiliaryStates)
+                            _cellStatusEffects.Add(status);
+                    }
+                }
+                return _cellStatusEffects;
+            }
+        }
 
         public bool HasAdjacentStair = false;
         //If cell is a stair cell, sets this tuple to its Entrance and Exit respectively 
@@ -49,6 +96,12 @@ namespace PrototypeGame
         public void Start()
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + height * GridMetrics.heightIncrement, transform.position.z);
+            substances = new Dictionary<AlchemicalState, AlchemicalSubstance>()
+            {
+                { AlchemicalState.solid,new AlchemicalSubstance(AlchemicalState.None) },
+                { AlchemicalState.liquid,new AlchemicalSubstance(AlchemicalState.None) },
+                { AlchemicalState.gas,new AlchemicalSubstance(AlchemicalState.None) }
+            };
         }
 
         public Color GetColor()
@@ -92,38 +145,18 @@ namespace PrototypeGame
             gridIndex = new IntVector2(x + mx * maxMeshSize, y + my * maxMeshSize);
         }
 
-        public void SetOccupyingObject(GameObject o) { occupyingObject = o;}
-        public GameObject GetOccupyingObject() { return occupyingObject; }
-
         public void SetCellState()
         {
             if (cellTemplate.isARiver || cellTemplate.obstacleMode != 0)
-                state = CellState.obstacle;
-
-            else if (cellTemplate.stairMode != CellTemplate.StairMode.None)
-                isStairs = true;
-
-            else if (occupyingObject != null)
-            {
-                switch(occupyingObject.tag)
-                {
-                    case "Player":
-                        state = CellState.occupiedParty;
-                        break;
-                    case "Enemy":
-                        state = CellState.occupiedEnemy;
-                        break;
-                    case "Interactable":
-                        state = CellState.interactable;
-                        break;
-                }
-            }
-
+                baseState = CellState.obstacle;
             else
-                state = CellState.open;
+                baseState = CellState.open;
+
+            if (cellTemplate.stairMode != CellTemplate.StairMode.None)
+                isStairs = true;
         }
 
-        public CellState GetCellState() { return state; }
+        public CellState GetCellState() { return state; }        
 
         public void ApplyHighlight(GameObject effect)
         {

@@ -9,6 +9,7 @@ namespace PrototypeGame
         public ShieldCharge shieldCharge;
         public CharacterStateManager stateManager;
         public TaticalMovement taticalMovement;
+        int cellIndex;
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,17 +20,23 @@ namespace PrototypeGame
             stateManager.characterAction = CharacterAction.ShieldCharge;
             stateManager.characterState = CharacterState.IsInteracting;
             shieldCharge.GetComponent<Collider>().isTrigger = true;
+            cellIndex = 0;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             shieldCharge.characterRigidBody.velocity = 5f * shieldCharge.targetDirection;
-
-            if (taticalMovement.ReachedPosition(taticalMovement.transform.position, shieldCharge.targetPos)&& !shieldCharge.reachedTarget)
+            Vector3 nextPos = shieldCharge.cells[cellIndex].transform.position;
+            if (taticalMovement.ReachedPosition(taticalMovement.transform.position, nextPos))
             {
-                if (!shieldCharge.targetPathBlocked)
-                    shieldCharge.EndCast();
+                cellIndex++;
+                taticalMovement.PathCellInteractions();
+                if (taticalMovement.ReachedPosition(taticalMovement.transform.position, shieldCharge.targetPos) && !shieldCharge.reachedTarget)
+                {
+                    if (!shieldCharge.targetPathBlocked)
+                        shieldCharge.EndCast();
+                }
             }
         }
 

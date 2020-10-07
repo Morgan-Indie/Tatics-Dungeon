@@ -17,7 +17,7 @@ namespace PrototypeGame
             iceSpikes.combatUtils = _combatUtils;
             iceSpikes.skillAnimation = "SpellCastHand";
 
-            iceSpikes.heatValue = HeatValue.cold;            
+            iceSpikes.heatState = new HeatState(HeatValue.cold);            
 
             iceSpikes.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.waterDamage);
             iceSpikes.alchemicalDamgeType = CombatStatType.waterDamage;

@@ -17,7 +17,7 @@ namespace PrototypeGame
             flameThrower.combatUtils = _combatUtils;
             flameThrower.skillAnimation = "SpellCastHand";
 
-            flameThrower.heatValue = HeatValue.hot;
+            flameThrower.heatState = new HeatState(HeatValue.hot);
 
             flameThrower.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.fireDamage);
             flameThrower.alchemicalDamgeType = CombatStatType.fireDamage;

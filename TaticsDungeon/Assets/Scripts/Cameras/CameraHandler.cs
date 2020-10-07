@@ -57,7 +57,7 @@ namespace PrototypeGame
             Vector3 camUp = transform.up;
             camUp.y = 0;
             camUp.Normalize();
-            Vector3 moveDirection = (camUp * InputHandler.instance.MoveY + transform.right * InputHandler.instance.MoveX).normalized;
+            Vector3 moveDirection = (camUp * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal")).normalized;
             transform.position = Vector3.SmoothDamp(transform.position,
                 transform.position + moveDirection * cameraSensitivity * delta,
                 ref currentVelocity, delta / cameraSpeed);

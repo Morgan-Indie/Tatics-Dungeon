@@ -70,10 +70,7 @@ namespace PrototypeGame
             foreach (PlayerManager player in playersDict.Values.ToArray())
             {
                 player.skillSlotsHandler.skillPanel.SetActive(false);
-                player.taticalMovement.SetCurrentCell();
             }
-            foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
-                enemy.taticalMovement.SetCurrentCell();
 
             InitalizePlayerTurn();
             popUpUI.Activate();

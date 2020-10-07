@@ -140,3 +140,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0, b: 0, a: 0}
   height: 0
+  cellTemplate: {fileID: 0}
+  baseState: 0
+  highlightType: 0
+  isStairs: 0
+  isFlammable: 0
+  occupingObjectMask:
+    serializedVersion: 2
+    m_Bits: 15872
+  HasAdjacentStair: 0
+  index:
+    x: 0
+    y: 0
+  gridIndex:
+    x: 0
+    y: 0

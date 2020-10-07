@@ -15,7 +15,6 @@ namespace PrototypeGame
 
             GameObject ob = Instantiate(projectilePrefab, playerHand.transform.position, transform.rotation);
             ob.transform.LookAt(cells[0].transform);
-            Debug.Log(cells.Count);
 
             foreach (GridCell cell in cells)
             {

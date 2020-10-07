@@ -33,7 +33,7 @@ namespace PrototypeGame
             List<GridCell> cells = CastableShapes.GetCastableCells(skill, targetIndex);
             targetCell = cells[0];
 
-            target = targetCell.GetOccupyingObject();
+            target = targetCell.occupyingObject;
 
             if (target != null)
             {

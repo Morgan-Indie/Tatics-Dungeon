@@ -5469,7 +5469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1440485451
 Transform:
   m_ObjectHideFlags: 0
@@ -7304,9 +7304,7 @@ MonoBehaviour:
     type: 3}
   WetVFXCharacter: {fileID: 5478021774202754969, guid: c1b743f196eec564fbc235356c54549e,
     type: 3}
-  OilVFXCharacter: {fileID: 4962391677518018257, guid: 3c5a1044254597a40b0f47b74bb36778,
-    type: 3}
-  InfernoVFXCharacter: {fileID: 1208781713066404, guid: aafad909270f83046bc79c06fe30321a,
+  InfernoVFXCharacter: {fileID: 3096691946875360006, guid: 7737a33397d3b3642b8d393190056670,
     type: 3}
   ShockVFXCharacter: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570,
     type: 3}
@@ -7314,15 +7312,11 @@ MonoBehaviour:
     type: 3}
   FrozenVFXCharacter: {fileID: 1202128272935260579, guid: a2de7477c7e43d84bb3e44a9bb893e4f,
     type: 3}
-  FireVFXCell: {fileID: 1151502900046148, guid: d5e400a2a0d155d4db9970614680534f,
+  FireVFXCell: {fileID: 3096691946875360006, guid: 4f180e5bf900c22409598659687779d2,
     type: 3}
   WetVFXCell: {fileID: 342596010867634176, guid: c7f6253b371700240a59edfb44bf9fd4,
     type: 3}
-  OilVFXCell: {fileID: 5925526688476676265, guid: 7999524cfffd3c34199487891aba0481,
-    type: 3}
-  InfernoVFXCell: {fileID: 1345027383935582, guid: 508c9f007a2bf724d88361f16953bbac,
-    type: 3}
-  ShockVFXCell: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570,
+  InfernoVFXCell: {fileID: 3096691946875360006, guid: 4f180e5bf900c22409598659687779d2,
     type: 3}
   FrozenVFXCell: {fileID: 1202128272935260579, guid: a2de7477c7e43d84bb3e44a9bb893e4f,
     type: 3}

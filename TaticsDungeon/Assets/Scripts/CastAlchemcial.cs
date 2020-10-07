@@ -33,11 +33,10 @@ namespace PrototypeGame
 
         public override void Excute(float delta, GridCell targetCell)
         {
-            combatUtils.HandleAlchemicalSkillCell(targetCell, this);
             if (targetCell.occupyingObject != null)
-            {
-                combatUtils.HandleAlchemicalSkillCharacter(targetCell.occupyingObject.GetComponent<CharacterStats>(), this);
-            }
+                combatUtils.HandleAlchemicalSkillCharacter(targetCell.occupyingObject.GetComponent<CharacterStateManager>(), targetCell,this);
+            else
+                combatUtils.HandleAlchemicalSkillCell(targetCell, this);
         }
     }
 }

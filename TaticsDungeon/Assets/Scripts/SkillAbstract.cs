@@ -17,7 +17,7 @@ namespace PrototypeGame
         public CombatStatType alchemicalDamgeType;
         public CombatStat armor;
         public CombatStat resistance;
-        public HeatValue heatValue;
+        public HeatState heatState;
         public string skillAnimation;
         IntVector2 prevIndex;
 

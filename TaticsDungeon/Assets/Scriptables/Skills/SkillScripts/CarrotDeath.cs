@@ -17,7 +17,7 @@ namespace PrototypeGame
             carrotDeath.combatUtils = _combatUtils;
             carrotDeath.skillAnimation = "SpellCastHand";
 
-            carrotDeath.heatValue = HeatValue.hot;
+            carrotDeath.heatState = new HeatState(HeatValue.hot);
 
             carrotDeath.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.fireDamage);
             carrotDeath.alchemicalDamgeType = CombatStatType.fireDamage;

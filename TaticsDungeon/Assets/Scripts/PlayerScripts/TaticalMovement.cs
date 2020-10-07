@@ -25,8 +25,6 @@ namespace PrototypeGame
 
         public LayerMask characterCheckLayerMask;
         public LayerMask attackCheckLayerMask;
-        public IntVector2 currentIndex;
-        public GridCell currentCell;
         public IntVector2 targetIndex;
         public int currentPathIndex=0;
         public Dictionary<IntVector2, IntVector2> currentNavDict;
@@ -38,6 +36,19 @@ namespace PrototypeGame
 
         float movementSpeed = 3f;
         float rotationSpeed = 25f;
+
+        public GridCell currentCell
+        {
+            get{ return mapAdapter.GetCellByPos(transform.position);}
+        }
+
+        public IntVector2 currentIndex
+        {
+            get
+            {
+                return currentCell.index;
+            }
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -51,39 +62,8 @@ namespace PrototypeGame
             characterStats = GetComponent<CharacterStats>();
             characterRigidbody = GetComponent<Rigidbody>();
             playerManager = GetComponent<PlayerManager>();
-
-            SetCurrentCell();
         }
 
-        public void SetCurrentIndex()
-        {
-            currentIndex = mapAdapter.GetIndexByPos(transform.position);
-        }
-        public void SetCurrentCell()
-        {                           
-            SetCurrentIndex();
-            currentCell = mapAdapter.GetCellByIndex(currentIndex);
-            currentCell.SetOccupyingObject(this.gameObject);
-
-            CellState cellstate;
-            if (gameObject.tag=="Player")
-                cellstate = CellState.occupiedParty;
-            else
-                cellstate = CellState.occupiedEnemy;
-
-            currentCell.state = cellstate;
-            GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = cellstate;
-        }
-
-        public void UpdateGridState()
-        {            
-            currentCell.SetOccupyingObject(null);
-            
-            currentCell.state=CellState.open;
-            //GridManager.Instance.gridState[currentIndex.x, currentIndex.y] = CellState.open;
-            SetCurrentCell();
-            //Debug.Log(characterStats.characterName+" Grid State Updated");
-        }
 
         public void HandleRotation(float delta, Vector3 moveDirection)
         {
@@ -178,11 +158,21 @@ namespace PrototypeGame
             //Debug.Log(characterStats.characterName + " Setting Destination");    
         }
 
+        public void PathCellInteractions()
+        {
+            (currentCell.substances, stateManager.characterSubstances, stateManager.statusEffects,
+                currentCell.heatState.Value, stateManager.heatState.Value)
+                = AlchemyEngine.instance.CharacterCellInteractions(currentCell, stateManager);
+
+            AlchemyEngine.instance.ApplyStateVFX(currentCell);
+            AlchemyEngine.instance.ApplyStateVFX(stateManager);
+        }
+
         public void TraverseToDestination(float delta)
         {
             if (ReachedPosition(transform.position,moveLocation))
             {
-                UpdateGridState();
+                PathCellInteractions();
                 characterRigidBody.velocity = Vector3.zero;
                 animationHandler.PlayTargetAnimation("CombatIdle");
 
@@ -200,7 +190,8 @@ namespace PrototypeGame
             else
             {
                 if ((ReachedPosition(transform.position, nextPos)))
-                {                    
+                {
+                    PathCellInteractions();
                     currentPathIndex++;
                     SetNextPos(path[currentPathIndex]);                    
                 }

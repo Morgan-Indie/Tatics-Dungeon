@@ -13,6 +13,7 @@ namespace PrototypeGame
         public bool reachedTarget=false;
         public bool targetPathBlocked = false;
         IntVector2 preTargetCellIndex = new IntVector2(-1, -1);
+        public List<GridCell> cells;
 
         public Rigidbody characterRigidBody;
         public CharacterStateManager stateManager;
@@ -41,7 +42,6 @@ namespace PrototypeGame
             characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
             if (!targetPathBlocked)
                 animationHandler.PlayTargetAnimation("CombatIdle");
-            taticalMovement.UpdateGridState();
             taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
             taticalMovement.SetCurrentNavDict();
             targetCell = null;
@@ -50,7 +50,7 @@ namespace PrototypeGame
         public override void Cast(float delta, IntVector2 _targetIndex)
         {
             targetIndex = _targetIndex;
-            List<GridCell> cells = PinnedShapes.GetPinnedCells(skill,taticalMovement.currentIndex , targetIndex);
+            cells = PinnedShapes.GetPinnedCells(skill,taticalMovement.currentIndex , targetIndex);
             animationHandler.PlayTargetAnimation("ShieldCharge");
             characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation| RigidbodyConstraints.FreezePositionY;
             characterStats.UseAP(skill.APcost);

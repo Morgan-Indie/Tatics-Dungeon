@@ -40,41 +40,54 @@ namespace PrototypeGame
             targetStats.TakeDamage(totalDamage);
         }
 
-        public void HandleAlchemicalSkillCharacter(CharacterStats targetStats, SkillAbstract skillScript)
+        public void HandleAlchemicalSkillCharacter(CharacterStateManager targetCharacter, GridCell targetCell, SkillAbstract skillScript)
         {
-            DealDamage(targetStats, skillScript);
-        }
-
-        public void HandleAlchemicalSkillCell(GridCell targetCell, SkillAbstract skillScript)
-        {
-            targetCell.heatState.AddHeat(skillScript.heatValue);
+            DealDamage(targetCharacter.characterStats, skillScript);
+            targetCharacter.characterSubstances = AlchemyEngine.instance.MergeSubstances(targetCell, targetCharacter);
 
             switch (skillScript.skill.type)
             {
                 case SkillType.CastHeat:
-                    (targetCell.substances,targetCell.heatState.Value) = AlchemyEngine.instance.ApplyAlchemicalTransfomation(
-                        targetCell.substances, targetCell);
+                    (targetCell.substances, targetCharacter.characterSubstances,targetCharacter.statusEffects,
+                        targetCell.heatState.Value,targetCharacter.heatState.Value) = AlchemyEngine.instance.ApplyAlchemicalTransfomation(
+                        targetCell,targetCharacter,skillScript);
                     break;
 
                 case SkillType.CastSubstance:
                     CastSubstance castSubstance = (CastSubstance)skillScript;
-                    (targetCell.substances, targetCell.heatState.Value) =AlchemyEngine.instance.ApplyDirectSubstance(
-                        castSubstance.substance,targetCell.substances, targetCell);
+                    targetCell.substances = AlchemyEngine.instance.ApplyDirectSubstance(castSubstance.substance, targetCell.substances);
+
+                    (targetCharacter.characterSubstances,targetCharacter.statusEffects,targetCharacter.statusTurns) = AlchemyEngine.instance.ApplyDirectSubstance(
+                        castSubstance.substance, targetCharacter.characterSubstances,targetCharacter.statusEffects, targetCharacter.statusTurns);
+
+                    (targetCell.substances, targetCharacter.characterSubstances, targetCharacter.statusEffects,
+                        targetCell.heatState.Value, targetCharacter.heatState.Value) = AlchemyEngine.instance.ApplyAlchemicalTransfomation(
+                        targetCell, targetCharacter, skillScript);
                     break;
             }
 
             AlchemyEngine.instance.ApplyStateVFX(targetCell);
+            AlchemyEngine.instance.ApplyStateVFX(targetCharacter);
+        }
 
-            if (ActivateVFX.Instance.PoisonCheckCell != null)
+        public void HandleAlchemicalSkillCell(GridCell targetCell, SkillAbstract skillScript)
+        {
+            targetCell.heatState= targetCell.heatState + skillScript.heatState;
+
+            switch (skillScript.skill.type)
             {
-                AlchemyEngine.instance.PropagateEffect(ActivateVFX.Instance.PoisonCheckCell, StatusEffect.Poisoned);
-                ActivateVFX.Instance.PoisonCheckCell = null;
+                case SkillType.CastHeat:
+                    (targetCell.substances,targetCell.heatState.Value) = AlchemyEngine.instance.ApplyAlchemicalTransfomation(targetCell);
+                    break;
+
+                case SkillType.CastSubstance:
+                    CastSubstance castSubstance = (CastSubstance)skillScript;
+                    targetCell.substances = AlchemyEngine.instance.ApplyDirectSubstance(castSubstance.substance,targetCell.substances);
+                    (targetCell.substances, targetCell.heatState.Value) = AlchemyEngine.instance.ApplyAlchemicalTransfomation(targetCell);
+                    break;
             }
-            if (ActivateVFX.Instance.ShockCheckCell != null)
-            {
-                AlchemyEngine.instance.PropagateEffect(ActivateVFX.Instance.ShockCheckCell, StatusEffect.Shocked);
-                ActivateVFX.Instance.ShockCheckCell = null;
-            }
+
+            AlchemyEngine.instance.ApplyStateVFX(targetCell);
         }
     }
 }
