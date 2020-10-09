@@ -28,6 +28,7 @@ namespace PrototypeGame
         public int playerIndex=0;
         public int enemyIndex=0;
         public int Turn = 1;
+        public List<GridCell> GridCellsToUpdate = new List<GridCell>();
 
         [Header("Required")]
         public TurnPopUpFade popUpUI;
@@ -270,6 +271,10 @@ namespace PrototypeGame
         public void SwitchTurns()
         {
             popUpUI.Activate();
+            foreach(GridCell cell in GridCellsToUpdate.ToList())
+            {
+                cell.UpdateAlchemicalStates();
+            }
             if (isPlayerTurn)
             {
                 foreach (PlayerManager player in playersDict.Values.ToArray())

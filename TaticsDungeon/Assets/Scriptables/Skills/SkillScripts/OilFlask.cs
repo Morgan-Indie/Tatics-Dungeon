@@ -18,8 +18,8 @@ namespace PrototypeGame
             oilFlask.skillAnimation = "Toss";
 
             oilFlask.heatState = new HeatState(HeatValue.neutral);
-            oilFlask.substance = new AlchemicalSubstance(AlchemicalState.liquid);
-            oilFlask.substance.AddAuxState(StatusEffect.Oiled);
+            oilFlask._substance = new AlchemicalSubstance(AlchemicalState.liquid);
+            oilFlask._substance.AddAuxState(StatusEffect.Oiled);
 
             oilFlask.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.normalDamage);
             oilFlask.alchemicalDamgeType = CombatStatType.waterDamage;

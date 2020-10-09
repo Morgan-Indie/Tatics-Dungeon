@@ -48,7 +48,7 @@ namespace PrototypeGame
             switch (skillScript.skill.type)
             {
                 case SkillType.CastHeat:
-                    (targetCell.substances, targetCharacter.characterSubstances,targetCharacter.statusEffects,
+                    (targetCell.substances, targetCharacter.characterSubstances,targetCharacter.statusEffects, targetCharacter.statusTurns,
                         targetCell.heatState.Value,targetCharacter.heatState.Value) = AlchemyEngine.instance.ApplyAlchemicalTransfomation(
                         targetCell,targetCharacter,skillScript);
                     break;
@@ -60,7 +60,7 @@ namespace PrototypeGame
                     (targetCharacter.characterSubstances,targetCharacter.statusEffects,targetCharacter.statusTurns) = AlchemyEngine.instance.ApplyDirectSubstance(
                         castSubstance.substance, targetCharacter.characterSubstances,targetCharacter.statusEffects, targetCharacter.statusTurns);
 
-                    (targetCell.substances, targetCharacter.characterSubstances, targetCharacter.statusEffects,
+                    (targetCell.substances, targetCharacter.characterSubstances, targetCharacter.statusEffects, targetCharacter.statusTurns,
                         targetCell.heatState.Value, targetCharacter.heatState.Value) = AlchemyEngine.instance.ApplyAlchemicalTransfomation(
                         targetCell, targetCharacter, skillScript);
                     break;

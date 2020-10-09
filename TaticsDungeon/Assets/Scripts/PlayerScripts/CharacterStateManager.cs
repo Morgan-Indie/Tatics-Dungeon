@@ -22,7 +22,7 @@ namespace PrototypeGame
         public CharacterAction characterAction = CharacterAction.None;
         public CharacterStats characterStats;
         public List<int> statusEffects = new List<int>();
-        public Dictionary<StatusEffect, int> statusTurns = new Dictionary<StatusEffect, int>();
+        public Dictionary<int, int> statusTurns = new Dictionary<int, int>();
         public Dictionary<StatusEffect, GameObject> statusVFXDict = new Dictionary<StatusEffect, GameObject>();
         public Dictionary<AlchemicalState, GameObject> stateVFXDict = new Dictionary<AlchemicalState, GameObject>()
         {
@@ -50,20 +50,21 @@ namespace PrototypeGame
             if (!statusEffects.Contains((int)status))
             {
                 statusEffects.Add((int)status);
-                statusTurns.Add(status, AlchemyEngine.instance.statusTurnsDict[status]);
+                statusTurns.Add((int)status, AlchemyEngine.instance.statusTurnsDict[status]);
             }
         }
 
         public void UpdateTurns()
         {
-            foreach (StatusEffect key in statusTurns.Keys.ToList())
+            foreach (int key in statusTurns.Keys.ToList())
             {
                 statusTurns[key] -= 2;
-                if (statusTurns[key]<0)
+                if (statusTurns[key]<=0)
                 {
                     statusTurns.Remove(key);
-                    Destroy(statusVFXDict[key]);
-                    statusVFXDict.Remove(key);
+                    Debug.Log(key);
+                    Destroy(statusVFXDict[(StatusEffect)key]);
+                    statusVFXDict.Remove((StatusEffect)key);
                 }
             }
 
@@ -71,15 +72,13 @@ namespace PrototypeGame
             {
                 if (stateVFXDict[key]!=null)
                 {
-                    AlchemicalSubstance substance = characterSubstances[key];
-                    substance.turnsLeft -= 2;
-                    if (substance.turnsLeft < 0)
+                    characterSubstances[key].turnsLeft -= 2;
+                    if (characterSubstances[key].turnsLeft <= 0)
                     {
                         Destroy(stateVFXDict[key]);
                         stateVFXDict[key] = null;
-                        substance=substance.Reset();
+                        characterSubstances[key]= new AlchemicalSubstance(AlchemicalState.None);
                     }
-                    characterSubstances[key] = substance;
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace PrototypeGame
 {
@@ -76,7 +77,7 @@ namespace PrototypeGame
                 {
                     if (substance.alchemicalState!=AlchemicalState.None)
                     {
-                        foreach (int status in substance.auxiliaryStates)
+                        foreach (int status in substance.auxiliaryStates.Distinct())
                             _cellStatusEffects.Add(status);
                     }
                 }
@@ -165,6 +166,57 @@ namespace PrototypeGame
                 Destroy(highlightEffect);
             highlightEffect = Instantiate(effect, transform.position, transform.rotation);
             highlightEffect.transform.SetParent(transform);
+        }
+
+        public void UpdateAlchemicalStates()
+        {
+            bool toRemove = true;
+            foreach(AlchemicalState state in substances.Keys.ToList())
+            {
+                if (substances[state].alchemicalState!=AlchemicalState.None)
+                {
+                    toRemove = false;
+                    substances[state].turnsLeft -= 1;
+                    if (substances[state].turnsLeft <= 0)
+                    {
+                        substances[state].Reset();
+                        if (VFXDict[state] != null)
+                        {
+                            Destroy(VFXDict[state]);
+                            VFXDict[state] = null;
+                        }
+                    }
+
+                    else
+                    {
+                        foreach (StatusEffect status in substances[state].auxiliaryStates.ToList())
+                        {
+                            Debug.Log(status);
+                            substances[state].statusTurns[(int)status] -= 1;
+                            if (substances[state].statusTurns[(int)status]<=0)
+                            {
+                                substances[state].auxiliaryStates.Remove((int)status);
+                                substances[state].statusTurns.Remove((int)status);
+                                if (status == StatusEffect.Shocked)
+                                {
+                                    foreach (GameObject vfx in VFXDict.Values)
+                                    {
+                                        if (vfx != null)
+                                            vfx.transform.Find("ShockEffect").gameObject.SetActive(false);
+                                    }
+                                }
+                                else if (status == StatusEffect.Inferno)
+                                {
+                                    Destroy(statusVFXDict[status]);
+                                    statusVFXDict.Remove(status);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (toRemove)
+                GameManager.instance.GridCellsToUpdate.Remove(this);
         }
     }
 

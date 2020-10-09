@@ -18,7 +18,8 @@ namespace PrototypeGame
             rain.skillAnimation = "SpellCastHand";
 
             rain.heatState = new HeatState(HeatValue.neutral);
-            rain.substance = new AlchemicalSubstance(AlchemicalState.liquid);            
+            rain._substance = new AlchemicalSubstance(AlchemicalState.liquid);            
+
 
             rain.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.waterDamage);
             rain.alchemicalDamgeType = CombatStatType.waterDamage;

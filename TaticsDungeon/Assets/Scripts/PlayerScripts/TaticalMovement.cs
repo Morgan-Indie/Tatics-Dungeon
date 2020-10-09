@@ -160,7 +160,7 @@ namespace PrototypeGame
 
         public void PathCellInteractions()
         {
-            (currentCell.substances, stateManager.characterSubstances, stateManager.statusEffects,
+            (currentCell.substances, stateManager.characterSubstances, stateManager.statusEffects,stateManager.statusTurns,
                 currentCell.heatState.Value, stateManager.heatState.Value)
                 = AlchemyEngine.instance.CharacterCellInteractions(currentCell, stateManager);
 

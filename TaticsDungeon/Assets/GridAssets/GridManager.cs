@@ -180,6 +180,7 @@ namespace PrototypeGame
                     castRange = CastableShapes.GetCastableCells(skill, castOrigin);
                     outerRange = CastableShapes.CircularCells(playerOrigin, skill.castableSettings.radius + skill.castableSettings.range, skill.castableSettings.range + 1);
                     break;
+
                 case CastType.Pinned:
                     rangeCells = new List<GridCell>();
                     castRange = PinnedShapes.GetPinnedCells(skill, playerOrigin, castOrigin);

@@ -7,7 +7,9 @@ namespace PrototypeGame
     public abstract class CastSubstance : SkillAbstract
     {
         public float intScaleValue;
-        public AlchemicalSubstance substance;
+        public AlchemicalSubstance _substance;
+
+        public AlchemicalSubstance substance { get { return new AlchemicalSubstance(_substance);}}
 
         public override void Cast(float delta, IntVector2 targetIndex)
         {

@@ -285,7 +285,7 @@ namespace PrototypeGame
             if (gridMeshes.Length == 0) { Initalize(); }
             if (index.x >= gridMap.width || index.y >= gridMap.height || index.x < 0 || index.y < 0)
             {
-                Debug.Log("Invalid Index for cell retrieval");
+                //Debug.Log("Invalid Index for cell retrieval");
                 return null;
             }
             try

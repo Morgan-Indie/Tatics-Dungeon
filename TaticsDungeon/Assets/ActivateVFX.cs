@@ -77,7 +77,9 @@ namespace PrototypeGame
 
         #region activate elemental effect
         public void ActivateElementalEffect(GridCell target)
-        {            
+        {
+            if (!GameManager.instance.GridCellsToUpdate.Contains(target))
+                GameManager.instance.GridCellsToUpdate.Add(target);
             foreach (AlchemicalState key in target.substances.Keys.ToList())
             {
                 if (target.substances[key].alchemicalState != AlchemicalState.None)
@@ -160,9 +162,6 @@ namespace PrototypeGame
 
         public void InstantiateSubstanceVFX(GridCell target,AlchemicalState key)
         {
-            if (target.VFXDict[key] != null)
-                Destroy(target.VFXDict[key]);
-
             GameObject vfx = Instantiate(cellStateVFX_dict[key]);
 
             ActivateStateStatusEffects(vfx, target, key);
@@ -183,6 +182,27 @@ namespace PrototypeGame
         #region Activate Status Effects
         public void ActivateStateStatusEffects(GameObject vfx, GridCell target, AlchemicalState key)
         {
+            if (key == AlchemicalState.gas)
+            {
+                if (!target.substances[key].auxiliaryStates.Contains((int)StatusEffect.Poisoned))
+                {
+                    vfx.transform.Find("PoisonEffect").gameObject.SetActive(false);
+                    vfx.GetComponentInChildren<VisualEffect>().SetBool("Poisoned", false);
+                }
+            }
+
+            else
+            {
+                if (!target.substances[key].auxiliaryStates.Contains((int)StatusEffect.Poisoned))
+                {
+                    vfx.transform.Find("PoisonEffect").gameObject.SetActive(false);
+                    vfx.GetComponentInChildren<MeshRenderer>().material.SetFloat("PoisonedCheck", 0);
+                }
+
+                if (!target.substances[key].auxiliaryStates.Contains((int)StatusEffect.Oiled))
+                    vfx.GetComponentInChildren<MeshRenderer>().material.SetFloat("OilCheck", 0);
+            }
+           
             foreach (StatusEffect statusEffect in target.substances[key].auxiliaryStates)
             {
                 switch (statusEffect)
@@ -197,9 +217,7 @@ namespace PrototypeGame
                                 PoisonCheckCell = target;
                             }
                             else if (key == AlchemicalState.gas)
-                            {
                                 vfx.GetComponentInChildren<VisualEffect>().SetBool("Poisoned", true);
-                            }
                             else
                                 vfx.GetComponentInChildren<MeshRenderer>().material.SetFloat("PoisonedCheck", 1);
                         }

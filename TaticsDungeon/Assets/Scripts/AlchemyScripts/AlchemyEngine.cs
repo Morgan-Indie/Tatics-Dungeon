@@ -12,45 +12,47 @@ namespace PrototypeGame
         Burning, Inferno, Frozen, Shocked, Poisoned, Cursed, Blessed, Wet, Oiled, Electricuted,Chilled,None
     }
 
-    public struct AlchemicalSubstance
+    public class AlchemicalSubstance
     {
         public AlchemicalState alchemicalState;
         public List<int> auxiliaryStates;
         public int turnsLeft;
-        public Dictionary<StatusEffect, int> statusTurns;
+        public Dictionary<int, int> statusTurns;
 
         public AlchemicalSubstance(AlchemicalState _alchemicalState)
         {
             alchemicalState = _alchemicalState;
             auxiliaryStates = new List<int>();
             turnsLeft = AlchemyEngine.instance.substanceTurnsDict[_alchemicalState];
-            statusTurns = new Dictionary<StatusEffect, int>();
+            statusTurns = new Dictionary<int, int>();
         }
 
         public AlchemicalSubstance(AlchemicalSubstance substance)
         {
             alchemicalState = substance.alchemicalState;
-            auxiliaryStates = substance.auxiliaryStates;
+            auxiliaryStates = new List<int>(substance.auxiliaryStates);
             turnsLeft = substance.turnsLeft;
-            statusTurns = substance.statusTurns;
+            statusTurns = new Dictionary<int,int>(substance.statusTurns);
         }
 
-        public void AddAuxState(StatusEffect _auxiliaryState)
-        {            
-            auxiliaryStates.Add((int)_auxiliaryState);
-            statusTurns[_auxiliaryState] = AlchemyEngine.instance.statusTurnsDict[_auxiliaryState];
-        }
-
-        public AlchemicalSubstance TransformState(int _alchemicalState)
+        public void TransformState(int _alchemicalState)
         {
             alchemicalState = (AlchemicalState)_alchemicalState;
             turnsLeft = AlchemyEngine.instance.substanceTurnsDict[alchemicalState];
-            return this;
         }
 
-        public AlchemicalSubstance Reset()
+        public void AddAuxState(StatusEffect status)
         {
-            return new AlchemicalSubstance(AlchemicalState.None);
+            auxiliaryStates.Add((int)status);
+            statusTurns[(int)status] = AlchemyEngine.instance.statusTurnsDict[status];
+        }
+
+        public void Reset()
+        {
+            alchemicalState = AlchemicalState.None;
+            auxiliaryStates = new List<int>();
+            turnsLeft = AlchemyEngine.instance.substanceTurnsDict[AlchemicalState.None]; 
+            statusTurns = new Dictionary<int, int>();
         }
     }
 
@@ -78,18 +80,18 @@ namespace PrototypeGame
 
         public Dictionary<AlchemicalState, int> substanceTurnsDict = new Dictionary<AlchemicalState, int>()
         {
-            {AlchemicalState.gas,4 },
-            {AlchemicalState.liquid,4 },
-            {AlchemicalState.solid,4 },
+            {AlchemicalState.gas,6 },
+            {AlchemicalState.liquid,6 },
+            {AlchemicalState.solid,6 },
             {AlchemicalState.None,-1 },
         };
         public Dictionary<StatusEffect, int> statusTurnsDict = new Dictionary<StatusEffect, int>()
         {
-            {StatusEffect.Poisoned,6 },
+            {StatusEffect.Poisoned,8 },
             {StatusEffect.Burning,4 },
             {StatusEffect.Inferno,4 },
             {StatusEffect.Shocked,2 },
-            {StatusEffect.Oiled,6 },
+            {StatusEffect.Oiled,8 },
         };
 
         public void Awake()
@@ -119,7 +121,8 @@ namespace PrototypeGame
                     AlchemicalState newState = (AlchemicalState)Mathf.Clamp((int)state + (int)heatValue,0,2);
                     if (newState != state)
                     {
-                        substances[newState] = substances[state].TransformState((int)newState);
+                        substances[state].TransformState((int)newState);
+                        substances[newState] = substances[state];
                         substances[state] = new AlchemicalSubstance(AlchemicalState.None);
                         modifiedState = true;
                     }
@@ -130,19 +133,25 @@ namespace PrototypeGame
             return (substances, heatValue);
         }
 
-        public (Dictionary<AlchemicalState, AlchemicalSubstance>, Dictionary<AlchemicalState, AlchemicalSubstance> ,List<int>, HeatValue, HeatValue) 
+        public (Dictionary<AlchemicalState, AlchemicalSubstance>, Dictionary<AlchemicalState, AlchemicalSubstance> ,List<int>, Dictionary<int, int>, HeatValue, HeatValue) 
             ApplyAlchemicalTransfomation(GridCell cell, CharacterStateManager character, SkillAbstract skill = null)
         {
             HeatState combinedHeatState = skill==null? cell.heatState+ character.heatState: cell.heatState + character.heatState + skill.heatState;
             Dictionary<AlchemicalState, AlchemicalSubstance> substances = new Dictionary<AlchemicalState, AlchemicalSubstance>(cell.substances);
             Dictionary<AlchemicalState, AlchemicalSubstance> characterSubstances = new Dictionary<AlchemicalState, AlchemicalSubstance>(character.characterSubstances);
-            List<int> statusEffects = character.statusEffects.Union(cell.cellStatusEffects.Union(transferableEffects)).ToList();            
+            List<int> statusEffects = character.statusEffects.Union(cell.cellStatusEffects.Union(transferableEffects)).ToList();
+            Dictionary<int, int> statusTurns = new Dictionary<int, int>(character.statusTurns);
+            
+            foreach (StatusEffect effect in statusEffects.Except(character.statusEffects))
+            {
+                statusTurns[(int)effect] = statusTurnsDict[effect];
+            }
 
             if (combinedHeatState.Value == 0)
-                return (substances,characterSubstances, statusEffects, HeatValue.neutral, HeatValue.neutral);
+                return (substances,characterSubstances, statusEffects, statusTurns,HeatValue.neutral, HeatValue.neutral);
 
             bool modifiedState = false;
-            characterSubstances = MergeSubstances(cell, character);
+            characterSubstances = MergeSubstances(cell, character);            
 
             foreach (AlchemicalState key in substances.Keys.ToList())
             {
@@ -153,28 +162,31 @@ namespace PrototypeGame
                     AlchemicalState newState = (AlchemicalState)Mathf.Clamp((int)cellState + (int)combinedHeatState.Value,0,2);
                     if (newState != cellState)
                     {
-                        substances[newState] = substances[cellState].TransformState((int)newState);
+                        substances[cellState].TransformState((int)newState);
+                        substances[newState]=substances[cellState];
                         substances[cellState] = new AlchemicalSubstance(AlchemicalState.None);
                         modifiedState = true;
                     }
                 }
+
                 if (characterState != AlchemicalState.None)
                 {
                     AlchemicalState newState = (AlchemicalState)Mathf.Clamp((int)characterState + (int)combinedHeatState.Value, 0, 2);
                     if (newState != characterState)
                     {
-                        characterSubstances[newState] = characterSubstances[characterState].TransformState((int)newState);
-                        characterSubstances[characterState] = new AlchemicalSubstance(AlchemicalState.None);
+                        characterSubstances[characterState].TransformState((int)newState);
+                        characterSubstances[newState]=characterSubstances[characterState];
+                        characterSubstances[characterState]= new AlchemicalSubstance(AlchemicalState.None);
                         modifiedState = true;
 
                         if (newState == AlchemicalState.solid)
-                            substances[newState] = characterSubstances[newState];
+                            substances[newState]=characterSubstances[newState];
                     }
                 }
             }
 
             combinedHeatState.Value = modifiedState ? 0 : combinedHeatState.Value;
-            return (substances, characterSubstances, statusEffects,combinedHeatState.Value, combinedHeatState.Value);
+            return (substances, characterSubstances, statusEffects, statusTurns,combinedHeatState.Value, combinedHeatState.Value);
         }
         #endregion
 
@@ -193,7 +205,7 @@ namespace PrototypeGame
             return characterSubstances;
         }
 
-        public (Dictionary<AlchemicalState, AlchemicalSubstance>, Dictionary<AlchemicalState, AlchemicalSubstance>, List<int>, HeatValue, HeatValue) 
+        public (Dictionary<AlchemicalState, AlchemicalSubstance>, Dictionary<AlchemicalState, AlchemicalSubstance>, List<int>, Dictionary<int, int> ,HeatValue, HeatValue) 
             CharacterCellInteractions(GridCell targetCell, CharacterStateManager targetCharacter)
         {
             HeatState combinedHeat = targetCell.heatState + targetCharacter.heatState;
@@ -214,18 +226,21 @@ namespace PrototypeGame
             substances[newSubstance.alchemicalState] = newSubstance;
             return substances;
         }
-
-        public (Dictionary<AlchemicalState, AlchemicalSubstance>,List<int>, Dictionary<StatusEffect, int>) ApplyDirectSubstance(AlchemicalSubstance newSubstance,
-            Dictionary<AlchemicalState, AlchemicalSubstance> _substances, List<int> _statusEffects, Dictionary<StatusEffect, int> _statusTurns)
+        
+        public (Dictionary<AlchemicalState, AlchemicalSubstance>,List<int>, Dictionary<int, int>) ApplyDirectSubstance(AlchemicalSubstance newSubstance,
+            Dictionary<AlchemicalState, AlchemicalSubstance> _substances, List<int> _statusEffects, Dictionary<int, int> _statusTurns)
         {
             Dictionary<AlchemicalState, AlchemicalSubstance> substances = new Dictionary<AlchemicalState, AlchemicalSubstance>(_substances);
-            Dictionary<StatusEffect, int> statusTurns = new Dictionary<StatusEffect, int>(_statusTurns);
+            Dictionary<int, int> statusTurns = new Dictionary<int, int>(_statusTurns);
+
             substances[newSubstance.alchemicalState] = newSubstance;
             List<int> statusEffects = _statusEffects.Union(newSubstance.auxiliaryStates).ToList();
+
             foreach(StatusEffect effect in statusEffects.Except(_statusEffects))
             {
-                statusTurns.Add(effect, statusTurnsDict[effect]);
+                statusTurns.Add((int)effect, statusTurnsDict[effect]);
             }
+
             return (substances,statusEffects,statusTurns);
         }
         #endregion
@@ -261,9 +276,19 @@ namespace PrototypeGame
         }
         #endregion
 
+        public void ApplyInferno(GridCell cell)
+        {
+            RemoveAllVFXCell(cell);
+            activateVFX.ActivateElementalEffect(StatusEffect.Inferno, cell);
+            cell.heatState.Value = HeatValue.hot;
+            cell.substances[AlchemicalState.gas].AddAuxState(StatusEffect.Inferno);
+            
+            PropagateInferno(cell);
+        }
+
         #region Apply State VFX
         public void ApplyStateVFX(GridCell cell)
-        {
+        {            
             switch (cell.heatState.Value)
             {
                 case HeatValue.hot:
@@ -280,11 +305,7 @@ namespace PrototypeGame
                 default:
                     if (cell.substances[AlchemicalState.gas].auxiliaryStates.Contains((int)StatusEffect.Oiled))
                     {
-                        RemoveAllVFXCell(cell);
-                        activateVFX.ActivateElementalEffect(StatusEffect.Inferno, cell);
-                        cell.heatState.Value = HeatValue.hot;
-                        cell.substances[AlchemicalState.gas].auxiliaryStates.Add((int)StatusEffect.Inferno);
-                        PropagateInferno(cell);                        
+                        ApplyInferno(cell);
                     }
                     else
                         activateVFX.ActivateElementalEffect(cell);
@@ -330,7 +351,9 @@ namespace PrototypeGame
                     {
                         RemoveAllVFXCharacter(character);
                         activateVFX.ActivateElementalEffect(StatusEffect.Inferno, character);
-                        character.AddStatus(StatusEffect.Inferno);
+                        character.characterSubstances[AlchemicalState.gas].auxiliaryStates.Remove((int)StatusEffect.Oiled);
+                        character.characterSubstances[AlchemicalState.gas].statusTurns.Remove((int)StatusEffect.Oiled);
+                        character.AddStatus(StatusEffect.Inferno);                                                
                         character.heatState.Value = HeatValue.hot;
                     }
                     else
@@ -369,7 +392,25 @@ namespace PrototypeGame
 
                     if (cell != null && !visited.Contains(move) && cell.substances[AlchemicalState.liquid].alchemicalState == AlchemicalState.liquid)
                     {
-                        cell.substances[AlchemicalState.liquid].AddAuxState(effect);
+                        if (!cell.substances[AlchemicalState.liquid].auxiliaryStates.Contains((int)effect))
+                        {
+                            cell.substances[AlchemicalState.liquid].AddAuxState(effect);
+                            if (cell.occupyingObject!=null)
+                            {
+                                CharacterStateManager character = cell.occupyingObject.GetComponent<CharacterStateManager>();
+                                if (!character.statusEffects.Contains((int)effect))
+                                {
+                                    character.statusEffects.Add((int)effect);
+                                    character.statusTurns[(int)effect] = statusTurnsDict[effect];
+
+                                    GameObject vfx = Instantiate(activateVFX.characterStatusVFX_dict[effect]);
+                                    vfx.transform.position = character.transform.position;
+                                    vfx.transform.SetParent(character.transform);
+                                    character.statusVFXDict[effect] = vfx;
+                                }
+                            }
+                        }
+
                         switch (effect)
                         {                            
                             case StatusEffect.Shocked:
