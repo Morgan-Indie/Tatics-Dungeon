@@ -7,7 +7,7 @@ namespace PrototypeGame
 {
     public enum CharacterState
     {
-        Ready,InMenu, IsInteracting,Dead
+        Ready,InMenu, IsInteracting,Dead, Disabled
     }
 
     public enum CharacterAction
@@ -54,17 +54,30 @@ namespace PrototypeGame
             }
         }
 
+
+        public void RemoveStatus(StatusEffect status)
+        {
+            if (statusEffects.Contains((int)status))
+            {
+                statusEffects.Remove((int)status);
+                statusTurns.Remove((int)status);
+                if (statusVFXDict.ContainsKey(status))
+                {
+                    Destroy(statusVFXDict[status]);
+                    statusVFXDict.Remove(status);
+                }
+            }
+        }
+
         public void UpdateTurns()
         {
             foreach (int key in statusTurns.Keys.ToList())
             {
+                statusVFXDict[(StatusEffect)key].GetComponent<VFXEffectScript>().ActivateEffect();
                 statusTurns[key] -= 2;
                 if (statusTurns[key]<=0)
                 {
-                    statusTurns.Remove(key);
-                    Debug.Log(key);
-                    Destroy(statusVFXDict[(StatusEffect)key]);
-                    statusVFXDict.Remove((StatusEffect)key);
+                    RemoveStatus((StatusEffect)key);
                 }
             }
 

@@ -23,7 +23,8 @@ namespace PrototypeGame
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             CharacterStateManager stateManager = animator.GetComponent<CharacterStateManager>();
-            stateManager.characterState = CharacterState.Ready;
+            if (stateManager.characterState== CharacterState.IsInteracting)
+                stateManager.characterState = CharacterState.Ready;
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()

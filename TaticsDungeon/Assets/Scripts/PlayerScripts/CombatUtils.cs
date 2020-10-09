@@ -40,6 +40,22 @@ namespace PrototypeGame
             targetStats.TakeDamage(totalDamage);
         }
 
+        public void DealDamage(CharacterStats targetStats, DamageStruct damage)
+        {
+            int damageDeltNormal = (int)(damage.normal * (1 - targetStats.armor.Value / 300f));
+            //Debug.Log(characterStats.characterName + " damageDeltNormal: " + damageDeltNormal);
+
+            int damageDeltPierce = damage.pierce;
+            //Debug.Log(characterStats.characterName + " damageDeltPierce: " + damageDeltPierce);
+
+            int damageDeltAlchemical = (int)(damage.alchemical * (1f - targetStats.playerResistanceStatDict[damage.alchemicalType].Value / 200f));
+            //Debug.Log(characterStats.characterName + " "+ outputDamage.alchemicalType+ ": " + damageDeltAlchemical);
+
+            int totalDamage = damageDeltPierce + damageDeltAlchemical + damageDeltNormal;
+            totalDamage = totalDamage > 0 ? totalDamage : 0;
+            targetStats.TakeDamage(totalDamage);
+        }
+
         public void HandleAlchemicalSkillCharacter(CharacterStateManager targetCharacter, GridCell targetCell, SkillAbstract skillScript)
         {
             DealDamage(targetCharacter.characterStats, skillScript);

@@ -21,6 +21,8 @@ namespace PrototypeGame
         public bool isFlammable = false;
         public HeatState heatState = new HeatState();
         public LayerMask occupingObjectMask;
+        public int InfernoTurns = 0;
+        public int ChilledTurns = 0;
 
         public Dictionary<AlchemicalState, AlchemicalSubstance> substances;
 
@@ -191,7 +193,6 @@ namespace PrototypeGame
                     {
                         foreach (StatusEffect status in substances[state].auxiliaryStates.ToList())
                         {
-                            Debug.Log(status);
                             substances[state].statusTurns[(int)status] -= 1;
                             if (substances[state].statusTurns[(int)status]<=0)
                             {
@@ -205,16 +206,36 @@ namespace PrototypeGame
                                             vfx.transform.Find("ShockEffect").gameObject.SetActive(false);
                                     }
                                 }
-                                else if (status == StatusEffect.Inferno)
-                                {
-                                    Destroy(statusVFXDict[status]);
-                                    statusVFXDict.Remove(status);
-                                }
                             }
                         }
                     }
                 }
             }
+            
+            if (ChilledTurns>0)
+            {
+                toRemove = false;
+                ChilledTurns -= 1;
+                if (ChilledTurns <=0)
+                {
+                    Destroy(statusVFXDict[StatusEffect.Chilled]);
+                    statusVFXDict.Remove(StatusEffect.Chilled);
+                    heatState.Value = HeatValue.neutral;
+                }
+            }
+
+            if (InfernoTurns > 0)
+            {
+                toRemove = false;
+                InfernoTurns -= 1;
+                if (InfernoTurns <= 0)
+                {
+                    Destroy(statusVFXDict[StatusEffect.Inferno]);
+                    statusVFXDict[StatusEffect.Inferno] = null;
+                    heatState.Value = HeatValue.neutral;
+                }
+            }
+
             if (toRemove)
                 GameManager.instance.GridCellsToUpdate.Remove(this);
         }

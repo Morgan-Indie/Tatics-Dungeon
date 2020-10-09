@@ -143,8 +143,7 @@ namespace PrototypeGame
 
                 if (cell != null)
                 {
-                    if (cell.substances[AlchemicalState.gas].auxiliaryStates.Contains((int)StatusEffect.Inferno) &&
-                            target.substances[AlchemicalState.liquid].auxiliaryStates.Contains((int)StatusEffect.Oiled))
+                    if (cell.InfernoTurns>0 && target.substances[AlchemicalState.liquid].auxiliaryStates.Contains((int)StatusEffect.Oiled))
                     {                        
                         AlchemyEngine.instance.PropagateInferno(cell);
                         return;
@@ -249,6 +248,8 @@ namespace PrototypeGame
         #region direct effect activations
         public void ActivateElementalEffect(StatusEffect status, GridCell target)
         {
+            if (!GameManager.instance.GridCellsToUpdate.Contains(target))
+                GameManager.instance.GridCellsToUpdate.Add(target);
             cellStatusVFX_dict[status].transform.position = target.transform.position;
             GameObject vfx = Instantiate(cellStatusVFX_dict[status]);
             vfx.transform.position = target.transform.position;
@@ -256,9 +257,61 @@ namespace PrototypeGame
             target.statusVFXDict[status]=vfx;
         }
 
+        public void ActivateInferno(GridCell target)
+        {
+            AlchemyEngine.instance.RemoveAllVFXCell(target);
+            target.heatState.Value = HeatValue.hot;
+
+            foreach (AlchemicalSubstance substance in target.substances.Values)
+                substance.Reset();
+
+            StatusEffect status = StatusEffect.Inferno;
+            cellStatusVFX_dict[status].transform.position = target.transform.position;
+
+            GameObject vfx = Instantiate(cellStatusVFX_dict[status]);
+            vfx.transform.position = target.transform.position;
+            vfx.transform.SetParent(target.transform);
+            target.statusVFXDict[status] = vfx;
+
+            target.InfernoTurns = 4;
+            AlchemyEngine.instance.PropagateInferno(target);
+
+            if (target.occupyingObject != null)
+            {
+                CharacterStateManager character = target.occupyingObject.GetComponent<CharacterStateManager>();
+
+                if(!character.statusEffects.Contains((int)StatusEffect.Inferno))
+                    ActivateInferno(character);
+            }
+        }
+
+        public void ActivateInferno(CharacterStateManager target)
+        {
+            AlchemyEngine.instance.RemoveAllVFXCharacter(target);
+
+            foreach (AlchemicalSubstance substance in target.characterSubstances.Values)
+                substance.Reset();
+            
+            target.heatState.Value = HeatValue.hot;
+            StatusEffect status = StatusEffect.Inferno;
+
+            target.AddStatus(status);
+            if (target.statusEffects.Contains((int)StatusEffect.Oiled))
+                target.RemoveStatus(StatusEffect.Oiled);
+            if (target.statusEffects.Contains((int)StatusEffect.Burning))
+                target.RemoveStatus(StatusEffect.Burning);
+
+            characterStatusVFX_dict[status].transform.position = target.transform.position;
+            GameObject vfx = Instantiate(characterStatusVFX_dict[status]);
+            vfx.transform.position = target.transform.position;
+            vfx.transform.SetParent(target.transform);
+            target.statusVFXDict[status] = vfx;
+        }
+
         public void ActivateElementalEffect(StatusEffect status, CharacterStateManager target)
         {
             characterStatusVFX_dict[status].transform.position = target.transform.position;
+
             GameObject vfx = Instantiate(characterStatusVFX_dict[status]);
             vfx.transform.position = target.transform.position+Vector3.up*.5f;
             vfx.transform.SetParent(target.transform);

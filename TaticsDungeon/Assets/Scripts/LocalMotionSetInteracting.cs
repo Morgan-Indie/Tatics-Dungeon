@@ -20,12 +20,13 @@ namespace PrototypeGame
             if (animator.GetFloat("MovementThreshold") >= .5f)
             {
                 stateManager.characterState = CharacterState.IsInteracting;
-                GameManager.instance.gameState = GameState.ResolvingInteraction;
+                //GameManager.instance.gameState = GameState.ResolvingInteraction;
             }
-            else
+            else if (stateManager.characterState == CharacterState.IsInteracting)
             {
+                Debug.Log("here");
                 stateManager.characterState = CharacterState.Ready;
-                GameManager.instance.gameState = GameState.Ready;
+                //GameManager.instance.gameState = GameState.Ready;
             }
                 
         }

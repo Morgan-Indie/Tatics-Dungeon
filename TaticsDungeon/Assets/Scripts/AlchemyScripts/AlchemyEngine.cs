@@ -125,6 +125,7 @@ namespace PrototypeGame
                         substances[newState] = substances[state];
                         substances[state] = new AlchemicalSubstance(AlchemicalState.None);
                         modifiedState = true;
+                        break;
                     }
                 }
             }
@@ -137,6 +138,8 @@ namespace PrototypeGame
             ApplyAlchemicalTransfomation(GridCell cell, CharacterStateManager character, SkillAbstract skill = null)
         {
             HeatState combinedHeatState = skill==null? cell.heatState+ character.heatState: cell.heatState + character.heatState + skill.heatState;
+
+            Debug.Log(combinedHeatState.Value);
             Dictionary<AlchemicalState, AlchemicalSubstance> substances = new Dictionary<AlchemicalState, AlchemicalSubstance>(cell.substances);
             Dictionary<AlchemicalState, AlchemicalSubstance> characterSubstances = new Dictionary<AlchemicalState, AlchemicalSubstance>(character.characterSubstances);
             List<int> statusEffects = character.statusEffects.Union(cell.cellStatusEffects.Union(transferableEffects)).ToList();
@@ -151,24 +154,28 @@ namespace PrototypeGame
                 return (substances,characterSubstances, statusEffects, statusTurns,HeatValue.neutral, HeatValue.neutral);
 
             bool modifiedState = false;
-            characterSubstances = MergeSubstances(cell, character);            
+            characterSubstances = MergeSubstances(cell, character);
 
             foreach (AlchemicalState key in substances.Keys.ToList())
             {
                 AlchemicalState cellState = substances[key].alchemicalState;
-                AlchemicalState characterState = characterSubstances[key].alchemicalState;
                 if (cellState != AlchemicalState.None)
                 {
-                    AlchemicalState newState = (AlchemicalState)Mathf.Clamp((int)cellState + (int)combinedHeatState.Value,0,2);
+                    AlchemicalState newState = (AlchemicalState)Mathf.Clamp((int)cellState + (int)combinedHeatState.Value, 0, 2);
                     if (newState != cellState)
                     {
                         substances[cellState].TransformState((int)newState);
-                        substances[newState]=substances[cellState];
+                        substances[newState] = substances[cellState];
                         substances[cellState] = new AlchemicalSubstance(AlchemicalState.None);
                         modifiedState = true;
+                        break;
                     }
                 }
+            }
 
+            foreach (AlchemicalState key in characterSubstances.Keys.ToList())
+            {
+                AlchemicalState characterState = characterSubstances[key].alchemicalState;
                 if (characterState != AlchemicalState.None)
                 {
                     AlchemicalState newState = (AlchemicalState)Mathf.Clamp((int)characterState + (int)combinedHeatState.Value, 0, 2);
@@ -181,6 +188,7 @@ namespace PrototypeGame
 
                         if (newState == AlchemicalState.solid)
                             substances[newState]=characterSubstances[newState];
+                        break;
                     }
                 }
             }
@@ -276,19 +284,9 @@ namespace PrototypeGame
         }
         #endregion
 
-        public void ApplyInferno(GridCell cell)
-        {
-            RemoveAllVFXCell(cell);
-            activateVFX.ActivateElementalEffect(StatusEffect.Inferno, cell);
-            cell.heatState.Value = HeatValue.hot;
-            cell.substances[AlchemicalState.gas].AddAuxState(StatusEffect.Inferno);
-            
-            PropagateInferno(cell);
-        }
-
         #region Apply State VFX
         public void ApplyStateVFX(GridCell cell)
-        {            
+        {                        
             switch (cell.heatState.Value)
             {
                 case HeatValue.hot:
@@ -300,12 +298,19 @@ namespace PrototypeGame
 
                 case HeatValue.cold:
                     activateVFX.ActivateElementalEffect(StatusEffect.Chilled, cell);
+                    cell.ChilledTurns = 2;
                     break;
 
                 default:
-                    if (cell.substances[AlchemicalState.gas].auxiliaryStates.Contains((int)StatusEffect.Oiled))
+                    if (cell.statusVFXDict.ContainsKey(StatusEffect.Chilled))
                     {
-                        ApplyInferno(cell);
+                        Destroy(cell.statusVFXDict[StatusEffect.Chilled]);
+                        cell.statusVFXDict.Remove(StatusEffect.Chilled);
+                        cell.ChilledTurns = 0;
+                    }
+                    if (cell.substances[AlchemicalState.gas].auxiliaryStates.Contains((int)StatusEffect.Oiled))
+                    {                        
+                        activateVFX.ActivateInferno(cell);
                     }
                     else
                         activateVFX.ActivateElementalEffect(cell);
@@ -330,10 +335,11 @@ namespace PrototypeGame
             {
                 case HeatValue.hot:
                     activateVFX.ActivateElementalEffect(StatusEffect.Burning, character);
+                    character.AddStatus(StatusEffect.Burning);
                     break;
 
                 case HeatValue.cold:
-                    activateVFX.ActivateElementalEffect(StatusEffect.Chilled, character);
+                    character.heatState.Value = HeatValue.neutral;
                     break;
 
                 default:
@@ -349,11 +355,8 @@ namespace PrototypeGame
                     }
                     else if (character.characterSubstances[AlchemicalState.gas].auxiliaryStates.Contains((int)StatusEffect.Oiled))
                     {
-                        RemoveAllVFXCharacter(character);
-                        activateVFX.ActivateElementalEffect(StatusEffect.Inferno, character);
-                        character.characterSubstances[AlchemicalState.gas].auxiliaryStates.Remove((int)StatusEffect.Oiled);
-                        character.characterSubstances[AlchemicalState.gas].statusTurns.Remove((int)StatusEffect.Oiled);
-                        character.AddStatus(StatusEffect.Inferno);                                                
+                        if (!character.statusEffects.Contains((int)StatusEffect.Inferno))
+                            activateVFX.ActivateInferno(character);
                         character.heatState.Value = HeatValue.hot;
                     }
                     else
@@ -464,20 +467,10 @@ namespace PrototypeGame
                     if (cell != null && !visited.Contains(move) && cell.substances[AlchemicalState.liquid].alchemicalState == AlchemicalState.liquid
                         && cell.substances[AlchemicalState.liquid].auxiliaryStates.Contains((int)StatusEffect.Oiled))
                     {
-                        RemoveAllVFXCell(cell);
-                        activateVFX.ActivateElementalEffect(StatusEffect.Inferno, cell);
-                        cell.substances[AlchemicalState.gas].auxiliaryStates.Add((int)StatusEffect.Inferno);
-                        cell.heatState.Value = HeatValue.hot;
+                        activateVFX.ActivateInferno(cell);
 
                         if (!que.Contains(cell.index))
                             que.Add(cell.index);
-
-                        if (cell.occupyingObject!=null)
-                        {
-                            CharacterStateManager character = cell.occupyingObject.GetComponent<CharacterStateManager>();
-                            RemoveAllVFXCharacter(character);
-                            activateVFX.ActivateElementalEffect(StatusEffect.Inferno, character);
-                        }
                     }
                 }
             }

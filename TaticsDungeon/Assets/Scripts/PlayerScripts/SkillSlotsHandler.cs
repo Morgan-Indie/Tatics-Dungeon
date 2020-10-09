@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PrototypeGame
 {
@@ -8,7 +9,6 @@ namespace PrototypeGame
     {
         [HideInInspector]
         private int allSlots = 10;
-        private int enabledSlots;
         private SkillSlot[] slots;
         PlayerManager playerManager;
         CharacterStateManager stateManager;
@@ -65,6 +65,15 @@ namespace PrototypeGame
                     slots[i].empty = false;
                     return;
                 }
+            }
+        }
+
+        public void DisableAllSlots()
+        {
+
+            foreach (SkillSlot slot in slots)
+            {
+                slot.GetComponent<Button>().enabled = false;
             }
         }
     }

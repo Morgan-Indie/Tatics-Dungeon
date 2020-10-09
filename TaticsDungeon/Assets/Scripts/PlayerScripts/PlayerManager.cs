@@ -45,15 +45,18 @@ namespace PrototypeGame
         public void PlayerUpdate(float delta)
         {
             if (isCurrentPlayer)
-            {                
-                inventoryHandler.ActivateInventoryUI();
-                if (GameManager.instance.gameState != GameState.InMenu)
+            {                                
+                if (stateManager.characterState!=CharacterState.Disabled)
                 {
-                    if (selectedSkill == null || selectedSkill.skill.type == SkillType.Move)
-                        taticalMovement.ExcuteMovement(delta);
-                    else
-                        taticalMovement.UseSkill(selectedSkill, delta);
-                }                
+                    inventoryHandler.ActivateInventoryUI();
+                    if (GameManager.instance.gameState != GameState.InMenu)
+                    {
+                        if (selectedSkill == null || selectedSkill.skill.type == SkillType.Move)
+                            taticalMovement.ExcuteMovement(delta);
+                        else
+                            taticalMovement.UseSkill(selectedSkill, delta);
+                    }
+                }             
             }
         }
     }

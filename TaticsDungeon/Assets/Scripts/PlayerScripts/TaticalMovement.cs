@@ -160,12 +160,17 @@ namespace PrototypeGame
 
         public void PathCellInteractions()
         {
-            (currentCell.substances, stateManager.characterSubstances, stateManager.statusEffects,stateManager.statusTurns,
-                currentCell.heatState.Value, stateManager.heatState.Value)
-                = AlchemyEngine.instance.CharacterCellInteractions(currentCell, stateManager);
+            if (currentCell.InfernoTurns > 0)
+                ActivateVFX.Instance.ActivateInferno(stateManager);
+            else
+            {
+                (currentCell.substances, stateManager.characterSubstances, stateManager.statusEffects, stateManager.statusTurns,
+                    currentCell.heatState.Value, stateManager.heatState.Value)
+                    = AlchemyEngine.instance.CharacterCellInteractions(currentCell, stateManager);
 
-            AlchemyEngine.instance.ApplyStateVFX(currentCell);
-            AlchemyEngine.instance.ApplyStateVFX(stateManager);
+                AlchemyEngine.instance.ApplyStateVFX(currentCell);
+                AlchemyEngine.instance.ApplyStateVFX(stateManager);
+            }
         }
 
         public void TraverseToDestination(float delta)

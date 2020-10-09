@@ -277,11 +277,12 @@ namespace PrototypeGame
             }
             if (isPlayerTurn)
             {
+                foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
+                    enemy.stateManager.UpdateTurns();
+
                 foreach (PlayerManager player in playersDict.Values.ToArray())
-                {
                     player.isCurrentPlayer = false;
-                    player.stateManager.UpdateTurns();
-                }
+
                 currentCharacter.skillSlotsHandler.skillPanel.SetActive(false);
                 GridManager.Instance.RemoveAllHighlights();
                 InitalizeEnemyTurn();                
@@ -289,10 +290,10 @@ namespace PrototypeGame
             else
             {
                 foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
-                {
                     enemy.isCurrentEnemy = false;
-                    enemy.stateManager.UpdateTurns();
-                }
+
+                foreach (PlayerManager player in playersDict.Values.ToArray())
+                    player.stateManager.UpdateTurns();
 
                 Turn++;
                 InitalizePlayerTurn();
@@ -330,7 +331,7 @@ namespace PrototypeGame
 
             foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
             {
-                if (enemy.stateManager.characterState != CharacterState.Ready)
+                if (enemy.stateManager.characterState == CharacterState.IsInteracting)
                 {
                     gameState = GameState.ResolvingInteraction;
                     return;
