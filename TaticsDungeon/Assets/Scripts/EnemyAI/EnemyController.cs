@@ -1,45 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace PrototypeGame
 {
-    public class EnemyController : FSM
+    public class EnemyController : MonoBehaviour
     {
         public CharacterStats characterStats;
         public CharacterStateManager stateManager;
         public AnimationHandler animationHandler;
         public TaticalMovement taticalMovement;
-        public Dictionary<SkillType, Skill> skillDict;
-        public DogDudeSkillList skillList;
+        public AISkillSlotHandler skillHandler;
+        public DamageSkill damageSkill;
+        public bool UsingSkill = false;
+        public SkillAbstract selectedSkill = null;
 
-        public override void Initialize()
+        public void Start()
         {
             characterStats = GetComponent<CharacterStats>();
             stateManager = GetComponent<CharacterStateManager>();
             taticalMovement = GetComponent<TaticalMovement>();
             animationHandler = GetComponent<AnimationHandler>();
-            skillList = GetComponent<DogDudeSkillList>();
-            skillDict = skillList.skillDict;
-            ConstructFSM();
+            skillHandler = GetComponent<AISkillSlotHandler>();
+            damageSkill = GetComponent<DamageSkill>();
         }
 
-        public override void FSMUpdate(float delta)
+        public void SelectSkill()
         {
-            CurrentState.HandleTransitions();
-            CurrentState.Act(delta);
+            int choice = Random.Range(0, skillHandler.skills.Count - 1);
+            selectedSkill = skillHandler.skills[choice];
         }
 
-        public void SetTransition(Transition t)
+        public void Act(float delta)
         {
-            PerformTransition(t);
-        }
 
-        private void ConstructFSM()
-        {
-            AggressiveState aggState = new AggressiveState(characterStats, 
-                stateManager,taticalMovement,animationHandler,skillDict);
-            AddFSMState(aggState);
+            damageSkill.CastSkill(selectedSkill, Time.deltaTime);
         }
     }
 }

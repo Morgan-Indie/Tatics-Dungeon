@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class FlameThrower : CastAlchemical
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             FlameThrower flameThrower = _characterStats.gameObject.AddComponent<FlameThrower>();
             flameThrower.characterStats = _characterStats;
@@ -16,6 +16,7 @@ namespace PrototypeGame
             flameThrower.skill = _skill;
             flameThrower.combatUtils = _combatUtils;
             flameThrower.skillAnimation = "SpellCastHand";
+            flameThrower.slot = _slot;
 
             flameThrower.heatState = new HeatState(HeatValue.hot);
 
@@ -23,7 +24,6 @@ namespace PrototypeGame
             flameThrower.alchemicalDamgeType = CombatStatType.fireDamage;
             flameThrower.normalDamage = new CombatStat(0, CombatStatType.normalDamage);
             flameThrower.peirceDamage = new CombatStat(0, CombatStatType.pierceDamage);
-
             flameThrower.intScaleValue = skill._scaleValue * _characterStats.Intelligence.Value;
             StatModifier intScaling = new StatModifier(flameThrower.intScaleValue, StatModType.Flat);
 

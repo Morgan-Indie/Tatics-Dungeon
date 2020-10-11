@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class OilFlask : CastSubstance
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             OilFlask oilFlask = _characterStats.gameObject.AddComponent<OilFlask>();
             oilFlask.characterStats = _characterStats;
@@ -17,6 +17,7 @@ namespace PrototypeGame
             oilFlask.combatUtils = _combatUtils;
             oilFlask.skillAnimation = "Toss";
 
+            oilFlask.slot = _slot;
             oilFlask.heatState = new HeatState(HeatValue.neutral);
             oilFlask._substance = new AlchemicalSubstance(AlchemicalState.liquid);
             oilFlask._substance.AddAuxState(StatusEffect.Oiled);
@@ -28,7 +29,6 @@ namespace PrototypeGame
 
             oilFlask.intScaleValue = skill._scaleValue * _characterStats.Intelligence.Value;
             StatModifier intScaling = new StatModifier(oilFlask.intScaleValue, StatModType.Flat);
-
             oilFlask.alchemicalDamage.AddModifier(intScaling);
             return oilFlask;
         }

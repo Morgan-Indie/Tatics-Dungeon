@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class CarrotDeath : CastAlchemical
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             CarrotDeath carrotDeath = _characterStats.gameObject.AddComponent<CarrotDeath>();
             carrotDeath.characterStats = _characterStats;
@@ -16,9 +16,9 @@ namespace PrototypeGame
             carrotDeath.skill = _skill;
             carrotDeath.combatUtils = _combatUtils;
             carrotDeath.skillAnimation = "SpellCastHand";
+            carrotDeath.slot = _slot;
 
             carrotDeath.heatState = new HeatState(HeatValue.hot);
-
             carrotDeath.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.fireDamage);
             carrotDeath.alchemicalDamgeType = CombatStatType.fireDamage;
             carrotDeath.normalDamage = new CombatStat(0, CombatStatType.normalDamage);

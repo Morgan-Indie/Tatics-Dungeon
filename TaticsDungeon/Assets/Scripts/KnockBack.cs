@@ -29,6 +29,7 @@ namespace PrototypeGame
         {
             taticalMovement.PathCellInteractions();
             animator.GetComponent<StatusVFX>().StunVFXPlay();
+            taticalMovement.SetCurrentNavDict();
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()

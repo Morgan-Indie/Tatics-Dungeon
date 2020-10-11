@@ -19,8 +19,10 @@ namespace PrototypeGame
         public CombatStat resistance;
         public HeatState heatState;
         public string skillAnimation;
-        IntVector2 prevIndex;
+        public SkillSlot slot;
 
+        IntVector2 prevIndex;
+        
         public void Activate(float delta)
         {
             IntVector2 index = taticalMovement.GetMouseIndex();
@@ -42,7 +44,7 @@ namespace PrototypeGame
         }
 
         public abstract SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-                        TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill);
+                        TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot);
         public abstract void Cast(float delta, IntVector2 targetIndex);
         public abstract void Excute(float delta, GridCell targetCell);
     }

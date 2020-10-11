@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class FlameCross : CastAlchemical
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill,SkillSlot _slot)
         {
             FlameCross flameCross = _characterStats.gameObject.AddComponent<FlameCross>();
             flameCross.characterStats = _characterStats;

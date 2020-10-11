@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class PoisonFlask : CastSubstance
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             PoisonFlask poisonFlask = _characterStats.gameObject.AddComponent<PoisonFlask>();
             poisonFlask.characterStats = _characterStats;
@@ -17,6 +17,7 @@ namespace PrototypeGame
             poisonFlask.combatUtils = _combatUtils;
             poisonFlask.skillAnimation = "Toss";
 
+            poisonFlask.slot = _slot;
             poisonFlask.heatState = new HeatState(HeatValue.neutral);
             poisonFlask._substance = new AlchemicalSubstance(AlchemicalState.liquid);
             poisonFlask._substance.AddAuxState(StatusEffect.Poisoned);

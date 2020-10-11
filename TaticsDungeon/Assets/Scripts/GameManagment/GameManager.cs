@@ -278,7 +278,9 @@ namespace PrototypeGame
             if (isPlayerTurn)
             {
                 foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
+                {
                     enemy.stateManager.UpdateTurns();
+                }
 
                 foreach (PlayerManager player in playersDict.Values.ToArray())
                     player.isCurrentPlayer = false;
@@ -293,7 +295,10 @@ namespace PrototypeGame
                     enemy.isCurrentEnemy = false;
 
                 foreach (PlayerManager player in playersDict.Values.ToArray())
+                {
                     player.stateManager.UpdateTurns();
+                    player.skillSlotsHandler.UpdateCoolDowns();
+                }
 
                 Turn++;
                 InitalizePlayerTurn();

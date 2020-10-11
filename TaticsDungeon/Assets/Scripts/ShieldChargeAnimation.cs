@@ -10,6 +10,7 @@ namespace PrototypeGame
         public CharacterStateManager stateManager;
         public TaticalMovement taticalMovement;
         int cellIndex;
+        bool exitState;
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -20,21 +21,31 @@ namespace PrototypeGame
             stateManager.characterAction = CharacterAction.ShieldCharge;
             stateManager.characterState = CharacterState.IsInteracting;
             shieldCharge.GetComponent<Collider>().isTrigger = true;
-            cellIndex = 0;
+            exitState = false;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            shieldCharge.characterRigidBody.velocity = 5f * shieldCharge.targetDirection;
-            Vector3 nextPos = shieldCharge.cells[cellIndex].transform.position;
-            if (taticalMovement.ReachedPosition(taticalMovement.transform.position, nextPos))
+            if (!exitState)
             {
-                cellIndex++;
-                taticalMovement.PathCellInteractions();
-                if (taticalMovement.ReachedPosition(taticalMovement.transform.position, shieldCharge.targetPos) && !shieldCharge.reachedTarget)
+                shieldCharge.characterRigidBody.velocity = 5f * shieldCharge.targetDirection;
+                GridCell nextCell = shieldCharge.cells[0];
+                Vector3 nextPos = nextCell.transform.position;
+                if (taticalMovement.ReachedPosition(taticalMovement.transform.position, nextPos))
                 {
-                    if (!shieldCharge.targetPathBlocked)
+                    if (shieldCharge.cells.Contains(nextCell))
+                    {
+                        shieldCharge.cells.Remove(nextCell);
+                        taticalMovement.PathCellInteractions();
+                        if (shieldCharge.cells.Count == 0)
+                        {
+                            shieldCharge.EndCast();
+                            exitState = true;
+                        }
+                    }
+
+                    if (!shieldCharge.targetPathBlocked && taticalMovement.ReachedPosition(taticalMovement.transform.position,shieldCharge.targetPos))
                         shieldCharge.EndCast();
                 }
             }

@@ -6,12 +6,18 @@ namespace PrototypeGame
 {
     public class DogDudeSkillList : MonoBehaviour
     {
-        public Skill meleeAttack;
-        public Dictionary<SkillType, Skill> skillDict = new Dictionary<SkillType, Skill>();
+        public List<Skill> skillObjects;
+        public TaticalMovement taticalMovement;
+        public CharacterStats characterStats;
+        public AnimationHandler animationHandler;
+        public CombatUtils combatUtils;
 
         public void Start()
         {
-            skillDict.Add(meleeAttack.type,meleeAttack);
+            taticalMovement = GetComponent<TaticalMovement>();
+            characterStats = GetComponent<CharacterStats>();
+            animationHandler = GetComponent<AnimationHandler>();
+            combatUtils = GetComponent<CombatUtils>();
         }
     }
 }

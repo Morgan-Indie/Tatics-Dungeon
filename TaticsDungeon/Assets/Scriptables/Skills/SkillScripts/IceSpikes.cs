@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class IceSpikes : CastAlchemical
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             IceSpikes iceSpikes = _characterStats.gameObject.AddComponent<IceSpikes>();
             iceSpikes.characterStats = _characterStats;
@@ -16,6 +16,7 @@ namespace PrototypeGame
             iceSpikes.skill = _skill;
             iceSpikes.combatUtils = _combatUtils;
             iceSpikes.skillAnimation = "SpellCastHand";
+            iceSpikes.slot = _slot;
 
             iceSpikes.heatState = new HeatState(HeatValue.cold);            
 
@@ -26,7 +27,6 @@ namespace PrototypeGame
 
             iceSpikes.intScaleValue = skill._scaleValue * _characterStats.Intelligence.Value;
             StatModifier intScaling = new StatModifier(iceSpikes.intScaleValue, StatModType.Flat);
-
             iceSpikes.alchemicalDamage.AddModifier(intScaling);
             return iceSpikes;
         }

@@ -21,8 +21,10 @@ namespace PrototypeGame
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            CharacterStateManager stateManager = animator.GetComponent<CharacterStateManager>();
             animator.SetBool("GetUpTrigger", false);
-            animator.GetComponent<CharacterStateManager>().characterAction=CharacterAction.None;
+            stateManager.characterAction=CharacterAction.None;
+            stateManager.characterState = CharacterState.Ready;            
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()

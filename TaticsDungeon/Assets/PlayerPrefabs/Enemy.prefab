@@ -371,7 +371,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapAdapter: {fileID: 0}
-  triggerCollider: {fileID: 4346658694915827362}
   moveLocation: {x: 0, y: 1, z: 0}
   stateManager: {fileID: 0}
   characterCheckLayerMask:
@@ -380,10 +379,6 @@ MonoBehaviour:
   attackCheckLayerMask:
     serializedVersion: 2
     m_Bits: 7680
-  currentIndex:
-    x: 0
-    y: 0
-  currentCell: {fileID: 0}
   targetIndex:
     x: 0
     y: 0
@@ -393,7 +388,9 @@ MonoBehaviour:
   meshMask:
     serializedVersion: 2
     m_Bits: 16384
-  isDirty: 0
+  prevIndex:
+    x: -1
+    y: -1
 --- !u!114 &4346658694915827366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,6 +428,7 @@ MonoBehaviour:
   currentHealth: 0
   maxAP: 0
   currentAP: 0
+  currentAlchemcialType: 0
   healthBar: {fileID: 0}
   apBar: {fileID: 0}
   statusPanel: {fileID: 0}
@@ -453,10 +451,7 @@ MonoBehaviour:
   characterState: 0
   characterAction: 0
   characterStats: {fileID: 0}
-  skillColliderTiggered: 0
   statusEffects: 
-  burnDamage: 0
-  poisonDamage: 0
 --- !u!114 &4346658694915827363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,7 +479,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052da12f42eac6c4a96ef7796513b5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeAttack: {fileID: 11400000, guid: 507bc4d2d25c2204aa96977aae6584fb, type: 2}
+  skillObjects: []
+  taticalMovement: {fileID: 0}
+  characterStats: {fileID: 0}
+  animationHandler: {fileID: 0}
+  combatUtils: {fileID: 0}
 --- !u!114 &1810680449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,12 +496,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0cf67b3eadedb4b9634dc8deca93da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentStateID: 0
   characterStats: {fileID: 0}
   stateManager: {fileID: 0}
   animationHandler: {fileID: 0}
   taticalMovement: {fileID: 0}
-  skillList: {fileID: 1810680448}
+  skillHandler: {fileID: 0}
+  damageSkill: {fileID: 0}
+  UsingSkill: 0
+  selectedSkill: {fileID: 0}
 --- !u!114 &1810680461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,7 +522,6 @@ MonoBehaviour:
   stateManager: {fileID: 0}
   enemyController: {fileID: 0}
   isCurrentEnemy: 0
-  selectedSkill: {fileID: 0}
 --- !u!114 &1348990894252398239
 MonoBehaviour:
   m_ObjectHideFlags: 0

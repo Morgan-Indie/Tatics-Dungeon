@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class FlameCircle : CastAlchemical
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats,
-            AnimationHandler _animationHandler, TaticalMovement _taticalMovement,CombatUtils _combatUtils, Skill _skill)
+            AnimationHandler _animationHandler, TaticalMovement _taticalMovement,CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             FlameCircle flameCircle = _characterStats.gameObject.AddComponent<FlameCircle>();
             flameCircle.characterStats = _characterStats;

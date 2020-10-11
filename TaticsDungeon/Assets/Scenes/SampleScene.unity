@@ -580,6 +580,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4347284167483555766, guid: a8c9556c7aff33e41a5c2e4217d28bb2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8c9556c7aff33e41a5c2e4217d28bb2, type: 3}
 --- !u!1 &641075626 stripped
@@ -2195,6 +2200,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4500155906802865870, guid: 29586e19ecbd3f6409db602728730958,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4504170500055829651, guid: 29586e19ecbd3f6409db602728730958,
         type: 3}
       propertyPath: m_Layer
@@ -3524,6 +3534,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PaladinMale
       objectReference: {fileID: 0}
+    - target: {fileID: 4500155906802865870, guid: 90320c8ea753782449d11fa3a8de6c3b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5012251641638902140, guid: 90320c8ea753782449d11fa3a8de6c3b,
         type: 3}
       propertyPath: skills.Array.size
@@ -4585,6 +4600,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1810680448, guid: c8b74629850b4944b81391306c65de8d, type: 3}
+      propertyPath: skillObjects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1810680448, guid: c8b74629850b4944b81391306c65de8d, type: 3}
+      propertyPath: skillObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 507bc4d2d25c2204aa96977aae6584fb,
+        type: 2}
+    - target: {fileID: 1810680448, guid: c8b74629850b4944b81391306c65de8d, type: 3}
+      propertyPath: skillObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 18283dbd2ae83614ba6e48b6cd2fd9b4,
+        type: 2}
     - target: {fileID: 4342074221598909264, guid: c8b74629850b4944b81391306c65de8d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5599,6 +5628,55 @@ MonoBehaviour:
   - {fileID: 1193429382}
   bloodEffectsPerice:
   - {fileID: 307791945}
+--- !u!114 &1690947790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690947771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b346a8bc6ddec764c8611ff607a51b5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cells: []
+  targetCell: {fileID: 0}
+  targetIndex:
+    x: 0
+    y: 0
+  target: {fileID: 0}
+  skill: {fileID: 0}
+  taticalMovement: {fileID: 0}
+  stateManager: {fileID: 0}
+  characterStats: {fileID: 0}
+  targetPath: []
+  enemyController: {fileID: 0}
+  SelectedTarget: 0
+--- !u!114 &1690947791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690947771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86313f426f2a5ad4690e56f30b9e8089, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillPanel: {fileID: 0}
+  animationHandler: {fileID: 0}
+  combatUtils: {fileID: 0}
+  characterStats: {fileID: 0}
+  skillList: {fileID: 0}
+  skills: []
+  skillPanelPrefab: {fileID: 1861432900393455044, guid: e664b3749c9abe942bc6910d0ea0ec6a,
+    type: 3}
+  skillPanelBack: {fileID: 1103952855}
+  NormalAttack: {fileID: 0}
+  Move: {fileID: 0}
+  addNewSkills: {fileID: 0}
 --- !u!1 &1698929492
 GameObject:
   m_ObjectHideFlags: 0
@@ -6452,6 +6530,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangerFemale
       objectReference: {fileID: 0}
+    - target: {fileID: 4500155906802865870, guid: 72879516dd2f96d44ac8e96c3bd38db9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5012251641638902140, guid: 72879516dd2f96d44ac8e96c3bd38db9,
         type: 3}
       propertyPath: skills.Array.size
@@ -7266,6 +7349,7 @@ MonoBehaviour:
   playerIndex: 0
   enemyIndex: 0
   Turn: 1
+  GridCellsToUpdate: []
   popUpUI: {fileID: 764040022}
   endTurn: {fileID: 1268537438}
   playerStatusPrefab: {fileID: 78394042420887159, guid: e6dd5339f0f0bf8449e9e222e05e5e5f,
@@ -7300,17 +7384,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781c3960b41e8a7428135d47e09132dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireVFXCharacter: {fileID: 1648978194837340, guid: c3039019fa1c65840b1b35eed158363c,
+  FireVFXCharacter: {fileID: 8700736318003218560, guid: a428e9bef96642349aa500d1a391e1f7,
     type: 3}
   WetVFXCharacter: {fileID: 5478021774202754969, guid: c1b743f196eec564fbc235356c54549e,
     type: 3}
   InfernoVFXCharacter: {fileID: 3096691946875360006, guid: 7737a33397d3b3642b8d393190056670,
     type: 3}
-  ShockVFXCharacter: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570,
+  ShockVFXCharacter: {fileID: 8259123037078701884, guid: e06b05d87108f9e468feeca88288b5e4,
     type: 3}
-  PoisonVFXCharacter: {fileID: 1447051283816784, guid: 61400dcd69108c64b970eb523f3d1783,
+  PoisonVFXCharacter: {fileID: 2298631755261620137, guid: 6b8b8a6d6d812ae4bb9a263a6c63abae,
     type: 3}
-  FrozenVFXCharacter: {fileID: 1202128272935260579, guid: a2de7477c7e43d84bb3e44a9bb893e4f,
+  FrozenVFXCharacter: {fileID: 8786399379154537090, guid: 7e78a79788dc6eb43bd6a34243483b12,
     type: 3}
   FireVFXCell: {fileID: 3096691946875360006, guid: 4f180e5bf900c22409598659687779d2,
     type: 3}

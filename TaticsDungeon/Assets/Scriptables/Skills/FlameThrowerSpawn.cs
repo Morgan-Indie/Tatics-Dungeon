@@ -14,7 +14,7 @@ namespace PrototypeGame
             playerHand = skill.gameObject.GetComponent<EquipmentSlotManager>().leftHandSlot.parentOverride;
 
             GameObject ob = Instantiate(projectilePrefab, playerHand.transform.position, transform.rotation);
-            ob.transform.LookAt(cells[0].transform);
+            ob.transform.LookAt(cells[1].transform);
 
             foreach (GridCell cell in cells)
             {

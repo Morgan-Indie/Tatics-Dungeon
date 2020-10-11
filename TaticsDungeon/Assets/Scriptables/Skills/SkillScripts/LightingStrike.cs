@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class LightingStrike : CastAlchemical
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             LightingStrike lightingStrike = _characterStats.gameObject.AddComponent<LightingStrike>();
             lightingStrike.characterStats = _characterStats;
@@ -16,8 +16,8 @@ namespace PrototypeGame
             lightingStrike.skill = _skill;
             lightingStrike.combatUtils = _combatUtils;
             lightingStrike.skillAnimation = "SpellCastHand";
-
             lightingStrike.heatState = new HeatState(HeatValue.neutral);
+            lightingStrike.slot = _slot;
 
             lightingStrike.alchemicalDamage = new CombatStat(_skill.damage, CombatStatType.shockDamage);
             lightingStrike.alchemicalDamgeType = CombatStatType.shockDamage;

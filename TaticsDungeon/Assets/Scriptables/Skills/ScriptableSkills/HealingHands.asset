@@ -19,7 +19,7 @@ MonoBehaviour:
   APcost: 2
   type: 10
   castType: 0
-  coolDown: 0
+  coolDown: 3
   skillScriptObject: {fileID: 465772608953933214, guid: 003d802451e86a448a76d77cf2061069,
     type: 3}
   effectPrefab: {fileID: 0}

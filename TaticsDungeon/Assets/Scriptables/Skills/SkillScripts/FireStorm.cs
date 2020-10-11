@@ -6,7 +6,8 @@ namespace PrototypeGame
 {
     public class FireStorm : CastAlchemical
     {
-        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler, TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+        public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill,SkillSlot _slot)
         {
             FireStorm fireStorm = _characterStats.gameObject.AddComponent<FireStorm>();
             fireStorm.characterStats = _characterStats;

@@ -13,7 +13,7 @@ namespace PrototypeGame
         {
             if (skill.castType == CastType.Free)
             {
-                cells = CastableShapes.GetCastableCells(skill, targetIndex);
+                cells = CastableShapes.GetCastableCells(skill, targetIndex);                
             }
             else
             {
@@ -24,7 +24,14 @@ namespace PrototypeGame
             animationHandler.PlayTargetAnimation(skillAnimation);
             characterStats.UseAP(skill.APcost);
 
-            GridManager.Instance.RemoveAllHighlights();
+            if (slot != null)
+            {
+                slot.skillCoolDownTurns += skill.coolDown;
+                slot.DisableSkill();
+                GridManager.Instance.RemoveAllHighlights();
+                characterStats.GetComponent<PlayerManager>().selectedSkill = null;
+            }
+
             GameObject effect = Instantiate(skill.effectPrefab,
                 taticalMovement.transform.position + Vector3.up * 1.5f + taticalMovement.transform.forward * 1f,
                 Quaternion.identity);
@@ -34,7 +41,8 @@ namespace PrototypeGame
         public override void Excute(float delta, GridCell targetCell)
         {
             if (targetCell.occupyingObject != null)
-                combatUtils.HandleAlchemicalSkillCharacter(targetCell.occupyingObject.GetComponent<CharacterStateManager>(), targetCell,this);
+                combatUtils.HandleAlchemicalSkillCharacter(targetCell.occupyingObject.GetComponent<CharacterStateManager>(),
+                    targetCell,this);
             else
                 combatUtils.HandleAlchemicalSkillCell(targetCell, this);
         }

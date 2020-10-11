@@ -152,6 +152,7 @@ namespace PrototypeGame
             stateManager.characterAction = CharacterAction.Moving;
             stateManager.characterState = CharacterState.IsInteracting;
             characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+
             currentPathIndex = 1;
 
             SetNextPos(path[currentPathIndex]);
@@ -207,6 +208,7 @@ namespace PrototypeGame
                 HandleRotation(delta, currentDirection);
 
                 characterRigidBody.velocity = movementSpeed * currentDirection;
+
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position,Vector3.down,out hit,(1<<0)))
                 {

@@ -11,14 +11,34 @@ namespace PrototypeGame
         public bool empty;
         public Skill skill;
         public Transform slotIconPanel;
-        public SkillAbstract skillScript;        
+        public Transform slotIconMask;
+        public SkillAbstract skillScript; 
+        public int skillCoolDownTurns;
 
         [Header("Required")]
         public Sprite defaultSprite;
 
         private void Awake()
         {
-            slotIconPanel = transform.GetChild(0);            
+            slotIconPanel = transform.GetChild(0);
+            slotIconMask = transform.GetChild(1);
+
+        }
+
+        public void DisableSkill()
+        {
+            Color temp = slotIconMask.GetComponent<Image>().color;
+            temp.a = .2f;
+            slotIconMask.GetComponent<Image>().color=temp;
+            GetComponent<Button>().enabled = false;
+        }
+
+        public void EnableSkill()
+        {
+            Color temp = slotIconMask.GetComponent<Image>().color;
+            temp.a = 0f;
+            slotIconMask.GetComponent<Image>().color = temp;
+            GetComponent<Button>().enabled = true;
         }
 
         public void UpdateSlot(CharacterStats characterStats, AnimationHandler animationHandler,
@@ -31,7 +51,8 @@ namespace PrototypeGame
                 slotIconPanel.GetComponent<Image>().sprite = skill.icon;
                 skillScript = skill.skillScriptObject.GetComponent<SkillAbstract>();
                 skillScript = skillScript.AttachSkill(characterStats, animationHandler, 
-                    taticalMovement, combatUtils,skill);
+                    taticalMovement, combatUtils,skill,this);
+                skillCoolDownTurns = 0;
             }
         }
 
@@ -40,7 +61,7 @@ namespace PrototypeGame
             if (skillScript.skill.type == SkillType.Move)
                 GameManager.instance.currentCharacter.taticalMovement.SetCurrentNavDict();
 
-            GameManager.instance.SwitchSkill(skillScript);            
+            GameManager.instance.SwitchSkill(skillScript);
         }
     }
 }

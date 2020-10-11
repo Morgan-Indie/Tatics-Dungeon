@@ -16,7 +16,7 @@ MonoBehaviour:
   skillClass: 3
   icon: {fileID: 21300000, guid: c95e43e176074c548b752c46fa9b9b25, type: 3}
   LevelRequired: 0
-  APcost: 0
+  APcost: 3
   type: 1
   castType: 1
   coolDown: 3

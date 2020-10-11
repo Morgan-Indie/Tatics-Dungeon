@@ -9,7 +9,7 @@ namespace PrototypeGame
         public GameObject target;
 
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler, 
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             EnergyBall energyBall = _characterStats.gameObject.AddComponent<EnergyBall>();
             energyBall.characterStats = _characterStats;

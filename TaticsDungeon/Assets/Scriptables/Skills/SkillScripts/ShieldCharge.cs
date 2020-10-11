@@ -20,7 +20,7 @@ namespace PrototypeGame
         GridCell targetCell = null;
 
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             ShieldCharge shieldCharge = _characterStats.gameObject.AddComponent<ShieldCharge>();
             shieldCharge.characterStats = _characterStats;
@@ -30,6 +30,7 @@ namespace PrototypeGame
             shieldCharge.stateManager = _taticalMovement.GetComponent<CharacterStateManager>();
             shieldCharge.skill= _skill;
             shieldCharge.combatUtils = _combatUtils;
+            shieldCharge.slot = _slot;
             return shieldCharge;
         }
 
@@ -42,8 +43,9 @@ namespace PrototypeGame
             characterRigidBody.constraints = RigidbodyConstraints.FreezeAll;
             if (!targetPathBlocked)
                 animationHandler.PlayTargetAnimation("CombatIdle");
-            taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
             taticalMovement.SetCurrentNavDict();
+            slot.DisableSkill();
+            taticalMovement.GetComponent<PlayerManager>().selectedSkill = null;
             targetCell = null;
         }
 
@@ -54,6 +56,7 @@ namespace PrototypeGame
             animationHandler.PlayTargetAnimation("ShieldCharge");
             characterRigidBody.constraints = RigidbodyConstraints.FreezeRotation| RigidbodyConstraints.FreezePositionY;
             characterStats.UseAP(skill.APcost);
+            slot.skillCoolDownTurns += skill.coolDown;
 
             foreach (GridCell cell in cells)
             {

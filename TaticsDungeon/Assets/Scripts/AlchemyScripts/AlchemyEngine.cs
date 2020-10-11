@@ -139,10 +139,12 @@ namespace PrototypeGame
         {
             HeatState combinedHeatState = skill==null? cell.heatState+ character.heatState: cell.heatState + character.heatState + skill.heatState;
 
-            Debug.Log(combinedHeatState.Value);
             Dictionary<AlchemicalState, AlchemicalSubstance> substances = new Dictionary<AlchemicalState, AlchemicalSubstance>(cell.substances);
             Dictionary<AlchemicalState, AlchemicalSubstance> characterSubstances = new Dictionary<AlchemicalState, AlchemicalSubstance>(character.characterSubstances);
-            List<int> statusEffects = character.statusEffects.Union(cell.cellStatusEffects.Union(transferableEffects)).ToList();
+            List<int> statusEffects = new List<int>(character.statusEffects);
+
+            if (cell.cellStatusEffects.Contains((int)StatusEffect.Shocked))
+                statusEffects.Add((int)StatusEffect.Shocked);
             Dictionary<int, int> statusTurns = new Dictionary<int, int>(character.statusTurns);
             
             foreach (StatusEffect effect in statusEffects.Except(character.statusEffects))
@@ -218,7 +220,9 @@ namespace PrototypeGame
         {
             HeatState combinedHeat = targetCell.heatState + targetCharacter.heatState;
             if(combinedHeat.Value!=HeatValue.neutral)
-                targetCharacter.characterSubstances = MergeSubstances(targetCell,targetCharacter);
+            {
+                targetCharacter.characterSubstances = MergeSubstances(targetCell, targetCharacter);
+            }
             return ApplyAlchemicalTransfomation(targetCell, targetCharacter);
         }
 

@@ -32,7 +32,7 @@ namespace PrototypeGame
             int damageDeltPierce = outputDamage.pierce;
             //Debug.Log(characterStats.characterName + " damageDeltPierce: " + damageDeltPierce);
             
-            int damageDeltAlchemical = (int)(outputDamage.alchemical*(1f - targetStats.playerResistanceStatDict[outputDamage.alchemicalType].Value / 200f));
+            int damageDeltAlchemical = outputDamage.alchemical==0 ? (int)(outputDamage.alchemical*(1f - targetStats.playerResistanceStatDict[outputDamage.alchemicalType].Value / 200f)):0;
             //Debug.Log(characterStats.characterName + " "+ outputDamage.alchemicalType+ ": " + damageDeltAlchemical);
 
             int totalDamage = damageDeltPierce + damageDeltAlchemical + damageDeltNormal;

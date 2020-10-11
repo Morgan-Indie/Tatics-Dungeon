@@ -16,10 +16,10 @@ MonoBehaviour:
   skillClass: 3
   icon: {fileID: 21300000, guid: 33d2e28416d37144b8a32c7e4a52a6e7, type: 3}
   LevelRequired: 0
-  APcost: 0
+  APcost: 2
   type: 1
   castType: 0
-  coolDown: 2
+  coolDown: 3
   skillScriptObject: {fileID: 3901484207619081484, guid: c1bd3cff40e0c4d4886b6a980a115b06,
     type: 3}
   effectPrefab: {fileID: 1453318106977052, guid: b297c584b05b8fb4c9c899c722277768,

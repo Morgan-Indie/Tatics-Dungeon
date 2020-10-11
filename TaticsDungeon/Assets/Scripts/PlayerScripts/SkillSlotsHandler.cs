@@ -76,6 +76,25 @@ namespace PrototypeGame
                 slot.GetComponent<Button>().enabled = false;
             }
         }
+
+        public void UpdateCoolDowns()
+        {
+            foreach (SkillSlot slot in slots)
+            {
+                if (!slot.empty)
+                {
+                    if (slot.skillCoolDownTurns == 0)
+                    {
+                        slot.EnableSkill();
+                    }
+                    else
+                    {
+                        slot.DisableSkill();
+                        slot.skillCoolDownTurns -= 1;
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class Move : CastPhysical
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             Move move = _characterStats.gameObject.AddComponent<Move>();
             move.characterStats = _characterStats;
@@ -15,6 +15,7 @@ namespace PrototypeGame
             move.taticalMovement = _taticalMovement;
             move.skill = _skill;
             move.combatUtils = _combatUtils;
+            move.slot = _slot;
             return move;
         }
 

@@ -36,7 +36,7 @@ MonoBehaviour:
     TimelineViewMode:
       valueInternal: 0
     FramesScrollPosition:
-      valueInternal: -40
+      valueInternal: 53.42508
     FramesZoom:
       valueInternal: 0.16595879
     PropertiesScrollPosition:
@@ -78,7 +78,7 @@ MonoBehaviour:
     MirrorMappingCreated:
       valueInternal: 1
     ImportLastBrowsedDir:
-      valueInternal: Assets\Animations\Mage
+      valueInternal: Assets\Animations
     IKWizardInitialized:
       valueInternal: 1
     IKFrontDirConfigured:

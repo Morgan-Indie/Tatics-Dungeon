@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PrototypeGame
 {
@@ -11,7 +12,7 @@ namespace PrototypeGame
         public Stat HealValue;
 
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             HealingHands healingHands = _characterStats.gameObject.AddComponent<HealingHands>();
             healingHands.characterStats = _characterStats;
@@ -21,9 +22,9 @@ namespace PrototypeGame
             healingHands.combatUtils = _combatUtils;
             healingHands.HealValue = new Stat(_skill.damage);
             healingHands.scaleValue = _characterStats.Vitality.Value * _skill._scaleValue;
-
             StatModifier scaleMod = new StatModifier(healingHands.scaleValue, StatModType.Flat);
             healingHands.HealValue.AddModifier(scaleMod);
+            healingHands.slot = _slot;
 
             return healingHands;
         }
@@ -38,7 +39,11 @@ namespace PrototypeGame
             if (target != null)
             {
                 characterStats.transform.LookAt(target.transform);
+
                 characterStats.UseAP(skill.APcost);
+                slot.DisableSkill();
+
+                slot.skillCoolDownTurns += skill.coolDown;
                 animationHandler.PlayTargetAnimation("SpellCastHand");
                 Excute(delta);
             }

@@ -10,7 +10,7 @@ namespace PrototypeGame
         public ArrowHolder arrowHolder;
 
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils,Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils,Skill _skill,SkillSlot _slot)
         {
             RangeAttack rangeAttack = _characterStats.gameObject.AddComponent<RangeAttack>();
             rangeAttack.characterStats = _characterStats;
@@ -20,6 +20,7 @@ namespace PrototypeGame
             rangeAttack.combatUtils = _combatUtils;
             rangeAttack.arrowHolder = _taticalMovement.GetComponent<ArrowHolder>();
             rangeAttack.arrowHolder.rangeAttack = rangeAttack;
+            rangeAttack.slot = _slot;
 
             rangeAttack.normalDamage = new CombatStat(0f, CombatStatType.normalDamage);
             rangeAttack.peirceDamage = new CombatStat(0f, CombatStatType.pierceDamage);
@@ -47,6 +48,7 @@ namespace PrototypeGame
                 arrowHolder.targetCell = targetCell;
                 arrowHolder.target = target;
                 characterStats.UseAP(skill.APcost);
+                slot.DisableSkill();
             }
         }
 
@@ -59,6 +61,7 @@ namespace PrototypeGame
         {
             combatUtils.DealDamage(target.GetComponent<CharacterStats>(),this);
             target.GetComponent<BloodVFX>().PlayPeirceBloodEffects();
+            characterStats.GetComponent<PlayerManager>().selectedSkill = null;
         }
     }
 }

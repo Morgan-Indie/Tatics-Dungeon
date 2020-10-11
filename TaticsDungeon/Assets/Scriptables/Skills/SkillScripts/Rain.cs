@@ -7,7 +7,7 @@ namespace PrototypeGame
     public class Rain : CastSubstance
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats, AnimationHandler _animationHandler,
-            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill)
+            TaticalMovement _taticalMovement, CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             Rain rain = _characterStats.gameObject.AddComponent<Rain>();
             rain.characterStats = _characterStats;
@@ -16,6 +16,7 @@ namespace PrototypeGame
             rain.skill = _skill;
             rain.combatUtils = _combatUtils;
             rain.skillAnimation = "SpellCastHand";
+            rain.slot = _slot;
 
             rain.heatState = new HeatState(HeatValue.neutral);
             rain._substance = new AlchemicalSubstance(AlchemicalState.liquid);            

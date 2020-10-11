@@ -13,7 +13,6 @@ namespace PrototypeGame
         public CharacterStateManager stateManager;
         public EnemyController enemyController;
         public bool isCurrentEnemy;
-        public Skill selectedSkill;
 
         private void Start()
         {
@@ -37,7 +36,14 @@ namespace PrototypeGame
             {
                 if (characterStats.currentAP == 0 && GameManager.instance.gameState == GameState.Ready)
                     GameManager.instance.SetNextEnemy();
-                enemyController.FSMUpdate(delta);             
+                else
+                { 
+                    if (enemyController.selectedSkill == null)
+                    {
+                        enemyController.SelectSkill(); 
+                    }
+                    enemyController.Act(delta);
+                }
             }
         }
     }

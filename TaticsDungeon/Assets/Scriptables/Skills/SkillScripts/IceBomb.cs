@@ -8,7 +8,7 @@ namespace PrototypeGame
     {
         public override SkillAbstract AttachSkill(CharacterStats _characterStats,
             AnimationHandler _animationHandler, TaticalMovement _taticalMovement, 
-            CombatUtils _combatUtils, Skill _skill)
+            CombatUtils _combatUtils, Skill _skill, SkillSlot _slot)
         {
             IceBomb iceBomb = _characterStats.gameObject.AddComponent<IceBomb>();
             iceBomb.characterStats = _characterStats;
