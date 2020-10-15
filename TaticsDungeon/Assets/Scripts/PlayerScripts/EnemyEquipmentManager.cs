@@ -48,7 +48,10 @@ namespace PrototypeGame
             characterStats = GetComponent<CharacterStats>();
 
             foreach (EquipableItem item in Equipments)
+            {
+                item.Init();
                 EquipItem(item);
+            }
         }
 
         #region Equipment Holder Slot Loading/Unloading On Character Model

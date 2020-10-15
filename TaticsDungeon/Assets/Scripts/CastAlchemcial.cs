@@ -29,7 +29,6 @@ namespace PrototypeGame
                 slot.skillCoolDownTurns += skill.coolDown;
                 slot.DisableSkill();
                 GridManager.Instance.RemoveAllHighlights();
-                characterStats.GetComponent<PlayerManager>().selectedSkill = null;
             }
 
             GameObject effect = Instantiate(skill.effectPrefab,

@@ -64,7 +64,6 @@ namespace PrototypeGame
             playerManager = GetComponent<PlayerManager>();
         }
 
-
         public void HandleRotation(float delta, Vector3 moveDirection)
         {
             if (moveDirection == Vector3.zero)
@@ -172,7 +171,7 @@ namespace PrototypeGame
                 AlchemyEngine.instance.ApplyStateVFX(currentCell);
                 AlchemyEngine.instance.ApplyStateVFX(stateManager);
             }
-        }
+        }        
 
         public void TraverseToDestination(float delta)
         {
@@ -253,11 +252,6 @@ namespace PrototypeGame
                 }
                 prevIndex = index;
             }
-        }
-
-        public void UseSkill(SkillAbstract skillScript, float delta)
-        {
-            skillScript.Activate(delta);
         }
     }
 }

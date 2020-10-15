@@ -88,9 +88,9 @@ namespace PrototypeGame
         public Dictionary<StatusEffect, int> statusTurnsDict = new Dictionary<StatusEffect, int>()
         {
             {StatusEffect.Poisoned,8 },
-            {StatusEffect.Burning,4 },
-            {StatusEffect.Inferno,4 },
-            {StatusEffect.Shocked,2 },
+            {StatusEffect.Burning,6 },
+            {StatusEffect.Inferno,6 },
+            {StatusEffect.Shocked,4 },
             {StatusEffect.Oiled,8 },
         };
 
@@ -338,6 +338,7 @@ namespace PrototypeGame
             switch (character.heatState.Value)
             {
                 case HeatValue.hot:
+                    Debug.Log(character + " Burning");
                     activateVFX.ActivateElementalEffect(StatusEffect.Burning, character);
                     character.AddStatus(StatusEffect.Burning);
                     break;
@@ -351,6 +352,7 @@ namespace PrototypeGame
                     {
                         Destroy(character.statusVFXDict[StatusEffect.Burning]);
                         character.statusVFXDict.Remove(StatusEffect.Burning);
+                        character.RemoveStatus(StatusEffect.Burning);
                     }
                     if (character.statusVFXDict.ContainsKey(StatusEffect.Inferno))
                     {

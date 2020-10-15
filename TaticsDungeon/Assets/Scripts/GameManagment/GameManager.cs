@@ -108,16 +108,11 @@ namespace PrototypeGame
             }
                 
             else
-            {
-                if (CheckEnemyEndTurn())
-                    SwitchTurns();
+            {               
+                if (currentEnemy.stateManager.characterAction == CharacterAction.LyingDown)
+                    currentEnemy.characterStats.animationHandler.animator.SetBool("GetUpTrigger", true);
                 else
-                {
-                    if (currentEnemy.stateManager.characterAction == CharacterAction.LyingDown)
-                        currentEnemy.characterStats.animationHandler.animator.SetBool("GetUpTrigger", true);
-                    else
-                        currentEnemy.EnemyUpdate(delta);
-                }
+                    currentEnemy.EnemyUpdate(delta);
             }
         }
 
@@ -229,16 +224,21 @@ namespace PrototypeGame
         #region Enemy Selection
 
         public void SetNextEnemy()
-        {            
-            if (enemyIndex < 0)
-                enemyIndex = enemiesDict.Values.ToArray().Length - 1;
-            else if (enemyIndex >= enemiesDict.Values.ToArray().Length)
-                enemyIndex = 0;
-            currentEnemy.isCurrentEnemy = false;
-            currentEnemy = enemiesDict.Values.ToArray()[enemyIndex];
-            currentEnemy.isCurrentEnemy = true;
-            currentEnemy.taticalMovement.SetCurrentNavDict();
+        {
             enemyIndex++;
+
+            if (enemyIndex >= enemiesDict.Values.ToArray().Length)
+            {
+                enemyIndex = 0;
+                SwitchTurns();
+            }
+            else
+            {
+                currentEnemy.isCurrentEnemy = false;
+                currentEnemy = enemiesDict.Values.ToArray()[enemyIndex];
+                currentEnemy.isCurrentEnemy = true;
+                currentEnemy.taticalMovement.SetCurrentNavDict();
+            }
         }
 
         #endregion
@@ -247,8 +247,10 @@ namespace PrototypeGame
         public bool CheckEnemyEndTurn()
         {
             int totalAp = 0;
+     
             foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
                 totalAp += enemy.characterStats.currentAP;
+
             if (totalAp == 0 && gameState == GameState.Ready)
                 return true;
             return false;
@@ -280,6 +282,7 @@ namespace PrototypeGame
                 foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
                 {
                     enemy.stateManager.UpdateTurns();
+                    enemy.phase = AIActionPhase.SelectSkill;
                 }
 
                 foreach (PlayerManager player in playersDict.Values.ToArray())
@@ -293,7 +296,7 @@ namespace PrototypeGame
             {
                 foreach (EnemyManager enemy in enemiesDict.Values.ToArray())
                     enemy.isCurrentEnemy = false;
-
+                currentEnemy.skillSlotHandler.skillPanel.SetActive(false);
                 foreach (PlayerManager player in playersDict.Values.ToArray())
                 {
                     player.stateManager.UpdateTurns();

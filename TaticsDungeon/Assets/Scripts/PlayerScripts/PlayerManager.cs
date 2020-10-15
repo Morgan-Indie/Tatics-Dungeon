@@ -39,6 +39,15 @@ namespace PrototypeGame
         {
             GameManager.instance.playersDict.Remove(characterStats.characterName);
             gameObject.SetActive(false);
+            if (GameManager.instance.isPlayerTurn)
+                GameManager.instance.currentCharacter.taticalMovement.SetCurrentNavDict();
+            else
+                GameManager.instance.currentEnemy.taticalMovement.SetCurrentNavDict();
+        }
+
+        public void UseSkill(SkillAbstract skillScript, float delta)
+        {
+            skillScript.Activate(delta);
         }
 
         // Update is called once per frame
@@ -54,7 +63,7 @@ namespace PrototypeGame
                         if (selectedSkill == null || selectedSkill.skill.type == SkillType.Move)
                             taticalMovement.ExcuteMovement(delta);
                         else
-                            taticalMovement.UseSkill(selectedSkill, delta);
+                            UseSkill(selectedSkill, delta);
                     }
                 }             
             }

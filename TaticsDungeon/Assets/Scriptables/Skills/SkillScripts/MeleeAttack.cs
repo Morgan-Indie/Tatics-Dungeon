@@ -22,12 +22,13 @@ namespace PrototypeGame
 
             meleeAttack.normalDamage = new CombatStat(0f, CombatStatType.normalDamage);
             meleeAttack.peirceDamage = new CombatStat(0f, CombatStatType.pierceDamage);
-            meleeAttack.alchemicalDamage = new CombatStat(0f, CombatStatType.normalDamage);
+            
+            meleeAttack.alchemicalDamage = new CombatStat(0f, CombatStatType.fireDamage);
             meleeAttack.slot = _slot;
 
             meleeAttack.normalDamage.AddModifier(new StatModifier(_characterStats.normalDamage.Value, StatModType.Flat));
             meleeAttack.peirceDamage.AddModifier(new StatModifier(_characterStats.pierceDamage.Value, StatModType.Flat));
-            meleeAttack.alchemicalDamage.AddModifier(new StatModifier(_characterStats.normalDamage.Value, StatModType.Flat));
+            meleeAttack.alchemicalDamage.AddModifier(new StatModifier(_characterStats.fireDamage.Value, StatModType.Flat));
 
             return meleeAttack;
         }
@@ -60,7 +61,9 @@ namespace PrototypeGame
         {
             combatUtils.DealDamage(target.GetComponent<CharacterStats>(), this);
             target.GetComponent<BloodVFX>().PlaySplashBloodEffects();
-            characterStats.GetComponent<PlayerManager>().selectedSkill = null;
+
+            if (characterStats.tag == "Player") 
+                characterStats.GetComponent<PlayerManager>().selectedSkill = null;
         }
     }       
 }

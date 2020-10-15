@@ -24,11 +24,11 @@ namespace PrototypeGame
 
             rangeAttack.normalDamage = new CombatStat(0f, CombatStatType.normalDamage);
             rangeAttack.peirceDamage = new CombatStat(0f, CombatStatType.pierceDamage);
-            rangeAttack.alchemicalDamage = new CombatStat(0f, CombatStatType.normalDamage);
+            rangeAttack.alchemicalDamage = new CombatStat(0f, CombatStatType.fireDamage);
 
             rangeAttack.normalDamage.AddModifier(new StatModifier(_characterStats.normalDamage.Value, StatModType.Flat));
             rangeAttack.peirceDamage.AddModifier(new StatModifier(_characterStats.pierceDamage.Value, StatModType.Flat));
-            rangeAttack.alchemicalDamage.AddModifier(new StatModifier(_characterStats.pierceDamage.Value, StatModType.Flat));
+            rangeAttack.alchemicalDamage.AddModifier(new StatModifier(_characterStats.fireDamage.Value, StatModType.Flat));
 
             return rangeAttack;
         }

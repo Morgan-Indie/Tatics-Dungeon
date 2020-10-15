@@ -73,7 +73,8 @@ namespace PrototypeGame
         {
             foreach (int key in statusTurns.Keys.ToList())
             {
-                statusVFXDict[(StatusEffect)key].GetComponent<VFXEffectScript>().ActivateEffect();
+                if ((StatusEffect)key!=StatusEffect.Oiled)
+                    statusVFXDict[(StatusEffect)key].GetComponent<VFXEffectScript>().ActivateEffect();
                 statusTurns[key] -= 2;
                 if (statusTurns[key]<=0)
                 {

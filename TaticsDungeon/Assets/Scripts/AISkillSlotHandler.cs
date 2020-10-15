@@ -16,7 +16,7 @@ namespace PrototypeGame
         public CombatUtils combatUtils;
         public CharacterStats characterStats;
         public DogDudeSkillList skillList;
-        public List<SkillAbstract> skills;
+        public SkillAbstract[] skills;
 
         [Header("Required")]
         public GameObject skillPanelPrefab;
@@ -32,7 +32,6 @@ namespace PrototypeGame
             skillPanel = Instantiate(skillPanelPrefab) as GameObject;
             skillPanel.transform.SetParent(skillPanelBack.transform, false);
             slots = skillPanel.GetComponentsInChildren<SkillSlot>();
-            addNewSkills = GetComponent<TestAddNewSkills>();
             combatUtils = GetComponent<CombatUtils>();
             skillList = GetComponent<DogDudeSkillList>();
 
@@ -46,14 +45,14 @@ namespace PrototypeGame
             animationHandler = GetComponent<AnimationHandler>();
             characterStats = GetComponent<CharacterStats>();
             AddSkills();
+            skills = GetComponents<SkillAbstract>();
+            skillPanel.SetActive(false);
         }
 
         public void AddSkills()
         {
             foreach (Skill skill in skillList.skillObjects)
             {
-                SkillAbstract skillScript = skill.skillScriptObject.GetComponent<SkillAbstract>();
-                skills.Add(skillScript);
                 AddSkill(skill);
             }
         }

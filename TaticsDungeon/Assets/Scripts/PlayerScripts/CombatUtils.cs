@@ -27,13 +27,13 @@ namespace PrototypeGame
             DamageStruct outputDamage = ComputeDamage(skillScript);
 
             int damageDeltNormal = (int)(outputDamage.normal * (1-targetStats.armor.Value/300f));
-            //Debug.Log(characterStats.characterName + " damageDeltNormal: " + damageDeltNormal);
+            Debug.Log(characterStats.characterName + " damageDeltNormal: " + damageDeltNormal);
 
             int damageDeltPierce = outputDamage.pierce;
-            //Debug.Log(characterStats.characterName + " damageDeltPierce: " + damageDeltPierce);
-            
-            int damageDeltAlchemical = outputDamage.alchemical==0 ? (int)(outputDamage.alchemical*(1f - targetStats.playerResistanceStatDict[outputDamage.alchemicalType].Value / 200f)):0;
-            //Debug.Log(characterStats.characterName + " "+ outputDamage.alchemicalType+ ": " + damageDeltAlchemical);
+            Debug.Log(characterStats.characterName + " damageDeltPierce: " + damageDeltPierce);
+
+            int damageDeltAlchemical = outputDamage.alchemical==0 ? 0:(int)(outputDamage.alchemical*(1f - targetStats.playerResistanceStatDict[outputDamage.alchemicalType].Value / 200f));
+            Debug.Log(characterStats.characterName + " "+ outputDamage.alchemicalType+ ": " + damageDeltAlchemical);
 
             int totalDamage = damageDeltPierce + damageDeltAlchemical + damageDeltNormal;
             totalDamage = totalDamage>0 ? totalDamage: 0;

@@ -9,7 +9,7 @@ namespace PrototypeGame
         public CharacterStats characterStats;
         // Start is called before the first frame update
 
-        void Start()
+        void Awake()
         {
             characterStats = GetComponent<CharacterStats>();
         }
