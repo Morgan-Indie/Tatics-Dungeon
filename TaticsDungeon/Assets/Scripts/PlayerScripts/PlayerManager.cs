@@ -19,7 +19,6 @@ namespace PrototypeGame
         public Transform playerTransform;
         public TaticalMovement taticalMovement;
         public CharacterStats characterStats;
-        public AnimationHandler animationHandler;
         public CharacterStateManager stateManager;
         public InventoryHandler inventoryHandler;
         public SkillSlotsHandler skillSlotsHandler;
@@ -49,12 +48,6 @@ namespace PrototypeGame
         public void UseSkill(SkillAbstract skillScript, float delta)
         {
             skillScript.Activate(delta);
-        }
-
-        public void HandleDeath()
-        {
-            stateManager.characterState = CharacterState.Dead;
-            animationHandler.PlayTargetAnimation("Death");
         }
 
         // Update is called once per frame

@@ -76,6 +76,14 @@ namespace PrototypeGame
             panelName = statusPanel.GetComponentInChildren<Text>();
             panelName.text = characterName;
 
+            maxHealth = SetMaxHealthFromVitality();
+            currentHealth = maxHealth;
+            healthBar.SetMaxHealth(maxHealth);
+
+            maxAP = SetMaxAPFromStamina();
+            currentAP = maxAP;
+            apBar.SetMaxAP(maxAP);
+
             stateManager = GetComponent<CharacterStateManager>();
             animationHandler = GetComponent<AnimationHandler>();
             taticalMovement = GetComponent<TaticalMovement>();
@@ -131,6 +139,51 @@ namespace PrototypeGame
             playerResistanceStatDict.Add(CombatStatType.shockDamage, shockResistance);
             playerResistanceStatDict.Add(CombatStatType.fireDamage, fireResistance);
             playerResistanceStatDict.Add(CombatStatType.poisonDamage, poisonResistance);
+        }
+
+        public int SetMaxHealthFromVitality()
+        {
+            maxHealth = (int)Vitality.Value * 10;
+            //Debug.Log(characterName + " have max health: "+maxHealth);
+            return maxHealth;
+        }
+
+        public int SetMaxAPFromStamina()
+        {
+            maxAP = Mathf.FloorToInt(Stamina.Value);
+            return maxAP;
+        }
+
+        public void Heal(int healValue)
+        {
+            currentHealth = currentHealth + healValue <= maxHealth ? currentHealth + healValue : maxHealth;
+            Debug.Log(characterName + " healed " + healValue + " health and have " + currentHealth + " remaining");
+        }
+
+        public void TakeDamage(int damange)
+        {
+            if (damange == 0)
+                return;
+
+            currentHealth -= damange;
+            healthBar.SetCurrentHealth(currentHealth);
+            Debug.Log(characterName + " took "+ damange+" damage and have "+ currentHealth+" remaining");
+            if (currentHealth <= 0)
+            {   
+                stateManager.characterState = CharacterState.Dead;
+                animationHandler.PlayTargetAnimation("Death");
+            }
+            
+            else if (stateManager.characterAction == CharacterAction.LyingDown)
+                animationHandler.PlayTargetAnimation("LyingHitReaction");
+            else
+                animationHandler.PlayTargetAnimation("MinorHitReaction");
+        }
+
+        public void UseAP(int AP)
+        {
+            currentAP -= AP;
+            apBar.SetCurrentAP(currentAP);
         }
     }
 }
