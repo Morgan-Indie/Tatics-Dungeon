@@ -4,11 +4,21 @@ using UnityEngine;
 
 namespace PrototypeGame
 {
-    public class CombatStat : Stat
+    public class DamageStat : Stat
     {
-        public CombatStatType type;
+        public DamageStatType type;
 
-        public CombatStat(float baseValue, CombatStatType StatType) : base(baseValue)
+        public DamageStat(float baseValue, DamageStatType StatType) : base(baseValue)
+        {
+            type = StatType;
+        }
+    }
+
+    public class DefenseStat : Stat
+    {
+        public DefenseStatType type;
+
+        public DefenseStat(float baseValue, DefenseStatType StatType) : base(baseValue)
         {
             type = StatType;
         }

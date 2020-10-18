@@ -111,26 +111,5 @@ namespace PrototypeGame
             }
             return (prevCellNav, prevCellTargets);
         }
-
-        public List<IntVector2> GetPath(Dictionary<IntVector2, IntVector2> currentNavDict,
-            IntVector2 targetIndex, IntVector2 currentIndex)
-        {
-            List<IntVector2> path = new List<IntVector2>();
-
-            if (currentNavDict.ContainsKey(targetIndex))
-            {
-                IntVector2 index = targetIndex;
-                while (!index.Equals(currentIndex))
-                {
-                    path.Add(index);
-                    index = currentNavDict[index];
-                }
-                path.Add(currentIndex);
-                path.Reverse();
-                return path;
-            }
-            else
-                return null;
-        }
     }
 }

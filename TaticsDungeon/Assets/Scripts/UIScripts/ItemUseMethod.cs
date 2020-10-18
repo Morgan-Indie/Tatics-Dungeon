@@ -11,7 +11,7 @@ namespace PrototypeGame
         public InventoryHandler inventoryHandler;
         public EquipmentModifiersHandler modHandler;
         public StatPreviewSetText statpreview;
-        public CharacterStats characterStats;
+        public PlayerManager playerManager;
 
         [Header("Not Required")]
         public GameObject currentInventoryObject;
@@ -19,7 +19,7 @@ namespace PrototypeGame
         public void Start()
         {
             equipmentSlotManager = GetComponentInParent<EquipmentSlotManager>();
-            characterStats = GetComponentInParent<CharacterStats>();
+            playerManager = GetComponentInParent<PlayerManager>();
             modHandler = GetComponentInParent<EquipmentModifiersHandler>();
             inventoryHandler = GetComponentInParent<InventoryHandler>();
         }
@@ -34,8 +34,8 @@ namespace PrototypeGame
                 item.equipped = false;
                 modHandler.RemoveAllModifiers(item);
                 inventoryHandler.AddItem(item);
-                characterStats.SetMaxAPFromStamina();
-                characterStats.SetMaxHealthFromVitality();
+                playerManager.AP.SetMaxAPFromStamina();
+                playerManager.health.SetMaxHealthFromVitality();
             }
 
             else
@@ -44,8 +44,8 @@ namespace PrototypeGame
                 equipmentSlotManager.LoadEquipementOnEquipMenu(item, item.slotType);
                 item.equipped = true;                
                 modHandler.ApplyEquipmentModifiers(item);
-                characterStats.SetMaxAPFromStamina();
-                characterStats.SetMaxHealthFromVitality();
+                playerManager.AP.SetMaxAPFromStamina();
+                playerManager.health.SetMaxHealthFromVitality();
             }
             statpreview.updateStatTexts();
         }

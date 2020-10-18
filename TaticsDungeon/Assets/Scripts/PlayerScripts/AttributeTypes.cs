@@ -30,9 +30,9 @@ namespace PrototypeGame
         quiver
     }
 
-
-    public enum CombatStatType
+    public enum DamageStatType
     {
+        None,
         normalDamage,
         fireDamage,
         waterDamage,
@@ -40,6 +40,10 @@ namespace PrototypeGame
         pierceDamage,
         curseDamage,
         poisonDamage,
+    }
+
+    public enum DefenseStatType
+    {
         armor,
         fireResistance,
         waterResistance,

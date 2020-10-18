@@ -7,9 +7,6 @@ namespace PrototypeGame
 {
     public class CharacterStats : MonoBehaviour
     {
-        [Header("Name")]
-        public string characterName;
-
         [Header("Player Stats")]
         public float _strength=10;
         public float _vitality=10;
@@ -18,12 +15,6 @@ namespace PrototypeGame
         public float _luck=10;
         public float _stamina = 10;
 
-        [Header("For View Only")]
-        public int maxHealth;
-        public int currentHealth;
-        public int maxAP;
-        public int currentAP;
-
         public Stat Strength;
         public Stat Vitality;
         public Stat Dexterity;
@@ -31,6 +22,7 @@ namespace PrototypeGame
         public Stat Intelligence;
         public Stat Stamina;
 
+<<<<<<< Updated upstream
         public CombatStat normalDamage;
         public CombatStat pierceDamage;
         public CombatStat poisonDamage;
@@ -58,35 +50,18 @@ namespace PrototypeGame
         public CharacterStateManager stateManager;
         public AnimationHandler animationHandler;
         public TaticalMovement taticalMovement;
+=======
+        [HideInInspector]
+        public Dictionary<AttributeType, Stat> attributeDict= new Dictionary<AttributeType, Stat>();
+>>>>>>> Stashed changes
 
         private void Awake()
         {
-            CollectPlayerAttributes();
-            CollectPlayerCombatStats();
+            InitializeAttributes();
+            CollectAttributes();
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            healthBar = statusPanel.GetComponentInChildren<HealthBar>();
-            apBar = statusPanel.GetComponentInChildren<APFill>();
-            panelName = statusPanel.GetComponentInChildren<Text>();
-            panelName.text = characterName;
-
-            maxHealth = SetMaxHealthFromVitality();
-            currentHealth = maxHealth;
-            healthBar.SetMaxHealth(maxHealth);
-
-            maxAP = SetMaxAPFromStamina();
-            currentAP = maxAP;
-            apBar.SetMaxAP(maxAP);
-
-            stateManager = GetComponent<CharacterStateManager>();
-            animationHandler = GetComponent<AnimationHandler>();
-            taticalMovement = GetComponent<TaticalMovement>();
-        }
-
-        public void CollectPlayerAttributes()
+        public void InitializeAttributes()
         {
             Strength = new Stat(_strength);
             Vitality = new Stat(_vitality);
@@ -94,6 +69,7 @@ namespace PrototypeGame
             Luck = new Stat(_luck);
             Intelligence = new Stat(_intelligence);
             Dexterity = new Stat(_dexterity);
+<<<<<<< Updated upstream
 
             playerAttributeDict.Add(AttributeType.strength, Strength);
             playerAttributeDict.Add(AttributeType.dexterity, Dexterity);
@@ -168,12 +144,18 @@ namespace PrototypeGame
                 animationHandler.PlayTargetAnimation("LyingHitReaction");
             else
                 animationHandler.PlayTargetAnimation("MinorHitReaction");
+=======
+>>>>>>> Stashed changes
         }
 
-        public void UseAP(int AP)
+        public void CollectAttributes()
         {
-            currentAP -= AP;
-            apBar.SetCurrentAP(currentAP);
+            attributeDict.Add(AttributeType.strength, Strength);
+            attributeDict.Add(AttributeType.dexterity, Dexterity);
+            attributeDict.Add(AttributeType.luck, Luck);
+            attributeDict.Add(AttributeType.vitality, Vitality);
+            attributeDict.Add(AttributeType.stamina, Stamina);
+            attributeDict.Add(AttributeType.intelligence, Intelligence);
         }
     }
 }

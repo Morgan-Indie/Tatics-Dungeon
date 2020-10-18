@@ -24,6 +24,7 @@ namespace PrototypeGame
                 }
                 return _value;
             }
+            set { Basevalue = value; isDirty = true; }
         }
 
         public void PrintModifiers()

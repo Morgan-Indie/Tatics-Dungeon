@@ -6,62 +6,58 @@ namespace PrototypeGame
 {
     public class EquipmentModifiersHandler : MonoBehaviour
     {
-        public CharacterStats characterStats;
+        public CharacterStats stats;
+        public CharacterCombatStats combatStats;
         // Start is called before the first frame update
 
-        void Start()
+        void Awake()
         {
-            characterStats = GetComponent<CharacterStats>();
+            stats = GetComponent<CharacterStats>();
+            combatStats = GetComponent<CharacterCombatStats>();
         }
 
-        #region Handle Stat Modifiers
-
-        // add modifiers for the character's attributes, strength, intellegence etc... from the equipment
-        private void ApplyCharacterModifiers(EquipableItem item)
+        public void ApplyCharacterModifiers(EquipableItem item)
         {
             foreach (var mod in item.statModDict)
-                characterStats.playerAttributeDict[mod.Key].AddModifier(mod.Value);
+                stats.attributeDict[mod.Key].AddModifier(mod.Value);
         }
 
-        // add base damage and defense etc.. from the item
-        private void ApplyEquipmentStats(EquipableItem item)
-        {
-            foreach (var mod in item.equipmentStatDict)
-            {
-                characterStats.playerCombatStatDict[mod.Key].AddModifier(mod.Value);
-            }
-        }
-
-        private void ApplyEquipmentScalers(EquipableItem item)
+        #region ApplyAttributeScaling
+        public void ApplyDamageScalers(EquipableItem item)
         {
             foreach (var mod in item.scaleModDict)
             {
-                float scaleFactor = characterStats.playerAttributeDict[mod.Key].Value * mod.Value;
-                if (item._fireDamage != 0)
-                    characterStats.fireDamage.AddModifier(new StatModifier(scaleFactor,StatModType.Flat, item));
-                if (item._waterDamage != 0)
-                    characterStats.waterDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._shockDamage != 0)
-                    characterStats.shockDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._pierceDamage != 0)
-                    characterStats.pierceDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._poisonDamage != 0)
-                    characterStats.poisonDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._normalDamage != 0)
-                    characterStats.normalDamage.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._armor != 0)
-                    characterStats.armor.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._fireResistance != 0)
-                    characterStats.fireResistance.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._waterResistance != 0)
-                    characterStats.waterResistance.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._shockResistance != 0)
-                    characterStats.shockResistance.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
-                if (item._poisonResistance != 0)
-                    characterStats.poisonResistance.AddModifier(new StatModifier(scaleFactor, StatModType.Flat, item));
+                StatModifier StatMod = new StatModifier(stats.attributeDict[mod.Key].Value * mod.Value, StatModType.PercentAdd, item);
+                foreach (DamageStat stat in item.damageDict.Values)
+                    stat.AddModifier(StatMod);
             }
         }
-        #endregion      
+
+        public void ApplyDefenseScalers(EquipableItem item)
+        {
+            foreach (var mod in item.scaleModDict)
+            {
+                StatModifier StatMod = new StatModifier(stats.attributeDict[mod.Key].Value * mod.Value, StatModType.PercentAdd, item);
+                foreach (DefenseStat stat in item.defenseDict.Values)
+                    stat.AddModifier(StatMod);
+            }
+        }
+        #endregion
+
+        #region Apply equipment stats to characterCombatStats
+
+        public void ApplyDamageStats(EquipableItem item)
+        {
+            foreach (DamageStat stat in item.damageDict.Values)
+                combatStats.damageStatDict[stat.type].AddModifier(new StatModifier(stat.Value, StatModType.Flat, item));
+        }
+
+        public void ApplyDefenseStats(EquipableItem item)
+        {
+            foreach (DefenseStat stat in item.defenseDict.Values)
+                combatStats.defenseStatDict[stat.type].AddModifier(new StatModifier(stat.Value, StatModType.Flat, item));
+        }
+        #endregion
 
         public void RemoveAllModifiers(EquipableItem item)
         {
@@ -69,13 +65,17 @@ namespace PrototypeGame
                 mod.Value.RemoveAllModifiersFromSource(item);
             foreach (var mod in characterStats.playerCombatStatDict)
                 mod.Value.RemoveAllModifiersFromSource(item);
+            characterStats.currentAlchemcialType = CombatStatType.normalDamage;
         }
 
         public void ApplyEquipmentModifiers(EquipableItem item)
         {
             ApplyCharacterModifiers(item);
-            ApplyEquipmentStats(item);
-            ApplyEquipmentScalers(item);
+            if (item.isWeapon)
+            {
+                ApplyDamageScalers(item);
+                ApplyDamageStats(item);
+            }
         }
     }
 }

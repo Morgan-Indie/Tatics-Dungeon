@@ -7,14 +7,15 @@ namespace PrototypeGame
     public class CombatUtils : MonoBehaviour
     {
         [Header("Not Required")]
-        public CharacterStats characterStats;
-        public EquipmentSlotManager equipmentSlotManager;
+        public static CombatUtils Instance = null;
 
-        public void Start()
+        public void Awake()
         {
-            characterStats = GetComponent<CharacterStats>();
+            if (Instance == null)
+                Instance = this;
         }
 
+<<<<<<< Updated upstream
         public DamageStruct ComputeDamage()
         {
             float totalNormalDamage = 0f;
@@ -146,6 +147,86 @@ namespace PrototypeGame
                     targetCharacterStats.stateManager.statusEffects.Add(StatusEffect.Frozen);
                 AlchemyManager.Instance.ApplySolid(cell.alchemyState, SolidPhaseState.Water);
             }
+=======
+        public DamageStruct ComputeDamage(SkillAbstract skillScript)
+        {
+            float pierceDamage = 0f;
+            float alchemicalDamage = 0f;
+            float normalDamage = 0f;
+            DamageStatType alchemicalType = DamageStatType.None;
+
+            foreach (DamageStat stat in skillScript.damageStatsList)
+            {
+                switch (stat.type)
+                {
+                    case DamageStatType.normalDamage:
+                        normalDamage = stat.Value*skillScript.character.combatStats.baseDamage.Value;
+                        break;
+
+                    case DamageStatType.pierceDamage:
+                        pierceDamage = stat.Value * skillScript.character.combatStats.baseDamage.Value;
+                        break;
+
+                    default:
+                        alchemicalDamage = stat.Value * skillScript.character.combatStats.baseDamage.Value;
+                        alchemicalType = stat.type;
+                        break;
+                }
+            }
+
+            DamageStruct outputDamage = new DamageStruct(pierceDamage, normalDamage, alchemicalDamage, alchemicalType);
+            return outputDamage;
+        }
+
+        public void DealDamage(CharacterManager targetCharacter, DamageStruct damage)
+        {
+            int damageDeltNormal = (int)(damage.normal * (1 - targetCharacter.combatStats.armor.Value / 300f));
+
+            int damageDeltPierce = damage.pierce;
+
+            int damageDeltAlchemical = (int)(damage.alchemical * (1f - targetCharacter.combatStats.combatStatDict[damage.alchemicalType].Value / 200f));
+
+            int totalDamage = damageDeltPierce + damageDeltAlchemical + damageDeltNormal;
+            totalDamage = totalDamage > 0 ? totalDamage : 0;
+            targetCharacter.health.TakeDamage(totalDamage);
+        }
+
+        public void DealDamage(CharacterManager targetCharacter, SkillAbstract skillScript)
+        {
+            DamageStruct outputDamage = ComputeDamage(skillScript);
+            DealDamage(targetCharacter, outputDamage);
+        }
+
+        public void HandleAlchemicalSkillCharacter(CharacterManager targetCharacter, GridCell targetCell, SkillAbstract skillScript)
+        {
+            DealDamage(targetCharacter, skillScript);
+            CharacterStateManager characterState = targetCharacter.stateManager;
+            characterState.characterSubstances = AlchemyEngine.instance.MergeSubstances(targetCell, characterState);
+
+            switch (skillScript.skill.type)
+            {
+                case SkillType.CastHeat:
+                    (targetCell.substances, characterState.characterSubstances, characterState.statusEffects, characterState.statusTurns,
+                        targetCell.heatState.Value, characterState.heatState.Value) = AlchemyEngine.instance.ApplyAlchemicalTransfomation(
+                        targetCell, characterState, skillScript);
+                    break;
+
+                case SkillType.CastSubstance:
+                    CastSubstance castSubstance = (CastSubstance)skillScript;
+                    targetCell.substances = AlchemyEngine.instance.ApplyDirectSubstance(castSubstance.substance, targetCell.substances);
+
+                    (characterState.characterSubstances, characterState.statusEffects, characterState.statusTurns) = AlchemyEngine.instance.ApplyDirectSubstance(
+                        castSubstance.substance, characterState.characterSubstances, characterState.statusEffects, characterState.statusTurns);
+
+                    (targetCell.substances, characterState.characterSubstances, characterState.statusEffects, characterState.statusTurns,
+                        targetCell.heatState.Value, characterState.heatState.Value) = AlchemyEngine.instance.ApplyAlchemicalTransfomation(
+                        targetCell, characterState, skillScript);
+                    break;
+            }
+
+            AlchemyEngine.instance.ApplyStateVFX(targetCell);
+            AlchemyEngine.instance.ApplyStateVFX(characterState);
+>>>>>>> Stashed changes
         }
 
         public void SetShockInteractions(CharacterStats targetCharacterStats, bool fromCell = false)

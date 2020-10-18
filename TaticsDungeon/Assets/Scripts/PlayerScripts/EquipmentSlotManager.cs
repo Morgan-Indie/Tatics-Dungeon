@@ -11,14 +11,14 @@ namespace PrototypeGame
         EquipmentHolderSlot amuletSlot;
         EquipmentHolderSlot quiverSlot;
 
-        InventorySlot EquipedAmulet;
-        InventorySlot EquipedHelmet;
-        InventorySlot EquipedRightHand;
-        InventorySlot EquipedLeftHand;
-        InventorySlot EquipedTorso;
-        InventorySlot EquipedBoots;
-        InventorySlot EquipedLegging;
-        InventorySlot EquipedGloves;
+        public InventorySlot EquipedAmulet;
+        public InventorySlot EquipedHelmet;
+        public InventorySlot EquipedRightHand;
+        public InventorySlot EquipedLeftHand;
+        public InventorySlot EquipedTorso;
+        public InventorySlot EquipedBoots;
+        public InventorySlot EquipedLegging;
+        public InventorySlot EquipedGloves;
 
         [Header("Not Required")]
         public InventoryHandler inventoryHandler;
@@ -29,12 +29,20 @@ namespace PrototypeGame
         public List<InventorySlot> equipedItems;
         public GameObject EquipedItems;
 
+<<<<<<< Updated upstream
         public void Start()
+=======
+        void Awake()
+>>>>>>> Stashed changes
         {
             inventoryHandler = GetComponent<InventoryHandler>();
             playerEquipment = GetComponent<PlayerEquipment>();
+            AssignEquipmentSlots();
+            AssignInventorySlots();
+        }
 
-            #region Assign Equipment Holder Slots On Character Model
+        void AssignEquipmentSlots()
+        {
             EquipmentHolderSlot[] equipmentHolderSlots = GetComponentsInChildren<EquipmentHolderSlot>();
             foreach (EquipmentHolderSlot equipmentHolderSlot in equipmentHolderSlots)
             {
@@ -54,9 +62,10 @@ namespace PrototypeGame
                         break;
                 }
             }
-            #endregion
+        }
 
-            #region Assign Equipment Item Slot on Inventory Menu
+        void AssignInventorySlots()
+        {
             InventorySlot[] equipedItems = EquipedItems.GetComponentsInChildren<InventorySlot>();
             foreach (InventorySlot equipedItem in equipedItems)
             {
@@ -88,7 +97,6 @@ namespace PrototypeGame
                         break;
                 }
             }
-            #endregion
         }
 
         #region Loading/Unloading On Equipment Menu
