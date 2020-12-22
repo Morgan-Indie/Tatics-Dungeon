@@ -9,11 +9,27 @@ namespace PrototypeGame
         public CameraTransition townView;
         public bool traveling = false;
 
+        private Transform lookAtPoint;
+        private float lookInterpolationRate = 0.1f;
+
         public Transform origin;
 
         private void Start()
         {
             origin = townView.transform;
+        }
+
+        private void Update()
+        {
+            //Look at point
+            if (lookAtPoint != null)
+            {
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    Quaternion.LookRotation(lookAtPoint.position - transform.position),
+                    lookInterpolationRate
+                    );
+            }
         }
 
         public void Transition(CameraTransition cameraTransition)
@@ -35,6 +51,13 @@ namespace PrototypeGame
         {
             origin = newTransform;
             traveling = false;
+            lookAtPoint = null;
+        }
+
+        public void LookAtPoint(Transform p, float i = 0.1f)
+        {
+            lookAtPoint = p;
+            lookInterpolationRate = i;
         }
 
         public bool IsViewingTown() { return origin == townView.transform; }
